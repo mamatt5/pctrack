@@ -3,7 +3,7 @@ package com.fdmgroup.PCTrack.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -27,7 +27,9 @@ public class User {
 	
 	@Column(name = "JOIN DATE")
 	private LocalDate joinDate;
+
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Staff> roles;
 	
@@ -41,8 +43,9 @@ public class User {
 		this.joinDate = joinDate;
 		this.roles = new ArrayList<>();
 	}
-	
-	
+	public User() {
+		super();
+	}
 	public int getUserId() {
 		return userId;
 	}
@@ -91,7 +94,4 @@ public class User {
 		return "User [userId=" + userId + ", password=" + password + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", joinDate=" + joinDate + "]";
 	}
-
-	
-	
 }
