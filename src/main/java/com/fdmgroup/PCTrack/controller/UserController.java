@@ -20,7 +20,7 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 	
-	public User findById(@PathVariable String userId) {
+	public User findById(@PathVariable int userId) {
 		return userService.findUserId(userId);
 	}
 	
@@ -34,8 +34,8 @@ public class UserController {
 		return userService.findUserId(newUser.getUserId());
 	}
 	
-	public void deleteUser(@PathVariable String UserId) {
-		userService.deleteByUserId(UserId);
+	public void deleteUser(@PathVariable int userId) {
+		userService.deleteByUserId(userId);
 	}
 
 }
