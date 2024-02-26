@@ -27,9 +27,10 @@ public class Dataloader implements ApplicationRunner {
 	private UserService userService;
 	private RoomService roomService;
 	private LocationService locationService;
-	
+
 	@Autowired
-	public Dataloader(ComputerService computerService, ProgramService programService, UserService userService, RoomService roomService, LocationService locationService) {
+	public Dataloader(ComputerService computerService, ProgramService programService, UserService userService,
+			RoomService roomService, LocationService locationService) {
 		super();
 		this.computerService = computerService;
 		this.programService = programService;
@@ -49,13 +50,13 @@ public class Dataloader implements ApplicationRunner {
 		Program nodejs4 = new Program("Node.js", "20.5");
 		Program nodejs5 = new Program("Node.js", "20.9");
 		Program nodejs6 = new Program("Node.js", "20.1.0");
-		
+
 		Program python = new Program("Python Laucher", "3.9.7427.0");
 		Program npm = new Program("NPM", "10.2.4");
 		Program npm1 = new Program("NPM", "10.2.3");
 		Program npm2 = new Program("NPM", "6.14.5");
-		Program npm3 = new Program("NPM", "9.6.6"); 
-		Program npm4 = new Program("NPM", "9.8"); 
+		Program npm3 = new Program("NPM", "9.6.6");
+		Program npm4 = new Program("NPM", "9.8");
 		Program npm5 = new Program("NPM", "10.1.0");
 		Program npm6 = new Program("NPM", "9.6.4");
 		Program sql8wb = new Program("MySQL 8 Workbench", "8.0.32");
@@ -68,21 +69,25 @@ public class Dataloader implements ApplicationRunner {
 		Program git = new Program("Git", "2.27.0");
 		Program jdk = new Program("JDK", "17.0.2");
 
-		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, nodejs1, nodejs2, nodejs3, nodejs4, nodejs5,nodejs6, python, npm, npm1, npm2, npm3, npm4, npm5,
-				sql8wb, sqlShell, powerBi, excel, excel1, microsoftSSMS, pnpm, git, jdk);
+		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, nodejs1, nodejs2, nodejs3, nodejs4, nodejs5,
+				nodejs6, python, npm, npm1, npm2, npm3, npm4, npm5, sql8wb, sqlShell, powerBi, excel, excel1,
+				microsoftSSMS, pnpm, git, jdk);
 		programService.saveAll(programs);
-	
+
 		Location sydney = new Location("Sydney");
 		Location melbourne = new Location("Melbourne");
 		Location singapore = new Location("Singapore");
 		Location hongkong = new Location("Hong Kong");
-		
+
 		locationService.save(sydney);
 		locationService.save(melbourne);
 		locationService.save(singapore);
 		locationService.save(hongkong);
 
-		//bondi rooms
+		Room room1 = new Room("Bondi", sydney);
+		Room room2 = new Room("Coogee", sydney);
+
+		// bondi rooms
 		Computer c1 = new Computer(15040, new Room(),
 				Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		Computer c2 = new Computer(70156, new Room(),
@@ -92,30 +97,39 @@ public class Dataloader implements ApplicationRunner {
 		Computer c4 = new Computer(15068, new Room(),
 				Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
 		Computer c5 = new Computer(15048, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));		
+				Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		Computer c6 = new Computer(15052, new Room(), null);
-		Computer c7 = new Computer(15036, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c8 = new Computer(70101, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c7 = new Computer(15036, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb,
+				sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c8 = new Computer(70101, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb,
+				sqlShell, excel, microsoftSSMS, git, jdk));
 		Computer c9 = new Computer(70108, new Room(), null);
-		Computer c10 = new Computer(15054, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c11 = new Computer(15037, new Room(), Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c12 = new Computer(70104, new Room(), Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
-		Computer c13 = new Computer(15038, new Room(), Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
-		Computer c14 = new Computer(70160, new Room(), null);	
+		Computer c10 = new Computer(15054, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb,
+				sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c11 = new Computer(15037, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c12 = new Computer(70104, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
+		Computer c13 = new Computer(15038, new Room(), Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb,
+				sqlShell, excel1, microsoftSSMS, git, jdk));
+		Computer c14 = new Computer(70160, new Room(), null);
 		Computer c15 = new Computer(15070, new Room(), null);
-		
-		//coogee
-		Computer c16 = new Computer(15030, new Room(), Arrays.asList(vscode,eclipse,nodejs2,python,npm,excel,microsoftSSMS,git,jdk));
+
+		// coogee
+		Computer c16 = new Computer(15030, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs2, python, npm, excel, microsoftSSMS, git, jdk));
 		Computer c17 = new Computer(70213, new Room(), null);
-		Computer c18 = new Computer(70161, new Room(), Arrays.asList(vscode,eclipse,nodejs6,python,npm6, excel, microsoftSSMS, git, jdk));
+		Computer c18 = new Computer(70161, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs6, python, npm6, excel, microsoftSSMS, git, jdk));
 		Computer c19 = new Computer(70098, new Room(), null);
 		Computer c20 = new Computer(70093, new Room(), null);
 		Computer c21 = new Computer(15035, new Room(), null);
 		Computer c22 = new Computer(15064, new Room(), null);
 		Computer c23 = new Computer(70106, new Room(), null);
 		Computer c24 = new Computer(70162, new Room(), null);
-		
-		List<Computer> computers = Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24);
+
+		List<Computer> computers = Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16,
+				c17, c18, c19, c20, c21, c22, c23, c24);
 		computerService.saveAll(computers);
 		computerService.save(c1);
 		computerService.save(c2);
@@ -141,7 +155,7 @@ public class Dataloader implements ApplicationRunner {
 		computerService.save(c22);
 		computerService.save(c23);
 		computerService.save(c24);
-		
+
 		User u1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
 		User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(27, 11, 2023));
 		User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(27, 11, 2023));
@@ -152,7 +166,7 @@ public class Dataloader implements ApplicationRunner {
 		User u8 = new User("camden.leonard", "password123", "Camden", "Leonard", LocalDate.of(27, 11, 2023));
 		User u9 = new User("quincy.jarvis", "password123", "Quincy", "Jarvis", LocalDate.of(27, 11, 2023));
 		User u10 = new User("chaim.harrison", "password123", "Chaim", "Harrison", LocalDate.of(27, 11, 2023));
-		
+
 		userService.register(u1);
 		userService.register(u2);
 		userService.register(u3);
@@ -163,9 +177,7 @@ public class Dataloader implements ApplicationRunner {
 		userService.register(u8);
 		userService.register(u9);
 		userService.register(u10);
-		
-		
-		
+
 	}
 
 }
