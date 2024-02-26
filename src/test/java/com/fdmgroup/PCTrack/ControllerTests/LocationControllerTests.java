@@ -41,8 +41,7 @@ public class LocationControllerTests {
 			Location location1 = new Location("Sydney");
 			
 			when(locationService.findById(1)).thenReturn(location1);
-			Location foundLocation = locationController.findById(1);
-			assertSame(location1, foundLocation);
+			assertSame(location1, locationController.findById(1));
 			verify(locationService, times(1)).findById(1);
 		}
 		
@@ -50,15 +49,18 @@ public class LocationControllerTests {
 		void createLocation_test() {
 			Location location1 = new Location("Melbourne");
 			
-			locationController.createNewLocation(location1);
+			when(locationService.findById(0)).thenReturn(location1);
+			assertSame(location1, locationController.createNewLocation(location1));
 			verify(locationService, times(1)).save(location1);
 		}
 		
 		@Test
 		void updateLocation_test() {
 			Location location1 = new Location("Singapore");
-			
-			locationController.updateLocation(location1);
+			Location updatedLocation = new Location("Singaporealore");
+
+			when(locationService.findById(0)).thenReturn(updatedLocation);
+			assertSame(locationController.updateLocation(location1), updatedLocation);
 			verify(locationService, times(1)).update(location1);
 		}
 		

@@ -38,17 +38,16 @@ public class UserControllerTests {
 	@Test
 	void findUserById_test() {
 		
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
 		
 		when(userService.findUserId(1)).thenReturn(user1);
-		User foundUser = userController.findById(1);
-		assertSame(user1, foundUser);
+		assertSame(user1, userController.findById(1));
 		verify(userService, times(1)).findUserId(1);
 	}
 	
 	@Test
 	void createUser_test() {
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
 		
 		userController.createNewUser(user1);
 		verify(userService, times(1)).register(user1);
@@ -56,9 +55,12 @@ public class UserControllerTests {
 	
 	@Test
 	void updateUser_test() {
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
+		User updatedUser = new User("updated.updated", "updated", "Up", "Dated", LocalDate.of(2023, 4, 27));
 		
-		userController.updateUser(user1);
+	
+		when(userService.findUserId(0)).thenReturn(updatedUser);
+		assertSame(userController.updateUser(user1), updatedUser);
 		verify(userService, times(1)).update(user1);
 	}
 	
@@ -70,10 +72,10 @@ public class UserControllerTests {
 	
 	@Test
 	void findAllUsers() {
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
-		User user2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(27, 11, 2023));
-		User user3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(27, 11, 2023));
-		User user4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(27, 11, 2023));
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
+		User user2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(2023, 11, 27));
+		User user3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(2023, 11, 27));
+		User user4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
 
 		
 		List<User> allUsers = new ArrayList<>();
