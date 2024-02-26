@@ -8,7 +8,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 
+import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.ProgramService;
 
@@ -48,6 +50,23 @@ public class Dataloader implements ApplicationRunner {
 		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, nodejs1, nodejs2, python, npm, npm1, npm2,
 				sql8wb, sqlShell, powerBi, excel, excel1, microsoftSSMS, pnpm, git, jdk);
 		programService.saveAll(programs);
+
+		Computer c1 = new Computer(15040, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c2 = new Computer(70156, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
+		Computer c3 = new Computer(15046, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
+		Computer c4 = new Computer(15068, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
+		Computer c5 = new Computer(15048, new Room(),
+				Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		
+		computerService.save(c1);
+		computerService.save(c2);
+		computerService.save(c3);
+		computerService.save(c4);
+		computerService.save(c5);
 	}
 
 }

@@ -15,12 +15,6 @@ public class Computer {
 		this.programList = programList;
 	}
 	
-	public Computer(Room room, List<Program> programList) {
-		super();
-		this.room = room;
-		this.programList = programList;
-	}
-	
 	
 	public int getComputerId() {
 		return computerId;
