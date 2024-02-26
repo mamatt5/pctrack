@@ -1,8 +1,13 @@
 package com.fdmgroup.PCTrack.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="staff_type")
+@DiscriminatorValue("staff")
 public class Staff {
 	@Id
 	@GeneratedValue
@@ -46,3 +51,7 @@ public class Staff {
 		return "Staff [staffId=" + staffId + ", user=" + user + ", location=" + location + "]";
 	}
 }
+
+
+
+

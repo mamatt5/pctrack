@@ -145,5 +145,20 @@ public class UserDataLoader implements ApplicationRunner {
         userService.register(u8);
         userService.register(u9);
         userService.register(u10);
+        
+        
+        // sample data for inheritance, pls delete Jenny
+        Location location1 = new Location("FDM Sydney", "Sydney");
+        locationService.save(location1);
+        
+        Staff staff1 = new Staff(u1, location1);
+        RoomAdmin roomAdmin1 = new RoomAdmin(u2, location1);
+        LocationAdmin locationAdmin1 = new LocationAdmin(u3, location1);
+        BusinessAdmin businessAdmin1 = new BusinessAdmin(u4, location1);
+        
+        staffService.save(staff1);
+        staffService.save(roomAdmin1);
+        staffService.save(locationAdmin1);
+        staffService.save(businessAdmin1);
 	}
 }
