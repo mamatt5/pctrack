@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Location {
 	private int locationId;
-	private String name;
+	//private String name;
 	private String city;
 	//private List<Room> rooms;
 	
@@ -13,12 +13,17 @@ public class Location {
 		super();
 	}
 
-	public Location(int locationId, String name, String city) {
+	public Location(int locationId, String city) {
 		super();
 		this.locationId = locationId;
-		this.name = name;
+		//this.name = name;
 		this.city = city;
 		//this.rooms = rooms;
+	}
+	
+	public Location(String city) {
+		super();
+		this.city = city;
 	}
 	
 	public int getLocationId() {
@@ -27,12 +32,12 @@ public class Location {
 	public void setLocationId(int locationId) {
 		this.locationId = locationId;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+//	public String getName() {
+//		return name;
+//	}
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 	public String getCity() {
 		return city;
 	}

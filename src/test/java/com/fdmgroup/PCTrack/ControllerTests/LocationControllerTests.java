@@ -1,4 +1,4 @@
-package com.fdmgroup.PCTrack;
+package com.fdmgroup.PCTrack.ControllerTests;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -38,7 +38,7 @@ public class LocationControllerTests {
 		@Test
 		void findLocationById_test() {
 			
-			Location location1 = new Location("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+			Location location1 = new Location("Sydney");
 			
 			when(locationService.findById(1)).thenReturn(location1);
 			Location foundLocation = locationController.findById(1);
@@ -48,7 +48,7 @@ public class LocationControllerTests {
 		
 		@Test
 		void createLocation_test() {
-			Location location1 = new Location("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+			Location location1 = new Location("Melbourne");
 			
 			locationController.createNewLocation(location1);
 			verify(locationService, times(1)).save(location1);
@@ -56,7 +56,7 @@ public class LocationControllerTests {
 		
 		@Test
 		void updateLocation_test() {
-			Location location1 = new Location("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+			Location location1 = new Location("Singapore");
 			
 			locationController.updateLocation(location1);
 			verify(locationService, times(1)).update(location1);
@@ -70,10 +70,10 @@ public class LocationControllerTests {
 		
 		@Test
 		void findAllUsers() {
-			Location location1 = new Location("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
-			Location location2 = new Location("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
-			Location location3 = new Location("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
-			Location location4 = new Location("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+			Location location1 = new Location("Sydney");
+			Location location2 = new Location("Melbourne");
+			Location location3 = new Location("Singapore");
+			Location location4 = new Location("Hong Kong");
 
 			
 			List<Location> allLocations = new ArrayList<>();

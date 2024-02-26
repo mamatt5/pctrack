@@ -30,6 +30,17 @@ public class ComputerService {
 		}
 	}
 	
+	public void saveAll(List<Computer> newComputers) {
+		for (Computer c : newComputers)
+			if (this.computerRepository.existsById(c.getComputerId())) {
+				throw new RuntimeException("Computer already exists");
+			
+			} else {
+				this.computerRepository.save(c);
+			}
+	}
+	
+	
 	public void deleteById(int computerId) {
 		if (this.computerRepository.existsById(computerId)) {
 			computerRepository.deleteById(computerId);
