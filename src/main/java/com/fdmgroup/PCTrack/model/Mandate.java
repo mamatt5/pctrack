@@ -14,11 +14,10 @@ public class Mandate {
 	@JoinColumn(name = "FK_ROOM_ID")
 	private Room room;
 	
-	/* Add that later
 	@ManyToOne
 	@JoinColumn(name = "FK_ROOM_ADMIN")
-	private RoomAdmin roomAdmin */
-	
+	private RoomAdmin roomAdmin;
+		
 	@Column(name = "DATE_CREATED")
 	private LocalDate dateCreated;
 	
