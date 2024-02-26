@@ -8,16 +8,28 @@ import jakarta.persistence.*;
 
 @Entity
 public class User {
-	
 	@Id
 	@GeneratedValue
+	@Column(name = "ID")
 	private int userId;
+	
+	@Column(name = "USERNAME")
 	private String username;
+	
+	@Column(name = "PASSWORD")
 	private String password;
+	
+	@Column(name = "FIRST NAME")
 	private String firstName;
+	
+	@Column(name = "LAST NAME")
 	private String lastName;
+	
+	@Column(name = "JOIN DATE")
 	private LocalDate joinDate;
-	//private List<Staff> roles;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Staff> roles;
 	
 	
 	public User(String username, String password, String firstName, String lastName) {
