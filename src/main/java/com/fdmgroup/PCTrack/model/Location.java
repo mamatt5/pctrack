@@ -6,8 +6,11 @@ import jakarta.persistence.*;
 public class Location {
 	@Id
 	@GeneratedValue
+	@Column(name = "ID")
 	private int locationId;
+	@Column(name = "NAME")
 	private String name;
+	@Column(name = "CITY")
 	private String city;
 	
 	public Location(String name, String city) {

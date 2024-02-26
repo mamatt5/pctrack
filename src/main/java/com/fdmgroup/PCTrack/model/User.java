@@ -32,14 +32,14 @@ public class User {
 	private List<Staff> roles;
 	
 	
-	public User(String username, String password, String firstName, String lastName) {
+	public User(String username, String password, String firstName, String lastName, LocalDate joinDate) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.joinDate = LocalDate.now();
-		//this.roles = new ArrayList<>();
+		this.joinDate = joinDate;
+		this.roles = new ArrayList<>();
 	}
 	
 	
@@ -79,12 +79,12 @@ public class User {
 	public void setJoinDate(LocalDate joinDate) {
 		this.joinDate = joinDate;
 	}
-//	public List<Staff> getRoles() {
-//		return roles;
-//	}
-//	public void setRoles(List<Staff> roles) {
-//		this.roles = roles;
-//	}
+	public List<Staff> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Staff> roles) {
+		this.roles = roles;
+	}
 	
 	@Override
 	public String toString() {

@@ -11,6 +11,7 @@ public class StaffService {
 	private StaffRepository staffRepo;
 	
 	public StaffService(StaffRepository staffRepo) {
+		super();
 		this.staffRepo = staffRepo;
 	}
 	

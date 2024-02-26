@@ -6,10 +6,12 @@ import jakarta.persistence.*;
 public class Staff {
 	@Id
 	@GeneratedValue
+	@Column(name = "ID")
 	private int staffId;
 	@JoinColumn(name = "FK_USER_ID")
 	@ManyToOne
 	private User user;
+	@JoinColumn(name = "FK_LOCATION_ID")
 	@ManyToOne
 	private Location location;
 	
