@@ -10,11 +10,14 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.model.Computer;
+import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.User;
 import com.fdmgroup.PCTrack.service.ComputerService;
+import com.fdmgroup.PCTrack.service.LocationService;
 import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.RoomService;
 import com.fdmgroup.PCTrack.service.UserService;
 
 @Service
@@ -22,13 +25,17 @@ public class Dataloader implements ApplicationRunner {
 	private ComputerService computerService;
 	private ProgramService programService;
 	private UserService userService;
-
+	private RoomService roomService;
+	private LocationService locationService;
+	
 	@Autowired
-	public Dataloader(ComputerService computerService, ProgramService programService, UserService userService) {
+	public Dataloader(ComputerService computerService, ProgramService programService, UserService userService, RoomService roomService, LocationService locationService) {
 		super();
 		this.computerService = computerService;
 		this.programService = programService;
 		this.userService = userService;
+		this.roomService = roomService;
+		this.locationService = locationService;
 	}
 
 	@Override
@@ -65,6 +72,15 @@ public class Dataloader implements ApplicationRunner {
 				sql8wb, sqlShell, powerBi, excel, excel1, microsoftSSMS, pnpm, git, jdk);
 		programService.saveAll(programs);
 	
+		Location sydney = new Location("Sydney");
+		Location melbourne = new Location("Melbourne");
+		Location singapore = new Location("Singapore");
+		Location hongkong = new Location("Hong Kong");
+		
+		locationService.save(sydney);
+		locationService.save(melbourne);
+		locationService.save(singapore);
+		locationService.save(hongkong);
 
 		//bondi rooms
 		Computer c1 = new Computer(15040, new Room(),
@@ -147,6 +163,8 @@ public class Dataloader implements ApplicationRunner {
 		userService.register(u8);
 		userService.register(u9);
 		userService.register(u10);
+		
+		
 		
 	}
 
