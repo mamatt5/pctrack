@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 package com.arceus.SpringTemplate.security;
+=======
+package com.fdmgroup.PCTrack.security;
+>>>>>>> SQLCheck
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.arceus.SpringTemplate.dal.UserRepo;
 import com.arceus.SpringTemplate.model.User;
 
@@ -13,6 +18,17 @@ public class AuthUserService implements org.springframework.security.core.userde
 
 	@Autowired
 	public AuthUserService(UserRepo userRepo) {
+=======
+import com.fdmgroup.PCTrack.dal.UserRepository;
+import com.fdmgroup.PCTrack.model.User;
+
+@Service
+public class AuthUserService implements org.springframework.security.core.userdetails.UserDetailsService{
+	private UserRepository userRepo;
+
+	@Autowired
+	public AuthUserService(UserRepository userRepo) {
+>>>>>>> SQLCheck
 		super();
 		this.userRepo = userRepo;
 	}

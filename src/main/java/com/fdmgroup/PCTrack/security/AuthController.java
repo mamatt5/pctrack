@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package com.arceus.SpringTemplate.security;
+=======
+package com.fdmgroup.PCTrack.security;
+>>>>>>> SQLCheck
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

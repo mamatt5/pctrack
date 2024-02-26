@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package com.arceus.SpringTemplate.security;
+=======
+package com.fdmgroup.PCTrack.security;
+>>>>>>> SQLCheck
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
