@@ -1,18 +1,22 @@
-package com.arceus.SpringTemplate.security;
+
+package com.fdmgroup.PCTrack.security;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.arceus.SpringTemplate.dal.UserRepo;
-import com.arceus.SpringTemplate.model.User;
+
+import com.fdmgroup.PCTrack.dal.UserRepository;
+import com.fdmgroup.PCTrack.model.User;
 
 @Service
 public class AuthUserService implements org.springframework.security.core.userdetails.UserDetailsService{
-	private UserRepo userRepo;
+	private UserRepository userRepo;
 
 	@Autowired
-	public AuthUserService(UserRepo userRepo) {
+	public AuthUserService(UserRepository userRepo) {
+
 		super();
 		this.userRepo = userRepo;
 	}

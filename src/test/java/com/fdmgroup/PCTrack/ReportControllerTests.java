@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @ExtendWith(MockitoExtension.class)
-class PcTrackApplicationTests {
-
+public class ReportControllerTests {
 
 }
