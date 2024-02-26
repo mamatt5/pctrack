@@ -8,6 +8,11 @@ public class Location {
 	private String city;
 	private List<Room> rooms;
 	
+	
+	public Location() {
+		super();
+	}
+
 	public Location(int locationId, String name, String city, List<Room> rooms) {
 		super();
 		this.locationId = locationId;

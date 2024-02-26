@@ -11,8 +11,8 @@ import jakarta.persistence.Id;
 public class User {
 	
 	@Id
-	private String userId;
-	
+	private int userId;
+	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
@@ -20,9 +20,10 @@ public class User {
 	private List<Staff> roles;
 	
 	
-	public User(String userId, String password, String firstName, String lastName, LocalDate joinDate) {
+	public User(int userId, String username, String password, String firstName, String lastName, LocalDate joinDate) {
 		super();
 		this.userId = userId;
+		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -31,11 +32,17 @@ public class User {
 	}
 	
 	
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

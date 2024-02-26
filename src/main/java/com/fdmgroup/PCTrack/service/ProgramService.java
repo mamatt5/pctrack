@@ -30,6 +30,17 @@ public class ProgramService {
 		}
 	}
 	
+	public void saveAll(List<Program> newPrograms) {
+		for (Program p : newPrograms) {
+			if (this.programRepository.existsById(p.getProgramId())) {
+				throw new RuntimeException("Program already exists");
+			
+			} else {
+				this.programRepository.save(p);
+			}
+		}
+	}
+	
 	public void deleteById(int programId) {
 		if (this.programRepository.existsById(programId)) {
 			programRepository.deleteById(programId);

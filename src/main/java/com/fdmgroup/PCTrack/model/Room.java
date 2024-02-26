@@ -6,6 +6,12 @@ public class Room {
 	private Location location;
 	
 	
+	
+	public Room() {
+		super();
+	}
+
+
 	public Room(int roomId, String name, Location location) {
 		super();
 		this.roomId = roomId;
