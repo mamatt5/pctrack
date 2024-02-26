@@ -4,31 +4,30 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class User {
 	
 	@Id
+	@GeneratedValue
 	private int userId;
 	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
 	private LocalDate joinDate;
-	private List<Staff> roles;
+	//private List<Staff> roles;
 	
 	
-	public User(int userId, String username, String password, String firstName, String lastName, LocalDate joinDate) {
+	public User(String username, String password, String firstName, String lastName) {
 		super();
-		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.joinDate = LocalDate.now();
-		this.roles = new ArrayList<>();
+		//this.roles = new ArrayList<>();
 	}
 	
 	
@@ -68,17 +67,17 @@ public class User {
 	public void setJoinDate(LocalDate joinDate) {
 		this.joinDate = joinDate;
 	}
-	public List<Staff> getRoles() {
-		return roles;
-	}
-	public void setRoles(List<Staff> roles) {
-		this.roles = roles;
-	}
+//	public List<Staff> getRoles() {
+//		return roles;
+//	}
+//	public void setRoles(List<Staff> roles) {
+//		this.roles = roles;
+//	}
 	
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", password=" + password + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", joinDate=" + joinDate + ", roles=" + roles + "]";
+				+ lastName + ", joinDate=" + joinDate + "]";
 	}
 
 	
