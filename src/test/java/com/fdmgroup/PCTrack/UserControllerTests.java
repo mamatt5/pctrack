@@ -14,6 +14,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +37,17 @@ public class UserControllerTests {
 	@Test
 	void findUserById_test() {
 		
-		User user1 = new User("John", "Smith", "johnsmith@live.com", "johnsmith1", "password123");
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
 		
 		when(userService.findUserId(1)).thenReturn(user1);
-		User foundUser = userController.findUserId(1);
+		User foundUser = userController.findById(1);
 		assertSame(user1, foundUser);
 		verify(userService, times(1)).findUserId(1);
 	}
 	
 	@Test
 	void createUser_test() {
-		User user1 = new User("John", "Smith", "johnsmith@live.com", "johnsmith1", "password123");
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
 		
 		userController.createNewUser(user1);
 		verify(userService, times(1)).register(user1);
@@ -54,7 +55,7 @@ public class UserControllerTests {
 	
 	@Test
 	void updateUser_test() {
-		User user1 = new User("John", "Smith", "johnsmith@live.com", "johnsmith1", "password123");
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
 		
 		userController.updateUser(user1);
 		verify(userService, times(1)).update(user1);
@@ -68,10 +69,11 @@ public class UserControllerTests {
 	
 	@Test
 	void findAllUsers() {
-		User user1 = new User("John", "Smith", "johnsmith@live.com", "johnsmith1", "password123");
-		User user2 = new User("Jane", "Doe", "janedoe@live.com", "janedoe3", "pass123 ");
-		User user3 = new User("Mike", "Yao", "mikeyao@live.com", "mikeyao", "java23");
-		User user4 = new User("Rachel", "Perry", "rachelperry@live.com", "rperry1", "moo89");
+		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(27, 11, 2023));
+		User user2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(27, 11, 2023));
+		User user3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(27, 11, 2023));
+		User user4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(27, 11, 2023));
+
 		
 		List<User> allUsers = new ArrayList<>();
 		allUsers.add(user1);
@@ -80,7 +82,7 @@ public class UserControllerTests {
 		allUsers.add(user4);
 		
 		when(userService.findAllUsers()).thenReturn(allUsers);
-		assertSame(userController.findAllUsers(), allUsers);
+		assertSame(userController.getUsers(), allUsers);
 		verify(userService, times(1)).findAllUsers();
 	}
 
