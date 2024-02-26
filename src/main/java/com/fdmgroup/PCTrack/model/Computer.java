@@ -7,8 +7,11 @@ import jakarta.persistence.*;
 @Entity
 public class Computer {
 	@Id
+	@GeneratedValue
 	@Column(name = "ID")
 	private int computerId;
+	@Column(name = "COMPUTER_CODE")
+	private int computerCode;
 //	private Room room;
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Computer_Program", 
@@ -18,9 +21,9 @@ public class Computer {
 	@JoinColumn(name = "FK_PROGRAM_ID"))
 	private List<Program> programList;
 	
-	public Computer(int computerId, List<Program> programList) {
+	public Computer(int computerCode, List<Program> programList) {
 		super();
-		this.computerId = computerId;
+		this.computerCode = computerId;
 		this.programList = programList;
 	}
 	public Computer() {
@@ -31,6 +34,14 @@ public class Computer {
 	}
 	public void setComputerId(int computerId) {
 		this.computerId = computerId;
+	}
+	public int getComputerCode()
+	{
+		return computerCode;
+	}
+	public void setComputerCode(int computerCode)
+	{
+		this.computerCode = computerCode;
 	}
 	public List<Program> getProgramList() {
 		return programList;

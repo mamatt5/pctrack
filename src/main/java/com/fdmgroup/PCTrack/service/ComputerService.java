@@ -31,4 +31,14 @@ public class ComputerService {
 			this.computerRepo.save(newComputer);
 		}
 	}
+	
+	public void saveAll(List<Computer> newComputers) {
+		for (Computer c : newComputers) {
+			if (this.computerRepo.existsById(c.getComputerId())) {
+				throw new RuntimeException("Computer already exists");
+			} else {
+				this.computerRepo.save(c);
+			}
+		}
+	}
 }
