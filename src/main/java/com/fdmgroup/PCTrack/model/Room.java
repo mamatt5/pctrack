@@ -19,6 +19,11 @@ public class Room {
 		this.location = location;
 	}
 
+	public Room( String name, Location location) {
+		super();
+		this.name = name;
+		this.location = location;
+	}
 
 	public int getRoomId() {
 		return roomId;

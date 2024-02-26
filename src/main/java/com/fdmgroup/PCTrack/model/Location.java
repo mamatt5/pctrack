@@ -6,19 +6,19 @@ public class Location {
 	private int locationId;
 	private String name;
 	private String city;
-	private List<Room> rooms;
+	//private List<Room> rooms;
 	
 	
 	public Location() {
 		super();
 	}
 
-	public Location(int locationId, String name, String city, List<Room> rooms) {
+	public Location(int locationId, String name, String city) {
 		super();
 		this.locationId = locationId;
 		this.name = name;
 		this.city = city;
-		this.rooms = rooms;
+		//this.rooms = rooms;
 	}
 	
 	public int getLocationId() {
@@ -39,12 +39,12 @@ public class Location {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public List<Room> getRooms() {
-		return rooms;
-	}
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
-	}
+//	public List<Room> getRooms() {
+//		return rooms;
+//	}
+//	public void setRooms(List<Room> rooms) {
+//		this.rooms = rooms;
+//	}
 	
 	
 }
