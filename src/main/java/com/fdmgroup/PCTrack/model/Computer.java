@@ -5,14 +5,19 @@ import java.util.List;
 public class Computer {
 	private int computerId;
 	private Room room;
-	private Role isReady;
+	//private Role isReady;
 	private List<Program> programList;
 	
-	public Computer(int computerId, Room room, Role isReady, List<Program> programList) {
+	public Computer(int computerId, Room room,  List<Program> programList) {
 		super();
 		this.computerId = computerId;
 		this.room = room;
-		this.isReady = isReady;
+		this.programList = programList;
+	}
+	
+	public Computer(Room room, List<Program> programList) {
+		super();
+		this.room = room;
 		this.programList = programList;
 	}
 	
@@ -29,12 +34,12 @@ public class Computer {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	public Role getIsReady() {
-		return isReady;
-	}
-	public void setIsReady(Role isReady) {
-		this.isReady = isReady;
-	}
+//	public Role getIsReady() {
+//		return isReady;
+//	}
+//	public void setIsReady(Role isReady) {
+//		this.isReady = isReady;
+//	}
 	public List<Program> getProgramList() {
 		return programList;
 	}

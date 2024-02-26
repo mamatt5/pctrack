@@ -3,11 +3,19 @@ package com.fdmgroup.PCTrack.model;
 public class Program {
 	private int programId;
 	private String name;
-	private double versionNumber;
+	private String versionNumber;
 	
-	public Program(int programId, String name, double versionNumber) {
+	public Program(int programId, String name, String versionNumber) {
 		super();
 		this.programId = programId;
+		this.name = name;
+		this.versionNumber = versionNumber;
+	}
+	
+	
+
+	public Program(String name, String versionNumber) {
+		super();
 		this.name = name;
 		this.versionNumber = versionNumber;
 	}
@@ -28,11 +36,11 @@ public class Program {
 		this.name = name;
 	}
 
-	public double getVersionNumber() {
+	public String getVersionNumber() {
 		return versionNumber;
 	}
 
-	public void setVersionNumber(double versionNumber) {
+	public void setVersionNumber(String versionNumber) {
 		this.versionNumber = versionNumber;
 	}
 	
