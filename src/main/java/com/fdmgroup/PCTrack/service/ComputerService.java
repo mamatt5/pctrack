@@ -2,33 +2,47 @@ package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.fdmgroup.PCTrack.dal.ComputerRepository;
 import com.fdmgroup.PCTrack.model.Computer;
 
-@Service
 public class ComputerService {
-	private ComputerRepository computerRepo;
-	
-	public ComputerService(ComputerRepository computerRepo) {
+	private ComputerRepository computerRepository;
+
+	public ComputerService(ComputerRepository computerRepository) {
 		super();
-		this.computerRepo = computerRepo;
+		this.computerRepository = computerRepository;
 	}
 	
 	public List<Computer> findAllComputers() {
-		return this.computerRepo.findAll();
+		return this.computerRepository.findAll();
 	}
 	
 	public Computer findById(int computerId) {
-		return this.computerRepo.findById(computerId).orElseThrow(() -> new RuntimeException("Computer not found"));
+		return this.computerRepository.findById(computerId).orElseThrow(()-> new RuntimeException("Computer not found"));
 	}
 	
 	public void save(Computer newComputer) {
-		if (this.computerRepo.existsById(newComputer.getComputerId())) {
+		if (this.computerRepository.existsById(newComputer.getComputerId())) {
 			throw new RuntimeException("Computer already exists");
+		
 		} else {
-			this.computerRepo.save(newComputer);
+			this.computerRepository.save(newComputer);
 		}
 	}
+	
+	public void deleteById(int computerId) {
+		if (this.computerRepository.existsById(computerId)) {
+			computerRepository.deleteById(computerId);
+		}
+	}
+	
+	public void update(Computer newComputer) {
+		if (this.computerRepository.existsById(newComputer.getComputerId())) {
+			this.computerRepository.save(newComputer);
+		
+		} else {
+			throw new RuntimeException("Computer does not exist");
+		}
+	}
+
 }

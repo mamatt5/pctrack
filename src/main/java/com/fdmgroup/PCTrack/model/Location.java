@@ -1,25 +1,16 @@
 package com.fdmgroup.PCTrack.model;
 
-import jakarta.persistence.*;
+import java.util.List;
 
-@Entity
 public class Location {
-	@Id
-	@GeneratedValue
-	@Column(name = "ID")
 	private int locationId;
-	@Column(name = "NAME")
 	private String name;
-	@Column(name = "CITY")
 	private String city;
-<<<<<<< HEAD
 	//private List<Room> rooms;
-=======
->>>>>>> origin/SQLCheck
 	
-	public Location(String name, String city) {
+	
+	public Location() {
 		super();
-<<<<<<< HEAD
 	}
 
 	public Location(int locationId, String name, String city) {
@@ -28,14 +19,8 @@ public class Location {
 		this.name = name;
 		this.city = city;
 		//this.rooms = rooms;
-=======
-		this.name = name;
-		this.city = city;
->>>>>>> origin/SQLCheck
 	}
-	public Location() {
-		super();
-	}
+	
 	public int getLocationId() {
 		return locationId;
 	}
@@ -54,7 +39,6 @@ public class Location {
 	public void setCity(String city) {
 		this.city = city;
 	}
-<<<<<<< HEAD
 //	public List<Room> getRooms() {
 //		return rooms;
 //	}
@@ -63,10 +47,4 @@ public class Location {
 //	}
 	
 	
-=======
-	@Override
-	public String toString() {
-		return "Location [locationId=" + locationId + ", name=" + name + ", city=" + city + "]";
-	}
->>>>>>> origin/SQLCheck
 }
