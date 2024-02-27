@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.fdmgroup.PCTrack.dal.UserRepository;
 import com.fdmgroup.PCTrack.model.User;
 
+@Service
 public class UserService {
 	private UserRepository userRepository;
 //	add spring security
