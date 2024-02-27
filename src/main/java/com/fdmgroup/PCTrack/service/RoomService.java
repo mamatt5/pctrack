@@ -37,4 +37,11 @@ public class RoomService {
 			roomRepo.deleteById(roomId);
 		}
 	}
+
+	public void update(Room newRoom) {
+		// TODO Auto-generated method stub
+		
+	}
 }
+
+

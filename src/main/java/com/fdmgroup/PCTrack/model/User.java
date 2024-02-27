@@ -27,7 +27,6 @@ public class User {
 	
 	@Column(name = "JOIN DATE")
 	private LocalDate joinDate;
-
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
@@ -95,3 +94,4 @@ public class User {
 				+ lastName + ", joinDate=" + joinDate + "]";
 	}
 }
+

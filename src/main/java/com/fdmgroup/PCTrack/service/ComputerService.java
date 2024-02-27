@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.ComputerRepository;
 import com.fdmgroup.PCTrack.model.Computer;
+import com.fdmgroup.PCTrack.model.User;
 
 @Service
 public class ComputerService {

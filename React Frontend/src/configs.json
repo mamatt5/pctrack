@@ -1,0 +1,9 @@
+{
+    "NAME": "PCtrack",
+    "PORT": 8080,
+    "LOCATIONS": [
+        "APAC",
+        "Hong Kong",
+        "Singapore"
+    ]
+}

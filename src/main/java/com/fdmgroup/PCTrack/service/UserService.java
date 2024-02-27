@@ -2,7 +2,6 @@ package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ public class UserService {
 //	add spring security
 	private PasswordEncoder encoder;
 
-	@Autowired
 	public UserService(UserRepository userRepository, PasswordEncoder encoder) {
 		super();
 		this.userRepository = userRepository;
@@ -58,4 +56,7 @@ public class UserService {
 		}
 	}
 	
+	public String encodePw(String password) {
+		return encoder.encode(password);
+	}
 }
