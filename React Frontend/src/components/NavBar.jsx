@@ -25,6 +25,11 @@ import UpgradeOutlinedIcon from '@mui/icons-material/UpgradeOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useState } from 'react';
 
+import ComputerIcon from '@mui/icons-material/Computer';
+import SearchIcon from '@mui/icons-material/Search';
+import ApiIcon from '@mui/icons-material/Api';
+import ChairIcon from '@mui/icons-material/Chair';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -129,12 +134,12 @@ export default function NavBar(props) {
 
 
   const handleIconNav= (page) => {
-    if (page === "Home Page") {
-      navigate("/homepage")
-    } else if (page === "View Expenses") {
-      navigate("/viewexpense")
-    } else if (page === "Statistics") {
-      navigate("/viewstatistics")
+    if (page === "Search Rooms") {
+      navigate("/searchroom")
+    } else if (page === "Search Software") {
+      navigate("/searchsoftware")
+    } else if (page === "Search Computer") {
+      navigate("/searchcomputer")
     } else if (page === "Update Details") {
       navigate("/updatedetails")
     } else if (page === "Log Out") {
@@ -177,7 +182,7 @@ export default function NavBar(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home Page', 'View Expenses', 'Statistics'].map((text, index) => (
+          {['Search Rooms', 'Search Computer', 'Search Software'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }} >
               <ListItemButton
                 sx={{
@@ -197,9 +202,9 @@ export default function NavBar(props) {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 && <HomeOutlinedIcon/>}
-                  {index === 1 && <GridViewOutlinedIcon/>}
-                  {index === 2 && <DataSaverOffOutlinedIcon/>}
+                  {index === 0 && <ChairIcon/>}
+                  {index === 1 && <ComputerIcon/>}
+                  {index === 2 && <ApiIcon/>}
               
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />

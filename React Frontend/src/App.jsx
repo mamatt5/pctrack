@@ -10,6 +10,10 @@ import Login from "./components/Login";
 import Admin from "./components/Admin";
 import Home from "./components/Home";
 import LoggedInHomePage from "./components/LoggedInHomePage";
+import { SearchComputerPage } from "./components/SearchComputerPage";
+import { SearchRoomPage } from "./components/SearchRoomPage";
+import { SearchSoftwarePage } from "./components/SearchSoftwarePage";
+import UpdateDetailsPage from "./components/UpdateDetailsPage";
 
 function App() {
 
@@ -31,6 +35,10 @@ function App() {
 					<Route path="/admin" element={<Admin />} />
 					
 					<Route path="/home" element={<LoggedInHomePage />} />
+					<Route path="/searchroom" element={<SearchRoomPage />} />
+					<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
+					<Route path="/searchcomputer" element={<SearchComputerPage />} />
+					<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				</Routes>
       
 			</Router>
