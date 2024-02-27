@@ -50,13 +50,16 @@ public class UserDataLoader implements ApplicationRunner {
         // Rooms
         Room room1 = new Room("Bondi", location1);
         Room room2 = new Room("Coogee", location1);
-        Room room3 = new Room("Aberdeen", location2);
-        Room room4 = new Room("Lantau", location2);
-        Room room5 = new Room("Stanley", location2);
-        Room room6 = new Room("Causeway Bay", location2);
-        Room room7 = new Room("Raffles Place", location3);
-        Room room8 = new Room("Clarke Quay", location3);
-        Room room9 = new Room("Sentosa", location3);
+        Room room3 = new Room("Balmoral",location1);
+        Room room4 = new Room("Bronte",location1);
+        Room room5 = new Room("Tamarama",location1);
+        Room room6 = new Room("Aberdeen", location2);
+        Room room7 = new Room("Lantau", location2);
+        Room room8 = new Room("Stanley", location2);
+        Room room9 = new Room("Causeway Bay", location2);
+        Room room10 = new Room("Raffles Place", location3);
+        Room room11 = new Room("Clarke Quay", location3);
+        Room room12 = new Room("Sentosa", location3);
         
         List<Room> rooms = Arrays.asList(room1, room2, room3, room4, room5, room6, room7, room8, room9);
         
@@ -99,258 +102,258 @@ public class UserDataLoader implements ApplicationRunner {
 		programService.saveAll(programs);
 
 		// bondi rooms
-		Computer c1 = new Computer(15040);
+		Computer c1 = new Computer(15040, room1);
 		computerService.save(c1);
 		c1.setProgramList(Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c1);
 		
-		Computer c2 = new Computer(70156);
+		Computer c2 = new Computer(70156, room1);
 		computerService.save(c2);
 		c2.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
 		computerService.update(c2);
 
-		Computer c3 = new Computer(15046);
+		Computer c3 = new Computer(15046, room1);
 		computerService.save(c3);
 		c3.setProgramList(Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
 		computerService.update(c3);
 
-		Computer c4 = new Computer(15068);
+		Computer c4 = new Computer(15068, room1);
 		computerService.save(c4);
 		c4.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
 		computerService.update(c4);
 
-		Computer c5 = new Computer(15048);
+		Computer c5 = new Computer(15048, room1);
 		computerService.save(c5);
 		c5.setProgramList(Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c5);
 
-		Computer c6 = new Computer(15052);
+		Computer c6 = new Computer(15052, room1);
 		computerService.save(c6);
 
-		Computer c7 = new Computer(15036);
+		Computer c7 = new Computer(15036, room1);
 		computerService.save(c7);
 		c7.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c7);
 
-		Computer c8 = new Computer(70101);
+		Computer c8 = new Computer(70101, room1);
 		computerService.save(c8);
 		c8.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c8);
 
-		Computer c9 = new Computer(70108);
+		Computer c9 = new Computer(70108, room1);
 		computerService.save(c9);
 
-		Computer c10 = new Computer(15054);
+		Computer c10 = new Computer(15054, room1);
 		computerService.save(c10);
 		c10.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c10);
 
-		Computer c11 = new Computer(15037);
+		Computer c11 = new Computer(15037, room1);
 		computerService.save(c11);
 		c11.setProgramList(Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c11);
 
-		Computer c12 = new Computer(70104);
+		Computer c12 = new Computer(70104, room1);
 		computerService.save(c12);
 		c12.setProgramList(Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
 		computerService.update(c12);
 
-		Computer c13 = new Computer(15038);
+		Computer c13 = new Computer(15038, room1);
 		computerService.save(c13);
 		c13.setProgramList(Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
 		computerService.update(c13);
 
-		Computer c14 = new Computer(70160);
+		Computer c14 = new Computer(70160, room1);
 		computerService.save(c14);
 
-		Computer c15 = new Computer(15070);
+		Computer c15 = new Computer(15070, room1);
 		computerService.save(c15);
 
 
 
 		// coogee
-		Computer c16 = new Computer(15030);
+		Computer c16 = new Computer(15030, room2);
 		computerService.save(c16);
 		c16.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm, excel, microsoftSSMS, git, jdk));
 		computerService.update(c16);
 
-		Computer c17 = new Computer(70213);
+		Computer c17 = new Computer(70213, room2);
 		computerService.save(c17);
 
-		Computer c18 = new Computer(70161);
+		Computer c18 = new Computer(70161, room2);
 		computerService.save(c18);
 		c18.setProgramList(Arrays.asList(vscode, eclipse, nodejs6, python, npm6, excel, microsoftSSMS, git, jdk));
 		computerService.update(c18);
 
-		Computer c19 = new Computer(70098);
+		Computer c19 = new Computer(70098, room2);
 		computerService.save(c19);
 
-		Computer c20 = new Computer(70093);
+		Computer c20 = new Computer(70093, room2);
 		computerService.save(c20);
 
-		Computer c21 = new Computer(15035);
+		Computer c21 = new Computer(15035, room2);
 		computerService.save(c21);
 
-		Computer c22 = new Computer(15064);
+		Computer c22 = new Computer(15064, room2);
 		computerService.save(c22);
 
-		Computer c23 = new Computer(70106);
+		Computer c23 = new Computer(70106, room2);
 		computerService.save(c23);
 
-		Computer c24 = new Computer(70162);
+		Computer c24 = new Computer(70162, room2);
 		computerService.save(c24);
 
 
 		// balmoral
-		Computer c25 = new Computer(70215);
+		Computer c25 = new Computer(70215, room3);
 		computerService.save(c25);
 		c25.setProgramList(Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
 		computerService.update(c25);
 
-		Computer c26 = new Computer(70111);
+		Computer c26 = new Computer(70111, room3);
 		computerService.save(c26);
 		c26.setProgramList(Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
 		computerService.update(c26);
 
-		Computer c27 = new Computer(15042);
+		Computer c27 = new Computer(15042, room3);
 		computerService.save(c27);
 
-		Computer c28 = new Computer(15033);
+		Computer c28 = new Computer(15033, room3);
 		computerService.save(c28);
 		c28.setProgramList(Arrays.asList(vscode, eclipse, python, npm2, excel, microsoftSSMS, git, jdk));
 		computerService.update(c28);
 
-		Computer c29 = new Computer(70163);
+		Computer c29 = new Computer(70163, room3);
 		computerService.save(c29);
 		c29.setProgramList(Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
 		computerService.update(c29);
 
-		Computer c30 = new Computer(15066);
+		Computer c30 = new Computer(15066, room3);
 		computerService.save(c30);
 		c30.setProgramList(Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
 		computerService.update(c30);
 
-		Computer c31 = new Computer(15032);
+		Computer c31 = new Computer(15032, room3);
 		computerService.save(c31);
 
-		Computer c32 = new Computer(70159);
+		Computer c32 = new Computer(70159, room3);
 		computerService.save(c32);
 
-		Computer c33 = new Computer(15031);
+		Computer c33 = new Computer(15031, room3);
 		computerService.save(c33);
 
 
 		// bronte
-		Computer c34 = new Computer(70196);
+		Computer c34 = new Computer(70196, room4);
 		computerService.save(c34);
 		c34.setProgramList(Arrays.asList(vscode, nodejs2, python, npm2, excel, microsoftSSMS, git, jdk));
 		computerService.update(c34);
 
-		Computer c35 = new Computer(70204);
+		Computer c35 = new Computer(70204, room4);
 		computerService.save(c35);
 		c35.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, excel, microsoftSSMS, git, jdk));
 		computerService.update(c35);
 
-		Computer c36 = new Computer(70095);
+		Computer c36 = new Computer(70095, room4);
 		computerService.save(c36);
 		c36.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm3, excel, microsoftSSMS, git, jdk));
 		computerService.update(c36);
 
-		Computer c37 = new Computer(70207);
+		Computer c37 = new Computer(70207, room4);
 		computerService.save(c37);
 		c37.setProgramList(Arrays.asList(vscode, nodejs2, python, npm1, excel, microsoftSSMS, git, jdk));
 		computerService.update(c37);
 
-		Computer c38 = new Computer(70198);
+		Computer c38 = new Computer(70198, room4);
 		computerService.save(c38);
 
-		Computer c39 = new Computer(15056);
+		Computer c39 = new Computer(15056, room4);
 		computerService.save(c39);
 
-		Computer c40 = new Computer(70210);
+		Computer c40 = new Computer(70210, room4);
 		computerService.save(c40);
 
-		Computer c41 = new Computer(70212);
+		Computer c41 = new Computer(70212, room4);
 		computerService.save(c41);
 
 
 		// tamarama
-		Computer c42 = new Computer(15059);
+		Computer c42 = new Computer(15059, room5);
 		computerService.save(c42);
 		c42.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c42);
 
-		Computer c43 = new Computer(15091);
+		Computer c43 = new Computer(15091, room5);
 		computerService.save(c43);
 		c43.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c43);
 
-		Computer c44 = new Computer(70263);
+		Computer c44 = new Computer(70263, room5);
 		computerService.save(c44);
 		c44.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c44);
 
-		Computer c45 = new Computer(70272);
+		Computer c45 = new Computer(70272, room5);
 		computerService.save(c45);
 		c45.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c45);
 
-		Computer c46 = new Computer(70613);
+		Computer c46 = new Computer(70613, room5);
 		computerService.save(c46);
 		c46.setProgramList(Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c46);
 
-		Computer c47 = new Computer(70707);
+		Computer c47 = new Computer(70707, room5);
 		computerService.save(c47);
 		c47.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
 		computerService.update(c47);
 
-		Computer c48 = new Computer(70898);
+		Computer c48 = new Computer(70898, room5);
 		computerService.save(c48);
 		c48.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c48);
 
-		Computer c49 = new Computer(15656);
+		Computer c49 = new Computer(15656, room5);
 		computerService.save(c49);
 		c49.setProgramList(Arrays.asList(vscode, eclipse, nodejs4, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c49);
 
-		Computer c50 = new Computer(70410);
+		Computer c50 = new Computer(70410, room5);
 		computerService.save(c50);
 		c50.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c50);
 
-		Computer c51 = new Computer(70412);
+		Computer c51 = new Computer(70412, room5);
 		computerService.save(c51);
 		c51.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c51);
 
-		Computer c52 = new Computer(15231);
+		Computer c52 = new Computer(15231, room5);
 		computerService.save(c52);
 		c52.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c52);
 
-		Computer c53 = new Computer(72196);
+		Computer c53 = new Computer(72196, room5);
 		computerService.save(c53);
 		c53.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c53);
 
-		Computer c54 = new Computer(72210);
+		Computer c54 = new Computer(72210, room5);
 		computerService.save(c54);
 		c54.setProgramList(Arrays.asList(vscode, eclipse, nodejs3, python, npm3, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c54);
 
-		Computer c55 = new Computer(72212);
+		Computer c55 = new Computer(72212, room5);
 		computerService.save(c55);
 		c55.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c55);
 
-		Computer c56 = new Computer(15091);
+		Computer c56 = new Computer(15091, room5);
 		computerService.save(c56);
 		c56.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c56);
 
-		Computer c57 = new Computer(72196);
+		Computer c57 = new Computer(72196, room5);
 		computerService.save(c57);
 		c57.setProgramList(Arrays.asList(vscode, eclipse, nodejs6, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c57);
