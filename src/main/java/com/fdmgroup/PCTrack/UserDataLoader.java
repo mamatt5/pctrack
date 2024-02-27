@@ -172,7 +172,7 @@ public class UserDataLoader implements ApplicationRunner {
 //		computerService.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16,
 //		        c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36, c37,
 //		        c38, c39, c40, c41, c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, c55, c56, c57));
-        
+		User u0 = new User("admin", "admin", "Root", "Admin");
         User u1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
         User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(2023, 11, 27));
         User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(2023, 11, 27));
@@ -186,6 +186,7 @@ public class UserDataLoader implements ApplicationRunner {
         // no need to add a join date, can automatically generate it. 
         User u11 = new User("po.po", "password123", "Po", "Po");
         
+        userService.register(u0);
         userService.register(u1);
         userService.register(u2);
         userService.register(u3);
@@ -198,18 +199,16 @@ public class UserDataLoader implements ApplicationRunner {
         userService.register(u10);
         userService.register(u11);
         
-        
         // sample data for inheritance, pls delete Jenny
         Location location1 = new Location("FDM Sydney", "Sydney");
         locationService.save(location1);
         
-       
-        Staff staff1 = new Staff(u1, location1);
+        // root admin has access to all locations 
+        Staff staff1 = new Staff(u1, location1); 
         RoomAdmin roomAdmin1 = new RoomAdmin(u2, location1);
         LocationAdmin locationAdmin1 = new LocationAdmin(u3, location1);
+        BusinessAdmin businessAdmin1 = new BusinessAdmin(u0, location1);
         
-        // root admin has access to all locations 
-        BusinessAdmin businessAdmin1 = new BusinessAdmin(u4, location1);
         
         staffService.save(staff1);
         staffService.save(roomAdmin1);

@@ -32,7 +32,6 @@ public class User {
 	@Column(name = "JOIN DATE")
 	@CreationTimestamp
 	private LocalDate joinDate;
-
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")

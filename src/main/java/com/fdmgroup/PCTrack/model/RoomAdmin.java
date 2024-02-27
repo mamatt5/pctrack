@@ -14,8 +14,19 @@ public class RoomAdmin extends Staff {
 	@OneToMany
 	private List<Room> roomAssigned;
 	
+	
+	public RoomAdmin() {
+        // Default constructor required by JPA
+		super(); 
+    }
+	
+	
 	public RoomAdmin(User user, Location location) {
-		super(user, location);
+		super("Room", user, location);
+
+	}
+	public RoomAdmin(String type, User user, Location location) {
+		super(type, user, location);
 
 	}
 	

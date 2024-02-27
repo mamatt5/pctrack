@@ -10,11 +10,10 @@ import Config from "../configs.json";
 
 const location = Config.LOCATIONS;
 
-const fields = ["firstName", "lastName", "email", "password", "confirmPassword"];
+const fields = ["firstName", "lastName", "password", "confirmPassword"];
 let formData = {
 	firstName: "",
 	lastName: "",
-	email: "",
 	password: "",
 	confirmPassword: "",
 };
@@ -23,7 +22,6 @@ const Register = () => {
 	const navigate = useNavigate();
 	const [firstNameErr, setFirstNameErr] = useState("");
 	const [lastNameErr, setLastNameErr] = useState("");
-	const [emailErr, setEmailError] = useState("");
 	const [passwordErr, setPasswordError] = useState("");
 	const [confirmPasswordErr, setConfirmPasswordErr] = useState("");
 	const [formValid, setFormValid] = useState(false);
@@ -43,22 +41,17 @@ const Register = () => {
 		console.log(data);
 		const firstName = data.get("firstName").trim();
 		const lastName = data.get("lastName").trim();
-		const email = data.get("email").trim();
 		const password = data.get("password").trim();
 		const confirmPassword = data.get("confirmPassword").trim();
 
-		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailPattern.test(email)) {
-			setEmailError("* Invalid Email");
-		} else if (password !== confirmPassword) {
+		if (password !== confirmPassword) {
 			setConfirmPasswordErr("* Password does not match");
 		}
 	};
 
 	const checkInput = (field, value) => {
 
-        // reset error messages
-        setEmailError("")
+
         setPasswordError("")
         setConfirmPasswordErr("")
 
@@ -87,13 +80,6 @@ const Register = () => {
 						error={Boolean(lastNameErr)}
 						helperText={lastNameErr ? lastNameErr : ""}
 						onChange={(e) => checkInput("lastName", e.target.value)}
-					></TextField>
-					<TextField
-						name="email"
-						label="Email Name"
-						error={Boolean(emailErr)}
-						helperText={emailErr ? emailErr : ""}
-						onChange={(e) => checkInput("email", e.target.value)}
 					></TextField>
 					<TextField
 						name="password"

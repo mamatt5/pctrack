@@ -3,16 +3,14 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import callApi from "../partials/callApi";
+import callApi from "../api/callApi";
 
 // outside to prevent reredner
 let username = "";
 let password = "";
 
-// logs a user in
+
 /**
- *
- *
  * @returns
  */
 const login = () => {
@@ -56,14 +54,6 @@ const login = () => {
 	const loginUser = (bearerToken, username) => {
 		localStorage.setItem("token", bearerToken);
 		// check if its staff or admin.
-		navigate(`/admin`);
-	};
-
-	//
-	const loginError = (error) => {
-		setusernameError("");
-		setPasswordError("");
-		console.log(username);
 		const config = {
 			method: "get",
 			endpoint: `username/${username}`,
@@ -75,7 +65,25 @@ const login = () => {
 
 		// if we cant find the user, its a username issue
 		// if we can, its a password issue.
-		console.log(error);
+		callApi((res) => {
+			navigate(`/home/${res.id}`);
+		}, null, config);
+
+	};
+
+	//
+	const loginError = (error) => {
+		setusernameError("");
+		setPasswordError("");
+		console.log(username);
+		const config = {
+			method: "get",
+			endpoint: `username/${username}`
+		};
+
+		// if we cant find the user, its a username issue
+		// if we can, its a password issue.
+		// console.log(error);
 		callApi(
 			() => {
 				setPasswordError("* Incorrect Password");
@@ -88,7 +96,7 @@ const login = () => {
 	};
 
 	return (
-		<>
+		<div className="centerHorizonal">
 			<Box style={{ left: 0 }}>PC Track</Box>
 			<Box sx={{ border: "1px solid black", borderRadius: "10px" }}>
 				<Box>Login</Box>
@@ -112,7 +120,7 @@ const login = () => {
 					</Button>
 				</form>
 			</Box>
-		</>
+		</div>
 	);
 };
 
