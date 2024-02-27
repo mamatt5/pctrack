@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,8 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Button from '@mui/material/Button';
-import { Modal } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
@@ -25,6 +24,11 @@ import DataSaverOffOutlinedIcon from '@mui/icons-material/DataSaverOffOutlined';
 import UpgradeOutlinedIcon from '@mui/icons-material/UpgradeOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useState } from 'react';
+
+import ComputerIcon from '@mui/icons-material/Computer';
+import SearchIcon from '@mui/icons-material/Search';
+import ApiIcon from '@mui/icons-material/Api';
+import ChairIcon from '@mui/icons-material/Chair';
 
 const drawerWidth = 240;
 
@@ -43,7 +47,7 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(7)} + 1px)`, 
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
@@ -130,12 +134,12 @@ export default function NavBar(props) {
 
 
   const handleIconNav= (page) => {
-    if (page === "Home Page") {
-      navigate("/homepage")
-    } else if (page === "View Expenses") {
-      navigate("/viewexpense")
-    } else if (page === "Statistics") {
-      navigate("/viewstatistics")
+    if (page === "Search Rooms") {
+      navigate("/searchroom")
+    } else if (page === "Search Software") {
+      navigate("/searchsoftware")
+    } else if (page === "Search Computer") {
+      navigate("/searchcomputer")
     } else if (page === "Update Details") {
       navigate("/updatedetails")
     } else if (page === "Log Out") {
@@ -178,7 +182,7 @@ export default function NavBar(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home Page', 'View Expenses', 'Statistics'].map((text, index) => (
+          {['Search Rooms', 'Search Computer', 'Search Software'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }} >
               <ListItemButton
                 sx={{
@@ -198,9 +202,9 @@ export default function NavBar(props) {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 && <HomeOutlinedIcon/>}
-                  {index === 1 && <GridViewOutlinedIcon/>}
-                  {index === 2 && <DataSaverOffOutlinedIcon/>}
+                  {index === 0 && <ChairIcon/>}
+                  {index === 1 && <ComputerIcon/>}
+                  {index === 2 && <ApiIcon/>}
               
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
@@ -255,8 +259,9 @@ export default function NavBar(props) {
 
     </Box>
     
-
+   
 
                 
   );
 }
+

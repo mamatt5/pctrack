@@ -77,6 +77,7 @@ const login = () => {
 					</Button>
 				</form>
 			</Box>
+			<Home/>
 		</>
 	);
 };
