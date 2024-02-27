@@ -364,6 +364,7 @@ public class UserDataLoader implements ApplicationRunner {
 //		        c38, c39, c40, c41, c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, c55, c56, c57));
         
 		
+		// no need to manuualy add date
 		User u0 = new User("admin1", "0000!!", "Root", "Admin");
         User u1 = new User("andy.joe", "password123", "Andy", "Joe");
         User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
@@ -386,16 +387,16 @@ public class UserDataLoader implements ApplicationRunner {
     	User u18 = new User("carolina.portugal", "password123", "Carolina", "Portugal", LocalDate.of(2023, 11, 27));
     	User u19 = new User("alex.zlatevska", "password123", "Aleksandra", "Zlatevska", LocalDate.of(2023, 11, 27));
     	User u20 = new User("joe.mclaren", "password123", "Joe", "Mclaren", LocalDate.of(2023, 11, 27));
-    	User u21 = new User("rod.flavell", "password123", "Rod", "Flavell", LocalDate.of(2023, 11, 27));
+    	
         
-    	List<User> users = Arrays.asList(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21);
+    	List<User> users = Arrays.asList(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20);
     	
     	for (User user : users) {
     		userService.register(user);
     	}
         
     	// Business admin
-    	BusinessAdmin businessAdmin = new BusinessAdmin(u21, location1);
+    	BusinessAdmin businessAdmin = new BusinessAdmin(u0, location1);
     	staffService.save(businessAdmin);
     	
     	// Location admin
