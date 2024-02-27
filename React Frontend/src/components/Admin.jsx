@@ -5,6 +5,7 @@ const Admin = () => {
     return(<>
     Only if user is an admin.
         <Register/>
+        <Home/>
     </>)
 }
 
