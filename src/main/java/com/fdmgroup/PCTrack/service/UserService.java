@@ -3,6 +3,7 @@ package com.fdmgroup.PCTrack.service;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.UserRepository;
 import com.fdmgroup.PCTrack.model.User;

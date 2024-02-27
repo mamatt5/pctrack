@@ -2,9 +2,12 @@ package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.fdmgroup.PCTrack.dal.ProgramRepository;
 import com.fdmgroup.PCTrack.model.Program;
 
+@Service
 public class ProgramService {
 	private ProgramRepository programRepository;
 

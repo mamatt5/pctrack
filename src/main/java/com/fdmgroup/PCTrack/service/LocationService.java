@@ -2,9 +2,11 @@ package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.fdmgroup.PCTrack.dal.LocationRepository;
 import com.fdmgroup.PCTrack.model.Location;
-
+@Service
 public class LocationService {
 	private LocationRepository locationRepository;
 

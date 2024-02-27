@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.RoomService;
 
+@RestController
 public class RoomController {
 	private RoomService roomService;
 
