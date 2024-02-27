@@ -58,4 +58,7 @@ public class UserService {
 		}
 	}
 	
+	public String encodePw(String password) {
+		return encoder.encode(password);
+	}
 }

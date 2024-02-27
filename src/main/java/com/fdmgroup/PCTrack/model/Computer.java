@@ -23,8 +23,12 @@ public class Computer {
 	
 	public Computer(int computerCode, List<Program> programList) {
 		super();
-		this.computerCode = computerId;
+		this.computerCode = computerCode;
 		this.programList = programList;
+	}
+	public Computer(int computerCode) {
+		super();
+		this.computerCode = computerCode;
 	}
 	public Computer() {
 		super();
