@@ -19,20 +19,52 @@ public class UserDataLoader implements ApplicationRunner {
 	private StaffService staffService;
 	private ComputerService computerService;
 	private ProgramService programService;
+	private RoomService roomService;
 	
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
-			ComputerService computerService, ProgramService programService) {
+			ComputerService computerService, ProgramService programService, RoomService roomService) {
 		super();
 		this.userService = userService;
 		this.locationService = locationService;
 		this.staffService = staffService;
 		this.computerService = computerService;
 		this.programService = programService;
+		this.roomService = roomService;
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		
+		// Locations
+        Location location1 = new Location("FDM Sydney", "Sydney");
+        Location location2 = new Location("FDM Hongkong", "Hong Kong");
+        Location location3 = new Location("FDM Singapore", "Singapore");
+        
+        List<Location> locations = Arrays.asList(location1, location2, location3);
+        
+        for (Location location : locations) {
+        	locationService.save(location);
+        }
+        
+        // Rooms
+        Room room1 = new Room("Bondi", location1);
+        Room room2 = new Room("Coogee", location1);
+        Room room3 = new Room("Aberdeen", location2);
+        Room room4 = new Room("Lantau", location2);
+        Room room5 = new Room("Stanley", location2);
+        Room room6 = new Room("Causeway Bay", location2);
+        Room room7 = new Room("Raffles Place", location3);
+        Room room8 = new Room("Clarke Quay", location3);
+        Room room9 = new Room("Sentosa", location3);
+        
+        List<Room> rooms = Arrays.asList(room1, room2, room3, room4, room5, room6, room7, room8, room9);
+        
+        for (Room room : rooms) {
+        	roomService.save(room);
+        }
+        
+        // Programs
 		Program vscode = new Program("Visual Studio Code", "1.46.1");
 		Program eclipse = new Program("Eclipse", "4.22");
 		Program nodejs = new Program("Node.js", "20.11.0");
@@ -300,30 +332,84 @@ public class UserDataLoader implements ApplicationRunner {
         User u9 = new User("quincy.jarvis", "password123", "Quincy", "Jarvis", LocalDate.of(2023, 11, 27));
         User u10 = new User("chaim.harrison", "password123", "Chaim", "Harrison", LocalDate.of(2023, 11, 27));
         
-        userService.register(u1);
-        userService.register(u2);
-        userService.register(u3);
-        userService.register(u4);
-        userService.register(u5);
-        userService.register(u6);
-        userService.register(u7);
-        userService.register(u8);
-        userService.register(u9);
-        userService.register(u10);
+        User u11 = new User("ryan.wilson", "password123", "Ryan", "Wilson", LocalDate.of(2023, 11, 27));
+    	User u12 = new User("tejasva.saboo", "password123", "Tejasva", "Saboo", LocalDate.of(2023, 11, 27));
+    	User u13 = new User("donald.witcombe", "password123", "Donald", "Witcombe", LocalDate.of(2023, 11, 27));
+    	User u14 = new User("flor.crencic", "password123", "Florencia", "Crencic", LocalDate.of(2023, 11, 27));
+    	User u15 = new User("james.mccarthy", "password123", "James", "McCarthy", LocalDate.of(2023, 11, 27));
+    	User u16 = new User("dan.solomon", "password123", "Dan", "Solomon", LocalDate.of(2023, 11, 27));
+    	User u17 = new User("chris.spencer", "password123", "Chris", "Spencer", LocalDate.of(2023, 11, 27));
+    	User u18 = new User("carolina.portugal", "password123", "Carolina", "Portugal", LocalDate.of(2023, 11, 27));
+    	User u19 = new User("alex.zlatevska", "password123", "Aleksandra", "Zlatevska", LocalDate.of(2023, 11, 27));
+    	User u20 = new User("joe.mclaren", "password123", "Joe", "Mclaren", LocalDate.of(2023, 11, 27));
+    	User u21 = new User("rod.flavell", "password123", "Rod", "Flavell", LocalDate.of(2023, 11, 27));
         
+    	List<User> users = Arrays.asList(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21);
+    	
+    	for (User user : users) {
+    		userService.register(user);
+    	}
         
-        // sample data for inheritance, pls delete Jenny
-        Location location1 = new Location("FDM Sydney", "Sydney");
-        locationService.save(location1);
+    	// Business admin
+    	BusinessAdmin businessAdmin = new BusinessAdmin(u21, location1);
+    	staffService.save(businessAdmin);
+    	
+    	// Location admin
+    	LocationAdmin locationAdmin1 = new LocationAdmin(u20, location1);
+    	LocationAdmin locationAdmin2 = new LocationAdmin(u17, location1);
+    	LocationAdmin locationAdmin3 = new LocationAdmin(u6, location2);
+    	LocationAdmin locationAdmin4 = new LocationAdmin(u7, location2);
+    	LocationAdmin locationAdmin5 = new LocationAdmin(u8, location3);
+    	
+    	staffService.save(locationAdmin1);
+    	staffService.save(locationAdmin2);
+    	staffService.save(locationAdmin3);
+    	staffService.save(locationAdmin4);
+    	staffService.save(locationAdmin5);
+    	
+    	// Room admin
+    	RoomAdmin roomAdmin1 = new RoomAdmin(u14, location1);
+    	RoomAdmin roomAdmin2 = new RoomAdmin(u15, location1);
+    	RoomAdmin roomAdmin3 = new RoomAdmin(u1, location2);
+    	RoomAdmin roomAdmin4 = new RoomAdmin(u2, location3);
+    	RoomAdmin roomAdmin5 = new RoomAdmin(u3, location3);
+    	
+    	staffService.save(roomAdmin1);
+    	staffService.save(roomAdmin2);
+    	staffService.save(roomAdmin3);
+    	staffService.save(roomAdmin4);
+    	staffService.save(roomAdmin5);
+    	
+    	
+    	// Staff
+    	Staff staff1 = new Staff(u9, location1);
+    	Staff staff2 = new Staff(u10, location1);
+    	Staff staff3 = new Staff(u11, location1);
+    	Staff staff4 = new Staff(u12, location1);
+    	Staff staff5 = new Staff(u13, location1);
+    	Staff staff6 = new Staff(u16, location1);
+    	
+    	staffService.save(staff1);
+    	staffService.save(staff2);
+    	staffService.save(staff3);
+    	staffService.save(staff4);
+    	staffService.save(staff5);
+    	staffService.save(staff6);
+
+	
         
-        Staff staff1 = new Staff(u1, location1);
-        RoomAdmin roomAdmin1 = new RoomAdmin(u2, location1);
-        LocationAdmin locationAdmin1 = new LocationAdmin(u3, location1);
-        BusinessAdmin businessAdmin1 = new BusinessAdmin(u4, location1);
-        
-        staffService.save(staff1);
-        staffService.save(roomAdmin1);
-        staffService.save(locationAdmin1);
-        staffService.save(businessAdmin1);
+//        // sample data for inheritance, pls delete Jenny
+//        Location location1 = new Location("FDM Sydney", "Sydney");
+//        locationService.save(location1);
+//        
+//        Staff staff1 = new Staff(u1, location1);
+//        RoomAdmin roomAdmin1 = new RoomAdmin(u2, location1);
+//        LocationAdmin locationAdmin1 = new LocationAdmin(u3, location1);
+//        BusinessAdmin businessAdmin1 = new BusinessAdmin(u4, location1);
+//        
+//        staffService.save(staff1);
+//        staffService.save(roomAdmin1);
+//        staffService.save(locationAdmin1);
+//        staffService.save(businessAdmin1);
 	}
 }
