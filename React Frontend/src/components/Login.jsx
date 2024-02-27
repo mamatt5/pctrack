@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import callApi from "../partials/callApi";
 
-
 // outside to prevent reredner
 let username = "";
 let password = "";
@@ -17,7 +16,7 @@ let password = "";
  * @returns
  */
 const login = () => {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const [usernameError, setusernameError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
@@ -35,20 +34,12 @@ const login = () => {
 
 	const checkLogin = (e) => {
 		e.preventDefault();
+
 		const data = new FormData(e.currentTarget);
 		const username = data.get("username").trim();
 		const password = data.get("password").trim();
 
-		// if (username !== "admin") {
-		// 	setEmailError("* Username not found");
-		// } else if (password == "") {
-		// 	setPasswordError("* Password incorrect");
-		// } else {
-        //     loginUser("Sd", "admin")
-        // }
-
-
-		const config =  {
+		const config = {
 			method: "post",
 			endpoint: "auth/login",
 			auth: {
@@ -58,7 +49,6 @@ const login = () => {
 		};
 
 		callApi(loginUser, loginError, config, username);
-
 	};
 
 	// store token in local storage if a user logs in
@@ -66,13 +56,15 @@ const login = () => {
 	const loginUser = (bearerToken, username) => {
 		localStorage.setItem("token", bearerToken);
 		// check if its staff or admin.
-        navigate(`/admin`)
+		navigate(`/admin`);
 	};
 
 	//
 	const loginError = (error) => {
-		console.log(error)
-		const config =  {
+		setusernameError("");
+		setPasswordError("");
+		console.log(username);
+		const config = {
 			method: "get",
 			endpoint: `username/${username}`,
 			auth: {
@@ -83,7 +75,16 @@ const login = () => {
 
 		// if we cant find the user, its a username issue
 		// if we can, its a password issue.
-		callApi(setusernameError("* Username does not exist"), setPasswordError("* Incorrect Password"), config);
+		console.log(error);
+		callApi(
+			() => {
+				setPasswordError("* Incorrect Password");
+			},
+			() => {
+				setusernameError("* Username does not exist");
+			},
+			config
+		);
 	};
 
 	return (

@@ -31,6 +31,7 @@ const callApi = (onSuccessDo, onFailureDo, options, ...optional) => {
         params: params,
         headers: header,
     }
+    console.log(configs)
 
     // if an auth if provided, then add it to configs.
     // leaving auth = {} in the configs will NOT work as it will still require authentication
@@ -50,10 +51,12 @@ const callApi = (onSuccessDo, onFailureDo, options, ...optional) => {
     axios(configs)
         .then(response => {
             console.log(response.data)
+            console.log("succeeded...")
             onSuccessDo(response.data, ...optional);
         })
         .catch(error => {
             console.log(error)
+            console.log("failed...")
             onFailureDo(error)
         })
 
