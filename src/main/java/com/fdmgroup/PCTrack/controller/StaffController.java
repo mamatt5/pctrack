@@ -31,9 +31,16 @@ public class StaffController {
 		return staffService.findAllStaffs();
 	}
 	
+	@PostMapping("staff")
+	public void createStaff(@RequestBody Staff staff) {
+		 staffService.save(staff);
+	}
+	
 	@GetMapping("staff/{userId}")
 	public List<Staff> findById(@PathVariable int userId) {
 		return staffService.findByUserId(userId);
 	}
+	
+	
 	
 }
