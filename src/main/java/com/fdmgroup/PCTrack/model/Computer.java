@@ -23,7 +23,7 @@ public class Computer {
 	
 	public Computer(int computerCode, List<Program> programList) {
 		super();
-		this.computerCode = computerId;
+		this.computerCode = computerCode;
 		this.programList = programList;
 	}
 	public Computer() {
@@ -54,3 +54,4 @@ public class Computer {
 		return "Computer [computerId=" + computerId + ", programList=" + programList + "]";
 	}
 }
+
