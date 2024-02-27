@@ -20,7 +20,7 @@ import com.fdmgroup.PCTrack.service.ProgramService;
 import com.fdmgroup.PCTrack.service.RoomService;
 import com.fdmgroup.PCTrack.service.UserService;
 
-@Service
+
 public class Dataloader implements ApplicationRunner {
 	private ComputerService computerService;
 	private ProgramService programService;

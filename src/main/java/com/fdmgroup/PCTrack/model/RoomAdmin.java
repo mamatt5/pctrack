@@ -15,7 +15,7 @@ public class RoomAdmin extends Staff {
 	private List<Room> roomAssigned;
 	
 	public RoomAdmin(User user, Location location) {
-		super(location, user);
+		super(user, location);
 
 	}
 	

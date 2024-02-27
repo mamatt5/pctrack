@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fdmgroup.PCTrack.model.Report;
 import com.fdmgroup.PCTrack.service.ReportService;
-
+@RestController
 public class ReportController {
 	private ReportService reportService;
 

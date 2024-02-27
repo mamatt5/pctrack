@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.service.ComputerService;
-
+@RestController
 public class ComputerController {
 	private ComputerService computerService;
 
