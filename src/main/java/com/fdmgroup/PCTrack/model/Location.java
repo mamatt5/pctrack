@@ -1,55 +1,47 @@
 package com.fdmgroup.PCTrack.model;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
 public class Location {
+	@Id
+	@GeneratedValue
+	@Column(name = "ID")
 	private int locationId;
-	//private String name;
+	@Column(name = "NAME")
+	private String name;
+	@Column(name = "CITY")
 	private String city;
-	//private List<Room> rooms;
 	
-	
+	public Location(String name, String city) {
+		super();
+		this.name = name;
+		this.city = city;
+	}
 	public Location() {
 		super();
 	}
-
-	public Location(int locationId, String city) {
-		super();
-		this.locationId = locationId;
-		//this.name = name;
-		this.city = city;
-		//this.rooms = rooms;
-	}
-	
-	public Location(String city) {
-		super();
-		this.city = city;
-	}
-	
 	public int getLocationId() {
 		return locationId;
 	}
 	public void setLocationId(int locationId) {
 		this.locationId = locationId;
 	}
-//	public String getName() {
-//		return name;
-//	}
-//	public void setName(String name) {
-//		this.name = name;
-//	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getCity() {
 		return city;
 	}
 	public void setCity(String city) {
 		this.city = city;
 	}
-//	public List<Room> getRooms() {
-//		return rooms;
-//	}
-//	public void setRooms(List<Room> rooms) {
-//		this.rooms = rooms;
-//	}
-	
-	
+	@Override
+	public String toString() {
+		return "Location [locationId=" + locationId + ", name=" + name + ", city=" + city + "]";
+	}
 }
+
