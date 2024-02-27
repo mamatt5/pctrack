@@ -26,6 +26,10 @@ public class Computer {
 		this.computerCode = computerCode;
 		this.programList = programList;
 	}
+	public Computer(int computerCode) {
+		super();
+		this.computerCode = computerCode;
+	}
 	public Computer() {
 		super();
 	}
