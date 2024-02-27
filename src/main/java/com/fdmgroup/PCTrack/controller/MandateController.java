@@ -17,7 +17,7 @@ public class MandateController {
 	}
 	
 	public List<Mandate> getMandates() {
-		return mandateService.findAllMandates();
+		return mandateService.findAllMandate();
 	}
 	
 	public Mandate findById(@PathVariable int mandateId) {

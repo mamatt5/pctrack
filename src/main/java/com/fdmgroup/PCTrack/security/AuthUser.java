@@ -24,6 +24,7 @@ public class AuthUser implements org.springframework.security.core.userdetails.U
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
+		// TODO Auto-generated method stub
 		//System.out.println(new SimpleGrantedAuthority(this.user.getRole().toString()));
 		return Arrays.asList();
 

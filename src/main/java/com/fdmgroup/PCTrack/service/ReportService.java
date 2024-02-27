@@ -1,47 +1,49 @@
 package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.fdmgroup.PCTrack.dal.ReportRepository;
 import com.fdmgroup.PCTrack.model.Report;
 
+@Service
 public class ReportService {
-	private ReportRepository reportRepository;
-
-	public ReportService(ReportRepository reportRepository) {
+	private ReportRepository reportRepo;
+	
+	@Autowired
+	public ReportService(ReportRepository reportRepo) {
 		super();
-		this.reportRepository = reportRepository;
+		this.reportRepo = reportRepo;
 	}
 	
 	public List<Report> findAllReports() {
-		return this.reportRepository.findAll();
+		return this.reportRepo.findAll();
 	}
 	
 	public Report findById(int reportId) {
-		return this.reportRepository.findById(reportId).orElseThrow(()-> new RuntimeException("Report not found"));
+		return this.reportRepo.findById(reportId).orElseThrow(() -> new RuntimeException("Report not found"));
 	}
 	
 	public void save(Report newReport) {
-		if (this.reportRepository.existsById(newReport.getReportId())) {
+		if (this.reportRepo.existsById(newReport.getReportId())) {
 			throw new RuntimeException("Report already exists");
-		
 		} else {
-			this.reportRepository.save(newReport);
+			this.reportRepo.save(newReport);
 		}
 	}
 	
 	public void deleteById(int reportId) {
-		if (this.reportRepository.existsById(reportId)) {
-			reportRepository.deleteById(reportId);
+		if (this.reportRepo.existsById(reportId)) {
+			reportRepo.deleteById(reportId);
 		}
 	}
 	
 	public void update(Report newReport) {
-		if (this.reportRepository.existsById(newReport.getReportId())) {
-			this.reportRepository.save(newReport);
-		
+		if (this.reportRepo.existsById(newReport.getReportId())) {
+			this.reportRepo.save(newReport);
 		} else {
 			throw new RuntimeException("Report does not exist");
 		}
 	}
 }
+

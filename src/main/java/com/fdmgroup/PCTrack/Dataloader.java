@@ -88,45 +88,36 @@ public class Dataloader implements ApplicationRunner {
 		Room room2 = new Room("Coogee", sydney);
 
 		// bondi rooms
-		Computer c1 = new Computer(15040, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c2 = new Computer(70156, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
-		Computer c3 = new Computer(15046, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
-		Computer c4 = new Computer(15068, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
-		Computer c5 = new Computer(15048, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c6 = new Computer(15052, new Room(), null);
-		Computer c7 = new Computer(15036, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb,
+		Computer c1 = new Computer(15040, Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c2 = new Computer(70156, Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
+		Computer c3 = new Computer(15046, Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
+		Computer c4 = new Computer(15068, Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
+		Computer c5 = new Computer(15048, Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c6 = new Computer(15052, null);
+		Computer c7 = new Computer(15036, Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb,
 				sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c8 = new Computer(70101, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb,
+		Computer c8 = new Computer(70101, Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb,
 				sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c9 = new Computer(70108, new Room(), null);
-		Computer c10 = new Computer(15054, new Room(), Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb,
+		Computer c9 = new Computer(70108, null);
+		Computer c10 = new Computer(15054, Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb,
 				sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c11 = new Computer(15037, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c12 = new Computer(70104, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
-		Computer c13 = new Computer(15038, new Room(), Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb,
+		Computer c11 = new Computer(15037, Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c12 = new Computer(70104, Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
+		Computer c13 = new Computer(15038, Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb,
 				sqlShell, excel1, microsoftSSMS, git, jdk));
-		Computer c14 = new Computer(70160, new Room(), null);
-		Computer c15 = new Computer(15070, new Room(), null);
+		Computer c14 = new Computer(70160, null);
+		Computer c15 = new Computer(15070, null);
 
 		// coogee
-		Computer c16 = new Computer(15030, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs2, python, npm, excel, microsoftSSMS, git, jdk));
-		Computer c17 = new Computer(70213, new Room(), null);
-		Computer c18 = new Computer(70161, new Room(),
-				Arrays.asList(vscode, eclipse, nodejs6, python, npm6, excel, microsoftSSMS, git, jdk));
-		Computer c19 = new Computer(70098, new Room(), null);
-		Computer c20 = new Computer(70093, new Room(), null);
-		Computer c21 = new Computer(15035, new Room(), null);
-		Computer c22 = new Computer(15064, new Room(), null);
-		Computer c23 = new Computer(70106, new Room(), null);
-		Computer c24 = new Computer(70162, new Room(), null);
+		Computer c16 = new Computer(15030, Arrays.asList(vscode, eclipse, nodejs2, python, npm, excel, microsoftSSMS, git, jdk));
+		Computer c17 = new Computer(70213, null);
+		Computer c18 = new Computer(70161, Arrays.asList(vscode, eclipse, nodejs6, python, npm6, excel, microsoftSSMS, git, jdk));
+		Computer c19 = new Computer(70098, null);
+		Computer c20 = new Computer(70093, null);
+		Computer c21 = new Computer(15035, null);
+		Computer c22 = new Computer(15064, null);
+		Computer c23 = new Computer(70106, null);
+		Computer c24 = new Computer(70162, null);
 
 		List<Computer> computers = Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16,
 				c17, c18, c19, c20, c21, c22, c23, c24);
