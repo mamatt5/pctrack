@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.ComputerRepository;
 import com.fdmgroup.PCTrack.model.Computer;
+import com.fdmgroup.PCTrack.model.User;
 
 @Service
 public class ComputerService {
@@ -39,6 +40,24 @@ public class ComputerService {
 			} else {
 				this.computerRepo.save(c);
 			}
+		}
+	}
+	
+	public void deleteByComputerId(int computerId) {
+		if (this.computerRepo.existsById(computerId)) {
+			computerRepo.deleteById(computerId);
+			
+		} else {
+			throw new RuntimeException("Computer does not exist");
+		}
+	}
+	
+	public void update(Computer newComputer) {
+		if (this.computerRepo.existsById(newComputer.getComputerId())) {
+			this.computerRepo.save(newComputer);
+		
+		} else {
+			throw new RuntimeException("Computer does not exist");
 		}
 	}
 }
