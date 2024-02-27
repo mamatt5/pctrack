@@ -38,7 +38,7 @@ public class LocationControllerTests {
 		@Test
 		void findLocationById_test() {
 			
-			Location location1 = new Location("Sydney");
+			Location location1 = new Location("FDM Sydney", "Sydney");
 			
 			when(locationService.findById(1)).thenReturn(location1);
 			assertSame(location1, locationController.findById(1));
@@ -47,7 +47,7 @@ public class LocationControllerTests {
 		
 		@Test
 		void createLocation_test() {
-			Location location1 = new Location("Melbourne");
+			Location location1 = new Location("FDM Melbourne", "Melbourne");
 			
 			when(locationService.findById(0)).thenReturn(location1);
 			assertSame(location1, locationController.createNewLocation(location1));
@@ -56,8 +56,8 @@ public class LocationControllerTests {
 		
 		@Test
 		void updateLocation_test() {
-			Location location1 = new Location("Singapore");
-			Location updatedLocation = new Location("Singaporealore");
+			Location location1 = new Location("FDM Singapore", "Singapore");
+			Location updatedLocation = new Location("FDM Singaporealore", "Singaporealore");
 
 			when(locationService.findById(0)).thenReturn(updatedLocation);
 			assertSame(locationController.updateLocation(location1), updatedLocation);
@@ -71,11 +71,11 @@ public class LocationControllerTests {
 		}
 		
 		@Test
-		void findAllUsers() {
-			Location location1 = new Location("Sydney");
-			Location location2 = new Location("Melbourne");
-			Location location3 = new Location("Singapore");
-			Location location4 = new Location("Hong Kong");
+		void findAllLocations() {
+			Location location1 = new Location("FDM Sydney", "Sydney");
+			Location location2 = new Location("FDM Melbourne", "Melbourne");
+			Location location3 = new Location("FDM Singapore", "Singapore");
+			Location location4 = new Location("Hong Kong","Hong Kong");
 
 			
 			List<Location> allLocations = new ArrayList<>();

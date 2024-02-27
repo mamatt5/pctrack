@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.controller.UserController;
 import com.fdmgroup.PCTrack.model.User;
+import com.fdmgroup.PCTrack.service.StaffService;
 import com.fdmgroup.PCTrack.service.UserService;
 
 import org.mockito.Mock;
@@ -28,11 +29,14 @@ public class UserControllerTests {
 	@Mock
 	UserService userService;
 	
+	@Mock
+	StaffService staffService;
+	
 	UserController userController;
 	
 	@BeforeEach
 	void setup() {
-		this.userController = new UserController(userService);
+		this.userController = new UserController(userService, staffService);
 	}
 	
 	@Test
