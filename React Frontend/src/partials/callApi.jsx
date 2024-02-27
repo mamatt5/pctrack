@@ -15,10 +15,11 @@ const NAME = Config.NAME
 /**
  *
  * @param {*} onSuccessDo the function that runs if call is successful
+ * @param {*} onFailureDo the function that runs if call is unsuccessful
  * @param {*} options any configs required, only method and endpoint are mandatory for all calls
  * @param  {...any} optional any parameters that need to be passed into onSuccessDo
  */
-const callApi = (onSuccessDo, options, ...optional) => {
+const callApi = (onSuccessDo, onFailureDo, options, ...optional) => {
 
     const { method, endpoint, data = {}, params = {}, auth = {}, header = {} } = options;
     const URL = `http://localhost:${PORT}/${NAME}/${endpoint}`
@@ -53,6 +54,7 @@ const callApi = (onSuccessDo, options, ...optional) => {
         })
         .catch(error => {
             console.log(error)
+            onFailureDo(error)
         })
 
 
