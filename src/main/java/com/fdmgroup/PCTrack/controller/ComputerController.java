@@ -36,7 +36,7 @@ public class ComputerController {
 	}
 	
 	public void deleteComputer(@PathVariable int computerId) {
-		computerService.deleteById(computerId);
+		computerService.deleteByComputerId(computerId);
 	}
 
 }
