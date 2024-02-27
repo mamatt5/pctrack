@@ -8,10 +8,21 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("location_admin")
 public class LocationAdmin extends RoomAdmin {
 
+	
+	public LocationAdmin() {
+        // Default constructor required by JPA
+		super(); 
+    }
 	public LocationAdmin(User user, Location location) {
-		super(user, location);
+		super("Location", user, location);
 
 	}
+	
+	public LocationAdmin(String type, User user, Location location) {
+		super(type, user, location);
+
+	}
+
 
 	
 	public void setStaffLocation(Staff staff, Location location) {

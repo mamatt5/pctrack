@@ -15,10 +15,11 @@ const NAME = Config.NAME
 /**
  *
  * @param {*} onSuccessDo the function that runs if call is successful
+ * @param {*} onFailureDo the function that runs if call is unsuccessful
  * @param {*} options any configs required, only method and endpoint are mandatory for all calls
  * @param  {...any} optional any parameters that need to be passed into onSuccessDo
  */
-const callApi = (onSuccessDo, options, ...optional) => {
+const callApi = (onSuccessDo, onFailureDo, options, ...optional) => {
 
     const { method, endpoint, data = {}, params = {}, auth = {}, header = {} } = options;
     const URL = `http://localhost:${PORT}/${NAME}/${endpoint}`
@@ -30,6 +31,7 @@ const callApi = (onSuccessDo, options, ...optional) => {
         params: params,
         headers: header,
     }
+    console.log(configs)
 
     // if an auth if provided, then add it to configs.
     // leaving auth = {} in the configs will NOT work as it will still require authentication
@@ -49,10 +51,13 @@ const callApi = (onSuccessDo, options, ...optional) => {
     axios(configs)
         .then(response => {
             console.log(response.data)
+            console.log("succeeded...")
             onSuccessDo(response.data, ...optional);
         })
         .catch(error => {
             console.log(error)
+            console.log("failed...")
+            onFailureDo(error)
         })
 
 

@@ -70,10 +70,11 @@ public class SecurityConfig {
         	.csrf(csrf -> csrf.disable())
         	.authorizeHttpRequests(authz -> authz
         			.requestMatchers("/adminonly").hasAuthority("SCOPE_ADMIN")
+        			.requestMatchers("/username/{username}").permitAll()
         			// add requestMatchers("/blahblah").permitAll()
-        			// anyone can access the /blahblah
         			// below means that any request requires you to be logged in first
         			.anyRequest().permitAll()
+        			
         	)
 //        	.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)  //The old syntax
         	.oauth2ResourceServer(server->server.jwt(Customizer.withDefaults()))
