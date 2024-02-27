@@ -32,6 +32,7 @@ public class StaffService {
 		}
 	}
 	
+	
 	public List<Staff> findByUserId(int userId) {
 		return this.staffRepo.findByUserId(userId);
 	}
