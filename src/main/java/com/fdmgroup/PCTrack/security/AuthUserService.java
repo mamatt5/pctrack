@@ -1,4 +1,6 @@
+
 package com.fdmgroup.PCTrack.security;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +15,7 @@ public class AuthUserService implements org.springframework.security.core.userde
 
 	@Autowired
 	public AuthUserService(UserRepository userRepo) {
+
 		super();
 		this.userRepo = userRepo;
 	}

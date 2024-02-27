@@ -70,7 +70,10 @@ public class SecurityConfig {
         	.csrf(csrf -> csrf.disable())
         	.authorizeHttpRequests(authz -> authz
         			.requestMatchers("/adminonly").hasAuthority("SCOPE_ADMIN")
-        			.anyRequest().authenticated()
+        			// add requestMatchers("/blahblah").permitAll()
+        			// anyone can access the /blahblah
+        			// below means that any request requires you to be logged in first
+        			.anyRequest().permitAll()
         	)
 //        	.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)  //The old syntax
         	.oauth2ResourceServer(server->server.jwt(Customizer.withDefaults()))
@@ -88,7 +91,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // this is the React/frontend port, not
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // this is the React/frontend port, not
 																					// the java port
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		configuration.setAllowCredentials(true);

@@ -44,3 +44,4 @@ public class Location {
 		return "Location [locationId=" + locationId + ", name=" + name + ", city=" + city + "]";
 	}
 }
+

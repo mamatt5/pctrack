@@ -1,5 +1,6 @@
 package com.fdmgroup.PCTrack.model;
 
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
@@ -9,6 +10,7 @@ public class LocationAdmin extends RoomAdmin {
 
 	public LocationAdmin(User user, Location location) {
 		super(user, location);
+
 	}
 
 	
