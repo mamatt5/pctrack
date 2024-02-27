@@ -1,4 +1,6 @@
+
 package com.fdmgroup.PCTrack.security;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +9,9 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+
 import com.fdmgroup.PCTrack.model.User;
+
 
 public class AuthUser implements org.springframework.security.core.userdetails.UserDetails{
 	private User user;
@@ -19,9 +23,11 @@ public class AuthUser implements org.springframework.security.core.userdetails.U
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+
 		// TODO Auto-generated method stub
 		//System.out.println(new SimpleGrantedAuthority(this.user.getRole().toString()));
 		return Arrays.asList();
+
 	}
 
 	@Override

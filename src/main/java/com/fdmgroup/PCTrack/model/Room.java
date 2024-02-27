@@ -46,4 +46,5 @@ public class Room {
 	public String toString() {
 		return "Room [roomId=" + roomId + ", name=" + name + ", location=" + location + "]";
 	}
+
 }
