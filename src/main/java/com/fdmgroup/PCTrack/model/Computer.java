@@ -12,7 +12,9 @@ public class Computer {
 	private int computerId;
 	@Column(name = "COMPUTER_CODE")
 	private int computerCode;
-//	private Room room;
+	@ManyToOne
+	@JoinColumn(name = "FK_ROOM_ID")
+	private Room room;
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Computer_Program", 
 	joinColumns =
@@ -29,6 +31,12 @@ public class Computer {
 	public Computer(int computerCode) {
 		super();
 		this.computerCode = computerCode;
+	}
+	
+	public Computer(int computerCode, Room room) {
+		super();
+		this.computerCode = computerCode;
+		this.room = room;
 	}
 	public Computer() {
 		super();
