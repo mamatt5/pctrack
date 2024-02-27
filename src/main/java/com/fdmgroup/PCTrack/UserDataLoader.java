@@ -62,13 +62,15 @@ public class UserDataLoader implements ApplicationRunner {
 		Program jdk = new Program("JDK", "17.0.2");
 
 		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, nodejs1, nodejs2, nodejs3, nodejs4, nodejs5,
-		        nodejs6, python, npm, npm1, npm2, npm3, npm4, npm5, sql8wb, sqlShell, powerBi, excel, excel1,
+		        nodejs6, python, npm, npm1, npm2, npm3, npm4, npm5, npm6, sql8wb, sqlShell, powerBi, excel, excel1,
 		        microsoftSSMS, pnpm, git, jdk);
 		programService.saveAll(programs);
 
 		// bondi rooms
-		Computer c1 = new Computer(15040,
-		        Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c1 = new Computer(15040);
+		computerService.save(c1);
+		c1.setProgramList(Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		
 		Computer c2 = new Computer(70156,
 		        Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
 		Computer c3 = new Computer(15046,
@@ -77,12 +79,12 @@ public class UserDataLoader implements ApplicationRunner {
 		        Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
 		Computer c5 = new Computer(15048,
 		        Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c6 = new Computer(15052, null);
+		Computer c6 = new Computer(15052);
 		Computer c7 = new Computer(15036, Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel,
 		        microsoftSSMS, git, jdk));
 		Computer c8 = new Computer(70101, Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel,
 		        microsoftSSMS, git, jdk));
-		Computer c9 = new Computer(70108, null);
+		Computer c9 = new Computer(70108);
 		Computer c10 = new Computer(15054, Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell,
 		        excel, microsoftSSMS, git, jdk));
 		Computer c11 = new Computer(15037,
@@ -91,35 +93,35 @@ public class UserDataLoader implements ApplicationRunner {
 		        Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
 		Computer c13 = new Computer(15038, Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb, sqlShell,
 		        excel1, microsoftSSMS, git, jdk));
-		Computer c14 = new Computer(70160, null);
-		Computer c15 = new Computer(15070, null);
+		Computer c14 = new Computer(70160);
+		Computer c15 = new Computer(15070);
 
 		// coogee
 		Computer c16 = new Computer(15030,
 		        Arrays.asList(vscode, eclipse, nodejs2, python, npm, excel, microsoftSSMS, git, jdk));
-		Computer c17 = new Computer(70213, null);
+		Computer c17 = new Computer(70213);
 		Computer c18 = new Computer(70161,
 		        Arrays.asList(vscode, eclipse, nodejs6, python, npm6, excel, microsoftSSMS, git, jdk));
-		Computer c19 = new Computer(70098, null);
-		Computer c20 = new Computer(70093, null);
-		Computer c21 = new Computer(15035, null);
-		Computer c22 = new Computer(15064, null);
-		Computer c23 = new Computer(70106, null);
-		Computer c24 = new Computer(70162, null);
+		Computer c19 = new Computer(70098);
+		Computer c20 = new Computer(70093);
+		Computer c21 = new Computer(15035);
+		Computer c22 = new Computer(15064);
+		Computer c23 = new Computer(70106);
+		Computer c24 = new Computer(70162);
 
 		// balmoral
 		Computer c25 = new Computer(70215, Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
 		Computer c26 = new Computer(70111, Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
-		Computer c27 = new Computer(15042, null);
+		Computer c27 = new Computer(15042);
 		Computer c28 = new Computer(15033,
 		        Arrays.asList(vscode, eclipse, python, npm2, excel, microsoftSSMS, git, jdk));
 		Computer c29 = new Computer(70163,
 		        Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
 		Computer c30 = new Computer(15066,
 		        Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
-		Computer c31 = new Computer(15032, null);
-		Computer c32 = new Computer(70159, null);
-		Computer c33 = new Computer(15031, null);
+		Computer c31 = new Computer(15032);
+		Computer c32 = new Computer(70159);
+		Computer c33 = new Computer(15031);
 
 		// bronte
 		Computer c34 = new Computer(70196,
@@ -130,10 +132,10 @@ public class UserDataLoader implements ApplicationRunner {
 		        Arrays.asList(vscode, eclipse, nodejs2, python, npm3, excel, microsoftSSMS, git, jdk));
 		Computer c37 = new Computer(70207,
 		        Arrays.asList(vscode, nodejs2, python, npm1, excel, microsoftSSMS, git, jdk));
-		Computer c38 = new Computer(70198, null);
-		Computer c39 = new Computer(15056, null);
-		Computer c40 = new Computer(70210, null);
-		Computer c41 = new Computer(70212, null);
+		Computer c38 = new Computer(70198);
+		Computer c39 = new Computer(15056);
+		Computer c40 = new Computer(70210);
+		Computer c41 = new Computer(70212);
 
 		// tamarama
 		Computer c42 = new Computer(15059, Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell,
