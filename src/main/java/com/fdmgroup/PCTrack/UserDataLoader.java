@@ -203,9 +203,12 @@ public class UserDataLoader implements ApplicationRunner {
         Location location1 = new Location("FDM Sydney", "Sydney");
         locationService.save(location1);
         
+       
         Staff staff1 = new Staff(u1, location1);
         RoomAdmin roomAdmin1 = new RoomAdmin(u2, location1);
         LocationAdmin locationAdmin1 = new LocationAdmin(u3, location1);
+        
+        // root admin has access to all locations 
         BusinessAdmin businessAdmin1 = new BusinessAdmin(u4, location1);
         
         staffService.save(staff1);

@@ -28,6 +28,11 @@ public class UserController {
 		return userService.findUserId(userId);
 	}
 	
+	@GetMapping("username/{username}")
+	public User findByUsername(@PathVariable String username) {
+		return userService.findUserUsername(username);
+	}
+	
 	@PostMapping("users")
 	public User createNewUser(@RequestBody User newUser) {
 		userService.register(newUser);

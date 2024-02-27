@@ -28,6 +28,10 @@ public class UserService {
 		return this.userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Username not found."));
 	}
 	
+	public User findUserUsername(String username) { 
+		return this.userRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("Username not found."));
+	} 
+	
 	public void register(User newUser) {
 		if (this.userRepository.existsById(newUser.getUserId())) {
 			throw new RuntimeException("Username already exists");
