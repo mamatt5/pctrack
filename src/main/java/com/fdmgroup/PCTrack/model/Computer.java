@@ -30,7 +30,6 @@ public class Computer {
 	public Computer(int computerCode) {
 		super();
 		this.computerCode = computerCode;
-		this.programList = null;
 	}
 	public Computer() {
 		super();

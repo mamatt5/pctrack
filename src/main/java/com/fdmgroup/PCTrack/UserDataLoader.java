@@ -71,105 +71,219 @@ public class UserDataLoader implements ApplicationRunner {
 		computerService.save(c1);
 		c1.setProgramList(Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		
-		Computer c2 = new Computer(70156,
-		        Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
-		Computer c3 = new Computer(15046,
-		        Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
-		Computer c4 = new Computer(15068,
-		        Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
-		Computer c5 = new Computer(15048,
-		        Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		Computer c2 = new Computer(70156);
+		computerService.save(c2);
+		c2.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm1, excel, microsoftSSMS, git, jdk));
+
+		Computer c3 = new Computer(15046);
+		computerService.save(c3);
+		c3.setProgramList(Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
+
+		Computer c4 = new Computer(15068);
+		computerService.save(c4);
+		c4.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
+
+		Computer c5 = new Computer(15048);
+		computerService.save(c5);
+		c5.setProgramList(Arrays.asList(vscode, eclipse, nodejs, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
 		Computer c6 = new Computer(15052);
-		Computer c7 = new Computer(15036, Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel,
-		        microsoftSSMS, git, jdk));
-		Computer c8 = new Computer(70101, Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel,
-		        microsoftSSMS, git, jdk));
+		computerService.save(c6);
+
+		Computer c7 = new Computer(15036);
+		computerService.save(c7);
+		c7.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
+		Computer c8 = new Computer(70101);
+		computerService.save(c8);
+		c8.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
 		Computer c9 = new Computer(70108);
-		Computer c10 = new Computer(15054, Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk));
-		Computer c11 = new Computer(15037,
-		        Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c12 = new Computer(70104,
-		        Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
-		Computer c13 = new Computer(15038, Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb, sqlShell,
-		        excel1, microsoftSSMS, git, jdk));
+		computerService.save(c9);
+
+		Computer c10 = new Computer(15054);
+		computerService.save(c10);
+		c10.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
+		Computer c11 = new Computer(15037);
+		computerService.save(c11);
+		c11.setProgramList(Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
+		Computer c12 = new Computer(70104);
+		computerService.save(c12);
+		c12.setProgramList(Arrays.asList(vscode, eclipse, nodejs4, python, npm4, excel, microsoftSSMS, git, jdk));
+
+		Computer c13 = new Computer(15038);
+		computerService.save(c13);
+		c13.setProgramList(Arrays.asList(vscode, eclipse, nodejs5, python, npm5, sql8wb, sqlShell, excel1, microsoftSSMS, git, jdk));
+
 		Computer c14 = new Computer(70160);
+		computerService.save(c14);
+
 		Computer c15 = new Computer(15070);
+		computerService.save(c15);
+
 
 		// coogee
-		Computer c16 = new Computer(15030,
-		        Arrays.asList(vscode, eclipse, nodejs2, python, npm, excel, microsoftSSMS, git, jdk));
+		Computer c16 = new Computer(15030);
+		computerService.save(c16);
+		c16.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm, excel, microsoftSSMS, git, jdk));
+
 		Computer c17 = new Computer(70213);
-		Computer c18 = new Computer(70161,
-		        Arrays.asList(vscode, eclipse, nodejs6, python, npm6, excel, microsoftSSMS, git, jdk));
+		computerService.save(c17);
+
+		Computer c18 = new Computer(70161);
+		computerService.save(c18);
+		c18.setProgramList(Arrays.asList(vscode, eclipse, nodejs6, python, npm6, excel, microsoftSSMS, git, jdk));
+
 		Computer c19 = new Computer(70098);
+		computerService.save(c19);
+
 		Computer c20 = new Computer(70093);
+		computerService.save(c20);
+
 		Computer c21 = new Computer(15035);
+		computerService.save(c21);
+
 		Computer c22 = new Computer(15064);
+		computerService.save(c22);
+
 		Computer c23 = new Computer(70106);
+		computerService.save(c23);
+
 		Computer c24 = new Computer(70162);
+		computerService.save(c24);
+
 
 		// balmoral
-		Computer c25 = new Computer(70215, Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
-		Computer c26 = new Computer(70111, Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
+		Computer c25 = new Computer(70215);
+		computerService.save(c25);
+		c25.setProgramList(Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
+
+		Computer c26 = new Computer(70111);
+		computerService.save(c26);
+		c26.setProgramList(Arrays.asList(vscode, eclipse, python, npm, excel, microsoftSSMS, git, jdk));
+
 		Computer c27 = new Computer(15042);
-		Computer c28 = new Computer(15033,
-		        Arrays.asList(vscode, eclipse, python, npm2, excel, microsoftSSMS, git, jdk));
-		Computer c29 = new Computer(70163,
-		        Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
-		Computer c30 = new Computer(15066,
-		        Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
+		computerService.save(c27);
+
+		Computer c28 = new Computer(15033);
+		computerService.save(c28);
+		c28.setProgramList(Arrays.asList(vscode, eclipse, python, npm2, excel, microsoftSSMS, git, jdk));
+
+		Computer c29 = new Computer(70163);
+		computerService.save(c29);
+		c29.setProgramList(Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
+
+		Computer c30 = new Computer(15066);
+		computerService.save(c30);
+		c30.setProgramList(Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
+
 		Computer c31 = new Computer(15032);
+		computerService.save(c31);
+
 		Computer c32 = new Computer(70159);
+		computerService.save(c32);
+
 		Computer c33 = new Computer(15031);
+		computerService.save(c33);
+
 
 		// bronte
-		Computer c34 = new Computer(70196,
-		        Arrays.asList(vscode, nodejs2, python, npm2, excel, microsoftSSMS, git, jdk));
-		Computer c35 = new Computer(70204,
-		        Arrays.asList(vscode, eclipse, nodejs2, python, npm2, excel, microsoftSSMS, git, jdk));
-		Computer c36 = new Computer(70095,
-		        Arrays.asList(vscode, eclipse, nodejs2, python, npm3, excel, microsoftSSMS, git, jdk));
-		Computer c37 = new Computer(70207,
-		        Arrays.asList(vscode, nodejs2, python, npm1, excel, microsoftSSMS, git, jdk));
+		Computer c34 = new Computer(70196);
+		computerService.save(c34);
+		c34.setProgramList(Arrays.asList(vscode, nodejs2, python, npm2, excel, microsoftSSMS, git, jdk));
+
+		Computer c35 = new Computer(70204);
+		computerService.save(c35);
+		c35.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, excel, microsoftSSMS, git, jdk));
+
+		Computer c36 = new Computer(70095);
+		computerService.save(c36);
+		c36.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm3, excel, microsoftSSMS, git, jdk));
+
+		Computer c37 = new Computer(70207);
+		computerService.save(c37);
+		c37.setProgramList(Arrays.asList(vscode, nodejs2, python, npm1, excel, microsoftSSMS, git, jdk));
+
 		Computer c38 = new Computer(70198);
+		computerService.save(c38);
+
 		Computer c39 = new Computer(15056);
+		computerService.save(c39);
+
 		Computer c40 = new Computer(70210);
+		computerService.save(c40);
+
 		Computer c41 = new Computer(70212);
+		computerService.save(c41);
+
 
 		// tamarama
-		Computer c42 = new Computer(15059, Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk, powerBi));
-		Computer c43 = new Computer(15091, Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk, powerBi));
-		Computer c44 = new Computer(70263, Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel,
-		        microsoftSSMS, git, jdk, powerBi));
-		Computer c45 = new Computer(70272, Arrays.asList(vscode, eclipse, nodejs2, python, npm, sql8wb, sqlShell, excel,
-		        microsoftSSMS, git, jdk, powerBi));
-		Computer c46 = new Computer(70613, Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel,
-		        microsoftSSMS, git, jdk, powerBi));
-		Computer c47 = new Computer(70707,
-		        Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
-		Computer c48 = new Computer(70898, Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk, powerBi));
-		Computer c49 = new Computer(15656, Arrays.asList(vscode, eclipse, nodejs4, python, npm3, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk));
-		Computer c50 = new Computer(70410,
-		        Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c51 = new Computer(70412, Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk, powerBi));
-		Computer c52 = new Computer(15231,
-		        Arrays.asList(vscode, eclipse, nodejs2, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
-		Computer c53 = new Computer(72196, Arrays.asList(vscode, eclipse, nodejs1, python, npm3, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk, powerBi));
-		Computer c54 = new Computer(72210,
-		        Arrays.asList(vscode, eclipse, nodejs3, python, npm3, excel, microsoftSSMS, git, jdk, powerBi));
-		Computer c55 = new Computer(72212, Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell,
-		        excel, microsoftSSMS, git, jdk));
-		Computer c56 = new Computer(15091, Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel,
-		        microsoftSSMS, git, jdk, powerBi));
-		Computer c57 = new Computer(72196, Arrays.asList(vscode, eclipse, nodejs6, python, npm, sql8wb, sqlShell, excel,
-		        microsoftSSMS, git, jdk, powerBi));
+		Computer c42 = new Computer(15059);
+		computerService.save(c42);
+		c42.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c43 = new Computer(15091);
+		computerService.save(c43);
+		c43.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c44 = new Computer(70263);
+		computerService.save(c44);
+		c44.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c45 = new Computer(70272);
+		computerService.save(c45);
+		c45.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c46 = new Computer(70613);
+		computerService.save(c46);
+		c46.setProgramList(Arrays.asList(vscode, eclipse, nodejs3, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c47 = new Computer(70707);
+		computerService.save(c47);
+		c47.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, excel, microsoftSSMS, git, jdk));
+
+		Computer c48 = new Computer(70898);
+		computerService.save(c48);
+		c48.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c49 = new Computer(15656);
+		computerService.save(c49);
+		c49.setProgramList(Arrays.asList(vscode, eclipse, nodejs4, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
+		Computer c50 = new Computer(70410);
+		computerService.save(c50);
+		c50.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
+		Computer c51 = new Computer(70412);
+		computerService.save(c51);
+		c51.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c52 = new Computer(15231);
+		computerService.save(c52);
+		c52.setProgramList(Arrays.asList(vscode, eclipse, nodejs2, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
+		Computer c53 = new Computer(72196);
+		computerService.save(c53);
+		c53.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm3, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c54 = new Computer(72210);
+		computerService.save(c54);
+		c54.setProgramList(Arrays.asList(vscode, eclipse, nodejs3, python, npm3, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c55 = new Computer(72212);
+		computerService.save(c55);
+		c55.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm2, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+
+		Computer c56 = new Computer(15091);
+		computerService.save(c56);
+		c56.setProgramList(Arrays.asList(vscode, eclipse, nodejs1, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
+		Computer c57 = new Computer(72196);
+		computerService.save(c57);
+		c57.setProgramList(Arrays.asList(vscode, eclipse, nodejs6, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk, powerBi));
+
 
 //		computerService.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16,
 //		        c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36, c37,
