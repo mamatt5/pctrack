@@ -183,6 +183,8 @@ public class UserDataLoader implements ApplicationRunner {
         User u8 = new User("camden.leonard", "password123", "Camden", "Leonard", LocalDate.of(2023, 11, 27));
         User u9 = new User("quincy.jarvis", "password123", "Quincy", "Jarvis", LocalDate.of(2023, 11, 27));
         User u10 = new User("chaim.harrison", "password123", "Chaim", "Harrison", LocalDate.of(2023, 11, 27));
+        // no need to add a join date, can automatically generate it. 
+        User u11 = new User("po.po", "password123", "Po", "Po");
         
         userService.register(u1);
         userService.register(u2);
@@ -194,6 +196,7 @@ public class UserDataLoader implements ApplicationRunner {
         userService.register(u8);
         userService.register(u9);
         userService.register(u10);
+        userService.register(u11);
         
         
         // sample data for inheritance, pls delete Jenny

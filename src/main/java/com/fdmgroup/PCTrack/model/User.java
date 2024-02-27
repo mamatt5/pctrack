@@ -1,8 +1,12 @@
 package com.fdmgroup.PCTrack.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -26,6 +30,7 @@ public class User {
 	private String lastName;
 	
 	@Column(name = "JOIN DATE")
+	@CreationTimestamp
 	private LocalDate joinDate;
 
 	
@@ -33,6 +38,16 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Staff> roles;
 	
+	
+	
+	public User(String username, String password, String firstName, String lastName) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.roles = new ArrayList<>();
+	}
 	
 	public User(String username, String password, String firstName, String lastName, LocalDate joinDate) {
 		super();
