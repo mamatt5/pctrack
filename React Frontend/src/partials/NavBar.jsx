@@ -16,20 +16,25 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Tooltip from '@mui/material/Tooltip';
 
-import { useNavigate } from "react-router-dom";
+
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+
+import callApi from "../api/callApi";
+import ComputerIcon from "@mui/icons-material/Computer";
+import SearchIcon from "@mui/icons-material/Search";
+import ApiIcon from "@mui/icons-material/Api";
+import ChairIcon from "@mui/icons-material/Chair";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
 import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useState } from "react";
-
-import ComputerIcon from "@mui/icons-material/Computer";
-import SearchIcon from "@mui/icons-material/Search";
-import ApiIcon from "@mui/icons-material/Api";
-import ChairIcon from "@mui/icons-material/Chair";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 const drawerWidth = 240;
 
@@ -110,7 +115,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 	})
 );
 
-export default function NavBar() {
+export default function NavBar(props) {
+  const {admin} = props
+  const { id } = useParams();
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
@@ -128,34 +135,25 @@ export default function NavBar() {
 		setOpen(false);
 	};
 
-	const handleIconNav = (page) => {
+	const handleIconNav = (page, id) => {
 		if (page === "Search Rooms") {
-			navigate("/searchroom");
-		} else if (page === "Search Software") {
-			navigate("/searchsoftware");
+			navigate(`/home/${id}/searchroom`);
+		} else if (page === "Manage Users") {
+      navigate(`/home/${id}/admin`);
+    } else if (page === "Search Software") {
+			navigate(`/home/${id}/searchsoftware`);
 		} else if (page === "Search Computer") {
-			navigate("/searchcomputer");
+			navigate(`/home/${id}/searchcomputer`);
 		} else if (page === "Update Details") {
-			navigate("/updatedetails");
+			navigate(`/home/${id}/searchcomputer`);
 		} else if (page === "Log Out") {
-			console.log("loging out");
 			localStorage.removeItem("token");
 			navigate("/");
 		}
-	};
+  }
 
-	// checking if is admin.
-	const { id } = useParams();
-	const [admin, setAdmin] = useState(false);
 
-	const checkAdmin = () => {
-		const config = {
-			method: "get",
-			endpoint: `users/${id}`,
-		};
 
-		callApi();
-	};
 
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -187,16 +185,18 @@ export default function NavBar() {
 					</IconButton>
 				</DrawerHeader>
 				<Divider />
-				<List>
-					{["Search Rooms", "Search Computer", "Search Software"].map((text, index) => (
-						<ListItem key={text} disablePadding sx={{ display: "block" }}>
+				{/* admin stuff  */}
+        {admin ? (
+					<>
+						<ListItem key={"Manage Users"} disablePadding sx={{ display: "block" }}>
+						<Tooltip title="Manage Users" placement="right">
 							<ListItemButton
 								sx={{
 									minHeight: 48,
 									justifyContent: open ? "initial" : "center",
 									px: 2.5,
 								}}
-								onClickCapture={() => handleIconNav(text)}
+								onClickCapture={() => handleIconNav("Manage Users", id)}
 							>
 								<ListItemIcon
 									sx={{
@@ -205,26 +205,61 @@ export default function NavBar() {
 										justifyContent: "center",
 									}}
 								>
-									{index === 0 && <ChairIcon />}
-									{index === 1 && <ComputerIcon />}
-									{index === 2 && <ApiIcon />}
+									<AdminPanelSettingsIcon />
 								</ListItemIcon>
-								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+								<ListItemText primary="Manage Users" sx={{ opacity: open ? 1 : 0 }} />
 							</ListItemButton>
+							</Tooltip>
 						</ListItem>
-					))}
-				</List>
-				<Divider />
+					</>
+				) : null}
+
+        {/* staff + admin stuff */}
 				<List>
-					{["Update Details", "Log Out"].map((text, index) => (
+					{["Search Rooms", "Search Computer", "Search Software"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
+							<Tooltip title={text} placement="right">
 							<ListItemButton
 								sx={{
 									minHeight: 48,
 									justifyContent: open ? "initial" : "center",
 									px: 2.5,
 								}}
-								onClickCapture={() => handleIconNav(text)}
+								onClickCapture={() => handleIconNav(text, id)}
+							>
+								<ListItemIcon
+									sx={{
+										minWidth: 0,
+										mr: open ? 3 : "auto",
+										justifyContent: "center",
+									}}
+								>
+									{index === 0 &&  <MeetingRoomIcon />}
+									{index === 1 && <ComputerIcon />}
+									{index === 2 && <ApiIcon />}
+								</ListItemIcon>
+								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+							</ListItemButton>
+							</Tooltip>
+						</ListItem>
+					))}
+				</List>
+
+				<Divider />
+
+        {/* logging out and updating deets */}
+
+				<List>
+					{["Update Details", "Log Out"].map((text, index) => (
+						<ListItem key={text} disablePadding sx={{ display: "block" }}>
+								<Tooltip title={text} placement="right">
+							<ListItemButton
+								sx={{
+									minHeight: 48,
+									justifyContent: open ? "initial" : "center",
+									px: 2.5,
+								}}
+								onClickCapture={() => handleIconNav(text, id)}
 							>
 								<ListItemIcon
 									sx={{
@@ -238,22 +273,12 @@ export default function NavBar() {
 								</ListItemIcon>
 								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 							</ListItemButton>
+							</Tooltip>
 						</ListItem>
 					))}
 				</List>
 			</Drawer>
 			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-				{/* <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-
-        </Typography> */}
 			</Box>
 		</Box>
 	);

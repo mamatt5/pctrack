@@ -12,6 +12,7 @@ import { SearchComputerPage } from "./components/SearchComputerPage";
 import { SearchRoomPage } from "./components/SearchRoomPage";
 import { SearchSoftwarePage } from "./components/SearchSoftwarePage";
 import UpdateDetailsPage from "./components/UpdateDetailsPage";
+import NavBar from "./partials/NavBar";
 
 function App() {
 
@@ -30,17 +31,13 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Login />} />
 					<Route path="/login" element={<Login />} />
-					{/* <Route path="/admin" element={<Admin />} /> */}
+					<Route path="/home/:id/*" element={<LoggedInHomePage />} />
 
-					<Route path="/home/:id" element={<LoggedInHomePage />} />
-					<Route path="/searchroom" element={<SearchRoomPage />} />
-					<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
-					<Route path="/searchcomputer" element={<SearchComputerPage />} />
-					<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				</Routes>
 
 			</Router>
 			</ThemeProvider>
+
 		</div>
 	);
 }

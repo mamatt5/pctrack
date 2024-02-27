@@ -4,9 +4,11 @@ export const SearchSoftwarePage = () => {
   return (
 
     <>
+      <div className='dashBoardPadding'>
         <h1>Under Construction</h1>
         <div>SearchSoftwarePage</div>
-        <NavBar />
+        </div>
+
     </>
   )
 }

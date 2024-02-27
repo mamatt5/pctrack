@@ -56,17 +56,14 @@ const login = () => {
 		// check if its staff or admin.
 		const config = {
 			method: "get",
-			endpoint: `username/${username}`,
-			auth: {
-				username: username,
-				password: password,
-			},
+			endpoint: `username/${username}`
 		};
 
 		// if we cant find the user, its a username issue
 		// if we can, its a password issue.
 		callApi((res) => {
-			navigate(`/home/${res.id}`);
+			console.log(res)
+			navigate(`/home/${res.userId}`);
 		}, null, config);
 
 	};
