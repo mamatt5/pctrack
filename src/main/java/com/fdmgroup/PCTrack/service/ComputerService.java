@@ -41,4 +41,22 @@ public class ComputerService {
 			}
 		}
 	}
+	
+	public void deleteByComputerId(int computerId) {
+		if (this.computerRepo.existsById(computerId)) {
+			computerRepo.deleteById(computerId);
+			
+		} else {
+			throw new RuntimeException("Computer does not exist");
+		}
+	}
+	
+	public void update(Computer newComputer) {
+		if (this.computerRepo.existsById(newComputer.getComputerId())) {
+			this.computerRepo.save(newComputer);
+		
+		} else {
+			throw new RuntimeException("Computer does not exist");
+		}
+	}
 }
