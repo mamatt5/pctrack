@@ -53,7 +53,7 @@ const login = () => {
 	// when login out, make sure to delete from local storage
 	const loginUser = (bearerToken, username) => {
 		localStorage.setItem("token", bearerToken);
-		// check if its staff or admin.
+
 		const config = {
 			method: "get",
 			endpoint: `username/${username}`,
