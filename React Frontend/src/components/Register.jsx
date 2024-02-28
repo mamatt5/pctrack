@@ -90,15 +90,10 @@ const Register = ({ users, setOpenModal }) => {
 		const lastName = data.get("lastName").trim();
 		const password = data.get("password").trim();
 
-		// .. i guess we can only assume that all users are new?
-		// 1. try to find the cobination starting with firstName.lastname
-		// 2. find how many we find as num
-		// 3. add the num to firstName.lastname(num + 1)
-		// 4. assume its a new user?
-		// for now... assume that every user must then be made into a staff
-		// despite the redundancy in the dataloader.
+
+		// assume that every user must then be made into a staff
 		// as a result, register will create a new user, and then make then a staff.
-		// confusing, need clarification w team
+		// same username and laste name simply adds 1
 
 		// Count the number of special characters
 		const hasTwoSpecialChars = () => {
