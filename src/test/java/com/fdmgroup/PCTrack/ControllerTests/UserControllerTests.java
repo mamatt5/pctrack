@@ -31,6 +31,9 @@ public class UserControllerTests {
 	@Mock
 	StaffService staffService;
 	
+	@Mock
+	StaffService staffService;
+	
 	UserController userController;
 	
 	@BeforeEach

@@ -71,11 +71,11 @@ public class LocationControllerTests {
 		}
 		
 		@Test
-		void findAllUsers() {
+		void findAllLocations() {
 			Location location1 = new Location("FDM Sydney", "Sydney");
 			Location location2 = new Location("FDM Melbourne", "Melbourne");
 			Location location3 = new Location("FDM Singapore", "Singapore");
-			Location location4 = new Location("FDM Hong Kong", "Hong Kong");
+			Location location4 = new Location("Hong Kong","Hong Kong");
 
 			
 			List<Location> allLocations = new ArrayList<>();
