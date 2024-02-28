@@ -100,24 +100,37 @@ const Register = ({ users, setOpenModal }) => {
 		// as a result, register will create a new user, and then make then a staff.
 		// confusing, need clarification w team
 
-		const username = getUsername(users, firstName, lastName);
-		console.log(username);
-
-		const config = {
-			method: "post",
-			endpoint: "users",
-			data: {
-				username: username,
-				password: password,
-				firstName: firstName,
-				lastName: lastName,
-			},
+		// Count the number of special characters
+		const hasTwoSpecialChars = () => {
+			const specialChars = password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || [];
+			return specialChars.length >= 2;
 		};
-		console.log("hueh");
-		callApi(createStaff, null, config);
-	};
+		if (!/^[a-zA-Z]+$/.test(firstName)) {
+			setFirstNameErr("Name must only contain characters");
+		} else if (!/^[a-zA-Z]+$/.test(lastName)) {
+			setLastNameErr("Name must only contain characters");
+		} else if (password.length < 12) {
+			setPasswordError("Password must be 12 or more characters long");
+		} else if (!hasTwoSpecialChars()) {
+			setPasswordError("Password must have 2 or more special characters");
+		} else {
+			const username = getUsername(users, firstName, lastName);
+			console.log(username);
 
-	// TO DO!!
+			const config = {
+				method: "post",
+				endpoint: "users",
+				data: {
+					username: username,
+					password: password,
+					firstName: firstName,
+					lastName: lastName,
+				},
+			};
+			console.log("hueh");
+			callApi(createStaff, null, config);
+		}
+	};
 
 	const createStaff = (data) => {
 		console.log(checkedValues);
@@ -183,8 +196,13 @@ const Register = ({ users, setOpenModal }) => {
 	console.log(checkedValues);
 	return (
 		<>
-			<Box sx={{ border: "1px solid black", borderRadius: "10px", width: "40vw", padding: "5%" }}>
-				<Box>Register a user</Box>
+			<Box sx={{ border: "1px solid black", borderRadius: "10px", width: "35vw", padding: "5%" }}>
+				<Box>
+					<Typography variant="h5" sx={{ paddingBottom: "1rem" }}>
+						Register a user
+					</Typography>
+				</Box>
+
 				<form onSubmit={checkRegister} className="flexCol">
 					<TextField
 						name="firstName"
@@ -192,6 +210,7 @@ const Register = ({ users, setOpenModal }) => {
 						error={Boolean(firstNameErr)}
 						helperText={firstNameErr ? firstNameErr : ""}
 						onChange={(e) => checkInput("firstName", e.target.value)}
+						sx={{ margin: "0.5rem" }}
 					/>
 					<TextField
 						name="lastName"
@@ -199,6 +218,7 @@ const Register = ({ users, setOpenModal }) => {
 						error={Boolean(lastNameErr)}
 						helperText={lastNameErr ? lastNameErr : ""}
 						onChange={(e) => checkInput("lastName", e.target.value)}
+						sx={{ margin: "0.5rem" }}
 					/>
 					<TextField
 						name="password"
@@ -206,28 +226,24 @@ const Register = ({ users, setOpenModal }) => {
 						error={Boolean(passwordErr)}
 						helperText={passwordErr ? passwordErr : ""}
 						onChange={(e) => checkInput("password", e.target.value)}
+						sx={{ margin: "0.5rem" }}
 					/>
 
 					<Typography>Office</Typography>
-					<Box className="flexRow" sx={{ alignItems: "center" }}>
+					<Box className="flexRow" sx={{ alignItems: "center", paddingLeft:"2rem"}}>
 						<FormGroup>
-							{locations.map(
-								(item) => (
-									console.log(item),
-									(
-										<FormControlLabel
-											control={
-												<Checkbox
-													checked={checkedValues.APAC}
-													onChange={handleCheck}
-													name={item.city}
-												/>
-											}
-											label={item.city}
+							{locations.map((item) => (
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={checkedValues.APAC}
+											onChange={handleCheck}
+											name={item.city}
 										/>
-									)
-								)
-							)}
+									}
+									label={item.city}
+								/>
+							))}
 						</FormGroup>
 					</Box>
 					<Box className="centerHorizonal">

@@ -13,7 +13,7 @@ import UpdateDetailsPage from "./UpdateDetailsPage";
 
 const LoggedInHomePage = () => {
 	// check if user if an admin
-  	// checking if is admin.
+	// checking if is admin.
 	const { id } = useParams();
 	const [admin, setAdmin] = useState(false);
 
@@ -29,16 +29,17 @@ const LoggedInHomePage = () => {
 		console.log(data);
 		// dta == [] means not even a staff,
 		// dta == null means its just a staff, not admin
-		if (data.length === 0) setAdmin(false);
-		else {
-			for (let i = 0; i < data.length; i++) {
-				console.log(data[i]);
-				if (data[i].adminlevel !== null) {
-					setAdmin(true);
-					break;
-				}
+		setAdmin(false);
+
+		for (let i = 0; i < data.length; i++) {
+			console.log(data[i].adminLevel);
+			if (data[i].adminLevel !== null ) {
+				console.log(data[i].adminlevel)
+				setAdmin(true);
+				break;
 			}
 		}
+		console.log(admin)
 	};
 
 	useEffect(() => {
@@ -51,14 +52,13 @@ const LoggedInHomePage = () => {
 	return (
 		<>
 			<Routes>
-
-					<Route path="/searchroom" element={<SearchRoomPage />} />
-					<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
-					<Route path="/searchcomputer" element={<SearchComputerPage />} />
-					<Route path="/updatedetails" element={<UpdateDetailsPage />} />
-          <Route path="/admin" element={<Admin />} />
-				</Routes>
-        <NavBar admin={admin}/>
+				<Route path="/searchroom" element={<SearchRoomPage />} />
+				<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
+				<Route path="/searchcomputer" element={<SearchComputerPage />} />
+				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
+				<Route path="/admin" element={<Admin />} />
+			</Routes>
+			<NavBar admin={admin} />
 		</>
 	);
 };
