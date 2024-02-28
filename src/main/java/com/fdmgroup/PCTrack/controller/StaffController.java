@@ -22,7 +22,6 @@ public class StaffController {
 	@Autowired
 	public StaffController( StaffService staffService) {
 		super();
-	
 		this.staffService = staffService;
 	}
 	
