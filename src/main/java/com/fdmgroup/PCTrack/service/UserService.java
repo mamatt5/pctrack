@@ -28,9 +28,18 @@ public class UserService {
 		return this.userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Username not found."));
 	}
 	
-	public User findUserUsername(String username) { 
-		return this.userRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("Username not found."));
-	} 
+	public User findByUsername(String username) {
+		return this.userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Username not found"));
+	}
+	
+	public boolean existsByUsername(String username) {
+		try {
+			findByUsername(username);
+		} catch (RuntimeException e) {
+			return false;
+		}
+		return true;
+	}
 	
 	public void register(User newUser) {
 		if (this.userRepository.existsById(newUser.getUserId())) {

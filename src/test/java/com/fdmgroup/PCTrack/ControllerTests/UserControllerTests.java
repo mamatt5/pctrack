@@ -30,7 +30,6 @@ public class UserControllerTests {
 	UserService userService;
 	@Mock
 	StaffService staffService;
-
 	
 	UserController userController;
 	

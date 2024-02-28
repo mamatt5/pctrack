@@ -61,6 +61,14 @@ public class Computer {
 	public void setProgramList(List<Program> programList) {
 		this.programList = programList;
 	}
+	public int programIndex(int programId) {
+		for (int i = 0; i < programList.size(); i++) {
+			if (programList.get(i).getProgramId() == programId) {
+				return i;
+			}
+		}
+		return -1;
+	}
 	@Override
 	public String toString() {
 		return "Computer [computerId=" + computerId + ", programList=" + programList + "]";

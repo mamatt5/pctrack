@@ -40,8 +40,12 @@ public class UserController {
 	
 	@PostMapping("users")
 	public User createNewUser(@RequestBody User newUser) {
-		userService.register(newUser);
-		return userService.findUserId(newUser.getUserId());
+		if (!userService.existsByUsername(newUser.getUsername())) {
+			userService.register(newUser);
+			return userService.findUserId(newUser.getUserId());
+		} else {
+			throw new RuntimeException("Username already exist");
+		}
 	}
 	
 	@PutMapping("users")

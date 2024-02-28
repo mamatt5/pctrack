@@ -32,7 +32,7 @@ public class AuthController {
     	System.out.println("princ: " + auth.getPrincipal());
     	System.out.println("creds: " + auth.getCredentials());
     	System.out.println(auth.getAuthorities());
-    	return "Hello, " + auth.getName();
+    	return auth.getName();
     }
     
     @GetMapping("adminonly")
