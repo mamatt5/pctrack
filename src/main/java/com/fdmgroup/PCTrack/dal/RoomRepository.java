@@ -13,6 +13,6 @@ import com.fdmgroup.PCTrack.model.Room;
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 	Optional<Room> findByName(String name);
 	
-//	@Query("SELECT r FROM Room r WHERE r.name LIKE CONCAT('%', :name, '%'")
-//	List<Room> searchByName(@Param("name") String name);
+	@Query("SELECT r FROM Room r WHERE r.name LIKE CONCAT('%', :name ,'%')")
+	List<Room> searchByName(@Param("name") String name);
 }
