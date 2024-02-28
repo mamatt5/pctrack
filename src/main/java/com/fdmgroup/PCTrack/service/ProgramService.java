@@ -47,6 +47,8 @@ public class ProgramService {
 	public void deleteById(int programId) {
 		if (this.programRepository.existsById(programId)) {
 			programRepository.deleteById(programId);
+		} else {
+			throw new RuntimeException("Program does not exist");
 		}
 	}
 	
