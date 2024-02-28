@@ -83,7 +83,6 @@ public class UserDataLoader implements ApplicationRunner
 		Program nodejs4 = new Program("Node.js", "20.5");
 		Program nodejs5 = new Program("Node.js", "20.9");
 		Program nodejs6 = new Program("Node.js", "20.1.0");
-
 		Program python = new Program("Python Laucher", "3.9.7427.0");
 		Program npm = new Program("NPM", "10.2.4");
 		Program npm1 = new Program("NPM", "10.2.3");
