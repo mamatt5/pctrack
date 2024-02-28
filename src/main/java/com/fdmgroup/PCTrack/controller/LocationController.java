@@ -46,6 +46,6 @@ public class LocationController {
 	
 	public void deleteLocation(@PathVariable int locationId) {
 		locationService.deleteById(locationId);
-	}
-
+	}   
+  
 }
