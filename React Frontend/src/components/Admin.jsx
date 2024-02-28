@@ -47,6 +47,11 @@ const RegisterModal = ({ openModal, setOpenModal, users }) => {
 				closeAfterTransition
 				aria-labelledby="register modal"
 				aria-describedby="opens a modal to register a user"
+                sx={{
+                    "& .MuiBackdrop-root": {
+                        backgroundColor: "rgba(0, 0, 0, 0.2)", // Adjust opacity here (0.5 for 50% darkness)
+                    },
+                }}
 			>
 				<Fade in={openModal}>
 					<Box
