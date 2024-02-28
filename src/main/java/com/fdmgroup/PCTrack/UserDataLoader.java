@@ -401,10 +401,10 @@ public class UserDataLoader implements ApplicationRunner {
     	
     	// Location admin
     	LocationAdmin locationAdmin1 = new LocationAdmin(u20, location1);
-    	LocationAdmin locationAdmin2 = new LocationAdmin(u17, location1);
-    	LocationAdmin locationAdmin3 = new LocationAdmin(u6, location2);
-    	LocationAdmin locationAdmin4 = new LocationAdmin(u7, location2);
-    	LocationAdmin locationAdmin5 = new LocationAdmin(u8, location3);
+    	LocationAdmin locationAdmin2 = new LocationAdmin(u1, location1);
+    	LocationAdmin locationAdmin3 = new LocationAdmin(u2, location2);
+    	LocationAdmin locationAdmin4 = new LocationAdmin(u3, location2);
+    	LocationAdmin locationAdmin5 = new LocationAdmin(u4, location3);
     	
     	staffService.save(locationAdmin1);
     	staffService.save(locationAdmin2);
@@ -413,11 +413,11 @@ public class UserDataLoader implements ApplicationRunner {
     	staffService.save(locationAdmin5);
     	
     	// Room admin
-    	RoomAdmin roomAdmin1 = new RoomAdmin(u14, location1);
-    	RoomAdmin roomAdmin2 = new RoomAdmin(u15, location1);
-    	RoomAdmin roomAdmin3 = new RoomAdmin(u1, location2);
-    	RoomAdmin roomAdmin4 = new RoomAdmin(u2, location3);
-    	RoomAdmin roomAdmin5 = new RoomAdmin(u3, location3);
+    	RoomAdmin roomAdmin1 = new RoomAdmin(u5, location1);
+    	RoomAdmin roomAdmin2 = new RoomAdmin(u6, location1);
+    	RoomAdmin roomAdmin3 = new RoomAdmin(u7, location2);
+    	RoomAdmin roomAdmin4 = new RoomAdmin(u8, location3);
+    	RoomAdmin roomAdmin5 = new RoomAdmin(u9, location3);
     	
     	staffService.save(roomAdmin1);
     	staffService.save(roomAdmin2);
@@ -427,11 +427,11 @@ public class UserDataLoader implements ApplicationRunner {
     	
     	
     	// Staff
-    	Staff staff1 = new Staff(u9, location1);
-    	Staff staff2 = new Staff(u10, location1);
-    	Staff staff3 = new Staff(u11, location1);
-    	Staff staff4 = new Staff(u12, location1);
-    	Staff staff5 = new Staff(u13, location1);
+    	Staff staff1 = new Staff(u10, location1);
+    	Staff staff2 = new Staff(u12, location1);
+    	Staff staff3 = new Staff(u13, location1);
+    	Staff staff4 = new Staff(u14, location1);
+    	Staff staff5 = new Staff(u15, location1);
     	Staff staff6 = new Staff(u16, location1);
     	
     	staffService.save(staff1);
