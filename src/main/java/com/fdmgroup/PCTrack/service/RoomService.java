@@ -35,15 +35,19 @@ public class RoomService {
 	public void deleteById(int roomId) {
 		if (this.roomRepo.existsById(roomId)) {
 			roomRepo.deleteById(roomId);
+		} else {
+			throw new RuntimeException("Room not found");
 		}
 	}
 
 	public void update(Room newRoom) {
 		if (this.roomRepo.existsById(newRoom.getRoomId())) {
 			this.roomRepo.save(newRoom);
+		
 		} else {
 			throw new RuntimeException("Room does not exist");
 		}
+		
 	}
 }
 

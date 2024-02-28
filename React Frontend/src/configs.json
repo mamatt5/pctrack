@@ -1,6 +1,6 @@
 {
-    "NAME": "PCtrack",
-    "PORT": 8080,
+    "NAME": "PCTrack",
+    "PORT": 8181,
     "LOCATIONS": [
         "APAC",
         "Hong Kong",

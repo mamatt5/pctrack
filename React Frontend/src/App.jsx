@@ -5,45 +5,40 @@ import { ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material";
 //pages
 
-//pages
 import Login from "./components/Login";
 import Admin from "./components/Admin";
-import Home from "./components/Home";
 import LoggedInHomePage from "./components/LoggedInHomePage";
 import { SearchComputerPage } from "./components/SearchComputerPage";
 import { SearchRoomPage } from "./components/SearchRoomPage";
 import { SearchSoftwarePage } from "./components/SearchSoftwarePage";
 import UpdateDetailsPage from "./components/UpdateDetailsPage";
+import NavBar from "./partials/NavBar";
 
 function App() {
 
 	const defaultTheme = createTheme({
 		palette: {
 		  background: {
-			default : "#e3f2fd",
-		  } 
+			default : "white", //#e3f2fd
+		  }
 		},
 	  });
 
 	return (
-		<>
+		<div  >
 			<ThemeProvider theme={defaultTheme} >
 			<Router>
 				<Routes>
-					<Route path="/" element={<Home />} />
+					<Route path="/" element={<Login />} />
 					<Route path="/login" element={<Login />} />
-					<Route path="/admin" element={<Admin />} />
-					
-					<Route path="/home" element={<LoggedInHomePage />} />
-					<Route path="/searchroom" element={<SearchRoomPage />} />
-					<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
-					<Route path="/searchcomputer" element={<SearchComputerPage />} />
-					<Route path="/updatedetails" element={<UpdateDetailsPage />} />
+					<Route path="/home/:id/*" element={<LoggedInHomePage />} />
+
 				</Routes>
-      
+
 			</Router>
 			</ThemeProvider>
-		</>
+
+		</div>
 	);
 }
 
