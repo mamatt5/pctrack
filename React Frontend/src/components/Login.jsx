@@ -4,11 +4,11 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import callApi from "../api/callApi";
+import { Typography } from "@mui/material";
 
 // outside to prevent reredner
 let username = "";
 let password = "";
-
 
 /**
  * @returns
@@ -56,16 +56,19 @@ const login = () => {
 		// check if its staff or admin.
 		const config = {
 			method: "get",
-			endpoint: `username/${username}`
+			endpoint: `username/${username}`,
 		};
 
 		// if we cant find the user, its a username issue
 		// if we can, its a password issue.
-		callApi((res) => {
-			console.log(res)
-			navigate(`/home/${res.userId}`);
-		}, null, config);
-
+		callApi(
+			(res) => {
+				console.log(res);
+				navigate(`/home/${res.userId}`);
+			},
+			null,
+			config
+		);
 	};
 
 	//
@@ -75,7 +78,7 @@ const login = () => {
 		console.log(username);
 		const config = {
 			method: "get",
-			endpoint: `username/${username}`
+			endpoint: `username/${username}`,
 		};
 
 		// if we cant find the user, its a username issue
@@ -94,9 +97,11 @@ const login = () => {
 
 	return (
 		<div className="centerHorizonal">
-			<Box style={{ left: 0 }}>PC Track</Box>
-			<Box sx={{ border: "1px solid black", borderRadius: "10px" }}>
-				<Box>Login</Box>
+			<Box style={{ left: 0 }}>
+				<Typography variant="h5" sx={{padding:"1rem"}}>PC Track</Typography>
+			</Box>
+			<Box sx={{ border: "1px solid black", borderRadius: "10px", width:"30vw" }}>
+				<Box><Typography variant="h6" sx={{padding:"0.5rem"}}>Login</Typography></Box>
 				<form onSubmit={checkLogin} className="flexCol">
 					<TextField
 						error={Boolean(usernameError)}
@@ -104,6 +109,7 @@ const login = () => {
 						name="username"
 						label="Username"
 						onChange={(e) => checkInput("username", e.target.value)}
+						sx={{ margin: "0.5rem" }}
 					/>
 					<TextField
 						error={Boolean(passwordError)}
@@ -111,8 +117,9 @@ const login = () => {
 						name="password"
 						label="Password"
 						onChange={(e) => checkInput("password", e.target.value)}
+						sx={{ margin: "0.5rem" }}
 					/>
-					<Button type="submit" variant="contained" disabled={!formValid} disableElevation>
+					<Button type="submit" variant="contained" disabled={!formValid} disableElevation sx={{margin:"2rem"}}>
 						Login
 					</Button>
 				</form>
