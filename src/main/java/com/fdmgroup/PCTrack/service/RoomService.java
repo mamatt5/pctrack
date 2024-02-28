@@ -39,8 +39,11 @@ public class RoomService {
 	}
 
 	public void update(Room newRoom) {
-		// TODO Auto-generated method stub
-		
+		if (this.roomRepo.existsById(newRoom.getRoomId())) {
+			this.roomRepo.save(newRoom);
+		} else {
+			throw new RuntimeException("Room does not exist");
+		}
 	}
 }
 
