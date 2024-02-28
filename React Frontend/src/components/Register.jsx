@@ -7,6 +7,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { Typography } from "@mui/material";
 import callApi from "../api/callApi";
+import { useEffect } from "react";
 
 const fields = ["firstName", "lastName", "password"];
 let formData = {
@@ -29,12 +30,41 @@ const getUsername = (users, first, last) => {
 	return `${first}.${last}${count}`;
 };
 
+const getLocations = (setLocations) => {
+	const config = {
+		method: "get",
+		endpoint: "locations",
+	};
+	callApi(
+		(locations) => {
+			setLocations(locations);
+		},
+		null,
+		config
+	);
+};
+
 const Register = ({ users, setOpenModal }) => {
 	console.log(users);
+	const [locations, setLocations] = useState([]);
 	const [firstNameErr, setFirstNameErr] = useState("");
 	const [lastNameErr, setLastNameErr] = useState("");
 	const [passwordErr, setPasswordError] = useState("");
 	const [formValid, setFormValid] = useState(false);
+	const [checkedValues, setCheckedValues] = useState({});
+
+	// Getting locatiosn
+
+	useEffect(() => {
+		getLocations(setLocations);
+
+		let locs = {};
+		locations.forEach((location) => {
+			console.log(location);
+			locs[location.city] = false;
+		});
+		setCheckedValues(locs);
+	}, []);
 
 	// checks if all fields are filled
 	const isFormValid = () => {
@@ -83,39 +113,48 @@ const Register = ({ users, setOpenModal }) => {
 				lastName: lastName,
 			},
 		};
-		console.log("hueh")
+		console.log("hueh");
 		callApi(createStaff, null, config);
-
 	};
 
 	// TO DO!!
-	/**
-	 *
-	 *
-	 *
-	 * location id 1 for now.... got lazy getting all locations.
-	 *
-	 */
+
 	const createStaff = (data) => {
-		console.log("huseh")
+		console.log(checkedValues);
+		console.log("huseh");
 		console.log(data);
-		const config = {
-			method: "post",
-			endpoint: "staff",
-			data: {
-				user: {
-					userId: data.userId,
+
+		// make new staff for each ticked location
+
+		Object.entries(checkedValues).forEach(([city, checked]) => {
+			console.log(city, checked);
+			let id = locations.find((location) => location.city === city).locationId;
+			console.log(id);
+			const config = {
+				method: "post",
+				endpoint: "staff",
+				data: {
+					user: {
+						userId: data.userId,
+					},
+					location: {
+						locationId: id,
+					},
+					adminLevel: null,
 				},
-				location: {
-					locationId: 1,
+			};
+
+			callApi(
+				() => {
+					setOpenModal(false);
 				},
-				adminLevel: null,
-			},
-		};
-		console.log("hi");
-		callApi(() => {setOpenModal(false)}, null, config);
+				null,
+				config
+			);
+		});
 	};
 
+	// checklist
 	const checkInput = (field, value) => {
 		setFirstNameErr("");
 		setLastNameErr("");
@@ -126,13 +165,6 @@ const Register = ({ users, setOpenModal }) => {
 		console.log(formData);
 		setFormValid(isFormValid());
 	};
-
-	// Checkbox State Handling
-	const [checkedValues, setCheckedValues] = useState({
-		APAC: false,
-		HongKong: false,
-		Singapore: false,
-	});
 
 	const handleCheck = (event) => {
 		setCheckedValues({
@@ -146,6 +178,9 @@ const Register = ({ users, setOpenModal }) => {
 		setFormValid(isFormValid());
 	};
 
+	//
+
+	console.log(checkedValues);
 	return (
 		<>
 			<Box sx={{ border: "1px solid black", borderRadius: "10px", width: "40vw", padding: "5%" }}>
@@ -176,32 +211,23 @@ const Register = ({ users, setOpenModal }) => {
 					<Typography>Office</Typography>
 					<Box className="flexRow" sx={{ alignItems: "center" }}>
 						<FormGroup>
-							<FormControlLabel
-								control={
-									<Checkbox checked={checkedValues.APAC} onChange={handleCheck} name="APAC" />
-								}
-								label="APAC"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={checkedValues.HongKong}
-										onChange={handleCheck}
-										name="HongKong"
-									/>
-								}
-								label="Hong Kong"
-							/>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={checkedValues.Singapore}
-										onChange={handleCheck}
-										name="Singapore"
-									/>
-								}
-								label="Singapore"
-							/>
+							{locations.map(
+								(item) => (
+									console.log(item),
+									(
+										<FormControlLabel
+											control={
+												<Checkbox
+													checked={checkedValues.APAC}
+													onChange={handleCheck}
+													name={item.city}
+												/>
+											}
+											label={item.city}
+										/>
+									)
+								)
+							)}
 						</FormGroup>
 					</Box>
 					<Box className="centerHorizonal">
