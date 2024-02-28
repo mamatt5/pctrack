@@ -24,6 +24,11 @@ public class RoomController {
 		return roomService.findAllRooms();
 	}
 	
+	@GetMapping("rooms/search/{name}")
+	public List<Room> searchByName(@PathVariable String name) {
+		return roomService.searchByName(name);
+	}
+	
 	@GetMapping("rooms/{roomId}")
 	public Room findById(@PathVariable int roomId) {
 		return roomService.findById(roomId);
