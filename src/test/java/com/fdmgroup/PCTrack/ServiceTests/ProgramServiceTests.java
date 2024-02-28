@@ -43,7 +43,7 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void save_user_test() {
+	void save_program_test() {
 		
 		Program sql8wb = new Program("MySQL 8 Workbench", "8.0.32");
 		
@@ -52,7 +52,7 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void save_multiple_users_test() {
+	void save_multiple_program_test() {
 		
 
 		Program microsoftSSMS = new Program("Microsoft MySQL", "15.0.18333.0");
@@ -87,7 +87,7 @@ public class ProgramServiceTests {
 	
 	
 	@Test
-	void find_all_user_test() {
+	void find_all_program_test() {
 		
 	
 		Program git = new Program("Git", "2.27.0");
@@ -110,7 +110,7 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_test() {
+	void find_program_by_id_test() {
 	
 		Optional<Program> sql8wb = Optional.of(new Program("MySQL 8 Workbench", "8.0.32"));
 
@@ -123,14 +123,14 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_fail_test() {
+	void find_program_by_id_fail_test() {
 
 		assertThrows(RuntimeException.class, () -> programService.findById(1));
 		verify(programRepo, times(1)).findById(1);
 	}
 	
 	@Test
-	void update_user_test() {
+	void update_program_test() {
 		
 		Program microsoftSSMS = new Program("Microsoft MySQL", "15.0.18333.0");
 		microsoftSSMS.setProgramId(1);
@@ -144,7 +144,7 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void update_user_fail_test() {
+	void update_program_fail_test() {
 		
 		Program nodejs3 = new Program("Node.js", "20.2.0");
 		nodejs3.setProgramId(1);
@@ -157,7 +157,7 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void delete_user_test() {
+	void delete_program_test() {
 		
 		when(programRepo.existsById(1)).thenReturn(true);
 		
@@ -169,7 +169,7 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void delete_user_fail_test() {
+	void delete_program_fail_test() {
 		
 		when(programRepo.existsById(1)).thenReturn(false);
 		

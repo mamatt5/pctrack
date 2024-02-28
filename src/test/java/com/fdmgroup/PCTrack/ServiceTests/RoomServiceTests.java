@@ -33,7 +33,7 @@ public class RoomServiceTests {
 	RoomService roomService;
 	
 	Location location1;
-	Room room1;
+
 	
 	@BeforeEach
 	void setup() {
@@ -43,21 +43,18 @@ public class RoomServiceTests {
 	}
 	
 	@Test
-	void save_user_test() {
+	void save_room_test() {
 		
 		Room room1 = new Room("Bondi", location1);
-        Room room2 = new Room("Coogee", location1);
-        Room room3 = new Room("Balmoral",location1);
-        Room room4 = new Room("Bronte",location1);
-        Room room5 = new Room("Tamarama",location1);
-       
+
+     
 		
 		roomService.save(room1);
 		verify(roomRepo, times(1)).save(room1);
 	}
 	
 	@Test
-	void save_multiple_users_test() {
+	void save_multiple_room_test() {
 		
 
 		Room room1 = new Room("Bondi", location1);
@@ -88,7 +85,7 @@ public class RoomServiceTests {
 	
 	
 	@Test
-	void find_all_user_test() {
+	void find_all_room_test() {
 		
 	
 		Room room1 = new Room("Bondi", location1);
@@ -116,7 +113,7 @@ public class RoomServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_test() {
+	void find_room_by_id_test() {
 		
 		Optional<Room> room1 = Optional.of(new Room("Balmoral", location1));
 
@@ -129,14 +126,14 @@ public class RoomServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_fail_test() {
+	void find_room_by_id_fail_test() {
 
 		assertThrows(RuntimeException.class, () -> roomService.findById(1));
 		verify(roomRepo, times(1)).findById(1);
 	}
 	
 	@Test
-	void update_user_test() {
+	void update_room_test() {
 		
 		Room room1 = new Room("Bondi", location1);
 		room1.setRoomId(1);
@@ -150,7 +147,7 @@ public class RoomServiceTests {
 	}
 	
 	@Test
-	void update_user_fail_test() {
+	void update_room_fail_test() {
 		
 		Room room1 = new Room("Bondi", location1);
 		room1.setRoomId(1);
@@ -164,7 +161,7 @@ public class RoomServiceTests {
 	}
 	
 	@Test
-	void delete_user_test() {
+	void delete_room_test() {
 		
 		when(roomRepo.existsById(1)).thenReturn(true);
 		
@@ -176,7 +173,7 @@ public class RoomServiceTests {
 	}
 	
 	@Test
-	void delete_user_fail_test() {
+	void delete_room_fail_test() {
 		
 		when(roomRepo.existsById(1)).thenReturn(false);
 		

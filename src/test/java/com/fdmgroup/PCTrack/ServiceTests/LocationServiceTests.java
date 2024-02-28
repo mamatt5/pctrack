@@ -33,9 +33,8 @@ public class LocationServiceTests {
 	LocationRepository locationRepo;
 	
 	LocationService locationService;
-	
 	Location location1;
-	Room room1;
+
 	
 	@BeforeEach
 	void setup() {
@@ -45,7 +44,7 @@ public class LocationServiceTests {
 	}
 	
 	@Test
-	void save_user_test() {
+	void save_location_test() {
 		
 		Location location1 = new Location("FDM Sydney", "Sydney");
 		
@@ -54,7 +53,7 @@ public class LocationServiceTests {
 	}
 	
 	@Test
-	void save_multiple_users_test() {
+	void save_multiple_location_test() {
 		
 
 		Location location1 = new Location("FDM Sydney", "Sydney");
@@ -77,7 +76,7 @@ public class LocationServiceTests {
 	
 	
 	@Test
-	void find_all_user_test() {
+	void find_all_location_test() {
 		
 	
 		Location location1 = new Location("FDM Sydney", "Sydney");
@@ -100,7 +99,7 @@ public class LocationServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_test() {
+	void find_location_by_id_test() {
 		
 		Optional<Location> location1 = Optional.of(new Location("FDM Sydney", "Sydney"));
 
@@ -113,14 +112,14 @@ public class LocationServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_fail_test() {
+	void find_location_by_id_fail_test() {
 
 		assertThrows(RuntimeException.class, () -> locationService.findById(1));
 		verify(locationRepo, times(1)).findById(1);
 	}
 	
 	@Test
-	void update_user_test() {
+	void update_location_test() {
 		
 		Location location1 = new Location("FDM Sydney", "Sydney");
 		location1.setLocationId(1);
@@ -134,7 +133,7 @@ public class LocationServiceTests {
 	}
 	
 	@Test
-	void update_user_fail_test() {
+	void update_location_fail_test() {
 		
 		Location location1 = new Location("FDM Sydney", "Sydney");
 		location1.setLocationId(1);
@@ -147,7 +146,7 @@ public class LocationServiceTests {
 	}
 	
 	@Test
-	void delete_user_test() {
+	void delete_location_test() {
 		
 		when(locationRepo.existsById(1)).thenReturn(true);
 		
@@ -159,7 +158,7 @@ public class LocationServiceTests {
 	}
 	
 	@Test
-	void delete_user_fail_test() {
+	void delete_location_fail_test() {
 		
 		when(locationRepo.existsById(1)).thenReturn(false);
 		

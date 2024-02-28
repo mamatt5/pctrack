@@ -51,7 +51,7 @@ public class ComputerServiceTests {
 	}
 	
 	@Test
-	void save_user_test() {
+	void save_computer_test() {
 		
 		Computer computer1 = new Computer(15040, room1);
 		
@@ -60,7 +60,7 @@ public class ComputerServiceTests {
 	}
 	
 	@Test
-	void save_multiple_users_test() {
+	void save_multiple_computers_test() {
 		
 
 		Computer computer1 = new Computer(15040, room1);
@@ -85,7 +85,7 @@ public class ComputerServiceTests {
 	
 	
 	@Test
-	void find_all_user_test() {
+	void find_all_computer_test() {
 		
 	
 		Computer computer1 = new Computer(15040, room1);
@@ -108,7 +108,7 @@ public class ComputerServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_test() {
+	void find_computer_by_id_test() {
 		
 		Optional<Computer> computer1 = Optional.of(new Computer(15040, room1));
 
@@ -121,14 +121,14 @@ public class ComputerServiceTests {
 	}
 	
 	@Test
-	void find_user_by_id_fail_test() {
+	void find_computer_by_id_fail_test() {
 
 		assertThrows(RuntimeException.class, () -> computerService.findById(1));
 		verify(computerRepo, times(1)).findById(1);
 	}
 	
 	@Test
-	void update_user_test() {
+	void update_computer_test() {
 		
 		Computer computer1 = new Computer(15040, room1);
 		computer1.setComputerId(1);
@@ -142,7 +142,7 @@ public class ComputerServiceTests {
 	}
 	
 	@Test
-	void update_user_fail_test() {
+	void update_computer_fail_test() {
 		
 		Computer computer1 = new Computer(15040, room1);
 		computer1.setComputerId(1);
@@ -155,7 +155,7 @@ public class ComputerServiceTests {
 	}
 	
 	@Test
-	void delete_user_test() {
+	void delete_computer_test() {
 		
 		when(computerRepo.existsById(1)).thenReturn(true);
 		
@@ -167,7 +167,7 @@ public class ComputerServiceTests {
 	}
 	
 	@Test
-	void delete_user_fail_test() {
+	void delete_computer_fail_test() {
 		
 		when(computerRepo.existsById(1)).thenReturn(false);
 		
