@@ -24,6 +24,11 @@ public class RoomController {
 		return roomService.findAllRooms();
 	}
 	
+	@GetMapping("rooms/search/{name}")
+	public List<Room> searchByName(@PathVariable String name) {
+		return roomService.searchByName(name);
+	}
+	
 	@GetMapping("rooms/{roomId}")
 	public Room findById(@PathVariable int roomId) {
 		return roomService.findById(roomId);
@@ -41,7 +46,7 @@ public class RoomController {
 		return roomService.findById(newRoom.getRoomId());
 	}
 	
-	@DeleteMapping("rooms/{roomdId")
+	@DeleteMapping("rooms/{roomdId}")
 	public void deleteRoom(@PathVariable int roomId) {
 		roomService.deleteById(roomId);
 	}

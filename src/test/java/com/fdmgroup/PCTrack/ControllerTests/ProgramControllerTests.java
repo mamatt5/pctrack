@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fdmgroup.PCTrack.controller.ProgramController;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.ProgramService;
 
 import org.mockito.Mock;
@@ -27,12 +28,14 @@ public class ProgramControllerTests {
 	
 	@Mock
 	ProgramService programService;
+	@Mock
+	ComputerService computerService;
 	
 	ProgramController programController;
 	
 	@BeforeEach
 	void setup() {
-		this.programController = new ProgramController(programService);
+		this.programController = new ProgramController(programService, computerService);
 	}
 	
 	@Test

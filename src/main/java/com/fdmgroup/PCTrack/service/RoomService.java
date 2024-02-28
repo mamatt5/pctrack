@@ -24,6 +24,10 @@ public class RoomService {
 		return this.roomRepo.findById(RoomId).orElseThrow(() -> new RuntimeException("Room not found"));
 	}
 	
+	public List<Room> searchByName(String name) {
+		return this.roomRepo.searchByName(name);
+	}
+	
 	public void save(Room newRoom) {
 		if (this.roomRepo.existsById(newRoom.getRoomId())) {
 			throw new RuntimeException("Room already exists");

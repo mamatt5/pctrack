@@ -33,12 +33,7 @@ public class UserService {
 	}
 	
 	public boolean existsByUsername(String username) {
-		try {
-			findByUsername(username);
-		} catch (RuntimeException e) {
-			return false;
-		}
-		return true;
+		return this.userRepository.existsByUsername(username);
 	}
 	
 	public void register(User newUser) {
