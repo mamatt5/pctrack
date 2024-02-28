@@ -363,9 +363,12 @@ public class UserDataLoader implements ApplicationRunner {
 //		        c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36, c37,
 //		        c38, c39, c40, c41, c42, c43, c44, c45, c46, c47, c48, c49, c50, c51, c52, c53, c54, c55, c56, c57));
         
-        User u1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
-        User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(2023, 11, 27));
-        User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(2023, 11, 27));
+		
+		// no need to manuualy add date
+		User u0 = new User("admin1", "0000!!", "Root", "Admin");
+        User u1 = new User("andy.joe", "password123", "Andy", "Joe");
+        User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
+        User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion");
         User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
         User u5 = new User("blitzcrank.botter", "password123", "Blitzcrank", "Botter", LocalDate.of(2023, 11, 27));
         User u6 = new User("baron.nashor", "password123", "Baron", "Nashor", LocalDate.of(2023, 11, 27));
@@ -384,16 +387,16 @@ public class UserDataLoader implements ApplicationRunner {
     	User u18 = new User("carolina.portugal", "password123", "Carolina", "Portugal", LocalDate.of(2023, 11, 27));
     	User u19 = new User("alex.zlatevska", "password123", "Aleksandra", "Zlatevska", LocalDate.of(2023, 11, 27));
     	User u20 = new User("joe.mclaren", "password123", "Joe", "Mclaren", LocalDate.of(2023, 11, 27));
-    	User u21 = new User("rod.flavell", "password123", "Rod", "Flavell", LocalDate.of(2023, 11, 27));
+    	
         
-    	List<User> users = Arrays.asList(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21);
+    	List<User> users = Arrays.asList(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20);
     	
     	for (User user : users) {
     		userService.register(user);
     	}
         
     	// Business admin
-    	BusinessAdmin businessAdmin = new BusinessAdmin(u21, location1);
+    	BusinessAdmin businessAdmin = new BusinessAdmin(u0, location1);
     	staffService.save(businessAdmin);
     	
     	// Location admin

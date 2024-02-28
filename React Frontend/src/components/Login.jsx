@@ -3,67 +3,107 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import callApi from "../api/callApi";
 
 // outside to prevent reredner
-let email = "";
+let username = "";
 let password = "";
 
-// logs a user in
+
 /**
- *
- *
  * @returns
  */
 const login = () => {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-	const [emailError, setEmailError] = useState("");
+	const [usernameError, setusernameError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [formValid, setFormValid] = useState(false);
 
 	const checkInput = (field, value) => {
 		console.log(value);
-		if (field === "email") email = value;
+		if (field === "username") username = value;
 		else if (field === "password") password = value;
 
 		// Check overall form validity
-		setFormValid(email !== "" && password !== "");
+		setFormValid(username !== "" && password !== "");
 		console.log(formValid);
 	};
 
 	const checkLogin = (e) => {
 		e.preventDefault();
+
 		const data = new FormData(e.currentTarget);
-		const email = data.get("email").trim();
+		const username = data.get("username").trim();
 		const password = data.get("password").trim();
-		if (email !== "admin") {
-			setEmailError("* Email not found");
-		} else if (password == "") {
-			setPasswordError("* Password incorrect");
-		} else {
-            loginUser("Sd", "admin")
-        }
+
+		const config = {
+			method: "post",
+			endpoint: "auth/login",
+			auth: {
+				username: username,
+				password: password,
+			},
+		};
+
+		callApi(loginUser, loginError, config, username);
 	};
 
 	// store token in local storage if a user logs in
 	// when login out, make sure to delete from local storage
 	const loginUser = (bearerToken, username) => {
-		// localStorage.setItem("token", bearerToken);
-        navigate(`/admin`)
+		localStorage.setItem("token", bearerToken);
+		// check if its staff or admin.
+		const config = {
+			method: "get",
+			endpoint: `username/${username}`
+		};
+
+		// if we cant find the user, its a username issue
+		// if we can, its a password issue.
+		callApi((res) => {
+			console.log(res)
+			navigate(`/home/${res.userId}`);
+		}, null, config);
+
+	};
+
+	//
+	const loginError = (error) => {
+		setusernameError("");
+		setPasswordError("");
+		console.log(username);
+		const config = {
+			method: "get",
+			endpoint: `username/${username}`
+		};
+
+		// if we cant find the user, its a username issue
+		// if we can, its a password issue.
+		// console.log(error);
+		callApi(
+			() => {
+				setPasswordError("* Incorrect Password");
+			},
+			() => {
+				setusernameError("* Username does not exist");
+			},
+			config
+		);
 	};
 
 	return (
-		<>
+		<div className="centerHorizonal">
 			<Box style={{ left: 0 }}>PC Track</Box>
 			<Box sx={{ border: "1px solid black", borderRadius: "10px" }}>
 				<Box>Login</Box>
 				<form onSubmit={checkLogin} className="flexCol">
 					<TextField
-						error={Boolean(emailError)}
-						helperText={emailError ? emailError : ""}
-						name="email"
-						label="Email"
-						onChange={(e) => checkInput("email", e.target.value)}
+						error={Boolean(usernameError)}
+						helperText={usernameError ? usernameError : ""}
+						name="username"
+						label="Username"
+						onChange={(e) => checkInput("username", e.target.value)}
 					/>
 					<TextField
 						error={Boolean(passwordError)}
@@ -77,8 +117,7 @@ const login = () => {
 					</Button>
 				</form>
 			</Box>
-			<Home/>
-		</>
+		</div>
 	);
 };
 

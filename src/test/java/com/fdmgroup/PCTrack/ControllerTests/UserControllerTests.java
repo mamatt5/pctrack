@@ -28,6 +28,8 @@ public class UserControllerTests {
 	
 	@Mock
 	UserService userService;
+	@Mock
+	StaffService staffService;
 	
 	@Mock
 	StaffService staffService;
