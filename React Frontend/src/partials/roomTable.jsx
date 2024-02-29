@@ -13,6 +13,8 @@ import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 import { useState } from 'react';
 import { Modal } from '@mui/material';
 import { Box } from '@mui/material';
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,7 +56,7 @@ export default function CustomizedTables({array}) {
 
     const [mandateModal, setMandateModal] = useState(false)
     const [render, setRender] = useState(false)
-
+    const navigate = useNavigate();
 
 
     const openModal = () => {
@@ -67,6 +69,10 @@ export default function CustomizedTables({array}) {
 
     const t = () => {
       setRender(true)
+    }
+
+    const goToComputerPage = () => {
+      navigate("/viewcomputerroom")
     }
 
   return (
@@ -87,7 +93,9 @@ export default function CustomizedTables({array}) {
           <StyledTableCell align="left" sx={{ width: '100px' }}>
 
 
-            <IconButton size="small">
+            <IconButton size="small" onClick={() => {
+              navigate("/viewcomputerroom", { state: row })
+            }}>
               <ManageSearchIcon />
             </IconButton>
 
@@ -108,8 +116,9 @@ export default function CustomizedTables({array}) {
           <Box sx={style}>
             <h1>Create Mandate</h1>
             <p>Look at console for room information</p>
+            <p>Background is not meant to go black when opening this menu but idk how to fix atm</p>
             {console.log(row)}
-            
+
           </Box>
         </Modal>
         
