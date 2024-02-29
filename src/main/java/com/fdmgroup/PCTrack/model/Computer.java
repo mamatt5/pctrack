@@ -55,6 +55,12 @@ public class Computer {
 	{
 		this.computerCode = computerCode;
 	}
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 	public List<Program> getProgramList() {
 		return programList;
 	}

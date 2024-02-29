@@ -9,7 +9,7 @@ import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.service.ComputerService;
 
 @RestController
-@CrossOrigin("http://localhost:5813")
+@CrossOrigin("http://localhost:5173")
 public class ComputerController {
 	
 	private ComputerService computerService;
