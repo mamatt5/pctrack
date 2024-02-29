@@ -7,6 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { IconButton } from '@mui/material';
+import DeviceHubIcon from '@mui/icons-material/DeviceHub';
+import { useState } from 'react';
+import { Modal } from '@mui/material';
+import { Box } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,33 +34,91 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 700,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  padding: 6,
+  borderRadius: 8,
+
+};
+
+
 export default function CustomizedTables({array}) {
     console.log(array)
-  return (
-    <TableContainer component={Paper} sx={{maxWidth:"70vw"}}>
-      <Table sx={{ minWidth: 70 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="left">Location</StyledTableCell>
-            <StyledTableCell align="left">Name</StyledTableCell>
-        
-            <StyledTableCell align="right">Button to Look into Room</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {array.map((row) => (
-            <StyledTableRow key={row.name}>
 
-              <StyledTableCell align="left">{row.location.name}</StyledTableCell>
-              <StyledTableCell align="left">{row.name}</StyledTableCell>
-              <StyledTableCell align="right" component="th" scope="row">
-                {row.name}
-                edit
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+
+    const [mandateModal, setMandateModal] = useState(false)
+    const [render, setRender] = useState(false)
+
+
+
+    const openModal = () => {
+      setMandateModal(true);
+    };
+
+    const closeModal = () => {
+      setMandateModal(false);
+    };
+
+    const t = () => {
+      setRender(true)
+    }
+
+  return (
+    <TableContainer component={Paper}  sx={{maxWidth:"40vw"}}>
+  <Table sx={{ minWidth: 700 }} aria-label="customized table">
+    <TableHead>
+      <TableRow>
+        <StyledTableCell align="left">Location</StyledTableCell>
+        <StyledTableCell align="left">Room Name</StyledTableCell>
+        <StyledTableCell align="left"></StyledTableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {array.map((row) => (
+        <><StyledTableRow key={row.name}>
+          <StyledTableCell align="left">{row.location.name}</StyledTableCell>
+          <StyledTableCell align="left">{row.name}</StyledTableCell>
+          <StyledTableCell align="left" sx={{ width: '100px' }}>
+
+
+            <IconButton size="small">
+              <ManageSearchIcon />
+            </IconButton>
+
+            <IconButton size="small" onClick={openModal}>
+              <DeviceHubIcon />
+            </IconButton>
+
+
+          </StyledTableCell>
+        </StyledTableRow>
+        
+        <Modal
+          open={mandateModal}
+          onClose={closeModal}
+          onClick={t} 
+          
+        >
+          <Box sx={style}>
+            <h1>Create Mandate</h1>
+            <p>Look at console for room information</p>
+            {console.log(row)}
+            
+          </Box>
+        </Modal>
+        
+        
+        </>
+        
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
   );
 }

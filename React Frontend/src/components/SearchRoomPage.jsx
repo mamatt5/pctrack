@@ -9,13 +9,14 @@ import axios from 'axios';
 import { Grid } from '@mui/material';
 import { Divider } from '@mui/material';
 import CustomizedTables from '../partials/roomTable'
+import { Box } from '@mui/material';
 
 export const SearchRoomPage = () => {
 
 
     
   const [rooms, setRooms] = useState([]);
-
+ 
 
   const test = (input) => {
     console.log("cancer")
@@ -44,7 +45,10 @@ export const SearchRoomPage = () => {
 
   return (
     <>
-      <CustomizedTables array={rooms} />
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <CustomizedTables array={rooms} />
+      </Box>
+
 
     </>
   )

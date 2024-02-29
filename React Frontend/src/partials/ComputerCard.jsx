@@ -58,6 +58,7 @@ const ComputerCard = () => {
           boxShadow: 20, 
           
         }, }}>
+          
           <CardActionArea onClick={openModal}>
             {/* <CardHeader title="Computer Details"/> */}
             <CardContent>
