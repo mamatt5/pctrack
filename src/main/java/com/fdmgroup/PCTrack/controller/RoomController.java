@@ -8,7 +8,7 @@ import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.RoomService;
 
 @RestController
-@CrossOrigin("http://localhost:5813")
+@CrossOrigin("http://localhost:5173")
 public class RoomController {
 	
 	private RoomService roomService;

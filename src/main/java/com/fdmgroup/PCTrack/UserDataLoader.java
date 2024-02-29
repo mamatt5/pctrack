@@ -923,6 +923,7 @@ public class UserDataLoader implements ApplicationRunner
 		c147.setProgramList(
 		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c147);
+		
 
 		// no need to manuualy add date
 		User u0 = new User("admin1", "0000!!", "Root", "Admin");

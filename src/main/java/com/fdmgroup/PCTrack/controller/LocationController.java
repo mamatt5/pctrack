@@ -14,7 +14,7 @@ import com.fdmgroup.PCTrack.service.LocationService;
 
 
 @RestController
-@CrossOrigin("http://localhost:5813")
+@CrossOrigin("http://localhost:5173")
 public class LocationController {
 	private LocationService locationService;
 

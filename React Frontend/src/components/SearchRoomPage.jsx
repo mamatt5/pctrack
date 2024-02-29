@@ -9,7 +9,6 @@ export const SearchRoomPage = () => {
      <div className='dashBoardPadding'>
         <h1>Under Construction</h1>
         <div>SearchRoomPage</div>
-        <ComputerCard />
         </div>
 
     </>
