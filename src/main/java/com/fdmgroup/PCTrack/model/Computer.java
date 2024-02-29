@@ -20,10 +20,10 @@ public class Computer {
 	joinColumns =
 	@JoinColumn(name = "FK_COMPUTER_ID"),
 	inverseJoinColumns =
-	@JoinColumn(name = "FK_PROGRAM_ID"))
-	private List<Program> programList;
+	@JoinColumn(name = "FK_PROGRAM_VERSION_ID"))
+	private List<ProgramVersion> programList;
 	
-	public Computer(int computerCode, List<Program> programList) {
+	public Computer(int computerCode, List<ProgramVersion> programList) {
 		super();
 		this.computerCode = computerCode;
 		this.programList = programList;
@@ -55,15 +55,15 @@ public class Computer {
 	{
 		this.computerCode = computerCode;
 	}
-	public List<Program> getProgramList() {
+	public List<ProgramVersion> getProgramList() {
 		return programList;
 	}
-	public void setProgramList(List<Program> programList) {
+	public void setProgramList(List<ProgramVersion> programList) {
 		this.programList = programList;
 	}
 	public int programIndex(int programId) {
 		for (int i = 0; i < programList.size(); i++) {
-			if (programList.get(i).getProgramId() == programId) {
+			if (programList.get(i).getProgramVersionId() == programId) {
 				return i;
 			}
 		}

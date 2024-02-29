@@ -20,7 +20,9 @@ import com.fdmgroup.PCTrack.controller.LocationController;
 import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.model.ProgramVersion;
 import com.fdmgroup.PCTrack.model.Room;
+import com.fdmgroup.PCTrack.model.Version;
 import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.LocationService;
 
@@ -32,9 +34,15 @@ public class ComputerControllerTests {
 	ComputerService computerService;
 	
 	ComputerController computerController;
-	Program vscode;
-	Program eclipse;
-	Program nodejs;
+	Program vscodeProgram;
+	Program eclipseProgram;
+	Program nodejsProgram;
+	Version v1;
+	Version v2;
+	Version v3;
+	ProgramVersion vscode;
+	ProgramVersion eclipse;
+	ProgramVersion nodejs;
 	Room room1;
     Room room2;
     Room room3;
@@ -44,9 +52,15 @@ public class ComputerControllerTests {
 	@BeforeEach
 	void setup() {
 		this.computerController = new ComputerController(computerService);
-		vscode = new Program("Visual Studio Code", "1.46.1");
-		eclipse = new Program("Eclipse", "4.22");
-		nodejs = new Program("Node.js", "20.11.0");
+		vscodeProgram = new Program("Visual Studio Code");
+		eclipseProgram = new Program("Eclipse");
+		nodejsProgram = new Program("Node.js");
+		v1 = new Version("1.46.1");
+		v2 = new Version("4.22");
+		v3 = new Version("20.11.0");
+		vscode = new ProgramVersion(vscodeProgram,v1);
+		eclipse = new ProgramVersion(eclipseProgram,v2);
+		nodejs = new ProgramVersion(nodejsProgram,v3);
 		location1 = new Location("FDM Sydney", "Sydney");
 		room1 = new Room("Bondi", location1);
 	    room2 = new Room("Coogee", location1);

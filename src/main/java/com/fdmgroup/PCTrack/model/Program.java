@@ -10,13 +10,10 @@ public class Program {
 	private int programId;
 	@Column(name = "NAME")
 	private String name;
-	@Column(name = "VERSION NO.")
-	private String versionNumber;
 	
-	public Program(String name, String versionNumber) {
+	public Program(String name) {
 		super();
 		this.name = name;
-		this.versionNumber = versionNumber;
 	}
 	public Program() {
 		super();
@@ -33,15 +30,10 @@ public class Program {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getVersionNumber() {
-		return versionNumber;
-	}
-	public void setVersionNumber(String versionNumber) {
-		this.versionNumber = versionNumber;
-	}
+
 	@Override
 	public String toString() {
-		return "Program [programId=" + programId + ", name=" + name + ", versionNumber=" + versionNumber + "]";
+		return "Program [programId=" + programId + ", name=" + name + "]";
 	}
 }
 
