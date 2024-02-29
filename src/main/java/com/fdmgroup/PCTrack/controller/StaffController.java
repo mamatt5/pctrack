@@ -7,7 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+import com.fdmgroup.PCTrack.model.Location;
+import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
 import com.fdmgroup.PCTrack.service.StaffService;
@@ -38,6 +39,11 @@ public class StaffController {
 	@GetMapping("staff/{userId}")
 	public List<Staff> findById(@PathVariable int userId) {
 		return staffService.findByUserId(userId);
+	}
+	
+	@GetMapping("staff/getrooms/{userId}")
+	public List<Room> findRoomsWhereStaffIsAdmin(@PathVariable int userId) {
+		return staffService.getRoomsStaffIsAdmin(userId);
 	}
 	
 	

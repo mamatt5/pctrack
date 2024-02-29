@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.fdmgroup.PCTrack.dal.StaffRepository;
+import com.fdmgroup.PCTrack.model.Location;
+import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
 
@@ -53,5 +55,10 @@ public class StaffService {
 		} else {
 			throw new RuntimeException("Staff does not exist");
 		}
+	}
+	
+	public List<Room> getRoomsStaffIsAdmin(int userId) {
+		System.out.println(userId);
+		return this.staffRepo.findRoomsStaffIsAdmin(userId);
 	}
 }
