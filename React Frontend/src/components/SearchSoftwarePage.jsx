@@ -7,7 +7,7 @@ import SoftwareTables from "../partials/SoftwareTable";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 
-const SearchSoftwarePage = () => {
+export const SearchSoftwarePage = () => {
     const [software, setSoftware] = useState([]);
 
     useEffect (() => {
@@ -48,4 +48,4 @@ const SearchSoftwarePage = () => {
       </>
     )
 }
-export default SearchSoftwarePage;
+//export default SearchSoftwarePage;
