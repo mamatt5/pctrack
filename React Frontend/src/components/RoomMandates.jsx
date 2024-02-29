@@ -1,23 +1,24 @@
-import axios from 'axios'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import callApi from '../api/callApi'
+
+const getRoomMandates = (setRoomMandates) => {
+  const config = {
+    method: 'get',
+    endpoint: `rooms/1/mandates`
+  };
+  callApi(setRoomMandates, null, config)
+}
 
 const RoomMandates = () => {
   const [roomMandates, setRoomMandates] = useState([])
   const { roomId } = useParams()
 
   useEffect(() => {
-    loadMandates()
-  })
-
-
-  const loadMandates = () => {
-    // room 1 for now
-    axios.get(`http://localhost:8181/PCTrack/rooms/3/mandates`)
-    .then(response => {setRoomMandates(response.data)})
-  }
+    getRoomMandates(setRoomMandates);
+  }, [])
 
   return (
     <>
