@@ -30,6 +30,11 @@ public class ComputerController {
 		return computerService.findById(computerId);
 	}
 	
+	@GetMapping("computers/search/{computerCode}")
+	public List<Computer> searchByComputerCode(@PathVariable int computerCode) {
+		return computerService.searchByComputerCode(computerCode);
+	}
+	
 	@PostMapping("computers")
 	public Computer createNewComputer(@RequestBody Computer newComputer) {
 		computerService.save(newComputer);
