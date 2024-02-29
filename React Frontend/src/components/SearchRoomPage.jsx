@@ -1,5 +1,6 @@
 import React from 'react'
 import NavBar from '../partials/NavBar'
+import ComputerCard from '../partials/ComputerCard'
 
 export const SearchRoomPage = () => {
 
@@ -8,6 +9,7 @@ export const SearchRoomPage = () => {
      <div className='dashBoardPadding'>
         <h1>Under Construction</h1>
         <div>SearchRoomPage</div>
+        <ComputerCard />
         </div>
 
     </>
