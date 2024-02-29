@@ -28,6 +28,11 @@ public class UserController {
 		return userService.findAllUsers();
 	}
 	
+	@GetMapping("searchUsers/{query}")
+	public List<User> getUsersPartial(@PathVariable String query) {
+		return userService.findAllUsersPartialMatch(query);
+	}
+	
 	@GetMapping("users/{userId}")
 	public User findById(@PathVariable int userId) {
 		return userService.findUserId(userId);
