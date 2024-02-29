@@ -1,7 +1,15 @@
 import React from 'react'
 import NavBar from '../partials/NavBar'
 import ComputerCard from '../partials/ComputerCard'
-import RoomMandates from './RoomMandates'
+import callApi from "../api/callApi";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { Grid } from '@mui/material';
+import { Divider } from '@mui/material';
+import CustomizedTables from '../partials/roomTable'
+import { Box } from '@mui/material';
 
 export const SearchRoomPage = () => {
 
@@ -37,12 +45,10 @@ export const SearchRoomPage = () => {
 
   return (
     <>
-     <div className='dashBoardPadding'>
-        <h1>Under Construction</h1>
-        <div>SearchRoomPage</div>
-        <ComputerCard />
-        <RoomMandates />
-        </div>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <CustomizedTables array={rooms} />
+      </Box>
+
 
     </>
   )
