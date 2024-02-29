@@ -24,10 +24,11 @@ public class Mandate {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	public Mandate(Room room, LocalDate dateCreated, String description) {
+	public Mandate(Room room, RoomAdmin roomAdmin, String description) {
 		super();
 		this.room = room;
-		this.dateCreated = dateCreated;
+		this.roomAdmin = roomAdmin;
+		this.dateCreated = LocalDate.now();
 		this.description = description;
 	}
 	public Mandate() {
