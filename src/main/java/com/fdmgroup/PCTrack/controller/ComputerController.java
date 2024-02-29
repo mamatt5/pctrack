@@ -9,7 +9,7 @@ import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.service.ComputerService;
 
 @RestController
-@CrossOrigin("http://localhost:5813")
+@CrossOrigin("http://localhost:5173")
 public class ComputerController {
 	
 	private ComputerService computerService;
@@ -28,6 +28,11 @@ public class ComputerController {
 	@GetMapping("computers/{computerId}")
 	public Computer findById(@PathVariable int computerId) {
 		return computerService.findById(computerId);
+	}
+	
+	@GetMapping("computers/search/{computerCode}")
+	public List<Computer> searchByComputerCode(@PathVariable int computerCode) {
+		return computerService.searchByComputerCode(computerCode);
 	}
 	
 	@PostMapping("computers")
