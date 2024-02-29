@@ -37,6 +37,25 @@ const ComputerCard = (props) => {
         setRender(true)
     }
 
+    const getColor = (computer) => {
+
+        switch(computer.role) {
+            case 'NONE':
+                return 'red'
+
+            case 'BI':
+            case 'DEV':
+                return 'yellow';
+            
+            case 'BOTH':
+                return 'green';
+
+            default:
+                return 'gray'
+        }
+        
+    }
+
     return (
         <Card sx={{
             maxWidth: 130,
@@ -51,11 +70,15 @@ const ComputerCard = (props) => {
                 boxShadow: 20,
 
             },
+
+            backgroundColor: getColor(computer),
+            margin: '5px'
         }}>
-            <CardActionArea onClick={openModal}>
+            <CardActionArea onClick={openModal} co>
                 {/* <CardHeader title="Computer Details"/> */}
                 <CardContent>
-
+                    {computer.role === 'DEV' && <div style={{ textAlign: 'center' }}>DEV</div>}
+                    {computer.role === 'BI' && <div style={{ textAlign: 'center' }}>BI</div>}
                     <ComputerTwoToneIcon sx={{ fontSize: 100 }} />
                     <div style={{ textAlign: 'center' }}>{computer.computerCode}</div>
 

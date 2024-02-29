@@ -2,10 +2,14 @@ package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.fdmgroup.PCTrack.dal.StaffRepository;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
+
 
 @Service
 public class StaffService {
@@ -20,6 +24,23 @@ public class StaffService {
 		return this.staffRepo.findAll();
 	}
 	
+	public Page<Staff> getStaffPage(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return this.staffRepo.findAll(pageable);
+    }
+	
+	public Page<Staff> findAllUsersPartialMatch(String query, int pageNumber, int pageSize) {
+		   Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		return this.staffRepo.findPartial(query, pageable);
+	}
+	
+	public long staffCount() {
+		return this.staffRepo.count();
+	}
+
+	public long staffCountPartial(String query) {
+		return this.staffRepo.countByUsernameLike(query);
+	}
 	public Staff findByStaffId(int staffId) {
 		return this.staffRepo.findById(staffId).orElseThrow(() -> new RuntimeException("Staff not found."));
 	}
