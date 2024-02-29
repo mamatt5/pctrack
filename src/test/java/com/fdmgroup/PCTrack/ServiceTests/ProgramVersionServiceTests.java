@@ -4,12 +4,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.dal.LocationRepository;
-import com.fdmgroup.PCTrack.dal.ProgramRepository;
+import com.fdmgroup.PCTrack.dal.ProgramVersionRepository;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.model.ProgramVersion;
 import com.fdmgroup.PCTrack.model.Room;
+import com.fdmgroup.PCTrack.model.Version;
 import com.fdmgroup.PCTrack.service.LocationService;
-import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.ProgramVersionService;
 
 import org.mockito.Mock;
 
@@ -27,25 +29,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @ExtendWith(MockitoExtension.class)
-public class ProgramServiceTests {
+public class ProgramVersionServiceTests {
 	@Mock
-	ProgramRepository programRepo;
+	ProgramVersionRepository programRepo;
 	
-	ProgramService programService;
+	ProgramVersionService programService;
 	
 
 	
 	@BeforeEach
 	void setup() {
 		
-		this.programService = new ProgramService(programRepo);
+		this.programService = new ProgramVersionService(programRepo);
 		
 	}
 	
 	@Test
 	void save_program_test() {
 		
-		Program sql8wb = new Program("MySQL 8 Workbench");
+		ProgramVersion sql8wb = new ProgramVersion(new Program("MySQL 8 Workbench"), new Version("8.0.32"));
 		
 		programService.save(sql8wb);
 		verify(programRepo, times(1)).save(sql8wb);
@@ -55,12 +57,12 @@ public class ProgramServiceTests {
 	void save_multiple_program_test() {
 		
 
-		Program microsoftSSMS = new Program("Microsoft MySQL");
-		Program pnpm = new Program("PNPM");
-		Program git = new Program("Git");
-		Program sql8wb = new Program("MySQL 8 Workbench");
-		Program sqlShell = new Program("MySQL Shell");
-		Program powerBi = new Program("PowerBi");
+		ProgramVersion microsoftSSMS = new ProgramVersion(new Program("Microsoft MySQL"), new Version("15.0.18333.0"));
+		ProgramVersion pnpm = new ProgramVersion(new Program("PNPM"), new Version("8.15.4"));
+		ProgramVersion git = new ProgramVersion(new Program("Git"), new Version("2.27.0"));
+		ProgramVersion sql8wb = new ProgramVersion(new Program("MySQL 8 Workbench"), new Version("8.0.32"));
+		ProgramVersion sqlShell = new ProgramVersion(new Program("MySQL Shell"), new Version("8.0.32"));
+		ProgramVersion powerBi = new ProgramVersion(new Program("PowerBi"), new Version("2.126.927.0"));
 		
       
 		
@@ -90,35 +92,35 @@ public class ProgramServiceTests {
 	void find_all_program_test() {
 		
 	
-		Program git = new Program("Git");
-		Program sql8wb = new Program("MySQL 8 Workbench");
-		Program sqlShell = new Program("MySQL Shell");
+		ProgramVersion git = new ProgramVersion(new Program("Git"), new Version("2.27.0"));
+		ProgramVersion sql8wb = new ProgramVersion(new Program("MySQL 8 Workbench"), new Version("8.0.32"));
+		ProgramVersion sqlShell = new ProgramVersion(new Program("MySQL Shell"), new Version("8.0.32"));
         
-		List<Program> allPrograms= new ArrayList<>();
+		List<ProgramVersion> allProgramVersions= new ArrayList<>();
 		
-		allPrograms.add(git);
-		allPrograms.add(sql8wb);
-		allPrograms.add(sqlShell);
+		allProgramVersions.add(git);
+		allProgramVersions.add(sql8wb);
+		allProgramVersions.add(sqlShell);
 		
 		
-		when(programRepo.findAll()).thenReturn(allPrograms);
+		when(programRepo.findAll()).thenReturn(allProgramVersions);
 		
-		List<Program> foundLocations = programService.findAllPrograms();
+		List<ProgramVersion> foundLocations = programService.findAllProgramVersions();
 	
 		verify(programRepo, times(1)).findAll();
-		assertSame(foundLocations, allPrograms);
+		assertSame(foundLocations, allProgramVersions);
 	}
 	
 	@Test
 	void find_program_by_id_test() {
 	
-		Optional<Program> sql8wb = Optional.of(new Program("MySQL 8 Workbench"));
+		Optional<ProgramVersion> sql8wb = Optional.of(new ProgramVersion(new Program("MySQL 8 Workbench"), new Version("8.0.32")));
 
 		when(programRepo.findById(1)).thenReturn(sql8wb);
-		Program foundProgram1 = programService.findById(1);
+		ProgramVersion foundProgramVersion1 = programService.findById(1);
 		
 		verify(programRepo, times(1)).findById(1);
-		assertSame(sql8wb.get(), foundProgram1);
+		assertSame(sql8wb.get(), foundProgramVersion1);
 
 	}
 	
@@ -132,8 +134,8 @@ public class ProgramServiceTests {
 	@Test
 	void update_program_test() {
 		
-		Program microsoftSSMS = new Program("Microsoft MySQL");
-		microsoftSSMS.setProgramId(1);
+		ProgramVersion microsoftSSMS = new ProgramVersion(new Program("Microsoft MySQL"), new Version("15.0.18333.0"));
+		microsoftSSMS.setProgramVersionId(1);
 		
 		when(programRepo.existsById(1)).thenReturn(true);
 		programService.update(microsoftSSMS);
@@ -146,8 +148,8 @@ public class ProgramServiceTests {
 	@Test
 	void update_program_fail_test() {
 		
-		Program nodejs3 = new Program("Node.js");
-		nodejs3.setProgramId(1);
+		ProgramVersion nodejs3 = new ProgramVersion(new Program("Node.js"),new Version("20.2.0"));
+		nodejs3.setProgramVersionId(1);
 		
 		when(programRepo.existsById(1)).thenReturn(false);
 		
