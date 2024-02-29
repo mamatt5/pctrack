@@ -23,6 +23,7 @@ public class Computer {
 	inverseJoinColumns =
 	@JoinColumn(name = "FK_PROGRAM_ID"))
 	private List<Program> programList;
+	
 	@Column(name = "ready_for_role")
 	private String role;
 	
@@ -62,6 +63,12 @@ public class Computer {
 	{
 		this.computerCode = computerCode;
 	}
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 	public List<Program> getProgramList() {
 		return programList;
 	}
@@ -69,6 +76,10 @@ public class Computer {
 	public void setProgramList(List<Program> programList) {
 		this.programList = programList;
 		this.role = determineRole(this).name();
+	}
+	
+	public String getRole() {
+		return role;
 	}
 	
 	public int programIndex(int programId) {

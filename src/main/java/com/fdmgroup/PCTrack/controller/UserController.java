@@ -11,7 +11,7 @@ import com.fdmgroup.PCTrack.service.StaffService;
 import com.fdmgroup.PCTrack.service.UserService;
 
 @RestController
-@CrossOrigin("http://localhost:5813")
+@CrossOrigin("http://localhost:5173")
 public class UserController {
 	private UserService userService;
 	private StaffService staffService;

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.ComputerRepository;
 import com.fdmgroup.PCTrack.model.Computer;
-import com.fdmgroup.PCTrack.model.Program;
 
 @Service
 public class ComputerService {
@@ -23,6 +22,10 @@ public class ComputerService {
 	
 	public Computer findById(int computerId) {
 		return this.computerRepo.findById(computerId).orElseThrow(() -> new RuntimeException("Computer not found"));
+	}
+	
+	public List<Computer> searchByComputerCode(int code) {
+		return this.computerRepo.searchByComputerCode(code);
 	}
 	
 	public void save(Computer newComputer) {
