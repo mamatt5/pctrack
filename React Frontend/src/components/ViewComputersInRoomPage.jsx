@@ -6,26 +6,23 @@ import { useEffect } from 'react';
 import { Box } from '@mui/material';
 
 
-export const ViewComputersInRoomPage = (props) => {
+const ViewComputersInRoomPage = (props) => {
     const {state} = useLocation();
     const [room, setRoom] = useState({});
-    const [computers, setComputers] = useState([]);
-    
 
-    
 
     useEffect(() => {
-		setRoom(state)
-
-	}, []);
+      setRoom(state)
+    
+	  }, []);
 
     console.log("please appear")
     console.log(room)
   return (
 
     <>
-        <NavBar />
-
+       
+        <NavBar admin={true}/>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
         <h1>You are now viewing room {room["name"]} </h1>
 
@@ -38,3 +35,5 @@ export const ViewComputersInRoomPage = (props) => {
 
   )
 }
+
+export default ViewComputersInRoomPage

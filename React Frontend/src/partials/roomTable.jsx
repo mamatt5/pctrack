@@ -15,6 +15,7 @@ import { Modal } from '@mui/material';
 import { Box } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -57,7 +58,7 @@ export default function CustomizedTables({array}) {
     const [mandateModal, setMandateModal] = useState(false)
     const [render, setRender] = useState(false)
     const navigate = useNavigate();
-
+    const { id } = useParams();
 
     const openModal = () => {
       setMandateModal(true);
@@ -94,7 +95,7 @@ export default function CustomizedTables({array}) {
 
 
             <IconButton size="small" onClick={() => {
-              navigate("/viewcomputerroom", { state: row })
+              navigate(`/home/${id}/viewcomputerroom`, { state: row })
             }}>
               <ManageSearchIcon />
             </IconButton>
