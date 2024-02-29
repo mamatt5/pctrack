@@ -22,6 +22,9 @@ public class Computer {
 	inverseJoinColumns =
 	@JoinColumn(name = "FK_PROGRAM_VERSION_ID"))
 	private List<ProgramVersion> programList;
+	@Column(name = "ready_for_role")
+	private String role;
+
 	
 	public Computer(int computerCode, List<ProgramVersion> programList) {
 		super();
@@ -61,6 +64,12 @@ public class Computer {
 	public void setProgramList(List<ProgramVersion> programList) {
 		this.programList = programList;
 	}
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
+	}	
 	public int programIndex(int programId) {
 		for (int i = 0; i < programList.size(); i++) {
 			if (programList.get(i).getProgramVersionId() == programId) {

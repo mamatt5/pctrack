@@ -23,10 +23,11 @@ public class UserDataLoader implements ApplicationRunner
 	private RoomService roomService;
 	private ProgramVersionService programVersionService;
 	private VersionService versionService;
+	private MandateService mandateService;
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
-	        ComputerService computerService, ProgramService programService, RoomService roomService, ProgramVersionService programVersionService, VersionService versionService)
+	        ComputerService computerService, ProgramService programService, RoomService roomService, MandateService mandateService, ProgramVersionService programVersionService, VersionService versionService)
 	{
 		super();
 		this.userService = userService;
@@ -35,6 +36,7 @@ public class UserDataLoader implements ApplicationRunner
 		this.computerService = computerService;
 		this.programService = programService;
 		this.roomService = roomService;
+		this.mandateService = mandateService;
 		this.programVersionService = programVersionService;
 		this.versionService = versionService;
 	}
@@ -91,8 +93,9 @@ public class UserDataLoader implements ApplicationRunner
 		Program pnpm = new Program("PNPM");
 		Program git = new Program("Git");
 		Program jdk = new Program("JDK");
+		Program visualStudio = new Program("Visual Studio");
 		
-		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel, microsoftSSMS, pnpm, git, jdk);
+		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel, microsoftSSMS, pnpm, git, jdk, visualStudio);
 		for (Program program : programs) {
 		    programService.save(program);
 		}
@@ -124,6 +127,7 @@ public class UserDataLoader implements ApplicationRunner
 		Version v24 = new Version("8.15.4");
 		Version v25 = new Version("2.27.0");
 		Version v26 = new Version("17.0.2");
+		Version v27 = new Version("1.87.0");
 		
 		List<Version> versions = Arrays.asList(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26);
 		for (Version version : versions) {
@@ -157,10 +161,11 @@ public class UserDataLoader implements ApplicationRunner
 		ProgramVersion pnpmV1 = new ProgramVersion(pnpm, v24);
 		ProgramVersion gitV1 = new ProgramVersion(git, v25);
 		ProgramVersion jdkV1 = new ProgramVersion(jdk, v26);
+		ProgramVersion visualStudioV1 = new ProgramVersion(visualStudio, v27);
 		
 		List<ProgramVersion> programsList = Arrays.asList(vscodeV1, eclipseV1, nodejsV1, nodejsV2, nodejsV3, nodejsV4, nodejsV5, nodejsV6,
 		        nodejsV7, pythonV1, npmV1, npmV2, npmV3, npmV4, npmV5, npmV6, npmV7, sql8wbV1, sqlShellV1, powerBiV1, excelV1, excelV2,
-		        microsoftSSMSV1, pnpmV1, gitV1, jdkV1);
+		        microsoftSSMSV1, pnpmV1, gitV1, jdkV1,visualStudioV1);
 		for (ProgramVersion pv : programsList) {
 			programVersionService.save(pv);
 		}
@@ -169,7 +174,7 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c1 = new Computer(15040, room1);
 		computerService.save(c1);
 		c1.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, visualStudioV1));
 		computerService.update(c1);
 
 		Computer c2 = new Computer(70156, room1);
