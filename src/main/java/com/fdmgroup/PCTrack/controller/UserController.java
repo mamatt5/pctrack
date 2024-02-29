@@ -11,7 +11,7 @@ import com.fdmgroup.PCTrack.service.StaffService;
 import com.fdmgroup.PCTrack.service.UserService;
 
 @RestController
-@CrossOrigin("http://localhost:5813")
+@CrossOrigin("http://localhost:5173")
 public class UserController {
 	private UserService userService;
 	private StaffService staffService;
@@ -26,6 +26,11 @@ public class UserController {
 	@GetMapping("users")
 	public List<User> getUsers() {
 		return userService.findAllUsers();
+	}
+	
+	@GetMapping("searchUsers/{query}")
+	public List<User> getUsersPartial(@PathVariable String query) {
+		return userService.findAllUsersPartialMatch(query);
 	}
 	
 	@GetMapping("users/{userId}")

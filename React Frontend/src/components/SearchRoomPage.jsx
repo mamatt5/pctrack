@@ -5,6 +5,36 @@ import RoomMandates from './RoomMandates'
 
 export const SearchRoomPage = () => {
 
+
+    
+  const [rooms, setRooms] = useState([]);
+ 
+
+  const test = (input) => {
+    console.log("cancer")
+    console.log(input)
+    setRooms(input)
+  }
+
+
+  const { id } = useParams()
+
+  useEffect(()=>{
+
+    const config = {
+      method: "get",
+      endpoint: "staff/getrooms/"+id,
+
+    }
+
+    callApi(test, null, config);
+  }, []);
+
+   
+
+
+
+
   return (
     <>
      <div className='dashBoardPadding'>
