@@ -23,6 +23,9 @@ public class UserService {
 	public List<User> findAllUsers() {
 		return this.userRepository.findAll();
 	}
+	public List<User> findAllUsersPartialMatch(String query) {
+		return this.userRepository.findByUsernameContainingIgnoreCase(query);
+	}
 	
 	public User findUserId(int userId) {
 		return this.userRepository.findById(userId).orElseThrow(()-> new RuntimeException("Username not found."));
@@ -31,7 +34,7 @@ public class UserService {
 	public User findByUsername(String username) {
 		return this.userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Username not found"));
 	}
-	
+
 	public boolean existsByUsername(String username) {
 		return this.userRepository.existsByUsername(username);
 	}

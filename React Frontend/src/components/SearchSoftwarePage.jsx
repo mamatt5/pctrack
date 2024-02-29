@@ -20,13 +20,13 @@ export const SearchSoftwarePage = () => {
         method: "get",
         endpoint: "programs",
       };
-    
+
       // if we cant find the user, its a username issue
       // if we can, its a password issue.
       callApi(setSoftware, null, config);
     };
-    
-    
+
+
     const SoftwareTab = () => {
       return <></>;
     };

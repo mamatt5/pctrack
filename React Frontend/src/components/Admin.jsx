@@ -9,16 +9,59 @@ import CustomizedTables from "../partials/staffTable";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 
-const getStaff = (setStaff) => {
-	// Functionality to get users
+let pageNum = 0;
+let pageSize = 10;
+
+const getStaffCount = (setStaffCount) => {
+	// Functionality to get staff on pagination
+	console.log(pageNum, pageSize);
 	const config = {
 		method: "get",
-		endpoint: "staff",
+		endpoint: "countStaff",
 	};
 
-	// if we cant find the user, its a username issue
-	// if we can, its a password issue.
+	callApi(setStaffCount, null, config);
+};
+
+const getStaff = (setStaff) => {
+	// Functionality to get staff on pagination
+	console.log(pageNum, pageSize);
+	const config = {
+		method: "get",
+		endpoint: "staffPage",
+		params: {
+			pageNumber: pageNum,
+			pageSize: pageSize,
+		},
+	};
+
 	callApi(setStaff, null, config);
+};
+
+const searchStaff = (query, setStaff) => {
+	console.log(query);
+	// Functionality to search users
+	const config = {
+		method: "get",
+		endpoint: `searchStaff/${query}`,
+		params: {
+			pageNumber: pageNum,
+			pageSize: pageSize,
+		},
+	};
+
+	callApi(setStaff, null, config);
+};
+
+const searchStaffCount = (query, setStaffCount) => {
+	console.log(query);
+	// Functionality to search users
+	const config = {
+		method: "get",
+		endpoint: `countStaffPartial/${query}`,
+	};
+
+	callApi(setStaffCount, null, config);
 };
 
 const getUsers = (setUsers) => {
@@ -28,17 +71,11 @@ const getUsers = (setUsers) => {
 		endpoint: "users",
 	};
 
-	// if we cant find the user, its a username issue
-	// if we can, its a password issue.
 	callApi(setUsers, null, config);
 };
 
-const UsersTab = () => {
-	return <></>;
-};
-
 const RegisterModal = ({ openModal, setOpenModal, users }) => {
-    console.log(users)
+	console.log(users);
 	return (
 		<>
 			<Modal
@@ -47,11 +84,11 @@ const RegisterModal = ({ openModal, setOpenModal, users }) => {
 				closeAfterTransition
 				aria-labelledby="register modal"
 				aria-describedby="opens a modal to register a user"
-                sx={{
-                    "& .MuiBackdrop-root": {
-                        backgroundColor: "rgba(0, 0, 0, 0.2)", // Adjust opacity here (0.5 for 50% darkness)
-                    },
-                }}
+				sx={{
+					"& .MuiBackdrop-root": {
+						backgroundColor: "rgba(0, 0, 0, 0.2)", // Adjust opacity here (0.5 for 50% darkness)
+					},
+				}}
 			>
 				<Fade in={openModal}>
 					<Box
@@ -62,11 +99,14 @@ const RegisterModal = ({ openModal, setOpenModal, users }) => {
 							left: "50%",
 							transform: "translate(-50%, -50%)",
 							backgroundColor: "white",
-                            borderRadius:3,
+							borderRadius: 3,
+							width: "40vw",
+							border: "1px solid black",
+							borderRadius: "10px",
 							p: 4,
 						}}
 					>
-						<Register users={users} setOpenModal={setOpenModal}/>
+						<Register users={users} setOpenModal={setOpenModal} />
 					</Box>
 				</Fade>
 			</Modal>
@@ -75,42 +115,54 @@ const RegisterModal = ({ openModal, setOpenModal, users }) => {
 };
 
 const Admin = () => {
+	document.body.style = "background: #f2f5f7;";
 	const [openModal, setOpenModal] = useState(false);
 	const [staff, setStaff] = useState([]);
-    const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState([]);
+	const [query, setQuery] = useState("");
+	const [change, setChange] = useState(true);
+	const [staffCount, setStaffCount] = useState(true);
 
 	useEffect(() => {
-		getStaff(setStaff);
-        getUsers(setUsers)
-	}, [openModal]);
+		if (query === "") {
+			getStaff(setStaff);
+			getStaffCount(setStaffCount);
+		} else {
+			searchStaff(query, setStaff);
+			searchStaffCount(query, setStaffCount);
+		}
+	}, [openModal, query, change]);
 
+	useEffect(() => {
+		pageNum = 0;
+	}, [query]);
+
+	useEffect(() => {
+		getUsers(setUsers);
+	}, [openModal]);
 
 	return (
 		<>
-			<Box className="dashBoardPadding">
-				<Box sx={{ display: "flex", flexDirection: "row" }}>
-					<UsersTab />
-				</Box>
+			<Box className="centerHorizonal" sx={{ paddingTop: "5rem", marginLeft: "8%" }}>
+				<Box sx={{ display: "flex", flexDirection: "row" }}></Box>
 
-				<Button
-					variant="contained"
-					disableElevation
-					sx={{
-						position: "fixed",
-						bottom: "10%",
-						right: "10%",
-						zIndex: 1000,
+				<RegisterModal openModal={openModal} setOpenModal={setOpenModal} users={users} />
+				<CustomizedTables
+					array={staff}
+					setQuery={setQuery}
+					staffCount={staffCount}
+					onChangePage={(pNum, pSize) => {
+						setChange((change) => !change);
+						pageNum = pNum;
+						pageSize = pSize;
 					}}
-					onClick={() => setOpenModal(true)}
-				>
+				/>
+				<Button variant="contained" disableElevation onClick={() => setOpenModal(true)}>
 					Register User
 				</Button>
-				<RegisterModal openModal={openModal} setOpenModal={setOpenModal} users={users}/>
-				<CustomizedTables array={staff} />
 			</Box>
 		</>
 	);
 };
 
 export default Admin;
-

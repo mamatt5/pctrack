@@ -86,17 +86,6 @@ const AppBar = styled(MuiAppBar, {
 	}),
 }));
 
-const style = {
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	width: 700,
-	bgcolor: "background.paper",
-	boxShadow: 24,
-	padding: 6,
-	borderRadius: 8,
-};
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(
 	({ theme, open }) => ({
@@ -169,6 +158,7 @@ export default function NavBar(props) {
 
 			<AppBar position="fixed" open={open} elevation={0}>
 				<Toolbar>
+
 					<IconButton
 						color="inherit"
 						aria-label="open drawer"
@@ -196,8 +186,9 @@ export default function NavBar(props) {
 				{/* admin stuff  */}
         {admin ? (
 					<>
-						<ListItem key={"Manage Users"} disablePadding sx={{ display: "block" }}>
-						<Tooltip title="Manage Users" placement="right">
+					{["Manage Users"].map((text, index) => (
+						<ListItem key={text} disablePadding sx={{ display: "block" }}>
+						<Tooltip title={text} placement="right">
 							<ListItemButton
 								sx={{
 									minHeight: 48,
@@ -213,17 +204,19 @@ export default function NavBar(props) {
 										justifyContent: "center",
 									}}
 								>
-									<AdminPanelSettingsIcon />
+									{index === 0 &&  <AdminPanelSettingsIcon />}
+
 								</ListItemIcon>
-								<ListItemText primary="Manage Users" sx={{ opacity: open ? 1 : 0 }} />
+								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 							</ListItemButton>
 							</Tooltip>
 						</ListItem>
+						))}
 					</>
 				) : null}
 
         {/* staff + admin stuff */}
-				<List>
+				<List sx={{padding:0}}>
 					{["Search Rooms", "Search Computer", "Search Software"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
