@@ -75,6 +75,7 @@ public class UserDataLoader implements ApplicationRunner
 
 		// Programs
 		Program vscode = new Program("Visual Studio Code", "1.46.1");
+		Program visualstudio = new Program("Visual Studio", "1.87.0");
 		Program eclipse = new Program("Eclipse", "4.22");
 		Program nodejs = new Program("Node.js", "20.11.0");
 		Program nodejs1 = new Program("Node.js", "20.10.0");
@@ -83,7 +84,7 @@ public class UserDataLoader implements ApplicationRunner
 		Program nodejs4 = new Program("Node.js", "20.5");
 		Program nodejs5 = new Program("Node.js", "20.9");
 		Program nodejs6 = new Program("Node.js", "20.1.0");
-		Program python = new Program("Python Laucher", "3.9.7427.0");
+		Program python = new Program("Python Launcher", "3.9.7427.0");
 		Program npm = new Program("NPM", "10.2.4");
 		Program npm1 = new Program("NPM", "10.2.3");
 		Program npm2 = new Program("NPM", "6.14.5");
@@ -101,7 +102,7 @@ public class UserDataLoader implements ApplicationRunner
 		Program git = new Program("Git", "2.27.0");
 		Program jdk = new Program("JDK", "17.0.2");
 
-		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, nodejs1, nodejs2, nodejs3, nodejs4, nodejs5,
+		List<Program> programs = Arrays.asList(vscode, visualstudio, eclipse, nodejs, nodejs1, nodejs2, nodejs3, nodejs4, nodejs5,
 		        nodejs6, python, npm, npm1, npm2, npm3, npm4, npm5, npm6, sql8wb, sqlShell, powerBi, excel, excel1,
 		        microsoftSSMS, pnpm, git, jdk);
 		programService.saveAll(programs);
@@ -110,7 +111,7 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c1 = new Computer(15040, room1);
 		computerService.save(c1);
 		c1.setProgramList(
-		        Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
+		        Arrays.asList(visualstudio, vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, excel, microsoftSSMS, git, jdk));
 		computerService.update(c1);
 
 		Computer c2 = new Computer(70156, room1);
@@ -859,6 +860,7 @@ public class UserDataLoader implements ApplicationRunner
 		c147.setProgramList(
 		        Arrays.asList(vscode, eclipse, nodejs1, python, npm, excel, microsoftSSMS, git, jdk, powerBi));
 		computerService.update(c147);
+		
 
 		// no need to manuualy add date
 		User u0 = new User("admin1", "0000!!", "Root", "Admin");
