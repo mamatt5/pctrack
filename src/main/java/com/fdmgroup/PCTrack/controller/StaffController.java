@@ -63,16 +63,9 @@ public class StaffController {
 	public List<Staff> findById(@PathVariable int userId) {
 		return staffService.findByUserId(userId);
 	}
-<<<<<<< src/main/java/com/fdmgroup/PCTrack/controller/StaffController.java
 	
 	@GetMapping("staff/getrooms/{userId}")
 	public List<Room> findRoomsWhereStaffIsAdmin(@PathVariable int userId) {
 		return staffService.getRoomsStaffIsAdmin(userId);
 	}
-	
-	
-	
-=======
-
->>>>>>> src/main/java/com/fdmgroup/PCTrack/controller/StaffController.java
 }
