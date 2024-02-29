@@ -191,7 +191,7 @@ const Register = ({ users, setOpenModal }) => {
 	console.log(checkedValues);
 	return (
 		<>
-			<Box sx={{ border: "1px solid black", borderRadius: "10px", width: "35vw", padding: "5%" }}>
+			<Box sx={{width: "95%"}}>
 				<Box>
 					<Typography variant="h5" sx={{ paddingBottom: "1rem" }}>
 						Register a user
@@ -246,10 +246,10 @@ const Register = ({ users, setOpenModal }) => {
 							type="submit"
 							variant="contained"
 							disabled={!formValid}
-							sx={{ width: "20%" }}
+
 							onClick={() => {}}
 						>
-							{" "}
+
 							Register
 						</Button>
 					</Box>

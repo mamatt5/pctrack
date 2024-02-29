@@ -5,7 +5,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import callApi from "../api/callApi";
 import { Typography } from "@mui/material";
-
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import { OutlinedInput, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { FormControl } from "@mui/material";
 // outside to prevent reredner
 let username = "";
 let password = "";
@@ -16,6 +20,7 @@ let password = "";
 const login = () => {
 	const navigate = useNavigate();
 
+	const [showPassword, setShowPassword] = useState(false);
 	const [usernameError, setusernameError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [formValid, setFormValid] = useState(false);
@@ -98,10 +103,16 @@ const login = () => {
 	return (
 		<div className="centerHorizonal">
 			<Box style={{ left: 0 }}>
-				<Typography variant="h5" sx={{padding:"1rem"}}>PC Track</Typography>
+				<Typography variant="h5" sx={{ padding: "1rem" }}>
+					PC Track
+				</Typography>
 			</Box>
-			<Box sx={{ border: "1px solid black", borderRadius: "10px", width:"30vw" }}>
-				<Box><Typography variant="h6" sx={{padding:"0.5rem"}}>Login</Typography></Box>
+			<Box sx={{ border: "1px solid black", borderRadius: "10px", width: "30vw" }}>
+				<Box>
+					<Typography variant="h6" sx={{ padding: "0.5rem" }}>
+						Login
+					</Typography>
+				</Box>
 				<form onSubmit={checkLogin} className="flexCol">
 					<TextField
 						error={Boolean(usernameError)}
@@ -111,15 +122,37 @@ const login = () => {
 						onChange={(e) => checkInput("username", e.target.value)}
 						sx={{ margin: "0.5rem" }}
 					/>
-					<TextField
-						error={Boolean(passwordError)}
-						helperText={passwordError ? passwordError : ""}
-						name="password"
-						label="Password"
-						onChange={(e) => checkInput("password", e.target.value)}
-						sx={{ margin: "0.5rem" }}
-					/>
-					<Button type="submit" variant="contained" disabled={!formValid} disableElevation sx={{margin:"2rem"}}>
+
+					<FormControl sx={{ m: 1 }} variant="outlined">
+						<InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+						<OutlinedInput
+							error={Boolean(passwordError)}
+							helperText={passwordError ? passwordError : ""}
+							name="password"
+							onChange={(e) => checkInput("password", e.target.value)}
+							type={showPassword ? "text" : "password"}
+							endAdornment={
+								<InputAdornment position="end">
+									<IconButton
+										aria-label="toggle password visibility"
+										onClick={() => setShowPassword((show) => !show)}
+										onMouseDown={(e) => e.preventDefault()}
+										edge="end"
+									>
+										{showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							}
+							label="Password"
+						/>
+					</FormControl>
+					<Button
+						type="submit"
+						variant="contained"
+						disabled={!formValid}
+						disableElevation
+						sx={{ margin: "2rem" }}
+					>
 						Login
 					</Button>
 				</form>
