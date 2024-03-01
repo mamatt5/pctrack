@@ -33,9 +33,10 @@ const LoggedInHomePage = () => {
 		setAdmin(false);
 
 		for (let i = 0; i < data.length; i++) {
-			console.log(data[i].adminLevel);
-			if (data[i].adminLevel !== null ) {
-				console.log(data[i].adminlevel)
+			console.log(data[i].adminLevel.precedence);
+			// in data base, all precedence = 0 means NOT admin
+			if (data[i].adminLevel.precedence > 0 ) {
+
 				setAdmin(true);
 				break;
 			}

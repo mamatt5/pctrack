@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import { Label } from "@mui/icons-material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -18,12 +19,41 @@ const MenuProps = {
 	},
 };
 
+export default function SelectSmall({ array, label }) {
+	console.log(array);
+	const [item, setItem] = React.useState("");
 
-export default function MultipleSelectCheckmarks({array, label}) {
+	const handleChange = (event) => {
+		setItem(event.target.value);
+	};
 
+	return (
+		<FormControl sx={{ m: 1, minWidth: 160 }} size="small">
+			<InputLabel id="demo-select-small-label">Permissions</InputLabel>
+			<Select
+				labelId="demo-select-small-label"
+				id="demo-select-small"
+				value={item}
+				label="Permissions"
+				onChange={handleChange}
+			>
+				<MenuItem value="">
+					<em>None</em>
+				</MenuItem>
+				{array.map((name) => (
+					<MenuItem key={name[label]} value={name[label]}>
+						{name[label]}
+					</MenuItem>
+				))}
+			</Select>
+		</FormControl>
+	);
+}
+
+export function MultipleSelectCheckmarks({ array, label }) {
 	const [arrItem, setItem] = React.useState([]);
 
-    const handleChange = (event) => {
+	const handleChange = (event) => {
 		const {
 			target: { value },
 		} = event;

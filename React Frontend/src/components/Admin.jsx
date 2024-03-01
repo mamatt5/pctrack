@@ -8,7 +8,11 @@ import Register from "./Register";
 import CustomizedTables from "../partials/staffTable";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
-import Loading from "../partials/Loading";
+import Paper from "@mui/material/Paper";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { IconButton, Tooltip, Typography } from "@mui/material";
+
 let pageNum = 0;
 let pageSize = 10;
 
@@ -120,9 +124,9 @@ const Admin = () => {
 	const [staff, setStaff] = useState([]);
 	const [users, setUsers] = useState([]);
 	const [query, setQuery] = useState("");
-	const [change, setChange] = useState(true);
-	const [staffCount, setStaffCount] = useState(true);
-	const [loading, setLoading] = useState(true);
+	const [change, setChange] = useState(true); // notifies theres been a page size/page change
+	const [staffCount, setStaffCount] = useState(-1); // -1 othewise we might mistake it as no users found
+
 	useEffect(() => {
 		if (query === "") {
 			getStaff(setStaff);
@@ -141,20 +145,39 @@ const Admin = () => {
 		getUsers(setUsers);
 	}, [openModal]);
 
-	// check if api still fetching data
-	useEffect(() => {
-		setLoading(Object.keys(staff).length === 0);
-	}, [staff]);
-
 	return (
 		<>
-			{loading ? (
-				<Loading />
-			) : (
+
 				<Box className="centerHorizonal" sx={{ paddingTop: "5rem", marginLeft: "8%" }}>
 					<Box sx={{ display: "flex", flexDirection: "row" }}></Box>
 
 					<RegisterModal openModal={openModal} setOpenModal={setOpenModal} users={users} />
+                    <Paper sx={{ overflow: "hidden", width: "82vw", maxWidth: 980 }} elevation={0}>
+                    <Box
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center",
+					padding: "1.6rem",
+				}}
+			>
+				<Typography variant="h5" sx={{ fontWeight: "bold", color: "#3b3b3b" }}>
+					Staff List
+				</Typography>
+				<Box>
+					<Tooltip title="Register User" onClick={() => setOpenModal(true)} placement="bottom">
+						<IconButton>
+							<PersonAddAltIcon />
+						</IconButton>
+					</Tooltip>
+
+					<Tooltip title="Filter Users" placement="bottom">
+						<IconButton>
+							<FilterListIcon />
+						</IconButton>
+					</Tooltip>
+				</Box>
+			</Box>
 					<CustomizedTables
 						array={staff}
 						setQuery={setQuery}
@@ -165,11 +188,10 @@ const Admin = () => {
 							pageSize = pSize;
 						}}
 					/>
-					<Button variant="contained" disableElevation onClick={() => setOpenModal(true)}>
-						Register User
-					</Button>
+                    </Paper>
+
 				</Box>
-			)}
+
 		</>
 	);
 };

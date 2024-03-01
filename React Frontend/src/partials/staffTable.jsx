@@ -13,6 +13,7 @@ import SearchBar from "./SearchBar";
 import EditIcon from "@mui/icons-material/Edit";
 import PermissonModal from "./ManagePermission";
 
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
 		backgroundColor: "#f3f7f9",
@@ -23,7 +24,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 		// borderBottom: "none",
 		color: "#3b3b3b",
 	},
-	width: "10%",
+	width: "10rem",
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -86,24 +87,18 @@ export default function CustomizedTables({ array, setQuery, staffCount, onChange
 		}));
 	};
 
+  // when new query reset page to 0.
+  const handleSetQuery = (newQuery) => {
+    setPage(0); // Reset the page to 0 when a new query is set
+    setQuery(newQuery);
+  }
 
 	// calcaultes the num of empty rows on a page to avoid the layout screwing up
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, staffCount - page * rowsPerPage);
 
 	return (
-		<Paper sx={{ overflow: "hidden", width: "82vw", maxWidth: 980 }} elevation={0}>
-			<Box
-				sx={{
-					display: "flex",
-					justifyContent: "space-between",
-					alignItems: "center",
-					padding: "1.6rem",
-				}}
-			>
-				<Typography variant="h5" sx={{ fontWeight: "bold", color: "#3b3b3b" }}>
-					Staff List
-				</Typography>
-			</Box>
+		<>
+
 			<TableContainer
 				component={Paper}
 				sx={{
@@ -156,7 +151,7 @@ export default function CustomizedTables({ array, setQuery, staffCount, onChange
 
 										<StyledTableCell align="left">{row.location.city}</StyledTableCell>
 										<StyledTableCell align="left">{row.user.joinDate}</StyledTableCell>
-										<StyledTableCell align="left">{row.adminLevel}</StyledTableCell>
+										<StyledTableCell align="left">{row.adminLevel.name}</StyledTableCell>
 										<StyledTableCell align="right" component="th" scope="row">
 											{row.name}
 											<EditIcon
@@ -195,7 +190,7 @@ export default function CustomizedTables({ array, setQuery, staffCount, onChange
 
 			{/* footer  */}
 			<Box sx={{ display: "flex", justifyContent: "space-between", padding: "0.5rem 0 0.5rem 0" }}>
-				<SearchBar placeholder={"Search User"} setQuery={setQuery} />
+				<SearchBar placeholder={"Search User"} setQuery={handleSetQuery} />
 				{/* PAGINATION  */}
 				<TablePagination
 					rowsPerPageOptions={[10, 25, 100]}
@@ -214,6 +209,6 @@ export default function CustomizedTables({ array, setQuery, staffCount, onChange
 					}
 				/>
 			</Box>
-		</Paper>
+		</>
 	);
 }
