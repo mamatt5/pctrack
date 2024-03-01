@@ -8,7 +8,7 @@ import Register from "./Register";
 import CustomizedTables from "../partials/staffTable";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
-
+import Loading from "../partials/Loading";
 let pageNum = 0;
 let pageSize = 10;
 
@@ -122,7 +122,7 @@ const Admin = () => {
 	const [query, setQuery] = useState("");
 	const [change, setChange] = useState(true);
 	const [staffCount, setStaffCount] = useState(true);
-
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		if (query === "") {
 			getStaff(setStaff);
@@ -141,26 +141,35 @@ const Admin = () => {
 		getUsers(setUsers);
 	}, [openModal]);
 
+	// check if api still fetching data
+	useEffect(() => {
+		setLoading(Object.keys(staff).length === 0);
+	}, [staff]);
+
 	return (
 		<>
-			<Box className="centerHorizonal" sx={{ paddingTop: "5rem", marginLeft: "8%" }}>
-				<Box sx={{ display: "flex", flexDirection: "row" }}></Box>
+			{loading ? (
+				<Loading />
+			) : (
+				<Box className="centerHorizonal" sx={{ paddingTop: "5rem", marginLeft: "8%" }}>
+					<Box sx={{ display: "flex", flexDirection: "row" }}></Box>
 
-				<RegisterModal openModal={openModal} setOpenModal={setOpenModal} users={users} />
-				<CustomizedTables
-					array={staff}
-					setQuery={setQuery}
-					staffCount={staffCount}
-					onChangePage={(pNum, pSize) => {
-						setChange((change) => !change);
-						pageNum = pNum;
-						pageSize = pSize;
-					}}
-				/>
-				<Button variant="contained" disableElevation onClick={() => setOpenModal(true)}>
-					Register User
-				</Button>
-			</Box>
+					<RegisterModal openModal={openModal} setOpenModal={setOpenModal} users={users} />
+					<CustomizedTables
+						array={staff}
+						setQuery={setQuery}
+						staffCount={staffCount}
+						onChangePage={(pNum, pSize) => {
+							setChange((change) => !change);
+							pageNum = pNum;
+							pageSize = pSize;
+						}}
+					/>
+					<Button variant="contained" disableElevation onClick={() => setOpenModal(true)}>
+						Register User
+					</Button>
+				</Box>
+			)}
 		</>
 	);
 };

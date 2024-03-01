@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.fdmgroup.PCTrack.model.Computer;
+import com.fdmgroup.PCTrack.model.SearchConfig;
 import com.fdmgroup.PCTrack.service.ComputerService;
 
 @RestController
@@ -30,9 +31,9 @@ public class ComputerController {
 		return computerService.findById(computerId);
 	}
 	
-	@GetMapping("computers/search/{computerCode}")
-	public List<Computer> searchByComputerCode(@PathVariable int computerCode) {
-		return computerService.searchByComputerCode(computerCode);
+	@PostMapping("computers/search")
+	public List<Computer> searchByComputerCode(@RequestBody SearchConfig searchConfig) {
+		return computerService.searchByComputerCode(searchConfig.getComputerCode(), searchConfig.getRoomId());
 	}
 	
 	@PostMapping("computers")
