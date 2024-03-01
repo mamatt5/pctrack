@@ -21,14 +21,11 @@ public class RoomAdmin extends Staff {
     }
 	
 	
-	public RoomAdmin(User user, Location location) {
-		super("Room", user, location);
+	public RoomAdmin(AdminLevel admin, User user, Location location) {
+		super(admin, user, location);
 
 	}
-	public RoomAdmin(String type, User user, Location location) {
-		super(type, user, location);
 
-	}
 	
 	public List<Room> getRoomAssigned() {
 		return roomAssigned;

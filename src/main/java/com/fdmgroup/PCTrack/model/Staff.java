@@ -19,23 +19,25 @@ public class Staff {
 	@JoinColumn(name = "FK_LOCATION_ID")
 	@ManyToOne
 	private Location location;
-	@JoinColumn(name = "admin_level")
-    private String adminLevel;
+	
+	@JoinColumn(name = "FK_ADMIN_ID")
+	@ManyToOne
+    private AdminLevel adminLevel;
 	
 	public Staff() {
 		super();
 	}
 	 
 	
+//
+//	public Staff(User user, Location location) {
+//		super();
+//		this.user = user;
+//		this.location = location;
+//		this.adminLevel = null; 
+//	}
 
-	public Staff(User user, Location location) {
-		super();
-		this.user = user;
-		this.location = location;
-		this.adminLevel = null; 
-	}
-
-	public Staff(String type, User user, Location location) {
+	public Staff(AdminLevel type, User user, Location location) {
 		super();
 		this.user = user;
 		this.location = location;
@@ -49,11 +51,11 @@ public class Staff {
 		this.staffId = staffId;
 	}
 	
-	public String getAdminLevel() {
+	public AdminLevel getAdminLevel() {
 		return adminLevel;
 	}
 
-	public void setAdminLevel(String staffType) {
+	public void setAdminLevel(AdminLevel staffType) {
 		this.adminLevel = staffType;
 	}
 	

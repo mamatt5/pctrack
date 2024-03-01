@@ -22,10 +22,14 @@ public class UserDataLoader implements ApplicationRunner
 	private ProgramService programService;
 	private RoomService roomService;
 	private MandateService mandateService;
-
+	private AdminLevelService adminService;
+	 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
-	        ComputerService computerService, ProgramService programService, RoomService roomService, MandateService mandateService)
+	        ComputerService computerService, ProgramService programService, RoomService roomService, MandateService mandateService,
+	        AdminLevelService adminService
+			)
+			
 	{
 		super();
 		this.userService = userService;
@@ -35,6 +39,7 @@ public class UserDataLoader implements ApplicationRunner
 		this.programService = programService;
 		this.roomService = roomService;
 		this.mandateService = mandateService;
+		this.adminService = adminService;
 	}
 
 	@Override
@@ -53,6 +58,21 @@ public class UserDataLoader implements ApplicationRunner
 			locationService.save(location);
 		}
 
+		
+		// Admin
+		// perms = 0 mean no perms 
+		// otherwise perms 1 means highest, 2 second highest etc....
+		AdminLevel Business = new AdminLevel("Business", 1);
+		AdminLevel Location = new AdminLevel("Location", 2);
+		AdminLevel Room = new AdminLevel("Room", 3);
+		AdminLevel User = new AdminLevel("", 0);
+
+		List<AdminLevel> adminLevels = Arrays.asList(Location, Business, Room, User);
+
+		for (AdminLevel adminLevel : adminLevels) {
+			adminService.save(adminLevel);
+		}
+		
 		// Rooms
 		Room room1 = new Room("Bondi", location1);
 		Room room2 = new Room("Coogee", location1);
@@ -63,7 +83,7 @@ public class UserDataLoader implements ApplicationRunner
 		Room room7 = new Room("Lantau", location2);
 		Room room8 = new Room("Stanley", location2);
 		Room room9 = new Room("Causeway Bay", location2);
-		Room room10 = new Room("Raffles Place", location3);
+		Room room10 = new Room("Raffles Place", location3); 
 		Room room11 = new Room("Clarke Quay", location3);
 		Room room12 = new Room("Sentosa", location3);
 
@@ -896,15 +916,15 @@ public class UserDataLoader implements ApplicationRunner
     	}
         
     	// Business admin
-    	BusinessAdmin businessAdmin = new BusinessAdmin(u0, location1);
+    	BusinessAdmin businessAdmin = new BusinessAdmin(Business, u0, location1);
     	staffService.save(businessAdmin);
     	
     	// Location admin
-    	LocationAdmin locationAdmin1 = new LocationAdmin(u20, location1);
-    	LocationAdmin locationAdmin2 = new LocationAdmin(u1, location1);
-    	LocationAdmin locationAdmin3 = new LocationAdmin(u2, location2);
-    	LocationAdmin locationAdmin4 = new LocationAdmin(u3, location2);
-    	LocationAdmin locationAdmin5 = new LocationAdmin(u4, location3);
+    	LocationAdmin locationAdmin1 = new LocationAdmin(Location, u20, location1);
+    	LocationAdmin locationAdmin2 = new LocationAdmin(Location, u1, location1);
+    	LocationAdmin locationAdmin3 = new LocationAdmin(Location, u2, location2);
+    	LocationAdmin locationAdmin4 = new LocationAdmin(Location, u3, location2);
+    	LocationAdmin locationAdmin5 = new LocationAdmin(Location, u4, location3);
     	
     	staffService.save(locationAdmin1);
     	staffService.save(locationAdmin2);
@@ -913,26 +933,26 @@ public class UserDataLoader implements ApplicationRunner
     	staffService.save(locationAdmin5);
     	
     	// Room admin
-    	RoomAdmin roomAdmin1 = new RoomAdmin(u5, location1);
-    	RoomAdmin roomAdmin2 = new RoomAdmin(u6, location1);
-    	RoomAdmin roomAdmin3 = new RoomAdmin(u7, location2);
-    	RoomAdmin roomAdmin4 = new RoomAdmin(u8, location3);
-    	RoomAdmin roomAdmin5 = new RoomAdmin(u9, location3);
+    	RoomAdmin roomAdmin1 = new RoomAdmin(Room, u5, location1);
+    	RoomAdmin roomAdmin2 = new RoomAdmin(Room, u6, location1);
+    	RoomAdmin roomAdmin3 = new RoomAdmin(Room, u7, location2);
+    	RoomAdmin roomAdmin4 = new RoomAdmin(Room, u8, location3);
+    	RoomAdmin roomAdmin5 = new RoomAdmin(Room, u9, location3);
     	
     	staffService.save(roomAdmin1);
     	staffService.save(roomAdmin2);
-    	staffService.save(roomAdmin3);
+    	staffService.save(roomAdmin3); 
     	staffService.save(roomAdmin4);
     	staffService.save(roomAdmin5);
     	
     	
     	// Staff
-    	Staff staff1 = new Staff(u10, location1);
-    	Staff staff2 = new Staff(u12, location1);
-    	Staff staff3 = new Staff(u13, location1);
-    	Staff staff4 = new Staff(u14, location1);
-    	Staff staff5 = new Staff(u15, location1);
-    	Staff staff6 = new Staff(u16, location1);
+    	Staff staff1 = new Staff(User,u10, location1);
+    	Staff staff2 = new Staff(User,u12, location1);
+    	Staff staff3 = new Staff(User,u13, location1);
+    	Staff staff4 = new Staff(User,u14, location1);
+    	Staff staff5 = new Staff(User,u15, location1);
+    	Staff staff6 = new Staff(User,u16, location1);
     	
     	staffService.save(staff1);
     	staffService.save(staff2);
