@@ -74,7 +74,7 @@ const ComputerCard = (props) => {
             backgroundColor: getColor(computer),
             margin: '5px'
         }}>
-            <CardActionArea onClick={openModal} co>
+            <CardActionArea onClick={openModal}>
                 {/* <CardHeader title="Computer Details"/> */}
                 <CardContent>
                     {computer.role === 'DEV' && <div style={{ textAlign: 'center' }}>DEV</div>}
@@ -94,7 +94,8 @@ const ComputerCard = (props) => {
                     <h1>Computer Details</h1>
                     <h2>{computer.computerCode}</h2>
                     <h3>Room: {computer.room.name}, {computer.room.location.name}</h3>
-                    <ProgramTable array = {computer.programList} />
+                    {computer.role !== 'NONE' && <h3>Role: {computer.role}</h3>}
+                    {computer.programList?.length > 0 && <ProgramTable array = {computer.programList} />}
                 </Box>
             </Modal>
         </Card>

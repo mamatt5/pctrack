@@ -27,7 +27,9 @@ public class UserDataLoader implements ApplicationRunner
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
+
 	        ComputerService computerService, ProgramService programService, RoomService roomService, MandateService mandateService, ProgramVersionService programVersionService, VersionService versionService)
+
 	{
 		super();
 		this.userService = userService;
@@ -304,6 +306,7 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c30 = new Computer(15066, room3);
 		computerService.save(c30);
+
 		c30.setProgramList(Arrays.asList(vscodeV1, eclipseV1, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c30);
 
@@ -1002,6 +1005,17 @@ public class UserDataLoader implements ApplicationRunner
     	staffService.save(staff5);
     	staffService.save(staff6);
 
+    	// Mandate
+    	String mandate1Desc = "We need 10 DEV-ready computers.";
+    	Mandate mandate1 = new Mandate(room1, roomAdmin1, mandate1Desc);
+    	mandateService.save(mandate1);
 
+    	String mandate2Desc = "We need 10 BI-ready computers.";
+    	Mandate mandate2 = new Mandate(room2, roomAdmin2, mandate2Desc);
+    	mandateService.save(mandate2);
+    	
+    	String mandate3Desc = "We need 10 DEV and BI-ready computers.";
+    	Mandate mandate3 = new Mandate(room3, roomAdmin3, mandate3Desc);
+    	mandateService.save(mandate3);
 	}
 }
