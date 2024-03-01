@@ -11,8 +11,8 @@ public class BusinessAdmin extends LocationAdmin {
 	public BusinessAdmin() {
 		super(); 
 	}
-	public BusinessAdmin(User user, Location location) {
-		super("Business", user, location);
+	public BusinessAdmin(AdminLevel admin, User user, Location location) {
+		super(admin, user, location);
 
 	}
 	

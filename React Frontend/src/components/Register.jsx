@@ -5,7 +5,7 @@ import { useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import callApi from "../api/callApi";
 import { useEffect } from "react";
 
@@ -60,7 +60,6 @@ const Register = ({ users, setOpenModal }) => {
 
 		let locs = {};
 		locations.forEach((location) => {
-			console.log(location);
 			locs[location.city] = false;
 		});
 		setCheckedValues(locs);
@@ -89,7 +88,6 @@ const Register = ({ users, setOpenModal }) => {
 		const firstName = data.get("firstName").trim();
 		const lastName = data.get("lastName").trim();
 		const password = data.get("password").trim();
-
 
 		// assume that every user must then be made into a staff
 		// as a result, register will create a new user, and then make then a staff.
@@ -191,15 +189,16 @@ const Register = ({ users, setOpenModal }) => {
 	console.log(checkedValues);
 	return (
 		<>
-			<Box sx={{width: "95%"}}>
+			<Box sx={{ width: "95%", padding:"1.5rem" }}>
 				<Box>
-					<Typography variant="h5" sx={{ paddingBottom: "1rem" }}>
+					<Typography variant="h5" >
 						Register a user
 					</Typography>
 				</Box>
-
+				<Divider  sx={{ margin:"1rem 0 1rem 0"}} />
 				<form onSubmit={checkRegister} className="flexCol">
 					<TextField
+					size="medium"
 						name="firstName"
 						label="Given Name"
 						error={Boolean(firstNameErr)}
@@ -224,8 +223,8 @@ const Register = ({ users, setOpenModal }) => {
 						sx={{ margin: "0.5rem" }}
 					/>
 
-					<Typography>Office</Typography>
-					<Box className="flexRow" sx={{ alignItems: "center", paddingLeft:"2rem"}}>
+					<Typography variant="subtitle1">Office</Typography>
+					<Box className="flexRow" sx={{ alignItems: "center", paddingLeft: "2rem" }}>
 						<FormGroup>
 							{locations.map((item) => (
 								<FormControlLabel
@@ -242,14 +241,7 @@ const Register = ({ users, setOpenModal }) => {
 						</FormGroup>
 					</Box>
 					<Box className="centerHorizonal">
-						<Button
-							type="submit"
-							variant="contained"
-							disabled={!formValid}
-
-							onClick={() => {}}
-						>
-
+						<Button type="submit" variant="contained" disabled={!formValid} onClick={() => {}}>
 							Register
 						</Button>
 					</Box>

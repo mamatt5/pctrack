@@ -13,17 +13,11 @@ public class LocationAdmin extends RoomAdmin {
         // Default constructor required by JPA
 		super(); 
     }
-	public LocationAdmin(User user, Location location) {
-		super("Location", user, location);
+	public LocationAdmin( AdminLevel admin, User user, Location location) {
+		super(admin, user, location);
 
 	}
 	
-	public LocationAdmin(String type, User user, Location location) {
-		super(type, user, location);
-
-	}
-
-
 	
 	public void setStaffLocation(Staff staff, Location location) {
 		

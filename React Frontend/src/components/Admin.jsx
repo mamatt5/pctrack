@@ -8,9 +8,23 @@ import Register from "./Register";
 import CustomizedTables from "../partials/staffTable";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
-import Loading from "../partials/Loading";
+import Paper from "@mui/material/Paper";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { IconButton, Tooltip, Typography } from "@mui/material";
+
 let pageNum = 0;
 let pageSize = 10;
+
+export const getAdminsLevels = (setAdminLevels) => {
+	// Functionality to get staff on pagination
+	const config = {
+		method: "get",
+		endpoint: "adminLevels",
+	};
+
+	callApi(setAdminLevels, null, config);
+};
 
 const getStaffCount = (setStaffCount) => {
 	// Functionality to get staff on pagination
@@ -92,7 +106,7 @@ const RegisterModal = ({ openModal, setOpenModal, users }) => {
 			>
 				<Fade in={openModal}>
 					<Box
-						className="centerHorizonal"
+
 						sx={{
 							position: "absolute",
 							top: "50%",
@@ -100,9 +114,10 @@ const RegisterModal = ({ openModal, setOpenModal, users }) => {
 							transform: "translate(-50%, -50%)",
 							backgroundColor: "white",
 							borderRadius: 3,
-							width: "40vw",
-							border: "1px solid black",
-							borderRadius: "10px",
+							width: "70vw",
+                            maxWidth:600,
+
+							borderRadius: "5px",
 							p: 4,
 						}}
 					>
@@ -114,15 +129,26 @@ const RegisterModal = ({ openModal, setOpenModal, users }) => {
 	);
 };
 
-const Admin = () => {
+const Admin = ({ currStaff }) => {
 	document.body.style = "background: #f2f5f7;";
+
+	// basically for each location, admins have different adminlevels
+	// first check location matching.
+
+	console.log(currStaff);
 	const [openModal, setOpenModal] = useState(false);
 	const [staff, setStaff] = useState([]);
 	const [users, setUsers] = useState([]);
 	const [query, setQuery] = useState("");
-	const [change, setChange] = useState(true);
-	const [staffCount, setStaffCount] = useState(true);
-	const [loading, setLoading] = useState(true);
+	const [change, setChange] = useState(true); // notifies theres been a page size/page change
+	const [staffCount, setStaffCount] = useState(-1); // -1 othewise we might mistake it as no users found
+	const [adminLevels, setAdminLevels] = useState([]);
+
+	useEffect(() => {
+		getAdminsLevels(setAdminLevels);
+	}, []);
+
+
 	useEffect(() => {
 		if (query === "") {
 			getStaff(setStaff);
@@ -141,36 +167,51 @@ const Admin = () => {
 		getUsers(setUsers);
 	}, [openModal]);
 
-	// check if api still fetching data
-	useEffect(() => {
-		setLoading(Object.keys(staff).length === 0);
-	}, [staff]);
-
 	return (
-		<>
-			{loading ? (
-				<Loading />
-			) : (
-				<Box className="centerHorizonal" sx={{ paddingTop: "5rem", marginLeft: "8%" }}>
-					<Box sx={{ display: "flex", flexDirection: "row" }}></Box>
+		<Box className="centerHorizonal" sx={{ paddingTop: "5rem", marginLeft: "8%" }}>
+			<Box sx={{ display: "flex", flexDirection: "row" }}></Box>
 
-					<RegisterModal openModal={openModal} setOpenModal={setOpenModal} users={users} />
-					<CustomizedTables
-						array={staff}
-						setQuery={setQuery}
-						staffCount={staffCount}
-						onChangePage={(pNum, pSize) => {
-							setChange((change) => !change);
-							pageNum = pNum;
-							pageSize = pSize;
-						}}
-					/>
-					<Button variant="contained" disableElevation onClick={() => setOpenModal(true)}>
-						Register User
-					</Button>
+			<RegisterModal openModal={openModal} setOpenModal={setOpenModal} users={users} />
+			<Paper sx={{ overflow: "hidden", width: "82vw", maxWidth: 980 }} elevation={0}>
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+						padding: "1.6rem",
+					}}
+				>
+					<Typography variant="h5" sx={{ fontWeight: "bold", color: "#3b3b3b" }}>
+						Staff List
+					</Typography>
+					<Box>
+						<Tooltip title="Register User" onClick={() => setOpenModal(true)} placement="bottom">
+							<IconButton>
+								<PersonAddAltIcon />
+							</IconButton>
+						</Tooltip>
+
+						<Tooltip title="Filter Users" placement="bottom">
+							<IconButton>
+								<FilterListIcon />
+							</IconButton>
+						</Tooltip>
+					</Box>
 				</Box>
-			)}
-		</>
+				<CustomizedTables
+					array={staff}
+                    currStaff={currStaff}
+					setQuery={setQuery}
+					staffCount={staffCount}
+                    adminLevels={adminLevels}
+					onChangePage={(pNum, pSize) => {
+						setChange((change) => !change);
+						pageNum = pNum;
+						pageSize = pSize;
+					}}
+				/>
+			</Paper>
+		</Box>
 	);
 };
 

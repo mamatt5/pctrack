@@ -12,8 +12,7 @@ import com.fdmgroup.PCTrack.model.*;
 import com.fdmgroup.PCTrack.service.*;
 
 @Service
-public class UserDataLoader implements ApplicationRunner
-{
+public class UserDataLoader implements ApplicationRunner {
 
 	private UserService userService;
 	private LocationService locationService;
@@ -23,11 +22,12 @@ public class UserDataLoader implements ApplicationRunner
 	private RoomService roomService;
 	private ProgramService programVersionService;
 	private MandateService mandateService;
+	private AdminLevelService adminService;
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
-
-	        ComputerService computerService, SoftwareService programService, RoomService roomService, MandateService mandateService, ProgramService programVersionService)
+			AdminLevelService adminService, ComputerService computerService, SoftwareService programService,
+			RoomService roomService, MandateService mandateService, ProgramService programVersionService)
 
 	{
 		super();
@@ -38,12 +38,12 @@ public class UserDataLoader implements ApplicationRunner
 		this.programService = programService;
 		this.roomService = roomService;
 		this.mandateService = mandateService;
+		this.adminService = adminService;
 		this.programVersionService = programVersionService;
 	}
 
 	@Override
-	public void run(ApplicationArguments args) throws Exception
-	{
+	public void run(ApplicationArguments args) throws Exception {
 
 		// Locations
 		Location location1 = new Location("FDM Sydney", "Sydney");
@@ -52,9 +52,22 @@ public class UserDataLoader implements ApplicationRunner
 
 		List<Location> locations = Arrays.asList(location1, location2, location3);
 
-		for (Location location : locations)
-		{
+		for (Location location : locations) {
 			locationService.save(location);
+		}
+
+		// Admin
+		// perms = 100 mean no perms
+		// otherwise perms 1 means highest, 2 second highest etc....
+		AdminLevel Business = new AdminLevel("Business", 1);
+		AdminLevel Location = new AdminLevel("Location", 2);
+		AdminLevel Room = new AdminLevel("Room", 3);
+		AdminLevel User = new AdminLevel("", 100);
+
+		List<AdminLevel> adminLevels = Arrays.asList(Location, Business, Room, User);
+
+		for (AdminLevel adminLevel : adminLevels) {
+			adminService.save(adminLevel);
 		}
 
 		// Rooms
@@ -72,10 +85,9 @@ public class UserDataLoader implements ApplicationRunner
 		Room room12 = new Room("Sentosa", location3);
 
 		List<Room> rooms = Arrays.asList(room1, room2, room3, room4, room5, room6, room7, room8, room9, room10, room11,
-		        room12);
+				room12);
 
-		for (Room room : rooms)
-		{
+		for (Room room : rooms) {
 			roomService.save(room);
 		}
 
@@ -94,13 +106,14 @@ public class UserDataLoader implements ApplicationRunner
 		Software git = new Software("Git");
 		Software jdk = new Software("JDK");
 		Software visualStudio = new Software("Visual Studio");
-		
-		List<Software> softwares = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel, microsoftSSMS, pnpm, git, jdk, visualStudio);
+
+		List<Software> softwares = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel,
+				microsoftSSMS, pnpm, git, jdk, visualStudio);
 		for (Software software : softwares) {
-		    programService.save(software);
+			programService.save(software);
 		}
-		
-		//Program Versions
+
+		// Program Versions
 		Program vscodeV1 = new Program(vscode, "1.46.1");
 		Program eclipseV1 = new Program(eclipse, "4.22");
 		Program nodejsV1 = new Program(nodejs, "20.11.0");
@@ -128,10 +141,10 @@ public class UserDataLoader implements ApplicationRunner
 		Program gitV1 = new Program(git, "2.27.0");
 		Program jdkV1 = new Program(jdk, "17.0.2");
 		Program visualStudioV1 = new Program(visualStudio, "1.87.0");
-		
-		List<Program> programsList = Arrays.asList(vscodeV1, eclipseV1, nodejsV1, nodejsV2, nodejsV3, nodejsV4, nodejsV5, nodejsV6,
-		        nodejsV7, pythonV1, npmV1, npmV2, npmV3, npmV4, npmV5, npmV6, npmV7, sql8wbV1, sqlShellV1, powerBiV1, excelV1, excelV2,
-		        microsoftSSMSV1, pnpmV1, gitV1, jdkV1,visualStudioV1);
+
+		List<Program> programsList = Arrays.asList(vscodeV1, eclipseV1, nodejsV1, nodejsV2, nodejsV3, nodejsV4,
+				nodejsV5, nodejsV6, nodejsV7, pythonV1, npmV1, npmV2, npmV3, npmV4, npmV5, npmV6, npmV7, sql8wbV1,
+				sqlShellV1, powerBiV1, excelV1, excelV2, microsoftSSMSV1, pnpmV1, gitV1, jdkV1, visualStudioV1);
 		for (Program pv : programsList) {
 			programVersionService.save(pv);
 		}
@@ -139,30 +152,32 @@ public class UserDataLoader implements ApplicationRunner
 		// SYD bondi
 		Computer c1 = new Computer(15040, room1);
 		computerService.save(c1);
-		c1.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, visualStudioV1));
+		c1.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, visualStudioV1));
 		computerService.update(c1);
 
 		Computer c2 = new Computer(70156, room1);
 		computerService.save(c2);
-		c2.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV2, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c2.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV2, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c2);
 
 		Computer c3 = new Computer(15046, room1);
 		computerService.save(c3);
-		c3.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV2, microsoftSSMSV1, gitV1, jdkV1));
+		c3.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV2,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c3);
 
 		Computer c4 = new Computer(15068, room1);
 		computerService.save(c4);
-		c4.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c4.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c4);
 
 		Computer c5 = new Computer(15048, room1);
 		computerService.save(c5);
-		c5.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c5.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c5);
 
 		Computer c6 = new Computer(15052, room1);
@@ -170,14 +185,14 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c7 = new Computer(15036, room1);
 		computerService.save(c7);
-		c7.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c7.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c7);
 
 		Computer c8 = new Computer(70101, room1);
 		computerService.save(c8);
-		c8.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c8.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c8);
 
 		Computer c9 = new Computer(70108, room1);
@@ -185,25 +200,26 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c10 = new Computer(15054, room1);
 		computerService.save(c10);
-		c10.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c10.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c10);
 
 		Computer c11 = new Computer(15037, room1);
 		computerService.save(c11);
-		c11.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c11.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c11);
 
 		Computer c12 = new Computer(70104, room1);
 		computerService.save(c12);
-		c12.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV5, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c12.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV5, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c12);
 
 		Computer c13 = new Computer(15038, room1);
 		computerService.save(c13);
 		c13.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV6, sql8wbV1, sqlShellV1, excelV2,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c13);
 
 		Computer c14 = new Computer(70160, room1);
@@ -215,7 +231,8 @@ public class UserDataLoader implements ApplicationRunner
 		// SYD coogee
 		Computer c16 = new Computer(15030, room2);
 		computerService.save(c16);
-		c16.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c16.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c16);
 
 		Computer c17 = new Computer(70213, room2);
@@ -223,7 +240,8 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c18 = new Computer(70161, room2);
 		computerService.save(c18);
-		c18.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c18.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c18);
 
 		Computer c19 = new Computer(70098, room2);
@@ -291,12 +309,14 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c35 = new Computer(70204, room4);
 		computerService.save(c35);
-		c35.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c35.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c35);
 
 		Computer c36 = new Computer(70095, room4);
 		computerService.save(c36);
-		c36.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c36.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c36);
 
 		Computer c37 = new Computer(70207, room4);
@@ -319,210 +339,214 @@ public class UserDataLoader implements ApplicationRunner
 		// SYD tamarama
 		Computer c42 = new Computer(15059, room5);
 		computerService.save(c42);
-		c42.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c42.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c42);
 
 		Computer c43 = new Computer(15091, room5);
 		computerService.save(c43);
-		c43.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c43.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c43);
 
 		Computer c44 = new Computer(70263, room5);
 		computerService.save(c44);
-		c44.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c44.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c44);
 
 		Computer c45 = new Computer(70272, room5);
 		computerService.save(c45);
-		c45.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c45.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c45);
 
 		Computer c46 = new Computer(70613, room5);
 		computerService.save(c46);
-		c46.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c46.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c46);
 
 		Computer c47 = new Computer(70707, room5);
 		computerService.save(c47);
-		c47.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c47.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c47);
 
 		Computer c48 = new Computer(70898, room5);
 		computerService.save(c48);
-		c48.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c48.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c48);
 
 		Computer c49 = new Computer(15656, room5);
 		computerService.save(c49);
-		c49.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c49.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c49);
 
 		Computer c50 = new Computer(70410, room5);
 		computerService.save(c50);
-		c50.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c50.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c50);
 
 		Computer c51 = new Computer(70412, room5);
 		computerService.save(c51);
-		c51.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c51.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c51);
 
 		Computer c52 = new Computer(15231, room5);
 		computerService.save(c52);
-		c52.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c52.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c52);
 
 		Computer c53 = new Computer(72196, room5);
 		computerService.save(c53);
-		c53.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c53.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c53);
 
 		Computer c54 = new Computer(72210, room5);
 		computerService.save(c54);
-		c54.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c54.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV4, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c54);
 
 		Computer c55 = new Computer(72212, room5);
 		computerService.save(c55);
-		c55.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c55.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c55);
 
 		Computer c56 = new Computer(15091, room5);
 		computerService.save(c56);
-		c56.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c56.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c56);
 
 		Computer c57 = new Computer(72196, room5);
 		computerService.save(c57);
-		c57.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c57.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c57);
 
 		// HK Aberdeen 14 room6
 		Computer c58 = new Computer(16028, room6);
 		computerService.save(c58);
-		c58.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c58.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c58);
 
 		Computer c59 = new Computer(16395, room6);
 		computerService.save(c59);
-		c59.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c59.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c59);
 
 		Computer c60 = new Computer(16245, room6);
 		computerService.save(c60);
-		c60.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c60.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c60);
 
 		Computer c61 = new Computer(16532, room6);
 		computerService.save(c61);
-		c61.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV5, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c61.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV5, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c61);
 
 		Computer c62 = new Computer(16788, room6);
 		computerService.save(c62);
-		c62.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV6, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c62.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV6, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c62);
 
 		Computer c63 = new Computer(16975, room6);
 		computerService.save(c63);
-		c63.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c63.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c63);
 
 		Computer c64 = new Computer(16031, room6);
 		computerService.save(c64);
-		c64.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c64.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c64);
 
 		Computer c65 = new Computer(16824, room6);
 		computerService.save(c65);
-		c65.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c65.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c65);
 
 		Computer c66 = new Computer(16992, room6);
 		computerService.save(c66);
-		c66.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c66.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c66);
 
 		Computer c67 = new Computer(16098, room6);
 		computerService.save(c67);
-		c67.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c67.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c67);
 
 		Computer c68 = new Computer(16333, room6);
 		computerService.save(c68);
-		c68.setProgramList(
-		        Arrays.asList(nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c68.setProgramList(Arrays.asList(nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c68);
 
 		Computer c69 = new Computer(16447, room6);
 		computerService.save(c69);
-		c69.setProgramList(
-		        Arrays.asList(nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c69.setProgramList(Arrays.asList(nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c69);
 
 		Computer c70 = new Computer(16654, room6);
 		computerService.save(c70);
-		c70.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c70.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c70);
 
 		Computer c71 = new Computer(16211, room6);
 		computerService.save(c71);
-		c71.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1,
-		        jdkV1, powerBiV1));
+		c71.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c71);
 
 		// HK Lantau 20 room7
 		Computer c72 = new Computer(16875, room7);
 		computerService.save(c72);
-		c72.setProgramList(
-		        Arrays.asList(nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c72.setProgramList(Arrays.asList(nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c72);
 
 		Computer c73 = new Computer(16030, room7);
 		computerService.save(c73);
-		c73.setProgramList(Arrays.asList(nodejsV2, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c73.setProgramList(Arrays.asList(nodejsV2, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1,
+				powerBiV1));
 		computerService.update(c73);
 
 		Computer c74 = new Computer(16397, room7);
 		computerService.save(c74);
-		c74.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, microsoftSSMSV1, gitV1, jdkV1));
+		c74.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c74);
 
 		Computer c75 = new Computer(16248, room7);
 		computerService.save(c75);
-		c75.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, gitV1, jdkV1, powerBiV1));
+		c75.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c75);
 
 		Computer c76 = new Computer(16535, room7);
 		computerService.save(c76);
-		c76.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV5, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c76.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV5, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c76);
 
 		Computer c77 = new Computer(16781, room7);
@@ -536,24 +560,26 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c80 = new Computer(16828, room7);
 		computerService.save(c80);
-		c80.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, gitV1, jdkV1));
+		c80.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				gitV1, jdkV1));
 		computerService.update(c80);
 
 		Computer c81 = new Computer(16998, room7);
 		computerService.save(c81);
-		c81.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c81.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c81);
 
 		Computer c82 = new Computer(16093, room7);
 		computerService.save(c82);
-		c82.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV6, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c82.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV6, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c82);
 
 		Computer c83 = new Computer(16338, room7);
 		computerService.save(c83);
-		c83.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, powerBiV1));
+		c83.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, powerBiV1));
 		computerService.update(c83);
 
 		Computer c84 = new Computer(16452, room7);
@@ -561,8 +587,8 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c85 = new Computer(16659, room7);
 		computerService.save(c85);
-		c85.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c85.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c85);
 
 		Computer c86 = new Computer(16214, room7);
@@ -570,32 +596,32 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c87 = new Computer(16786, room7);
 		computerService.save(c87);
-		c87.setProgramList(Arrays.asList(vscodeV1, eclipseV1, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1,
-		        jdkV1, powerBiV1));
+		c87.setProgramList(Arrays.asList(vscodeV1, eclipseV1, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c87);
 
 		Computer c88 = new Computer(16335, room7);
 		computerService.save(c88);
-		c88.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1,
-		        jdkV1, powerBiV1));
+		c88.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c88);
 
 		Computer c89 = new Computer(16596, room7);
 		computerService.save(c89);
-		c89.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c89.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c89);
 
 		Computer c90 = new Computer(16836, room7);
 		computerService.save(c90);
-		c90.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c90.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c90);
 
 		Computer c91 = new Computer(16202, room7);
 		computerService.save(c91);
-		c91.setProgramList(
-		        Arrays.asList(nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c91.setProgramList(Arrays.asList(nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c91);
 
 		// HK Stanley 8 room8
@@ -606,24 +632,26 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c93 = new Computer(17005, room8);
 		computerService.save(c93);
-		c93.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, jdkV1));
+		c93.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, jdkV1));
 		computerService.update(c93);
 
 		Computer c94 = new Computer(17002, room8);
 		computerService.save(c94);
-		c94.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, gitV1, jdkV1));
+		c94.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				gitV1, jdkV1));
 		computerService.update(c94);
 
 		Computer c95 = new Computer(17325, room8);
 		computerService.save(c95);
-		c95.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c95.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c95);
 
 		Computer c96 = new Computer(17645, room8);
 		computerService.save(c96);
-		c96.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c96.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c96);
 
 		Computer c97 = new Computer(17835, room8);
@@ -636,27 +664,28 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c99 = new Computer(18056, room8);
 		computerService.save(c99);
-		c99.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1));
+		c99.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c99);
 
 		// HK Causeway Bay 12 room9
 
 		Computer c100 = new Computer(19236, room9);
 		computerService.save(c100);
-		c100.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1, gitV1, jdkV1, powerBiV1));
+		c100.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c100);
 
 		Computer c101 = new Computer(19056, room9);
 		computerService.save(c101);
-		c101.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        jdkV1, powerBiV1));
+		c101.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, jdkV1, powerBiV1));
 		computerService.update(c101);
 
 		Computer c102 = new Computer(19625, room9);
 		computerService.save(c102);
-		c102.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, gitV1, jdkV1));
+		c102.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, sql8wbV1, sqlShellV1, gitV1, jdkV1));
 		computerService.update(c102);
 
 		Computer c103 = new Computer(19123, room9);
@@ -664,14 +693,14 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c104 = new Computer(19345, room9);
 		computerService.save(c104);
-		c104.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
-		        gitV1, jdkV1, powerBiV1));
+		c104.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c104);
 
 		Computer c105 = new Computer(19567, room9);
 		computerService.save(c105);
-		c105.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, jdkV1));
+		c105.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1, jdkV1));
 		computerService.update(c105);
 
 		Computer c106 = new Computer(19789, room9);
@@ -682,24 +711,26 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c108 = new Computer(20134, room9);
 		computerService.save(c108);
-		c108.setProgramList(Arrays.asList(vscodeV1, eclipseV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c108.setProgramList(Arrays.asList(vscodeV1, eclipseV1, npmV4, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1));
 		computerService.update(c108);
 
 		Computer c109 = new Computer(20356, room9);
 		computerService.save(c109);
-		c109.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c109.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c109);
 
 		Computer c110 = new Computer(20578, room9);
 		computerService.save(c110);
-		c110.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c110.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c110);
 
 		Computer c111 = new Computer(20791, room9);
 		computerService.save(c111);
-		c111.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1, powerBiV1));
+		c111.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV3, excelV1, microsoftSSMSV1, powerBiV1));
 		computerService.update(c111);
 
 		// SG Raffles Place 12 room10
@@ -707,23 +738,25 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c112 = new Computer(30932, room10);
 		computerService.save(c112);
 		c112.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c112);
 
 		Computer c113 = new Computer(31154, room10);
 		computerService.save(c113);
-		c113.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c113.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c113);
 
 		Computer c114 = new Computer(31376, room10);
 		computerService.save(c114);
-		c114.setProgramList(Arrays.asList(vscodeV1, eclipseV1, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c114.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c114);
 
 		Computer c115 = new Computer(31598, room10);
 		computerService.save(c115);
 		c115.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV5, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c115);
 
 		Computer c116 = new Computer(31820, room10);
@@ -739,46 +772,50 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c118 = new Computer(32264, room10);
 		computerService.save(c118);
 		c118.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV6, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c118);
 
 		Computer c119 = new Computer(32486, room10);
 		computerService.save(c119);
 		c119.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c119);
 
 		Computer c120 = new Computer(32708, room10);
 		computerService.save(c120);
-		c120.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1, gitV1, jdkV1));
+		c120.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1,
+				gitV1, jdkV1));
 		computerService.update(c120);
 
 		Computer c121 = new Computer(32930, room10);
 		computerService.save(c121);
-		c121.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c121.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c121);
 
 		Computer c122 = new Computer(33152, room10);
 		computerService.save(c122);
-		c122.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1));
+		c122.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
+				microsoftSSMSV1));
 		computerService.update(c122);
 
 		Computer c123 = new Computer(33374, room10);
 		computerService.save(c123);
-		c123.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c123.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV1, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c123);
 
 		// SG Clarke Quay 12 room11
 		Computer c124 = new Computer(33596, room11);
 		computerService.save(c124);
-		c124.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV2, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c124.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV2, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c124);
 
 		Computer c125 = new Computer(33818, room11);
 		computerService.save(c125);
 		c125.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c125);
 
 		Computer c126 = new Computer(34040, room11);
@@ -788,23 +825,26 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c127 = new Computer(34262, room11);
 		computerService.save(c127);
-		c127.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV5, sql8wbV1, sqlShellV1, excelV1));
+		c127.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV5, pythonV1, npmV5, sql8wbV1, sqlShellV1, excelV1));
 		computerService.update(c127);
 
 		Computer c128 = new Computer(34484, room11);
 		computerService.save(c128);
-		c128.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV6, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c128.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV6, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c128);
 
 		Computer c129 = new Computer(34706, room11);
 		computerService.save(c129);
 		c129.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c129);
 
 		Computer c130 = new Computer(34928, room11);
 		computerService.save(c130);
-		c130.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c130.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV3, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c130);
 
 		Computer c131 = new Computer(35150, room11);
@@ -818,25 +858,26 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c133 = new Computer(35594, room11);
 		computerService.save(c133);
 		c133.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV6, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c133);
 
 		Computer c134 = new Computer(35816, room11);
 		computerService.save(c134);
-		c134.setProgramList(Arrays.asList(vscodeV1, eclipseV1, pythonV1, npmV5, excelV1, microsoftSSMSV1, gitV1, jdkV1));
+		c134.setProgramList(
+				Arrays.asList(vscodeV1, eclipseV1, pythonV1, npmV5, excelV1, microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c134);
 
 		Computer c135 = new Computer(36038, room11);
 		computerService.save(c135);
-		c135.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c135.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c135);
 
 		// SG Sentonsa Place 12 room12
 		Computer c136 = new Computer(36260, room12);
 		computerService.save(c136);
-		c136.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV2, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c136.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV2, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c136);
 
 		Computer c137 = new Computer(36482, room12);
@@ -846,26 +887,26 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c138 = new Computer(36704, room12);
 		computerService.save(c138);
-		c138.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV4, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c138.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV4, pythonV1, npmV4, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c138);
 
 		Computer c139 = new Computer(36926, room12);
 		computerService.save(c139);
-		c139.setProgramList(
-		        Arrays.asList(nodejsV5, pythonV1, npmV5, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c139.setProgramList(Arrays.asList(nodejsV5, pythonV1, npmV5, sql8wbV1, sqlShellV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c139);
 
 		Computer c140 = new Computer(37148, room12);
 		computerService.save(c140);
-		c140.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV6, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c140.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV6, pythonV1, npmV6, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c140);
 
 		Computer c141 = new Computer(37370, room12);
 		computerService.save(c141);
 		c141.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV7, sql8wbV1, sqlShellV1, excelV1,
-		        microsoftSSMSV1, gitV1, jdkV1));
+				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c141);
 
 		Computer c142 = new Computer(37592, room12);
@@ -887,99 +928,98 @@ public class UserDataLoader implements ApplicationRunner
 
 		Computer c147 = new Computer(38702, room12);
 		computerService.save(c147);
-		c147.setProgramList(
-		        Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, excelV1, microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
+		c147.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, excelV1, microsoftSSMSV1,
+				gitV1, jdkV1, powerBiV1));
 		computerService.update(c147);
-		
 
 		// no need to manuualy add date
 		User u0 = new User("admin1", "0000!!", "Root", "Admin");
-        User u1 = new User("andy.joe", "password123", "Andy", "Joe"); 
-        User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
-        User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion");
-        User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
-        User u5 = new User("blitzcrank.botter", "password123", "Blitzcrank", "Botter", LocalDate.of(2023, 11, 27));
-        User u6 = new User("baron.nashor", "password123", "Baron", "Nashor", LocalDate.of(2023, 11, 27));
-        User u7 = new User("darwin.norman", "password123", "Darwin", "Norman", LocalDate.of(2023, 11, 27));
-        User u8 = new User("camden.leonard", "password123", "Camden", "Leonard", LocalDate.of(2023, 11, 27));
-        User u9 = new User("quincy.jarvis", "password123", "Quincy", "Jarvis", LocalDate.of(2023, 11, 27));
-        User u10 = new User("chaim.harrison", "password123", "Chaim", "Harrison", LocalDate.of(2023, 11, 27));
-        
-        User u11 = new User("ryan.wilson", "password123", "Ryan", "Wilson", LocalDate.of(2023, 11, 27));
-    	User u12 = new User("tejasva.saboo", "password123", "Tejasva", "Saboo", LocalDate.of(2023, 11, 27));
-    	User u13 = new User("donald.witcombe", "password123", "Donald", "Witcombe", LocalDate.of(2023, 11, 27));
-    	User u14 = new User("flor.crencic", "password123", "Florencia", "Crencic", LocalDate.of(2023, 11, 27));
-    	User u15 = new User("james.mccarthy", "password123", "James", "McCarthy", LocalDate.of(2023, 11, 27));
-    	User u16 = new User("dan.solomon", "password123", "Dan", "Solomon", LocalDate.of(2023, 11, 27));
-    	User u17 = new User("chris.spencer", "password123", "Chris", "Spencer", LocalDate.of(2023, 11, 27));
-    	User u18 = new User("carolina.portugal", "password123", "Carolina", "Portugal", LocalDate.of(2023, 11, 27));
-    	User u19 = new User("alex.zlatevska", "password123", "Aleksandra", "Zlatevska", LocalDate.of(2023, 11, 27));
-    	User u20 = new User("joe.mclaren", "password123", "Joe", "Mclaren", LocalDate.of(2023, 11, 27));
-    	
-        
-    	List<User> users = Arrays.asList(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20);
-    	
-    	for (User user : users) {
-    		userService.register(user);
-    	}
-        
-    	// Business admin
-    	BusinessAdmin businessAdmin = new BusinessAdmin(u0, location1);
-    	staffService.save(businessAdmin);
-    	
-    	// Location admin
-    	LocationAdmin locationAdmin1 = new LocationAdmin(u20, location1);
-    	LocationAdmin locationAdmin2 = new LocationAdmin(u1, location1);
-    	LocationAdmin locationAdmin3 = new LocationAdmin(u2, location2);
-    	LocationAdmin locationAdmin4 = new LocationAdmin(u3, location2);
-    	LocationAdmin locationAdmin5 = new LocationAdmin(u4, location3);
-    	
-    	staffService.save(locationAdmin1);
-    	staffService.save(locationAdmin2);
-    	staffService.save(locationAdmin3);
-    	staffService.save(locationAdmin4);
-    	staffService.save(locationAdmin5);
-    	
-    	// Room admin
-    	RoomAdmin roomAdmin1 = new RoomAdmin(u5, location1);
-    	RoomAdmin roomAdmin2 = new RoomAdmin(u6, location1);
-    	RoomAdmin roomAdmin3 = new RoomAdmin(u7, location2);
-    	RoomAdmin roomAdmin4 = new RoomAdmin(u8, location3);
-    	RoomAdmin roomAdmin5 = new RoomAdmin(u9, location3);
-    	
-    	staffService.save(roomAdmin1);
-    	staffService.save(roomAdmin2);
-    	staffService.save(roomAdmin3);
-    	staffService.save(roomAdmin4);
-    	staffService.save(roomAdmin5);
-    	
-    	
-    	// Staff
-    	Staff staff1 = new Staff(u10, location1);
-    	Staff staff2 = new Staff(u12, location1);
-    	Staff staff3 = new Staff(u13, location1);
-    	Staff staff4 = new Staff(u14, location1);
-    	Staff staff5 = new Staff(u15, location1);
-    	Staff staff6 = new Staff(u16, location1);
-    	
-    	staffService.save(staff1);
-    	staffService.save(staff2);
-    	staffService.save(staff3);
-    	staffService.save(staff4);
-    	staffService.save(staff5);
-    	staffService.save(staff6);
+		User u1 = new User("andy.joe", "password123", "Andy", "Joe");
+		User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
+		User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion");
+		User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
 
-    	// Mandate
-    	String mandate1Desc = "We need 10 DEV-ready computers.";
-    	Mandate mandate1 = new Mandate(room1, roomAdmin1, mandate1Desc);
-    	mandateService.save(mandate1);
+		User u5 = new User("roomadmin", "0000!!", "Room", "admin", LocalDate.of(2023, 11, 27));
+		User u6 = new User("baron.nashor", "password123", "Baron", "Nashor", LocalDate.of(2023, 11, 27));
+		User u7 = new User("darwin.norman", "password123", "Darwin", "Norman", LocalDate.of(2023, 11, 27));
+		User u8 = new User("camden.leonard", "password123", "Camden", "Leonard", LocalDate.of(2023, 11, 27));
+		User u9 = new User("quincy.jarvis", "password123", "Quincy", "Jarvis", LocalDate.of(2023, 11, 27));
+		User u10 = new User("chaim.harrison", "password123", "Chaim", "Harrison", LocalDate.of(2023, 11, 27));
 
-    	String mandate2Desc = "We need 10 BI-ready computers.";
-    	Mandate mandate2 = new Mandate(room2, roomAdmin2, mandate2Desc);
-    	mandateService.save(mandate2);
-    	
-    	String mandate3Desc = "We need 10 DEV and BI-ready computers.";
-    	Mandate mandate3 = new Mandate(room3, roomAdmin3, mandate3Desc);
-    	mandateService.save(mandate3);
+		User u11 = new User("ryan.wilson", "password123", "Ryan", "Wilson", LocalDate.of(2023, 11, 27));
+		User u12 = new User("tejasva.saboo", "password123", "Tejasva", "Saboo", LocalDate.of(2023, 11, 27));
+		User u13 = new User("donald.witcombe", "password123", "Donald", "Witcombe", LocalDate.of(2023, 11, 27));
+		User u14 = new User("flor.crencic", "password123", "Florencia", "Crencic", LocalDate.of(2023, 11, 27));
+		User u15 = new User("james.mccarthy", "password123", "James", "McCarthy", LocalDate.of(2023, 11, 27));
+		User u16 = new User("dan.solomon", "password123", "Dan", "Solomon", LocalDate.of(2023, 11, 27));
+		User u17 = new User("chris.spencer", "password123", "Chris", "Spencer", LocalDate.of(2023, 11, 27));
+		User u18 = new User("carolina.portugal", "password123", "Carolina", "Portugal", LocalDate.of(2023, 11, 27));
+		User u19 = new User("alex.zlatevska", "password123", "Aleksandra", "Zlatevska", LocalDate.of(2023, 11, 27));
+		User u20 = new User("joe.mclaren", "password123", "Joe", "Mclaren", LocalDate.of(2023, 11, 27));
+
+		List<User> users = Arrays.asList(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17,
+				u18, u19, u20);
+
+		for (User user : users) {
+			userService.register(user);
+		}
+
+		// Business admin
+		BusinessAdmin businessAdmin = new BusinessAdmin(Business, u0, location1);
+		staffService.save(businessAdmin);
+
+		// Location admin
+		LocationAdmin locationAdmin1 = new LocationAdmin(Location, u20, location1);
+		LocationAdmin locationAdmin2 = new LocationAdmin(Location, u1, location1);
+		LocationAdmin locationAdmin3 = new LocationAdmin(Location, u2, location2);
+		LocationAdmin locationAdmin4 = new LocationAdmin(Location, u3, location2);
+		LocationAdmin locationAdmin5 = new LocationAdmin(Location, u4, location3);
+
+		staffService.save(locationAdmin1);
+		staffService.save(locationAdmin2);
+		staffService.save(locationAdmin3);
+		staffService.save(locationAdmin4);
+		staffService.save(locationAdmin5);
+
+		// Room admin
+		RoomAdmin roomAdmin1 = new RoomAdmin(Room, u5, location1);
+		RoomAdmin roomAdmin2 = new RoomAdmin(Room, u6, location1);
+		RoomAdmin roomAdmin3 = new RoomAdmin(Room, u7, location2);
+		RoomAdmin roomAdmin4 = new RoomAdmin(Room, u8, location3);
+		RoomAdmin roomAdmin5 = new RoomAdmin(Room, u9, location3);
+
+		staffService.save(roomAdmin1);
+		staffService.save(roomAdmin2);
+		staffService.save(roomAdmin3);
+		staffService.save(roomAdmin4);
+		staffService.save(roomAdmin5);
+
+		// Staff
+		Staff staff1 = new Staff(User, u10, location1);
+		Staff staff2 = new Staff(User, u12, location1);
+		Staff staff3 = new Staff(User, u13, location1);
+		Staff staff4 = new Staff(User, u14, location1);
+		Staff staff5 = new Staff(User, u15, location1);
+		Staff staff6 = new Staff(User, u16, location1);
+
+		staffService.save(staff1);
+		staffService.save(staff2);
+		staffService.save(staff3);
+		staffService.save(staff4);
+		staffService.save(staff5);
+		staffService.save(staff6);
+
+		// Mandate
+		String mandate1Desc = "We need 10 DEV-ready computers.";
+		Mandate mandate1 = new Mandate(room1, roomAdmin1, mandate1Desc);
+		mandateService.save(mandate1);
+
+		String mandate2Desc = "We need 10 BI-ready computers.";
+		Mandate mandate2 = new Mandate(room2, roomAdmin2, mandate2Desc);
+		mandateService.save(mandate2);
+
+		String mandate3Desc = "We need 10 DEV and BI-ready computers.";
+		Mandate mandate3 = new Mandate(room3, roomAdmin3, mandate3Desc);
+		mandateService.save(mandate3);
 	}
 }

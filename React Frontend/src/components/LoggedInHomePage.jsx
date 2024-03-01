@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "../partials/NavBar";
 import callApi from "../api/callApi";
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useMatch, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SearchComputerPage } from "./SearchComputerPage";
 import { SearchRoomPage } from "./SearchRoomPage";
 import { SearchSoftwarePage } from "./SearchSoftwarePage";
@@ -11,57 +11,79 @@ import Admin from "./Admin";
 import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
+import { Box } from "@mui/material";
 
+const checkAdmin = (setAdmin, setStaff, id) => {
+	const config = {
+		method: "get",
+		endpoint: `staff/${id}`,
+	};
+	callApi(checkAdminLevel, null, config, setAdmin, setStaff);
+};
+
+const checkAdminLevel = (data, setAdmin, setStaff) => {
+	console.log(data);
+	// dta == [] means not even a staff,
+	// dta == null means its just a staff, not admin
+	setAdmin(false);
+	setStaff(data);
+
+	for (let i = 0; i < data.length; i++) {
+		console.log(data[i].adminLevel.precedence);
+		// in data base, all precedence = 100 means NOT admin
+		if (data[i].adminLevel.precedence !== 100) {
+			setAdmin(true);
+			break;
+		}
+	}
+};
+
+const welcomePage = (staff) => {
+	return (
+		<>
+			{staff.map((roles, index) => (
+				<>
+					{index === 0 ? (
+						<Box>
+							Welcome {roles.user.firstName} {roles.user.lastName}{" "}
+						</Box>
+					) : null}
+					<Box>
+						{roles.adminLevel.name} {roles.location.city}
+					</Box>
+				</>
+			))}
+		</>
+	);
+};
 const LoggedInHomePage = () => {
 	// check if user if an admin
 	// checking if is admin.
 	const { id } = useParams();
 	const [admin, setAdmin] = useState(false);
-
-	const checkAdmin = () => {
-		const config = {
-			method: "get",
-			endpoint: `staff/${id}`,
-		};
-		callApi(checkAdminLevel, null, config);
-	};
-
-	const checkAdminLevel = (data) => {
-		console.log(data);
-		// dta == [] means not even a staff,
-		// dta == null means its just a staff, not admin
-		setAdmin(false);
-
-		for (let i = 0; i < data.length; i++) {
-			console.log(data[i].adminLevel);
-			if (data[i].adminLevel !== null ) {
-				console.log(data[i].adminlevel)
-				setAdmin(true);
-				break;
-			}
-		}
-		console.log(admin)
-	};
-
+	const [staff, setStaff] = useState([]); // gives all the staff info
+	console.log(staff);
 	useEffect(() => {
 		console.log("checking");
-		checkAdmin();
+		checkAdmin(setAdmin, setStaff, id);
 	}, []);
 
-	console.log(admin);
+	const isHomePage = useMatch("/home/:id");
 
 	return (
-		<>
+		<Box className="centerHorizonal">
+			{isHomePage ? welcomePage(staff) : null}
+
 			<Routes>
 				<Route path="/searchroom" element={<SearchRoomPage />} />
 				<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
 				<Route path="/searchcomputer" element={<SearchComputerPage />} />
 				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
-				<Route path="/admin" element={<Admin />} />
+				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 			</Routes>
 			<NavBar admin={admin} />
-		</>
+		</Box>
 	);
 };
 
