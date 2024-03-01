@@ -1,21 +1,26 @@
 package com.fdmgroup.PCTrack.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.MandateRepository;
+import com.fdmgroup.PCTrack.dal.RoomRepository;
 import com.fdmgroup.PCTrack.model.Mandate;
+import com.fdmgroup.PCTrack.model.Room;
 
 @Service
 public class MandateService {
 	private MandateRepository mandateRepo;
+	private RoomRepository roomRepo;
 	
 	@Autowired
-	public MandateService(MandateRepository mandateRepo) {
+	public MandateService(MandateRepository mandateRepo, RoomRepository roomRepo) {
 		super();
 		this.mandateRepo = mandateRepo;
+		this.roomRepo = roomRepo;
 	}
 	
 	public List<Mandate> findAllMandate() {
@@ -46,6 +51,23 @@ public class MandateService {
 		} else {
 			throw new RuntimeException("Mandate does not exist");
 		}
+	}
+
+	public List<Mandate> findByRoom(int roomId) {
+		Room room = this.roomRepo.findById(roomId)
+				.orElseThrow(() -> new RuntimeException("Room not found"));
+		
+		List<Mandate> allMandates = this.mandateRepo.findAll();
+		List<Mandate> roomMandates = new ArrayList<Mandate>();
+		
+		for (Mandate mandate : allMandates) {
+			
+			if (mandate.getRoom() == room) {
+				roomMandates.add(mandate);
+			}
+			
+		}
+		return roomMandates;
 	}
 }
 

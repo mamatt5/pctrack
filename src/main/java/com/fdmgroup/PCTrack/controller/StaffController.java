@@ -69,6 +69,5 @@ public class StaffController {
 	public List<Room> findRoomsWhereStaffIsAdmin(@PathVariable int userId) {
 		return staffService.getRoomsStaffIsAdmin(userId);
 	}
-	
 
 }
