@@ -60,12 +60,12 @@ public class UserDataLoader implements ApplicationRunner
 
 		
 		// Admin
-		// perms = 0 mean no perms 
+		// perms = 100 mean no perms 
 		// otherwise perms 1 means highest, 2 second highest etc....
 		AdminLevel Business = new AdminLevel("Business", 1);
 		AdminLevel Location = new AdminLevel("Location", 2);
 		AdminLevel Room = new AdminLevel("Room", 3);
-		AdminLevel User = new AdminLevel("", 0);
+		AdminLevel User = new AdminLevel("", 100);
 
 		List<AdminLevel> adminLevels = Arrays.asList(Location, Business, Room, User);
 
@@ -890,7 +890,8 @@ public class UserDataLoader implements ApplicationRunner
         User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
         User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion");
         User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
-        User u5 = new User("blitzcrank.botter", "password123", "Blitzcrank", "Botter", LocalDate.of(2023, 11, 27));
+        
+        User u5 = new User("roomadmin", "0000!!", "Room", "admin", LocalDate.of(2023, 11, 27));
         User u6 = new User("baron.nashor", "password123", "Baron", "Nashor", LocalDate.of(2023, 11, 27));
         User u7 = new User("darwin.norman", "password123", "Darwin", "Norman", LocalDate.of(2023, 11, 27));
         User u8 = new User("camden.leonard", "password123", "Camden", "Leonard", LocalDate.of(2023, 11, 27));
