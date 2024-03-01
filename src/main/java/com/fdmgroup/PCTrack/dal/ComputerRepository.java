@@ -8,6 +8,7 @@ import com.fdmgroup.PCTrack.model.Computer;
 
 public interface ComputerRepository extends JpaRepository<Computer, Integer> {
 	
-	@Query("SELECT c FROM Computer c WHERE CAST(c.computerCode AS text) LIKE CONCAT('%', :code, '%')")
-	List<Computer> searchByComputerCode(@Param("code") int code);
+	@Query("SELECT c FROM Computer c WHERE CAST(c.computerCode AS text) LIKE CONCAT('%', :code, '%')"
+			+ "AND CAST(c.room.roomId AS text) LIKE :roomId") 
+	List<Computer> searchComputer(@Param("code") String code, @Param("roomId") String roomId);
 }
