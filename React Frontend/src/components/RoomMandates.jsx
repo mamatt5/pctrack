@@ -1,23 +1,21 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import callApi from '../api/callApi'
 
-const getRoomMandates = (setRoomMandates) => {
+const getRoomMandates = (roomId, setRoomMandates) => {
   const config = {
     method: 'get',
-    endpoint: `rooms/1/mandates`
+    endpoint: `rooms/${roomId}/mandates`
   };
   callApi(setRoomMandates, null, config)
 }
 
-const RoomMandates = () => {
+const RoomMandates = ({ roomId }) => {
   const [roomMandates, setRoomMandates] = useState([])
-  const { roomId } = useParams()
 
   useEffect(() => {
-    getRoomMandates(setRoomMandates);
+    getRoomMandates(roomId, setRoomMandates);
   }, [])
 
   return (
@@ -27,7 +25,7 @@ const RoomMandates = () => {
         <div>
           <ul style={{listStyle: 'none'}}>
             {roomMandates.map(mandate =>
-              <li>{mandate.description}</li>)}
+              <li key={mandate.mandateId}>{mandate.description}</li>)}
           </ul>
         </div>
     </>
