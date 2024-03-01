@@ -3,8 +3,9 @@ package com.fdmgroup.PCTrack.dal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.fdmgroup.PCTrack.model.ProgramVersion;
+import com.fdmgroup.PCTrack.model.Software;
+
 @Repository
-public interface ProgramVersionRepository extends JpaRepository<ProgramVersion, Integer> {
+public interface SoftwareRepository extends JpaRepository<Software, Integer> {
 
 }

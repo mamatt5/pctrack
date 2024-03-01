@@ -4,12 +4,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.dal.LocationRepository;
+import com.fdmgroup.PCTrack.dal.SoftwareRepository;
 import com.fdmgroup.PCTrack.dal.ProgramRepository;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.model.Software;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.LocationService;
 import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.SoftwareService;
 
 import org.mockito.Mock;
 
@@ -30,6 +33,9 @@ import org.junit.jupiter.api.Test;
 public class ProgramServiceTests {
 	@Mock
 	ProgramRepository programRepo;
+	@Mock
+	SoftwareRepository softwareRepo;
+
 	
 	ProgramService programService;
 	
@@ -38,29 +44,29 @@ public class ProgramServiceTests {
 	@BeforeEach
 	void setup() {
 		
-		this.programService = new ProgramService(programRepo);
+		this.programService = new ProgramService(programRepo, softwareRepo);
 		
 	}
 	
 	@Test
-	void save_program_test() {
+	void save_software_test() {
 		
-		Program sql8wb = new Program("MySQL 8 Workbench");
+		Program sql8wb = new Program(new Software("MySQL 8 Workbench"), "8.0.32");
 		
 		programService.save(sql8wb);
 		verify(programRepo, times(1)).save(sql8wb);
 	}
 	
 	@Test
-	void save_multiple_program_test() {
+	void save_multiple_software_test() {
 		
 
-		Program microsoftSSMS = new Program("Microsoft MySQL");
-		Program pnpm = new Program("PNPM");
-		Program git = new Program("Git");
-		Program sql8wb = new Program("MySQL 8 Workbench");
-		Program sqlShell = new Program("MySQL Shell");
-		Program powerBi = new Program("PowerBi");
+		Program microsoftSSMS = new Program(new Software("Microsoft MySQL"), "15.0.18333.0");
+		Program pnpm = new Program(new Software("PNPM"), "8.15.4");
+		Program git = new Program(new Software("Git"), "2.27.0");
+		Program sql8wb = new Program(new Software("MySQL 8 Workbench"), "8.0.32");
+		Program sqlShell = new Program(new Software("MySQL Shell"), "8.0.32");
+		Program powerBi = new Program(new Software("PowerBi"), "2.126.927.0");
 		
       
 		
@@ -90,9 +96,9 @@ public class ProgramServiceTests {
 	void find_all_program_test() {
 		
 	
-		Program git = new Program("Git");
-		Program sql8wb = new Program("MySQL 8 Workbench");
-		Program sqlShell = new Program("MySQL Shell");
+		Program git = new Program(new Software("Git"), "2.27.0");
+		Program sql8wb = new Program(new Software("MySQL 8 Workbench"), "8.0.32");
+		Program sqlShell = new Program(new Software("MySQL Shell"), "8.0.32");
         
 		List<Program> allPrograms= new ArrayList<>();
 		
@@ -112,7 +118,7 @@ public class ProgramServiceTests {
 	@Test
 	void find_program_by_id_test() {
 	
-		Optional<Program> sql8wb = Optional.of(new Program("MySQL 8 Workbench"));
+		Optional<Program> sql8wb = Optional.of(new Program(new Software("MySQL 8 Workbench"), "8.0.32"));
 
 		when(programRepo.findById(1)).thenReturn(sql8wb);
 		Program foundProgram1 = programService.findById(1);
@@ -132,7 +138,7 @@ public class ProgramServiceTests {
 	@Test
 	void update_program_test() {
 		
-		Program microsoftSSMS = new Program("Microsoft MySQL");
+		Program microsoftSSMS = new Program(new Software("Microsoft MySQL"), "15.0.18333.0");
 		microsoftSSMS.setProgramId(1);
 		
 		when(programRepo.existsById(1)).thenReturn(true);
@@ -146,7 +152,7 @@ public class ProgramServiceTests {
 	@Test
 	void update_program_fail_test() {
 		
-		Program nodejs3 = new Program("Node.js");
+		Program nodejs3 = new Program(new Software("Node.js"),"20.2.0");
 		nodejs3.setProgramId(1);
 		
 		when(programRepo.existsById(1)).thenReturn(false);

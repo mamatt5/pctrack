@@ -22,12 +22,12 @@ public class Computer {
 	@JoinColumn(name = "FK_COMPUTER_ID"),
 	inverseJoinColumns =
 	@JoinColumn(name = "FK_PROGRAM_VERSION_ID"))
-	private List<ProgramVersion> programList;
+	private List<Program> programList;
 	@Column(name = "ready_for_role")
 	private String role;
 
 	
-	public Computer(int computerCode, List<ProgramVersion> programList) {
+	public Computer(int computerCode, List<Program> programList) {
 		super();
 		this.computerCode = computerCode;
 		this.programList = programList;
@@ -63,10 +63,10 @@ public class Computer {
 	{
 		this.computerCode = computerCode;
 	}
-	public List<ProgramVersion> getProgramList() {
+	public List<Program> getProgramList() {
 		return programList;
 	}
-	public void setProgramList(List<ProgramVersion> programList) {
+	public void setProgramList(List<Program> programList) {
 		this.programList = programList;
 		this.role = determineRole(this).name();
 	}
@@ -76,9 +76,9 @@ public class Computer {
 	public void setRoom(Room room) {
 		this.room = room;
 	}	
-	public int programIndex(int programVersionId) {
+	public int programIndex(int programId) {
 		for (int i = 0; i < programList.size(); i++) {
-			if (programList.get(i).getProgramVersionId() == programVersionId) {
+			if (programList.get(i).getProgramId() == programId) {
 				return i;
 			}
 		}
@@ -93,7 +93,7 @@ public class Computer {
                 ".*NPM", ".*MySQL.*", "JDK", "Git");
 		List<String> biPrograms = Arrays.asList("Excel", "PowerBi");
 		
-		List<ProgramVersion> computerPrograms = computer.getProgramList();
+		List<Program> computerPrograms = computer.getProgramList();
 		
 		if (computerPrograms == null || computerPrograms.isEmpty()) {
 			return Role.NONE;
@@ -102,8 +102,8 @@ public class Computer {
 		for (String program : devPrograms) {
 			boolean programFound = false;
 			
-			for (ProgramVersion computerProgramVersion : computerPrograms) {
-				if (computerProgramVersion.getProgram().getName().matches(program)) {
+			for (Program computerProgram : computerPrograms) {
+				if (computerProgram.getSoftware().getName().matches(program)) {
 					programFound = true;
 					break;
 				}
@@ -118,8 +118,8 @@ public class Computer {
 		for (String program : biPrograms) {
 			boolean programFound = false;
 			
-			for (ProgramVersion computerProgramVersion : computerPrograms) {
-				if (computerProgramVersion.getProgram().getName().matches(program)) {
+			for (Program computerProgram : computerPrograms) {
+				if (computerProgram.getSoftware().getName().matches(program)) {
 					programFound = true;
 					break;
 				}

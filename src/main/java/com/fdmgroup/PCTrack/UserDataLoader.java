@@ -19,16 +19,16 @@ public class UserDataLoader implements ApplicationRunner
 	private LocationService locationService;
 	private StaffService staffService;
 	private ComputerService computerService;
-	private ProgramService programService;
+	private SoftwareService programService;
 	private RoomService roomService;
-	private ProgramVersionService programVersionService;
+	private ProgramService programVersionService;
 	private VersionService versionService;
 	private MandateService mandateService;
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
 
-	        ComputerService computerService, ProgramService programService, RoomService roomService, MandateService mandateService, ProgramVersionService programVersionService, VersionService versionService)
+	        ComputerService computerService, SoftwareService programService, RoomService roomService, MandateService mandateService, ProgramService programVersionService, VersionService versionService)
 
 	{
 		super();
@@ -82,23 +82,23 @@ public class UserDataLoader implements ApplicationRunner
 		}
 
 		// Programs
-		Program vscode = new Program("Visual Studio Code");
-		Program eclipse = new Program("Eclipse");
-		Program nodejs = new Program("Node.js");
-		Program python = new Program("Python Laucher");
-		Program npm = new Program("NPM");
-		Program sql8wb = new Program("MySQL 8 Workbench");
-		Program sqlShell = new Program("MySQL Shell");
-		Program powerBi = new Program("PowerBi");
-		Program excel = new Program("Excel");
-		Program microsoftSSMS = new Program("Microsoft MySQL");
-		Program pnpm = new Program("PNPM");
-		Program git = new Program("Git");
-		Program jdk = new Program("JDK");
-		Program visualStudio = new Program("Visual Studio");
+		Software vscode = new Software("Visual Studio Code");
+		Software eclipse = new Software("Eclipse");
+		Software nodejs = new Software("Node.js");
+		Software python = new Software("Python Laucher");
+		Software npm = new Software("NPM");
+		Software sql8wb = new Software("MySQL 8 Workbench");
+		Software sqlShell = new Software("MySQL Shell");
+		Software powerBi = new Software("PowerBi");
+		Software excel = new Software("Excel");
+		Software microsoftSSMS = new Software("Microsoft MySQL");
+		Software pnpm = new Software("PNPM");
+		Software git = new Software("Git");
+		Software jdk = new Software("JDK");
+		Software visualStudio = new Software("Visual Studio");
 		
-		List<Program> programs = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel, microsoftSSMS, pnpm, git, jdk, visualStudio);
-		for (Program program : programs) {
+		List<Software> programs = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel, microsoftSSMS, pnpm, git, jdk, visualStudio);
+		for (Software program : programs) {
 		    programService.save(program);
 		}
 
@@ -137,38 +137,38 @@ public class UserDataLoader implements ApplicationRunner
 		}
 		
 		//Program Versions
-		ProgramVersion vscodeV1 = new ProgramVersion(vscode, v1);
-		ProgramVersion eclipseV1 = new ProgramVersion(eclipse, v2);
-		ProgramVersion nodejsV1 = new ProgramVersion(nodejs, v3);
-		ProgramVersion nodejsV2 = new ProgramVersion(nodejs, v4);
-		ProgramVersion nodejsV3 = new ProgramVersion(nodejs, v5);
-		ProgramVersion nodejsV4 = new ProgramVersion(nodejs, v6);
-		ProgramVersion nodejsV5 = new ProgramVersion(nodejs, v7);
-		ProgramVersion nodejsV6 = new ProgramVersion(nodejs, v8);
-		ProgramVersion nodejsV7 = new ProgramVersion(nodejs, v9);
-		ProgramVersion pythonV1 = new ProgramVersion(python, v10);
-		ProgramVersion npmV1 = new ProgramVersion(npm, v11);
-		ProgramVersion npmV2 = new ProgramVersion(npm, v12);
-		ProgramVersion npmV3 = new ProgramVersion(npm, v13);
-		ProgramVersion npmV4 = new ProgramVersion(npm, v14);
-		ProgramVersion npmV5 = new ProgramVersion(npm, v15);
-		ProgramVersion npmV6 = new ProgramVersion(npm, v16);
-		ProgramVersion npmV7 = new ProgramVersion(npm, v17);
-		ProgramVersion sql8wbV1 = new ProgramVersion(sql8wb, v18);
-		ProgramVersion sqlShellV1 = new ProgramVersion(sqlShell, v19);
-		ProgramVersion powerBiV1 = new ProgramVersion(powerBi, v20);
-		ProgramVersion excelV1 = new ProgramVersion(excel, v21);
-		ProgramVersion excelV2 = new ProgramVersion(excel, v22);
-		ProgramVersion microsoftSSMSV1 = new ProgramVersion(microsoftSSMS, v23);
-		ProgramVersion pnpmV1 = new ProgramVersion(pnpm, v24);
-		ProgramVersion gitV1 = new ProgramVersion(git, v25);
-		ProgramVersion jdkV1 = new ProgramVersion(jdk, v26);
-		ProgramVersion visualStudioV1 = new ProgramVersion(visualStudio, v27);
+		Program vscodeV1 = new Program(vscode, v1);
+		Program eclipseV1 = new Program(eclipse, v2);
+		Program nodejsV1 = new Program(nodejs, v3);
+		Program nodejsV2 = new Program(nodejs, v4);
+		Program nodejsV3 = new Program(nodejs, v5);
+		Program nodejsV4 = new Program(nodejs, v6);
+		Program nodejsV5 = new Program(nodejs, v7);
+		Program nodejsV6 = new Program(nodejs, v8);
+		Program nodejsV7 = new Program(nodejs, v9);
+		Program pythonV1 = new Program(python, v10);
+		Program npmV1 = new Program(npm, v11);
+		Program npmV2 = new Program(npm, v12);
+		Program npmV3 = new Program(npm, v13);
+		Program npmV4 = new Program(npm, v14);
+		Program npmV5 = new Program(npm, v15);
+		Program npmV6 = new Program(npm, v16);
+		Program npmV7 = new Program(npm, v17);
+		Program sql8wbV1 = new Program(sql8wb, v18);
+		Program sqlShellV1 = new Program(sqlShell, v19);
+		Program powerBiV1 = new Program(powerBi, v20);
+		Program excelV1 = new Program(excel, v21);
+		Program excelV2 = new Program(excel, v22);
+		Program microsoftSSMSV1 = new Program(microsoftSSMS, v23);
+		Program pnpmV1 = new Program(pnpm, v24);
+		Program gitV1 = new Program(git, v25);
+		Program jdkV1 = new Program(jdk, v26);
+		Program visualStudioV1 = new Program(visualStudio, v27);
 		
-		List<ProgramVersion> programsList = Arrays.asList(vscodeV1, eclipseV1, nodejsV1, nodejsV2, nodejsV3, nodejsV4, nodejsV5, nodejsV6,
+		List<Program> programsList = Arrays.asList(vscodeV1, eclipseV1, nodejsV1, nodejsV2, nodejsV3, nodejsV4, nodejsV5, nodejsV6,
 		        nodejsV7, pythonV1, npmV1, npmV2, npmV3, npmV4, npmV5, npmV6, npmV7, sql8wbV1, sqlShellV1, powerBiV1, excelV1, excelV2,
 		        microsoftSSMSV1, pnpmV1, gitV1, jdkV1,visualStudioV1);
-		for (ProgramVersion pv : programsList) {
+		for (Program pv : programsList) {
 			programVersionService.save(pv);
 		}
 
