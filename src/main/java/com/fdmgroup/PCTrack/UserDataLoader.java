@@ -244,7 +244,7 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c30 = new Computer(15066, room3);
 		computerService.save(c30);
 		c30.setProgramList(Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
-		computerService.update(c30);
+		computerService.update(c30); 
 
 		Computer c31 = new Computer(15032, room3);
 		computerService.save(c31);

@@ -8,6 +8,7 @@ import { SearchRoomPage } from "./SearchRoomPage";
 import { SearchSoftwarePage } from "./SearchSoftwarePage";
 import { useParams } from "react-router-dom";
 import Admin from "./Admin";
+import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
 
@@ -57,6 +58,7 @@ const LoggedInHomePage = () => {
 				<Route path="/searchcomputer" element={<SearchComputerPage />} />
 				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				<Route path="/admin" element={<Admin />} />
+				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 			</Routes>
 			<NavBar admin={admin} />
 		</>

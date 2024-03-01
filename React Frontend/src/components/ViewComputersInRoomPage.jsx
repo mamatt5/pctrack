@@ -4,37 +4,75 @@ import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Box } from '@mui/material';
+import callApi from '../api/callApi';
+import ComputerCard from '../partials/ComputerCard';
+import { Typography } from '@mui/material';
+import { Grid } from '@mui/material';
+import { Divider } from '@mui/material';
 
 
-export const ViewComputersInRoomPage = (props) => {
+
+
+const ViewComputersInRoomPage = (props) => {
     const {state} = useLocation();
     const [room, setRoom] = useState({});
-    const [computers, setComputers] = useState([]);
-    
-
-    
+    const [computers, setComputers] = useState([])
 
     useEffect(() => {
-		setRoom(state)
+      setRoom(state)
 
-	}, []);
+      const config = {
+        method: "get",
+        endpoint: "getcomputers/"+state["roomId"],
+  
+      }
 
-    console.log("please appear")
-    console.log(room)
+      callApi(setComputers, null, config);
+	  }, []);
+
+    
   return (
+    <Box>
+      <NavBar admin={true}/>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      
 
-    <>
-        <NavBar />
-
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <h1>You are now viewing room {room["name"]} </h1>
-
-
+        <Box style={{ position: 'flex' }}>
+        <h1> You are now viewing room {room["name"]}</h1>
         </Box>
-        
 
-    </>
+      </Box>
+
+
+      <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}} marginTop={10}>
+        
+        
+          <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={4}>
+
+              <Grid item xs={12} >
+                <Grid container justifyContent="center" spacing={5} >
+                  {
+                  computers.map(computer =>
+                    
+                    <ComputerCard computer={computer} />
+                  
+                  )
+              }
+                </Grid>
+              </Grid>
+              
+          </Grid>
+          </Box>
+    </Box>
+
+
+
+
+
+       
     
 
   )
 }
+
+export default ViewComputersInRoomPage
