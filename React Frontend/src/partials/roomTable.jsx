@@ -15,6 +15,7 @@ import { Modal } from '@mui/material';
 import { Box } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import RoomMandates from '../components/RoomMandates';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,25 +52,18 @@ const style = {
 
 
 export default function CustomizedTables({array}) {
-    console.log(array)
-
-
-    const [mandateModal, setMandateModal] = useState(false)
+    const [selectedRow, setSelectedRow] = useState(null)
     const [render, setRender] = useState(false)
     const navigate = useNavigate();
 
 
-    const openModal = () => {
-      setMandateModal(true);
+    const openModal = (row) => {
+      setSelectedRow(row);
     };
 
     const closeModal = () => {
-      setMandateModal(false);
+      setSelectedRow(null);
     };
-
-    const t = () => {
-      setRender(true)
-    }
 
     const goToComputerPage = () => {
       navigate("/viewcomputerroom")
@@ -99,7 +93,7 @@ export default function CustomizedTables({array}) {
               <ManageSearchIcon />
             </IconButton>
 
-            <IconButton size="small" onClick={openModal}>
+            <IconButton size="small" onClick={()=>openModal(row)}>
               <DeviceHubIcon />
             </IconButton>
 
@@ -108,15 +102,12 @@ export default function CustomizedTables({array}) {
         </StyledTableRow>
         
         <Modal
-          open={mandateModal}
+          open={!!selectedRow}
           onClose={closeModal}
-          onClick={t} 
           
         >
           <Box sx={style}>
-            <h1>Create Mandate</h1>
-            <p>Look at console for room information</p>
-            <p>Background is not meant to go black when opening this menu but idk how to fix atm</p>
+            {selectedRow && <RoomMandates roomId={selectedRow.roomId} />}
             {console.log(row)}
 
           </Box>
