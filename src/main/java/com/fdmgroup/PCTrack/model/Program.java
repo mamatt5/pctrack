@@ -14,8 +14,7 @@ public class Program {
     @JoinColumn(name = "SOFTWARE_ID")
     private Software software;
 
-    @ManyToOne
-    @JoinColumn(name = "VERSION")
+    @Column(name = "VERSION")
     private String version;
 
 	public Program(Software software, String version)

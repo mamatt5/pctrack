@@ -4,11 +4,11 @@ package com.fdmgroup.PCTrack.ControllerTests;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.fdmgroup.PCTrack.controller.ProgramController;
+import com.fdmgroup.PCTrack.controller.SoftwareController;
 import com.fdmgroup.PCTrack.controller.SoftwareController;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Software;
-import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.SoftwareService;
 import com.fdmgroup.PCTrack.service.SoftwareService;
 
 import org.mockito.Mock;
@@ -29,53 +29,51 @@ public class SoftwareControllerTests {
 	
 	@Mock
 	SoftwareService softwareService;
-	@Mock
-	SoftwareService programService;
 	
-	ProgramController programController;
+	SoftwareController softwareController;
 	
 	@BeforeEach
 	void setup() {
-		this.programController = new ProgramController(softwareService, programService);
+		this.softwareController = new SoftwareController(softwareService);
 	}
 	
 	@Test
-	void findProgramById_test() {
+	void findSoftwareById_test() {
 		
 		Software vscode = new Software("Visual Studio Code");
 		
 		when(softwareService.findById(1)).thenReturn(vscode);
-		assertSame(vscode, programController.findById(1));
+		assertSame(vscode, softwareController.findById(1));
 		verify(softwareService, times(1)).findById(1);
 	}
 	
 	@Test
-	void createProgram_test() {
+	void createSoftware_test() {
 		Software excel = new Software("Excel");
 		
 		when(softwareService.findById(0)).thenReturn(excel);
-		assertSame(excel, programController.createNewProgram(excel));
+		assertSame(excel, softwareController.createNewSoftware(excel));
 		verify(softwareService, times(1)).save(excel);
 	}
 	
 	@Test
-	void updateProgram_test() {
+	void updateSoftware_test() {
 		Software git = new Software("Git");
 		Software updatedGit = new Software("Git");
 
 		when(softwareService.findById(0)).thenReturn(updatedGit);
-		assertSame(programController.updateProgram(git), updatedGit);
+		assertSame(softwareController.updateSoftware(git), updatedGit);
 		verify(softwareService, times(1)).update(git);
 	}
 	
 	@Test
-	void deleteProgram_test() {
-		programController.deleteProgram(1);
+	void deleteSoftware_test() {
+		softwareController.deleteSoftware(1);
 		verify(softwareService, times(1)).deleteById(1);
 	}
 	
 	@Test
-	void findAllPrograms() {
+	void findAllSoftwares() {
 		Software vscode = new Software("Visual Studio Code");
 		Software eclipse = new Software("Eclipse");
 		Software nodejs = new Software("Node.js");
@@ -87,18 +85,18 @@ public class SoftwareControllerTests {
 
 
 		
-		List<Software> allPrograms = new ArrayList<>();
-		allPrograms.add(vscode);
-		allPrograms.add(eclipse);
-		allPrograms.add(nodejs);
-		allPrograms.add(python);
-		allPrograms.add(npm);
-		allPrograms.add(sql8wb);
-		allPrograms.add(sqlShell);
-		allPrograms.add(powerBi);
+		List<Software> allSoftwares = new ArrayList<>();
+		allSoftwares.add(vscode);
+		allSoftwares.add(eclipse);
+		allSoftwares.add(nodejs);
+		allSoftwares.add(python);
+		allSoftwares.add(npm);
+		allSoftwares.add(sql8wb);
+		allSoftwares.add(sqlShell);
+		allSoftwares.add(powerBi);
 		
-		when(softwareService.findAllPrograms()).thenReturn(allPrograms);
-		assertSame(programController.getPrograms(), allPrograms);
-		verify(softwareService, times(1)).findAllPrograms();
+		when(softwareService.findAllSoftwares()).thenReturn(allSoftwares);
+		assertSame(softwareController.getSoftwares(), allSoftwares);
+		verify(softwareService, times(1)).findAllSoftwares();
 	}
 }

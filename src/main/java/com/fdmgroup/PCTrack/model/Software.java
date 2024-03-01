@@ -15,6 +15,13 @@ public class Software {
 		super();
 		this.name = name;
 	}
+	
+
+	public Software()
+	{
+		super();
+	}
+
 
 	public int getSoftwareId()
 	{
