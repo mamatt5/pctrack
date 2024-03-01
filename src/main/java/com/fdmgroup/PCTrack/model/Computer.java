@@ -84,6 +84,7 @@ public class Computer {
 		}
 		return -1;
 	}
+
 	public String getRole() {
 		return role;
 	}

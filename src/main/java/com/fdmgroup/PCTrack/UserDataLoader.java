@@ -83,7 +83,7 @@ public class UserDataLoader implements ApplicationRunner
 		Software vscode = new Software("Visual Studio Code");
 		Software eclipse = new Software("Eclipse");
 		Software nodejs = new Software("Node.js");
-		Software python = new Software("Python Laucher");
+		Software python = new Software("Python Launcher");
 		Software npm = new Software("NPM");
 		Software sql8wb = new Software("MySQL 8 Workbench");
 		Software sqlShell = new Software("MySQL Shell");
