@@ -57,7 +57,6 @@ const style = {
 
 export default function CustomizedTables({array}) {
     const [selectedRow, setSelectedRow] = useState(null)
-    const [render, setRender] = useState(false)
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -111,7 +110,7 @@ export default function CustomizedTables({array}) {
           
         >
           <Box sx={style}>
-            {selectedRow && <RoomMandates roomId={selectedRow.roomId} />}
+            {selectedRow && <RoomMandates room={selectedRow} />}
             {console.log(row)}
 
           </Box>

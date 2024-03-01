@@ -1,6 +1,6 @@
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { Divider, Select, Typography } from "@mui/material";
+import { Divider, IconButton, Select, Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import SelectSmall from "./CheckBoxDropDowns";
 import { useState } from "react";
@@ -105,6 +105,9 @@ const FirstPage = ({ staff, adminLevels }) => {
 				{staff.adminLevel.precedence === 100 ? "No permissions" : `${staff.adminLevel.name} Admin`}
 			</Typography>
 			<SelectSmall array={adminLevels} label={"name"} />
+            <IconButton>
+
+            </IconButton>
 		</>
 	);
 };

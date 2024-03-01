@@ -24,8 +24,8 @@ public class ComputerService {
 		return this.computerRepo.findById(computerId).orElseThrow(() -> new RuntimeException("Computer not found"));
 	}
 	
-	public List<Computer> searchByComputerCode(int code) {
-		return this.computerRepo.searchByComputerCode(code);
+	public List<Computer> searchByComputerCode(String code, String roomId) {
+		return this.computerRepo.searchComputer(code, roomId);
 	}
 	
 	public void save(Computer newComputer) {
@@ -55,9 +55,9 @@ public class ComputerService {
 		}
 	}
 	
-	public void deleteByProgramId(int programId) {
+	public void deleteByProgramVersionId(int programVersionId) {
 		for (Computer computer : findAllComputers()) {
-			int index = computer.programIndex(programId);
+			int index = computer.programIndex(programVersionId);
 			if (index != -1) {
 				computer.getProgramList().remove(index);
 			}

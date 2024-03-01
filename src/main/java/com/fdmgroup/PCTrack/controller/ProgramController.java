@@ -5,20 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.fdmgroup.PCTrack.model.Program;
-import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.SoftwareService;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5813")
 public class ProgramController {
 	private ProgramService programService;
-	private ComputerService computerService;
 	
 	@Autowired
-	public ProgramController(ProgramService programService, ComputerService computerService) {
+	public ProgramController(ProgramService programService, SoftwareService softwareService) {
 		super();
 		this.programService = programService;
-		this.computerService = computerService;
 	}
 	
 	@GetMapping("programs")
@@ -45,8 +43,13 @@ public class ProgramController {
 	
 	@DeleteMapping("programs/{programId}")
 	public void deleteProgram(@PathVariable int programId) {
-		computerService.deleteByProgramId(programId);
 		programService.deleteById(programId);
 	}
+	
+//	@DeleteMapping("programs/{programId}")
+//	public void deleteProgram(@PathVariable int programId) {
+//		computerService.deleteByProgramId(programId);
+//		programService.deleteById(programId);
+//	}
 
 }
