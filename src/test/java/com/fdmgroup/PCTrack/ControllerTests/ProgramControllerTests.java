@@ -6,9 +6,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.controller.ProgramController;
 import com.fdmgroup.PCTrack.model.Location;
+import com.fdmgroup.PCTrack.model.Software;
 import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.SoftwareService;
 
 import org.mockito.Mock;
 
@@ -29,19 +31,19 @@ public class ProgramControllerTests {
 	@Mock
 	ProgramService programService;
 	@Mock
-	ComputerService computerService;
+	SoftwareService softwareService;
 	
 	ProgramController programController;
 	
 	@BeforeEach
 	void setup() {
-		this.programController = new ProgramController(programService, computerService);
+		this.programController = new ProgramController(programService, softwareService);
 	}
 	
 	@Test
 	void findProgramById_test() {
 		
-		Program vscode = new Program("Visual Studio Code", "1.46.1");
+		Program vscode = new Program(new Software("Visual Studio Code"), "1.46.1");
 		
 		when(programService.findById(1)).thenReturn(vscode);
 		assertSame(vscode, programController.findById(1));
@@ -50,7 +52,7 @@ public class ProgramControllerTests {
 	
 	@Test
 	void createProgram_test() {
-		Program excel = new Program("Excel", "2107");
+		Program excel = new Program(new Software("Excel"), "2107");
 		
 		when(programService.findById(0)).thenReturn(excel);
 		assertSame(excel, programController.createNewProgram(excel));
@@ -59,8 +61,8 @@ public class ProgramControllerTests {
 	
 	@Test
 	void updateProgram_test() {
-		Program git = new Program("Git", "2.27.0");
-		Program updatedGit = new Program("Git", "3.27.0");
+		Program git = new Program(new Software("Git"), "2.27.0");
+		Program updatedGit = new Program(new Software("Git"), "3.27.0");
 
 		when(programService.findById(0)).thenReturn(updatedGit);
 		assertSame(programController.updateProgram(git), updatedGit);
@@ -75,14 +77,14 @@ public class ProgramControllerTests {
 	
 	@Test
 	void findAllPrograms() {
-		Program vscode = new Program("Visual Studio Code", "1.46.1");
-		Program eclipse = new Program("Eclipse", "4.22");
-		Program nodejs = new Program("Node.js", "20.11.0");
-		Program python = new Program("Python Laucher", "3.9.7427.0");
-		Program npm = new Program("NPM", "10.2.4");
-		Program sql8wb = new Program("MySQL 8 Workbench", "8.0.32");
-		Program sqlShell = new Program("MySQL Shell", "8.0.32");
-		Program powerBi = new Program("PowerBi", "2.126.927.0");
+		Program vscode = new Program(new Software("Visual Studio Code"), "1.46.1");
+		Program eclipse = new Program(new Software("Eclipse"), "4.22");
+		Program nodejs = new Program(new Software("Node.js"), "20.11.0");
+		Program python = new Program(new Software("Python Laucher"), "3.9.7427.0");
+		Program npm = new Program(new Software("NPM"), "10.2.4");
+		Program sql8wb = new Program(new Software("MySQL 8 Workbench"), "8.0.32");
+		Program sqlShell = new Program(new Software("MySQL Shell"), "8.0.32");
+		Program powerBi = new Program(new Software("PowerBi"), "2.126.927.0");
 
 
 		

@@ -55,9 +55,9 @@ public class ComputerService {
 		}
 	}
 	
-	public void deleteByProgramId(int programId) {
+	public void deleteByProgramVersionId(int programVersionId) {
 		for (Computer computer : findAllComputers()) {
-			int index = computer.programIndex(programId);
+			int index = computer.programIndex(programVersionId);
 			if (index != -1) {
 				computer.getProgramList().remove(index);
 			}
