@@ -22,13 +22,12 @@ public class UserDataLoader implements ApplicationRunner
 	private SoftwareService programService;
 	private RoomService roomService;
 	private ProgramService programVersionService;
-	private VersionService versionService;
 	private MandateService mandateService;
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
 
-	        ComputerService computerService, SoftwareService programService, RoomService roomService, MandateService mandateService, ProgramService programVersionService, VersionService versionService)
+	        ComputerService computerService, SoftwareService programService, RoomService roomService, MandateService mandateService, ProgramService programVersionService)
 
 	{
 		super();
@@ -40,7 +39,6 @@ public class UserDataLoader implements ApplicationRunner
 		this.roomService = roomService;
 		this.mandateService = mandateService;
 		this.programVersionService = programVersionService;
-		this.versionService = versionService;
 	}
 
 	@Override
@@ -97,73 +95,39 @@ public class UserDataLoader implements ApplicationRunner
 		Software jdk = new Software("JDK");
 		Software visualStudio = new Software("Visual Studio");
 		
-		List<Software> programs = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel, microsoftSSMS, pnpm, git, jdk, visualStudio);
-		for (Software program : programs) {
-		    programService.save(program);
-		}
-
-		//Versions
-		Version v1 = new Version("1.46.1");
-		Version v2 = new Version("4.22");
-		Version v3 = new Version("20.11.0");
-		Version v4 = new Version("20.10.0");
-		Version v5 = new Version("12.18.1");
-		Version v6 = new Version("20.2.0");
-		Version v7 = new Version("20.5");
-		Version v8 = new Version("20.9");
-		Version v9 = new Version("20.1.0");
-		Version v10 = new Version("3.9.7427.0");
-		Version v11 = new Version("10.2.4");
-		Version v12 = new Version("10.2.3");
-		Version v13 = new Version("6.14.5");
-		Version v14 = new Version("9.6.6");
-		Version v15 = new Version("9.8");
-		Version v16 = new Version("10.1.0");
-		Version v17 = new Version("9.6.4");
-		Version v18 = new Version("8.0.32");
-		Version v19 = new Version("8.0.32");
-		Version v20 = new Version("2.126.927.0");
-		Version v21 = new Version("2107");
-		Version v22 = new Version("2208");
-		Version v23 = new Version("15.0.18333.0");
-		Version v24 = new Version("8.15.4");
-		Version v25 = new Version("2.27.0");
-		Version v26 = new Version("17.0.2");
-		Version v27 = new Version("1.87.0");
-		
-		List<Version> versions = Arrays.asList(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27);
-		for (Version version : versions) {
-		    versionService.save(version);
+		List<Software> softwares = Arrays.asList(vscode, eclipse, nodejs, python, npm, sql8wb, sqlShell, powerBi, excel, microsoftSSMS, pnpm, git, jdk, visualStudio);
+		for (Software software : softwares) {
+		    programService.save(software);
 		}
 		
 		//Program Versions
-		Program vscodeV1 = new Program(vscode, v1);
-		Program eclipseV1 = new Program(eclipse, v2);
-		Program nodejsV1 = new Program(nodejs, v3);
-		Program nodejsV2 = new Program(nodejs, v4);
-		Program nodejsV3 = new Program(nodejs, v5);
-		Program nodejsV4 = new Program(nodejs, v6);
-		Program nodejsV5 = new Program(nodejs, v7);
-		Program nodejsV6 = new Program(nodejs, v8);
-		Program nodejsV7 = new Program(nodejs, v9);
-		Program pythonV1 = new Program(python, v10);
-		Program npmV1 = new Program(npm, v11);
-		Program npmV2 = new Program(npm, v12);
-		Program npmV3 = new Program(npm, v13);
-		Program npmV4 = new Program(npm, v14);
-		Program npmV5 = new Program(npm, v15);
-		Program npmV6 = new Program(npm, v16);
-		Program npmV7 = new Program(npm, v17);
-		Program sql8wbV1 = new Program(sql8wb, v18);
-		Program sqlShellV1 = new Program(sqlShell, v19);
-		Program powerBiV1 = new Program(powerBi, v20);
-		Program excelV1 = new Program(excel, v21);
-		Program excelV2 = new Program(excel, v22);
-		Program microsoftSSMSV1 = new Program(microsoftSSMS, v23);
-		Program pnpmV1 = new Program(pnpm, v24);
-		Program gitV1 = new Program(git, v25);
-		Program jdkV1 = new Program(jdk, v26);
-		Program visualStudioV1 = new Program(visualStudio, v27);
+		Program vscodeV1 = new Program(vscode, "1.46.1");
+		Program eclipseV1 = new Program(eclipse, "4.22");
+		Program nodejsV1 = new Program(nodejs, "20.11.0");
+		Program nodejsV2 = new Program(nodejs, "20.10.0");
+		Program nodejsV3 = new Program(nodejs, "12.18.1");
+		Program nodejsV4 = new Program(nodejs, "20.2.0");
+		Program nodejsV5 = new Program(nodejs, "20.5");
+		Program nodejsV6 = new Program(nodejs, "20.9");
+		Program nodejsV7 = new Program(nodejs, "20.1.0");
+		Program pythonV1 = new Program(python, "3.9.7427");
+		Program npmV1 = new Program(npm, "10.2.4");
+		Program npmV2 = new Program(npm, "10.2.3");
+		Program npmV3 = new Program(npm, "6.14.5");
+		Program npmV4 = new Program(npm, "9.14.5");
+		Program npmV5 = new Program(npm, "9.6.6");
+		Program npmV6 = new Program(npm, "10.1.0");
+		Program npmV7 = new Program(npm, "9.6.4");
+		Program sql8wbV1 = new Program(sql8wb, "8.0.32");
+		Program sqlShellV1 = new Program(sqlShell, "8.0.32");
+		Program powerBiV1 = new Program(powerBi, "2.126.927.0");
+		Program excelV1 = new Program(excel, "2107");
+		Program excelV2 = new Program(excel, "2208");
+		Program microsoftSSMSV1 = new Program(microsoftSSMS, "15.0.18333.0");
+		Program pnpmV1 = new Program(pnpm, "8.15.4");
+		Program gitV1 = new Program(git, "2.27.0");
+		Program jdkV1 = new Program(jdk, "17.0.2");
+		Program visualStudioV1 = new Program(visualStudio, "1.87.0");
 		
 		List<Program> programsList = Arrays.asList(vscodeV1, eclipseV1, nodejsV1, nodejsV2, nodejsV3, nodejsV4, nodejsV5, nodejsV6,
 		        nodejsV7, pythonV1, npmV1, npmV2, npmV3, npmV4, npmV5, npmV6, npmV7, sql8wbV1, sqlShellV1, powerBiV1, excelV1, excelV2,
