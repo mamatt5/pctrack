@@ -127,14 +127,22 @@ export default function NavBar(props) {
 	const handleIconNav = (page, id) => {
 		if (page === "Search Rooms") {
 			navigate(`/home/${id}/searchroom`);
+
 		} else if (page === "Manage Users") {
-      navigate(`/home/${id}/admin`);
-    } else if (page === "Search Software") {
+      		navigate(`/home/${id}/admin`);
+			
+    	} else if (page === "Search Software") {
 			navigate(`/home/${id}/searchsoftware`);
+
 		} else if (page === "Search Computer") {
 			navigate(`/home/${id}/searchcomputer`);
+		
+		} else if (page === "Search Rooms") {
+			navigate(`/home/${id}/searchroom`);
+
 		} else if (page === "Update Details") {
 			navigate(`/home/${id}/searchcomputer`);
+
 		} else if (page === "Log Out") {
 			localStorage.removeItem("token");
 			navigate("/");

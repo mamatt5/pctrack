@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fdmgroup.PCTrack.dal.RoomRepository;
+import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Room;
 
 @Service
@@ -52,6 +53,11 @@ public class RoomService {
 			throw new RuntimeException("Room does not exist");
 		}
 		
+	}
+
+	public List<Computer> getComptuersInRoom(int roomId) {
+		return this.roomRepo.getComputersInRoom(roomId);
+	
 	}
 }
 

@@ -1,15 +1,40 @@
 import React from 'react'
 import NavBar from '../partials/NavBar'
 import ComputerCard from '../partials/ComputerCard'
+import callApi from "../api/callApi";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import CustomizedTables from '../partials/roomTable'
+import { Box } from '@mui/material';
 
 export const SearchRoomPage = () => {
 
+  const [rooms, setRooms] = useState([]);
+ 
+
+  const test = (input) => {
+    setRooms(input)
+  }
+
+  const { id } = useParams()
+
+  useEffect(()=>{
+    const config = {
+      method: "get",
+      endpoint: "staff/getrooms/"+id,
+
+    }
+    callApi(test, null, config);
+  }, []);
+
+
   return (
     <>
-     <div className='dashBoardPadding'>
-        <h1>Under Construction</h1>
-        <div>SearchRoomPage</div>
-        </div>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <CustomizedTables array={rooms} />
+      </Box>
+
 
     </>
   )
