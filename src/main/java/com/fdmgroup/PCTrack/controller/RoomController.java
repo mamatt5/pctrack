@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.RoomService;
 
@@ -49,6 +51,11 @@ public class RoomController {
 	@DeleteMapping("rooms/{roomdId}")
 	public void deleteRoom(@PathVariable int roomId) {
 		roomService.deleteById(roomId);
+	}
+	
+	@GetMapping("getcomputers/{roomId}")
+	public List<Computer> getComputersInRoom(@PathVariable int roomId) {
+		return roomService.getComptuersInRoom(roomId);
 	}
 
 }

@@ -30,4 +30,5 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
 	@Query("SELECT s FROM Staff s WHERE s.user.username LIKE %:query%")
 	Page<Staff> findPartial(@Param("query") String query, Pageable pageable);
+
 }

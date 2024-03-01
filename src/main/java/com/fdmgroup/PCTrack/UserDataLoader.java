@@ -244,7 +244,7 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c30 = new Computer(15066, room3);
 		computerService.save(c30);
 		c30.setProgramList(Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
-		computerService.update(c30);
+		computerService.update(c30); 
 
 		Computer c31 = new Computer(15032, room3);
 		computerService.save(c31);
@@ -866,7 +866,7 @@ public class UserDataLoader implements ApplicationRunner
 
 		// no need to manuualy add date
 		User u0 = new User("admin1", "0000!!", "Root", "Admin");
-        User u1 = new User("andy.joe", "password123", "Andy", "Joe");
+        User u1 = new User("andy.joe", "password123", "Andy", "Joe"); 
         User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
         User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion");
         User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
