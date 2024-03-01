@@ -84,7 +84,12 @@ public class Computer {
 		}
 		return -1;
 	}
-	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public Role determineRole(Computer computer) {
 		boolean devReady = true;
 		boolean biReady = true;

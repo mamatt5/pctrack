@@ -41,8 +41,8 @@ export default function ProgramTable({ array }) {
                 <TableBody>
                     {array.map((row) => (
                         <StyledTableRow key={row.programId}>
-                            <StyledTableCell align="left">{row.name}</StyledTableCell>
-                            <StyledTableCell align="left">{row.versionNumber}</StyledTableCell>
+                            <StyledTableCell align="left">{row.software.name}</StyledTableCell>
+                            <StyledTableCell align="left">{row.version}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>
