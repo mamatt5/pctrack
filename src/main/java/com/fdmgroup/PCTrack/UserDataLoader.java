@@ -21,10 +21,11 @@ public class UserDataLoader implements ApplicationRunner
 	private ComputerService computerService;
 	private ProgramService programService;
 	private RoomService roomService;
+	private MandateService mandateService;
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
-	        ComputerService computerService, ProgramService programService, RoomService roomService)
+	        ComputerService computerService, ProgramService programService, RoomService roomService, MandateService mandateService)
 	{
 		super();
 		this.userService = userService;
@@ -33,6 +34,7 @@ public class UserDataLoader implements ApplicationRunner
 		this.computerService = computerService;
 		this.programService = programService;
 		this.roomService = roomService;
+		this.mandateService = mandateService;
 	}
 
 	@Override
@@ -242,7 +244,7 @@ public class UserDataLoader implements ApplicationRunner
 		Computer c30 = new Computer(15066, room3);
 		computerService.save(c30);
 		c30.setProgramList(Arrays.asList(vscode, eclipse, python, npm3, excel, microsoftSSMS, git, jdk));
-		computerService.update(c30);
+		computerService.update(c30); 
 
 		Computer c31 = new Computer(15032, room3);
 		computerService.save(c31);
@@ -864,7 +866,7 @@ public class UserDataLoader implements ApplicationRunner
 
 		// no need to manuualy add date
 		User u0 = new User("admin1", "0000!!", "Root", "Admin");
-        User u1 = new User("andy.joe", "password123", "Andy", "Joe");
+        User u1 = new User("andy.joe", "password123", "Andy", "Joe"); 
         User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
         User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion");
         User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
@@ -939,6 +941,17 @@ public class UserDataLoader implements ApplicationRunner
     	staffService.save(staff5);
     	staffService.save(staff6);
 
+    	// Mandate
+    	String mandate1Desc = "We need 10 DEV-ready computers.";
+    	Mandate mandate1 = new Mandate(room1, roomAdmin1, mandate1Desc);
+    	mandateService.save(mandate1);
 
+    	String mandate2Desc = "We need 10 BI-ready computers.";
+    	Mandate mandate2 = new Mandate(room2, roomAdmin2, mandate2Desc);
+    	mandateService.save(mandate2);
+    	
+    	String mandate3Desc = "We need 10 DEV and BI-ready computers.";
+    	Mandate mandate3 = new Mandate(room3, roomAdmin3, mandate3Desc);
+    	mandateService.save(mandate3);
 	}
 }

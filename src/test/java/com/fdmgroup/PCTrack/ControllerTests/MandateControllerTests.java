@@ -22,7 +22,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class) 
 public class MandateControllerTests {
 
 }
+ 

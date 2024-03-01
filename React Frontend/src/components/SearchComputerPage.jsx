@@ -1,10 +1,11 @@
 import React from 'react'
-import NavBar from '../partials/NavBar'
 import ComputerCard from '../partials/ComputerCard'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import callApi from '../api/callApi'
-import { TextField } from '@mui/material'
+import { Button, InputAdornment, OutlinedInput} from '@mui/material'
+import SearchIcon from "@mui/icons-material/Search";
+import AddComputer from '../partials/AddComputer'
 
 const getComputers = (setComputers) => {
     const config = {
@@ -31,27 +32,39 @@ const onSearchChange = (setComputers, value) => {
 export const SearchComputerPage = () => {
     const [computers, setComputers] = useState([]);
     const [search, setSearch] = useState("");
+    const [updated, setUpdated] = useState(true);
 
     useEffect(() => {
         getComputers(setComputers);
     }, []);
 
+    useEffect(() => {
+        getComputers(setComputers);
+        setUpdated(true);
+    }, [updated])
+
     return (
         <>
             <div className='dashBoardPadding'>
                 <h1>Computers</h1>
-                <TextField 
-                    label = "Search By Code"
-                    value = {search}
+                <OutlinedInput
+					id="search"
+					size="small"
+					placeholder={'Search By Code'}
+                    value={search}
+					startAdornment={
+						<InputAdornment position="start">
+							<SearchIcon />
+						</InputAdornment>
+					}
+					sx={{ borderRadius: 5 }}
                     onChange={(e) => {
                         if (/^\d+$/.test(e.target.value) || e.target.value == "") {
                             setSearch(e.target.value);
                             onSearchChange(setComputers, e.target.value)
                         }
-                        console.log(e.target.value)
-                        
                     }}
-                />
+				/>
                 <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     {
                         computers.map(computer =>
@@ -60,6 +73,7 @@ export const SearchComputerPage = () => {
                     }
                 </div>
             </div>
+            <AddComputer updated={[updated, setUpdated]}/>
         </>
     )
 }
