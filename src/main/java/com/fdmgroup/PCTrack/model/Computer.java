@@ -76,9 +76,9 @@ public class Computer {
 	public void setRoom(Room room) {
 		this.room = room;
 	}	
-	public int programIndex(int programId) {
+	public int programIndex(int programVersionId) {
 		for (int i = 0; i < programList.size(); i++) {
-			if (programList.get(i).getProgramVersionId() == programId) {
+			if (programList.get(i).getProgramVersionId() == programVersionId) {
 				return i;
 			}
 		}
@@ -93,7 +93,7 @@ public class Computer {
                 ".*NPM", ".*MySQL.*", "JDK", "Git");
 		List<String> biPrograms = Arrays.asList("Excel", "PowerBi");
 		
-		List<Program> computerPrograms = computer.getProgramList();
+		List<ProgramVersion> computerPrograms = computer.getProgramList();
 		
 		if (computerPrograms == null || computerPrograms.isEmpty()) {
 			return Role.NONE;
@@ -102,8 +102,8 @@ public class Computer {
 		for (String program : devPrograms) {
 			boolean programFound = false;
 			
-			for (Program computerProgram : computerPrograms) {
-				if (computerProgram.getName().matches(program)) {
+			for (ProgramVersion computerProgramVersion : computerPrograms) {
+				if (computerProgramVersion.getProgram().getName().matches(program)) {
 					programFound = true;
 					break;
 				}
@@ -118,8 +118,8 @@ public class Computer {
 		for (String program : biPrograms) {
 			boolean programFound = false;
 			
-			for (Program computerProgram : computerPrograms) {
-				if (computerProgram.getName().matches(program)) {
+			for (ProgramVersion computerProgramVersion : computerPrograms) {
+				if (computerProgramVersion.getProgram().getName().matches(program)) {
 					programFound = true;
 					break;
 				}

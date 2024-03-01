@@ -15,10 +15,9 @@ public class VersionController {
 	private ProgramVersionService programVersionService;
 	
 	@Autowired
-	public VersionController(VersionService versionService, ProgramVersionService programVersionService) {
+	public VersionController(VersionService versionService) {
 		super();
 		this.versionService = versionService;
-		this.programVersionService = programVersionService;
 	}
 	
 	@GetMapping("versions")

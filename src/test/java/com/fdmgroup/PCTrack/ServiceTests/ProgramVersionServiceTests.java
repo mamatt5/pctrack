@@ -4,7 +4,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.dal.LocationRepository;
+import com.fdmgroup.PCTrack.dal.ProgramRepository;
 import com.fdmgroup.PCTrack.dal.ProgramVersionRepository;
+import com.fdmgroup.PCTrack.dal.VersionRepository;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.model.ProgramVersion;
@@ -31,7 +33,11 @@ import org.junit.jupiter.api.Test;
 @ExtendWith(MockitoExtension.class)
 public class ProgramVersionServiceTests {
 	@Mock
-	ProgramVersionRepository programRepo;
+	ProgramVersionRepository programVersionRepo;
+	@Mock
+	ProgramRepository programRepo;
+	@Mock
+	VersionRepository versionRepo;
 	
 	ProgramVersionService programService;
 	
@@ -40,7 +46,7 @@ public class ProgramVersionServiceTests {
 	@BeforeEach
 	void setup() {
 		
-		this.programService = new ProgramVersionService(programRepo);
+		this.programService = new ProgramVersionService(programVersionRepo, programRepo, versionRepo);
 		
 	}
 	
@@ -50,7 +56,7 @@ public class ProgramVersionServiceTests {
 		ProgramVersion sql8wb = new ProgramVersion(new Program("MySQL 8 Workbench"), new Version("8.0.32"));
 		
 		programService.save(sql8wb);
-		verify(programRepo, times(1)).save(sql8wb);
+		verify(programVersionRepo, times(1)).save(sql8wb);
 	}
 	
 	@Test
@@ -67,22 +73,22 @@ public class ProgramVersionServiceTests {
       
 		
         programService.save(microsoftSSMS);
-		verify(programRepo, times(1)).save(microsoftSSMS);
+		verify(programVersionRepo, times(1)).save(microsoftSSMS);
 		
 		programService.save(pnpm);
-		verify(programRepo, times(1)).save(pnpm);
+		verify(programVersionRepo, times(1)).save(pnpm);
 		
 		programService.save(git);
-		verify(programRepo, times(1)).save(git);
+		verify(programVersionRepo, times(1)).save(git);
 		
 		programService.save(sql8wb);
-		verify(programRepo, times(1)).save(sql8wb);
+		verify(programVersionRepo, times(1)).save(sql8wb);
 		
 		programService.save(sqlShell);
-		verify(programRepo, times(1)).save(sqlShell);
+		verify(programVersionRepo, times(1)).save(sqlShell);
 		
 		programService.save(powerBi);
-		verify(programRepo, times(1)).save(powerBi);
+		verify(programVersionRepo, times(1)).save(powerBi);
 		
 
 	}
@@ -103,11 +109,11 @@ public class ProgramVersionServiceTests {
 		allProgramVersions.add(sqlShell);
 		
 		
-		when(programRepo.findAll()).thenReturn(allProgramVersions);
+		when(programVersionRepo.findAll()).thenReturn(allProgramVersions);
 		
 		List<ProgramVersion> foundLocations = programService.findAllProgramVersions();
 	
-		verify(programRepo, times(1)).findAll();
+		verify(programVersionRepo, times(1)).findAll();
 		assertSame(foundLocations, allProgramVersions);
 	}
 	
@@ -116,10 +122,10 @@ public class ProgramVersionServiceTests {
 	
 		Optional<ProgramVersion> sql8wb = Optional.of(new ProgramVersion(new Program("MySQL 8 Workbench"), new Version("8.0.32")));
 
-		when(programRepo.findById(1)).thenReturn(sql8wb);
+		when(programVersionRepo.findById(1)).thenReturn(sql8wb);
 		ProgramVersion foundProgramVersion1 = programService.findById(1);
 		
-		verify(programRepo, times(1)).findById(1);
+		verify(programVersionRepo, times(1)).findById(1);
 		assertSame(sql8wb.get(), foundProgramVersion1);
 
 	}
@@ -128,7 +134,7 @@ public class ProgramVersionServiceTests {
 	void find_program_by_id_fail_test() {
 
 		assertThrows(RuntimeException.class, () -> programService.findById(1));
-		verify(programRepo, times(1)).findById(1);
+		verify(programVersionRepo, times(1)).findById(1);
 	}
 	
 	@Test
@@ -137,11 +143,11 @@ public class ProgramVersionServiceTests {
 		ProgramVersion microsoftSSMS = new ProgramVersion(new Program("Microsoft MySQL"), new Version("15.0.18333.0"));
 		microsoftSSMS.setProgramVersionId(1);
 		
-		when(programRepo.existsById(1)).thenReturn(true);
+		when(programVersionRepo.existsById(1)).thenReturn(true);
 		programService.update(microsoftSSMS);
 		
-		verify(programRepo, times(1)).existsById(1);
-		verify(programRepo, times(1)).save(microsoftSSMS);
+		verify(programVersionRepo, times(1)).existsById(1);
+		verify(programVersionRepo, times(1)).save(microsoftSSMS);
 
 	}
 	
@@ -151,32 +157,32 @@ public class ProgramVersionServiceTests {
 		ProgramVersion nodejs3 = new ProgramVersion(new Program("Node.js"),new Version("20.2.0"));
 		nodejs3.setProgramVersionId(1);
 		
-		when(programRepo.existsById(1)).thenReturn(false);
+		when(programVersionRepo.existsById(1)).thenReturn(false);
 		
 		assertThrows(RuntimeException.class, () -> programService.update(nodejs3));
-		verify(programRepo, times(1)).existsById(1);
-		verify(programRepo, times(0)).save(nodejs3);
+		verify(programVersionRepo, times(1)).existsById(1);
+		verify(programVersionRepo, times(0)).save(nodejs3);
 	}
 	
 	@Test
 	void delete_program_test() {
 		
-		when(programRepo.existsById(1)).thenReturn(true);
+		when(programVersionRepo.existsById(1)).thenReturn(true);
 		
 		programService.deleteById(1);
 		
-		verify(programRepo, times(1)).existsById(1);
-		verify(programRepo, times(1)).deleteById(1);
+		verify(programVersionRepo, times(1)).existsById(1);
+		verify(programVersionRepo, times(1)).deleteById(1);
 
 	}
 	
 	@Test
 	void delete_program_fail_test() {
 		
-		when(programRepo.existsById(1)).thenReturn(false);
+		when(programVersionRepo.existsById(1)).thenReturn(false);
 		
 		assertThrows(RuntimeException.class, () -> programService.deleteById(1));
-		verify(programRepo, times(1)).existsById(1);
-		verify(programRepo, times(0)).deleteById(1);
+		verify(programVersionRepo, times(1)).existsById(1);
+		verify(programVersionRepo, times(0)).deleteById(1);
 	}
 }

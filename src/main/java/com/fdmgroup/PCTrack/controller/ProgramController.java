@@ -7,18 +7,19 @@ import org.springframework.web.bind.annotation.*;
 import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.ProgramVersionService;
 
 @RestController
 @CrossOrigin("http://localhost:5173")
 public class ProgramController {
 	private ProgramService programService;
-	private ComputerService computerService;
+	private ProgramVersionService programVersionService;
 	
 	@Autowired
-	public ProgramController(ProgramService programService, ComputerService computerService) {
+	public ProgramController(ProgramService programService, ProgramVersionService programVersionService) {
 		super();
 		this.programService = programService;
-		this.computerService = computerService;
+		this.programVersionService = programVersionService;
 	}
 	
 	@GetMapping("programs")
@@ -45,7 +46,7 @@ public class ProgramController {
 	
 	@DeleteMapping("programs/{programId}")
 	public void deleteProgram(@PathVariable int programId) {
-		computerService.deleteByProgramId(programId);
+		programVersionService.deleteByProgramId(programId);
 		programService.deleteById(programId);
 	}
 

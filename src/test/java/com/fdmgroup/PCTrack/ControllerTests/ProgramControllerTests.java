@@ -9,6 +9,7 @@ import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.ProgramService;
+import com.fdmgroup.PCTrack.service.ProgramVersionService;
 
 import org.mockito.Mock;
 
@@ -29,19 +30,19 @@ public class ProgramControllerTests {
 	@Mock
 	ProgramService programService;
 	@Mock
-	ComputerService computerService;
+	ProgramVersionService programVersionService;
 	
 	ProgramController programController;
 	
 	@BeforeEach
 	void setup() {
-		this.programController = new ProgramController(programService, computerService);
+		this.programController = new ProgramController(programService, programVersionService);
 	}
 	
 	@Test
 	void findProgramById_test() {
 		
-		Program vscode = new Program("Visual Studio Code", "1.46.1");
+		Program vscode = new Program("Visual Studio Code");
 		
 		when(programService.findById(1)).thenReturn(vscode);
 		assertSame(vscode, programController.findById(1));
@@ -50,7 +51,7 @@ public class ProgramControllerTests {
 	
 	@Test
 	void createProgram_test() {
-		Program excel = new Program("Excel", "2107");
+		Program excel = new Program("Excel");
 		
 		when(programService.findById(0)).thenReturn(excel);
 		assertSame(excel, programController.createNewProgram(excel));
@@ -59,8 +60,8 @@ public class ProgramControllerTests {
 	
 	@Test
 	void updateProgram_test() {
-		Program git = new Program("Git", "2.27.0");
-		Program updatedGit = new Program("Git", "3.27.0");
+		Program git = new Program("Git");
+		Program updatedGit = new Program("Git");
 
 		when(programService.findById(0)).thenReturn(updatedGit);
 		assertSame(programController.updateProgram(git), updatedGit);
@@ -75,14 +76,14 @@ public class ProgramControllerTests {
 	
 	@Test
 	void findAllPrograms() {
-		Program vscode = new Program("Visual Studio Code", "1.46.1");
-		Program eclipse = new Program("Eclipse", "4.22");
-		Program nodejs = new Program("Node.js", "20.11.0");
-		Program python = new Program("Python Laucher", "3.9.7427.0");
-		Program npm = new Program("NPM", "10.2.4");
-		Program sql8wb = new Program("MySQL 8 Workbench", "8.0.32");
-		Program sqlShell = new Program("MySQL Shell", "8.0.32");
-		Program powerBi = new Program("PowerBi", "2.126.927.0");
+		Program vscode = new Program("Visual Studio Code");
+		Program eclipse = new Program("Eclipse");
+		Program nodejs = new Program("Node.js");
+		Program python = new Program("Python Laucher");
+		Program npm = new Program("NPM");
+		Program sql8wb = new Program("MySQL 8 Workbench");
+		Program sqlShell = new Program("MySQL Shell");
+		Program powerBi = new Program("PowerBi");
 
 
 		
