@@ -31,7 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function ProgramTable({ array }) {
     return (
         <TableContainer component={Paper} sx={{ maxWidth: "70vw" }}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Table sx={{ minWidth: 600 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
                         <StyledTableCell align="left">Name</StyledTableCell>

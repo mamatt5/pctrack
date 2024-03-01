@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Modal } from '@mui/material';
 import { Box } from '@mui/material';
 import ProgramTable from './programTable';
+import ComputerIcon from '@mui/icons-material/Computer';
 
 const style = {
     position: 'absolute',
@@ -41,14 +42,14 @@ const ComputerCard = (props) => {
 
         switch(computer.role) {
             case 'NONE':
-                return 'red'
+                return '#FF6961'
 
             case 'BI':
             case 'DEV':
-                return 'yellow';
+                return '#ffff66';
             
             case 'BOTH':
-                return 'green';
+                return '#77DD77';
 
             default:
                 return 'gray'
@@ -72,14 +73,17 @@ const ComputerCard = (props) => {
             },
 
             backgroundColor: getColor(computer),
-            margin: '5px'
+            margin: '5px',
+           
         }}>
             <CardActionArea onClick={openModal} co>
                 {/* <CardHeader title="Computer Details"/> */}
                 <CardContent>
-                    {computer.role === 'DEV' && <div style={{ textAlign: 'center' }}>DEV</div>}
-                    {computer.role === 'BI' && <div style={{ textAlign: 'center' }}>BI</div>}
-                    <ComputerTwoToneIcon sx={{ fontSize: 100 }} />
+                    {computer.role === 'DEV' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>DEV</div>}
+                    {computer.role === 'BI' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>BI</div>}
+                    {computer.role === 'BOTH' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>&nbsp;</div>}
+                    {computer.role === 'NONE' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>&nbsp;</div>}
+                    <ComputerIcon sx={{ fontSize: 100 }} />
                     <div style={{ textAlign: 'center' }}>{computer.computerCode}</div>
 
                 </CardContent>
@@ -89,8 +93,21 @@ const ComputerCard = (props) => {
                 open={open}
                 onClose={closeModal}
                 onClick={t}
+                
+                
             >
-                <Box sx={style}>
+                <Box  sx={{
+                    ...style,
+                    overflowY: 'scroll', // Enable vertical scrolling
+                    maxHeight: '90vh',
+                    padding: '20px',
+                    '-ms-overflow-style': 'none',  // Hide scrollbar for Internet Explorer and Edge
+                    'scrollbar-width': 'none', // Hide scrollbar for Firefox
+                    '&::-webkit-scrollbar': {
+                        display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari)
+                    
+                    },
+                }}>
                     <h1>Computer Details</h1>
                     <h2>{computer.computerCode}</h2>
                     <h3>Room: {computer.room.name}, {computer.room.location.name}</h3>
