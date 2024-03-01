@@ -31,6 +31,14 @@ public class Mandate {
 		this.dateCreated = LocalDate.now();
 		this.description = description;
 	}
+	
+	public Mandate(Room room, String description) {
+		super();
+		this.room = room;
+		this.dateCreated = LocalDate.now();
+		this.description = description;
+	}
+	
 	public Mandate() {
 		super();
 	}
