@@ -33,11 +33,11 @@ const ViewComputersInRoomPage = (props) => {
     
   return (
     <Box>
-
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
       <NavBar admin={true}/>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      
 
-        <Box style={{ position: 'fixed' }}>
+        <Box style={{ position: 'flex' }}>
         <h1> You are now viewing room {room["name"]}</h1>
         </Box>
 
