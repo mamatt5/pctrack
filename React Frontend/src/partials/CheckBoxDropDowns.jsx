@@ -31,20 +31,24 @@ export default function SelectSmall({ array, label }) {
 		<FormControl sx={{ m: 1, minWidth: 160 }} size="small">
 			<InputLabel id="demo-select-small-label">Permissions</InputLabel>
 			<Select
+
 				labelId="demo-select-small-label"
 				id="demo-select-small"
 				value={item}
 				label="Permissions"
 				onChange={handleChange}
 			>
-				<MenuItem value="">
-					<em>None</em>
-				</MenuItem>
-				{array.map((name) => (
-					<MenuItem key={name[label]} value={name[label]}>
-						{name[label]}
-					</MenuItem>
-				))}
+				{array.map((name) =>
+					name[label] === "" ? (
+						<MenuItem key="none" value="">
+							<em>None</em>
+						</MenuItem>
+					) : (
+						<MenuItem key={name[label]} value={name[label]}>
+							{name[label]}
+						</MenuItem>
+					)
+				)}
 			</Select>
 		</FormControl>
 	);

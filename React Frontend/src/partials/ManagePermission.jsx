@@ -6,28 +6,52 @@ import SelectSmall from "./CheckBoxDropDowns";
 import { useState } from "react";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
+import Config from "../configs.json";
 
-const getAdminsLevels = (setAdminLevels) => {
-	// Functionality to get staff on pagination
-	const config = {
-		method: "get",
-		endpoint: "adminLevels",
-	};
+const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
+// 1. find the location were editing
+// 2. find the permission we have at that location
+// 3. return all adminlevels below that.
 
-	callApi(setAdminLevels, null, config);
+const getAssignableLevels = (admin, allAdminlevels, locationId) => {
+	console.log(admin);
+	console.log(allAdminlevels);
+	console.log(locationId);
+
+	const adminLevel = admin.filter((staff) => {
+		return staff.location.locationId === locationId;
+	})[0].adminLevel.precedence;
+
+    //note business (MAX PRECEDNECE ) is the only one that can assign
+    //another user the same precedence role.
+	let filteredAdminLevel = [];
+	// console.log(adminLevel)
+	if (adminLevel === MAX_PRECEDENCE) {
+		filteredAdminLevel = allAdminlevels.filter((levels) => {
+			return levels.precedence >= adminLevel;
+		});
+	} else {
+		filteredAdminLevel = allAdminlevels.filter((levels) => {
+			return levels.precedence > adminLevel;
+		});
+	}
+
+	console.log(filteredAdminLevel);
+	return filteredAdminLevel.sort((a,b) => a.precedence - b.precedence);
 };
 
-const PermissonModal = ({ openModal, setOpenModal, staff }) => {
+/**
+ * @staff staff is the user we are editing
+ * @admin admin is the admin editing the user
+ * @adminLevels is all the possible admin levels
+ * @param {*}
+ * @returns
+ */
+const PermissonModal = ({ openModal, setOpenModal, staff, adminLevels, admin }) => {
 	console.log(openModal);
 	console.log(staff);
-
-    const [adminLevels, setAdminLevels] = useState([])
-
-    useEffect(() => {
-        getAdminsLevels(setAdminLevels)
-    }, [])
-
-    console.log(adminLevels)
+	console.log(adminLevels);
+	const assignableAdminLevels = getAssignableLevels(admin, adminLevels, staff.location.locationId);
 	return (
 		<Modal
 			open={openModal}
@@ -52,33 +76,35 @@ const PermissonModal = ({ openModal, setOpenModal, staff }) => {
 						borderRadius: 3,
 						p: 7,
 						width: "64vw",
-						height: "64vw",
+						maxWidth: 700,
+						height: "45rem",
 					}}
 				>
-					<EditBox staff={staff} adminLevels={adminLevels} />
+					<FirstPage staff={staff} adminLevels={assignableAdminLevels} />
+
 				</Box>
 			</Fade>
 		</Modal>
 	);
 };
 
-const EditBox = ({ staff, adminLevels }) => {
-
+const FirstPage = ({ staff, adminLevels }) => {
 	return (
 		<>
 			<Typography variant="h4" sx={{ marginBottom: "2rem" }}>
 				Manage User Permissions
 			</Typography>
-            <Divider/>
+			<Divider />
 			<Typography variant="h5">
 				{staff.user.firstName} {staff.user.lastName}
 			</Typography>
 			<Typography>{staff.location.city}</Typography>
 
 			<Typography>
-				Current Level: {staff.adminLevel === null ? "None" : `${staff.adminLevel} Admin`}
+				Current Level:{" "}
+				{staff.adminLevel.precedence === 100 ? "No permissions" : `${staff.adminLevel.name} Admin`}
 			</Typography>
-            <SelectSmall array={adminLevels} label="name"/>
+			<SelectSmall array={adminLevels} label={"name"} />
 		</>
 	);
 };

@@ -8,11 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
 import EditIcon from "@mui/icons-material/Edit";
 import PermissonModal from "./ManagePermission";
-
+import EditOffIcon from "@mui/icons-material/EditOff";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -23,6 +23,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 		fontSize: 14,
 		// borderBottom: "none",
 		color: "#3b3b3b",
+		// padding:"0.8rem"
 	},
 	width: "10rem",
 }));
@@ -44,6 +45,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	},
 }));
 
+// checks if a staff is able to manage another staff
+// i.e. are premissions high enough for that location.
+// first filter out the location.
+// business can only do stuff in their location....
+const hasPrecedence = (logginedInStaff, toBeManagedStaff) => {
+	console.log(logginedInStaff);
+	console.log(toBeManagedStaff);
+
+	// first filters bu location, then filters by precednece.
+	const currStaffHasPredence = logginedInStaff.filter((staff) => {
+		return (
+			console.log(staff.adminLevel.precedence),
+			staff.location.locationId === toBeManagedStaff.location.locationId &&
+				staff.adminLevel.precedence < toBeManagedStaff.adminLevel.precedence
+		);
+	});
+	// if length is 0 then no precednece sinc eno matches were found
+	return currStaffHasPredence.length !== 0;
+};
 /**
  * PAGINATION
  * SEARCH BAR
@@ -54,7 +74,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
  * @returns
  */
 
-export default function CustomizedTables({ array, setQuery, staffCount, onChangePage }) {
+export default function CustomizedTables({
+	array,
+	currStaff,
+	setQuery,
+	staffCount,
+	adminLevels = { adminLevels },
+	onChangePage,
+}) {
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 	// the modal for editing permissions, its a collection of all the modals
@@ -87,18 +114,17 @@ export default function CustomizedTables({ array, setQuery, staffCount, onChange
 		}));
 	};
 
-  // when new query reset page to 0.
-  const handleSetQuery = (newQuery) => {
-    setPage(0); // Reset the page to 0 when a new query is set
-    setQuery(newQuery);
-  }
+	// when new query reset page to 0.
+	const handleSetQuery = (newQuery) => {
+		setPage(0); // Reset the page to 0 when a new query is set
+		setQuery(newQuery);
+	};
 
 	// calcaultes the num of empty rows on a page to avoid the layout screwing up
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, staffCount - page * rowsPerPage);
 
 	return (
 		<>
-
 			<TableContainer
 				component={Paper}
 				sx={{
@@ -134,7 +160,7 @@ export default function CustomizedTables({ array, setQuery, staffCount, onChange
 					<TableBody>
 						{/* actual rows */}
 						{emptyRows === rowsPerPage ? (
-							<TableRow style={{ height: 53 * emptyRows }}>
+							<TableRow style={{ height: 53 * 10 }}>
 								<TableCell colSpan={6} align="center">
 									<Typography variant="h6" sx={{ color: "gray", fontStyle: "italic" }}>
 										User not found
@@ -154,25 +180,37 @@ export default function CustomizedTables({ array, setQuery, staffCount, onChange
 										<StyledTableCell align="left">{row.adminLevel.name}</StyledTableCell>
 										<StyledTableCell align="right" component="th" scope="row">
 											{row.name}
-											<EditIcon
-												onClick={() => handleOpenModal(row.staffId)}
-												sx={{ color: "#8a989f", "&:hover": { cursor: "pointer" } }}
-											/>
 
-											{/* setOpenModal={(isOpen) => isOpen ? handleOpenModal(row.id) :
+											{hasPrecedence(currStaff, row) ? (
+												<>
+													<IconButton>
+														<EditIcon
+															onClick={() => handleOpenModal(row.staffId)}
+															sx={{ color: "#a1c3d3", "&:hover": { cursor: "pointer" } }}
+														/>
+													</IconButton>
+													{/* setOpenModal={(isOpen) => isOpen ? handleOpenModal(row.id) :
                         handleCloseModal(row.id)}: This passes a function setOpenModal
                         to the PermissionModal component. When setOpenModal(true) is called
                         inside PermissionModal, it calls handleOpenModal(row.id) to open the modal
                          for the corresponding row.id. When setOpenModal(false) is called inside
                          PermissionModal, it calls handleCloseModal(row.id) to close the modal
                          for the corresponding row.id. */}
-											<PermissonModal
-												openModal={!!openModals[row.staffId]}
-												setOpenModal={(isOpen) =>
-													isOpen ? handleOpenModal(row.staffId) : handleCloseModal(row.staffId)
-												}
-												staff={row}
-											/>
+													<PermissonModal
+														openModal={!!openModals[row.staffId]}
+														setOpenModal={(isOpen) =>
+															isOpen ? handleOpenModal(row.staffId) : handleCloseModal(row.staffId)
+														}
+														staff={row}
+														adminLevels={adminLevels}
+														admin={currStaff}
+													/>
+												</>
+											) : (
+												<IconButton disableRipple>
+													<EditOffIcon sx={{ color: "#ecf0f2" }} />
+												</IconButton>
+											)}
 										</StyledTableCell>
 									</StyledTableRow>
 								))}

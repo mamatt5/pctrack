@@ -16,8 +16,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Tooltip from '@mui/material/Tooltip';
-
+import Tooltip from "@mui/material/Tooltip";
 
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -28,13 +27,13 @@ import ComputerIcon from "@mui/icons-material/Computer";
 import SearchIcon from "@mui/icons-material/Search";
 import ApiIcon from "@mui/icons-material/Api";
 import ChairIcon from "@mui/icons-material/Chair";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import HomeIcon from '@mui/icons-material/Home';
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
 import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 
 const drawerWidth = 240;
 
@@ -86,7 +85,6 @@ const AppBar = styled(MuiAppBar, {
 	}),
 }));
 
-
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(
 	({ theme, open }) => ({
 		width: drawerWidth,
@@ -105,8 +103,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 );
 
 export default function NavBar(props) {
-  const {admin} = props
-  const { id } = useParams();
+	const { admin } = props;
+	const { id } = useParams();
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
@@ -127,30 +125,21 @@ export default function NavBar(props) {
 	const handleIconNav = (page, id) => {
 		if (page === "Search Rooms") {
 			navigate(`/home/${id}/searchroom`);
-
 		} else if (page === "Manage Users") {
-      		navigate(`/home/${id}/admin`);
-			
-    	} else if (page === "Search Software") {
+			navigate(`/home/${id}/admin`);
+		} else if (page === "Search Software") {
 			navigate(`/home/${id}/searchsoftware`);
-
 		} else if (page === "Search Computer") {
 			navigate(`/home/${id}/searchcomputer`);
-		
 		} else if (page === "Search Rooms") {
 			navigate(`/home/${id}/searchroom`);
-
 		} else if (page === "Update Details") {
 			navigate(`/home/${id}/searchcomputer`);
-
 		} else if (page === "Log Out") {
 			localStorage.removeItem("token");
 			navigate("/");
 		}
-  }
-
-
-
+	};
 
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -159,21 +148,25 @@ export default function NavBar(props) {
 			<AppBar position="fixed" open={open} elevation={0}>
 				<Toolbar>
 
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						onClick={handleDrawerOpen}
-						edge="start"
-						sx={{
-							marginRight: 5,
-							...(open && { display: "none" }),
-						}}
-					>
-						<MenuIcon />
+						<IconButton
+							color="inherit"
+							aria-label="open drawer"
+							onClick={handleDrawerOpen}
+							edge="start"
+							sx={{
+								marginRight: 5,
+								...(open && { display: "none" }),
+							}}
+						>
+							<MenuIcon />
+						</IconButton>
+						<Typography variant="h6" noWrap component="div">
+							PC Track
+						</Typography>
+
+						<IconButton color="inherit" sx={{ marginLeft: 'auto' }} onClick={()=>{navigate(`/home/${id}`);}}>
+					<HomeIcon />
 					</IconButton>
-					<Typography variant="h6" noWrap component="div">
-						PC Track
-					</Typography>
 				</Toolbar>
 			</AppBar>
 			<Drawer variant="permanent" open={open}>
@@ -184,63 +177,62 @@ export default function NavBar(props) {
 				</DrawerHeader>
 				<Divider />
 				{/* admin stuff  */}
-        {admin ? (
+				{admin ? (
 					<>
-					{["Manage Users"].map((text, index) => (
-						<ListItem key={text} disablePadding sx={{ display: "block" }}>
-						<Tooltip title={text} placement="right">
-							<ListItemButton
-								sx={{
-									minHeight: 48,
-									justifyContent: open ? "initial" : "center",
-									px: 2.5,
-								}}
-								onClickCapture={() => handleIconNav("Manage Users", id)}
-							>
-								<ListItemIcon
-									sx={{
-										minWidth: 0,
-										mr: open ? 3 : "auto",
-										justifyContent: "center",
-									}}
-								>
-									{index === 0 &&  <AdminPanelSettingsIcon />}
-
-								</ListItemIcon>
-								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-							</ListItemButton>
-							</Tooltip>
-						</ListItem>
+						{["Manage Users"].map((text, index) => (
+							<ListItem key={text} disablePadding sx={{ display: "block" }}>
+								<Tooltip title={text} placement="right">
+									<ListItemButton
+										sx={{
+											minHeight: 48,
+											justifyContent: open ? "initial" : "center",
+											px: 2.5,
+										}}
+										onClickCapture={() => handleIconNav("Manage Users", id)}
+									>
+										<ListItemIcon
+											sx={{
+												minWidth: 0,
+												mr: open ? 3 : "auto",
+												justifyContent: "center",
+											}}
+										>
+											{index === 0 && <AdminPanelSettingsIcon />}
+										</ListItemIcon>
+										<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+									</ListItemButton>
+								</Tooltip>
+							</ListItem>
 						))}
 					</>
 				) : null}
 
-        {/* staff + admin stuff */}
-				<List sx={{padding:0}}>
+				{/* staff + admin stuff */}
+				<List sx={{ padding: 0 }}>
 					{["Search Rooms", "Search Computer", "Search Software"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
-							<ListItemButton
-								sx={{
-									minHeight: 48,
-									justifyContent: open ? "initial" : "center",
-									px: 2.5,
-								}}
-								onClickCapture={() => handleIconNav(text, id)}
-							>
-								<ListItemIcon
+								<ListItemButton
 									sx={{
-										minWidth: 0,
-										mr: open ? 3 : "auto",
-										justifyContent: "center",
+										minHeight: 48,
+										justifyContent: open ? "initial" : "center",
+										px: 2.5,
 									}}
+									onClickCapture={() => handleIconNav(text, id)}
 								>
-									{index === 0 &&  <MeetingRoomIcon />}
-									{index === 1 && <ComputerIcon />}
-									{index === 2 && <ApiIcon />}
-								</ListItemIcon>
-								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-							</ListItemButton>
+									<ListItemIcon
+										sx={{
+											minWidth: 0,
+											mr: open ? 3 : "auto",
+											justifyContent: "center",
+										}}
+									>
+										{index === 0 && <MeetingRoomIcon />}
+										{index === 1 && <ComputerIcon />}
+										{index === 2 && <ApiIcon />}
+									</ListItemIcon>
+									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+								</ListItemButton>
 							</Tooltip>
 						</ListItem>
 					))}
@@ -248,39 +240,38 @@ export default function NavBar(props) {
 
 				<Divider />
 
-        {/* logging out and updating deets */}
+				{/* logging out and updating deets */}
 
 				<List>
 					{["Update Details", "Log Out"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
-								<Tooltip title={text} placement="right">
-							<ListItemButton
-								sx={{
-									minHeight: 48,
-									justifyContent: open ? "initial" : "center",
-									px: 2.5,
-								}}
-								onClickCapture={() => handleIconNav(text, id)}
-							>
-								<ListItemIcon
+							<Tooltip title={text} placement="right">
+								<ListItemButton
 									sx={{
-										minWidth: 0,
-										mr: open ? 3 : "auto",
-										justifyContent: "center",
+										minHeight: 48,
+										justifyContent: open ? "initial" : "center",
+										px: 2.5,
 									}}
+									onClickCapture={() => handleIconNav(text, id)}
 								>
-									{index === 0 && <UpgradeOutlinedIcon />}
-									{index === 1 && <LogoutOutlinedIcon />}
-								</ListItemIcon>
-								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-							</ListItemButton>
+									<ListItemIcon
+										sx={{
+											minWidth: 0,
+											mr: open ? 3 : "auto",
+											justifyContent: "center",
+										}}
+									>
+										{index === 0 && <UpgradeOutlinedIcon />}
+										{index === 1 && <LogoutOutlinedIcon />}
+									</ListItemIcon>
+									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+								</ListItemButton>
 							</Tooltip>
 						</ListItem>
 					))}
 				</List>
 			</Drawer>
-			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-			</Box>
+			<Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
 		</Box>
 	);
 }
