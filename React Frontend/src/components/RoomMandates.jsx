@@ -17,10 +17,20 @@ const createRoomMandate = (room, description, setRoomMandates) => {
 
   const config = {
     method: 'post',
-    endpoint: `mandates`,
+    endpoint: 'mandates',
     data: newMandate
   };
   callApi(()=> getRoomMandates(room.roomId, setRoomMandates), null, config)
+}
+
+const updateRoomMandate = (mandate, setRoomMandates) => {
+  const config = {
+    method: 'put',
+    endpoint: 'mandates',
+    data : mandate
+  };
+
+  callApi(()=> getRoomMandates(mandate.room.roomId, setRoomMandates), null, config)
 }
 
 const deleteRoomMandate = (roomId, mandateId, setRoomMandates) => {
@@ -34,8 +44,10 @@ const deleteRoomMandate = (roomId, mandateId, setRoomMandates) => {
 
 const RoomMandates = ({ room }) => {
   const [roomMandates, setRoomMandates] = useState([])
+  const [mandate, setMandate] = useState('')
   const [mandateDescription, setMandateDescription] = useState('')
   const [createMandateDialogue, setCreateMandateDialogue] = useState(false)
+  const [editMandateDialogue, setEditMandateDialogue] = useState(false)
 
   useEffect(() => {
     getRoomMandates(room.roomId, setRoomMandates);
@@ -47,6 +59,20 @@ const RoomMandates = ({ room }) => {
     setMandateDescription('')
   }
 
+  const editMandate = (mandate) => {
+    setMandate(mandate)
+    setMandateDescription(mandate.description)
+    setEditMandateDialogue(true)
+  }
+
+  const handleUpdate = () => {
+    const updatedMandate = { ...mandate, description: mandateDescription}
+    updateRoomMandate(updatedMandate, setRoomMandates);
+    setEditMandateDialogue(false)
+    setMandateDescription('')
+    setMandate(null)
+  }
+
   return (
     <>
       <div>
@@ -54,12 +80,30 @@ const RoomMandates = ({ room }) => {
           <h2>Mandates for {room.name} room</h2>
           {roomMandates.map(mandate =>
             <li key={mandate.mandateId}>{mandate.description}
-              <Button onClick={()=>deleteRoomMandate(room.roomId,mandate.mandateId,setRoomMandates)}>
-                Done</Button></li>)}
+              <Button onClick={()=> deleteRoomMandate(room.roomId,mandate.mandateId,setRoomMandates)}>
+                Done</Button>
+              <Button onClick={()=> editMandate(mandate)}>Edit</Button>
+                </li>)}
         </ul>
       </div>
 
       <Button onClick={()=>setCreateMandateDialogue(true)}>Create mandate</Button>
+
+      <Dialog open={editMandateDialogue} onClose={()=>setEditMandateDialogue(false)}>
+
+        <DialogTitle>Editing mandate</DialogTitle>
+        <DialogContent>
+          <TextField
+            value={mandateDescription}
+            onChange={(e)=> setMandateDescription(e.target.value)}
+            />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={()=>{setMandateDescription('');setEditMandateDialogue(false)}}>Cancel</Button>
+          <Button onClick={handleUpdate}>Save</Button>
+        </DialogActions>
+
+      </Dialog>
 
       <Dialog open={createMandateDialogue} onClose={()=>setCreateMandateDialogue(false)}>
 
