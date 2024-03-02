@@ -89,13 +89,15 @@ const RoomMandates = ({ room }) => {
 
       <Button onClick={()=>setCreateMandateDialogue(true)}>Create mandate</Button>
 
-      <Dialog open={editMandateDialogue} onClose={()=>setEditMandateDialogue(false)}>
+      <Dialog open={editMandateDialogue} onClose={()=>setEditMandateDialogue(false)} fullWidth>
 
         <DialogTitle>Editing mandate</DialogTitle>
         <DialogContent>
           <TextField
             value={mandateDescription}
             onChange={(e)=> setMandateDescription(e.target.value)}
+            multiline
+            fullWidth
             />
         </DialogContent>
         <DialogActions>
@@ -105,13 +107,15 @@ const RoomMandates = ({ room }) => {
 
       </Dialog>
 
-      <Dialog open={createMandateDialogue} onClose={()=>setCreateMandateDialogue(false)}>
+      <Dialog open={createMandateDialogue} onClose={()=>setCreateMandateDialogue(false)} fullWidth>
 
         <DialogTitle>Create a new mandate for {room.name}</DialogTitle>
         <DialogContent>
           <TextField
             value={mandateDescription}
             onChange={(e) => setMandateDescription(e.target.value)}
+            multiline
+            fullWidth
           />
         </DialogContent>
 
