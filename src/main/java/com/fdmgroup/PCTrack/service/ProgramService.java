@@ -5,14 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.ProgramRepository;
+import com.fdmgroup.PCTrack.dal.SoftwareRepository;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.model.Software;
 
 @Service
 public class ProgramService {
+	private ProgramRepository softwareRepository;
 	private ProgramRepository programRepository;
 
-	public ProgramService(ProgramRepository programRepository) {
+	public ProgramService(ProgramRepository programRepository, SoftwareRepository softwareRepository) {
 		super();
+		this.softwareRepository = programRepository;
 		this.programRepository = programRepository;
 	}
 	
@@ -58,6 +62,19 @@ public class ProgramService {
 		
 		} else {
 			throw new RuntimeException("Program does not exist");
+		}
+	}
+
+	public void deleteBySoftwareId(int softwareId)
+	{
+		for (Program p : findAllPrograms()) {
+			int index = p.getSoftware().getSoftwareId();
+			if(index == softwareId) {
+				programRepository.deleteById(softwareId);
+			}
+			else {
+				throw new RuntimeException("Program does not exist");
+			}
 		}
 	}
 }

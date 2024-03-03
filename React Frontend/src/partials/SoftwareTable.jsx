@@ -43,9 +43,9 @@ export default function SoftwareTables({array}) {
         </TableHead>
         <TableBody>
           {array.map((row) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell align="left">{row.name}</StyledTableCell>
-              <StyledTableCell align="left">{row.versionNumber}</StyledTableCell>
+            <StyledTableRow key={row.programId}>
+              <StyledTableCell align="left">{row.software.name}</StyledTableCell>
+              <StyledTableCell align="left">{row.version}</StyledTableCell>
               <StyledTableCell align="right" component="th" scope="row">
                 {row.id}
                 edit

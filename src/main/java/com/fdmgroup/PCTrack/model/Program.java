@@ -4,44 +4,66 @@ import jakarta.persistence.*;
 
 @Entity
 public class Program {
-	@Id
-	@GeneratedValue
-	@Column(name = "ID")
-	private int programId;
-	@Column(name = "NAME")
-	private String name;
-	@Column(name = "VERSION NO.")
-	private String versionNumber;
+
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
+    private int programId;
+
+    @ManyToOne
+    @JoinColumn(name = "SOFTWARE_ID")
+    private Software software;
+
+    @Column(name = "VERSION")
+    private String version;
+
+	public Program(Software software, String version)
+	{
+		super();
+		this.software = software;
+		this.version = version;
+	}
 	
-	public Program(String name, String versionNumber) {
-		super();
-		this.name = name;
-		this.versionNumber = versionNumber;
-	}
-	public Program() {
+	public Program()
+	{
 		super();
 	}
-	public int getProgramId() {
+
+	public int getProgramId()
+	{
 		return programId;
 	}
-	public void setProgramId(int programId) {
+
+	public void setProgramId(int programId)
+	{
 		this.programId = programId;
 	}
-	public String getName() {
-		return name;
+
+	public Software getSoftware()
+	{
+		return software;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setSoftware(Software software)
+	{
+		this.software = software;
 	}
-	public String getVersionNumber() {
-		return versionNumber;
+
+	public String getVersion() {
+		return version;
 	}
-	public void setVersionNumber(String versionNumber) {
-		this.versionNumber = versionNumber;
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
+
 	@Override
-	public String toString() {
-		return "Program [programId=" + programId + ", name=" + name + ", versionNumber=" + versionNumber + "]";
+	public String toString()
+	{
+		return "Program [programId=" + programId + ", software=" + software + ", version=" + version + "]";
 	}
+
+    
+    
 }
 

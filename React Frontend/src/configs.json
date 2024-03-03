@@ -1,9 +1,5 @@
 {
     "NAME": "PCTrack",
     "PORT": 8181,
-    "LOCATIONS": [
-        "APAC",
-        "Hong Kong",
-        "Singapore"
-    ]
+    "MAX_PRECEDENCE" : 1
 }

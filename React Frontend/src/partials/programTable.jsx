@@ -31,7 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function ProgramTable({ array }) {
     return (
         <TableContainer component={Paper} sx={{ maxWidth: "70vw" }}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Table sx={{ minWidth: 600 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
                         <StyledTableCell align="left">Name</StyledTableCell>
@@ -41,8 +41,8 @@ export default function ProgramTable({ array }) {
                 <TableBody>
                     {array.map((row) => (
                         <StyledTableRow key={row.programId}>
-                            <StyledTableCell align="left">{row.name}</StyledTableCell>
-                            <StyledTableCell align="left">{row.versionNumber}</StyledTableCell>
+                            <StyledTableCell align="left">{row.software.name}</StyledTableCell>
+                            <StyledTableCell align="left">{row.version}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>

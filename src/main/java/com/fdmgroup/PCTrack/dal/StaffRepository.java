@@ -20,7 +20,7 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	List<Staff> findByUserId(@Param("userId") Integer userId);
 
 
-	@Query("SELECT r FROM Room r WHERE r.location.id IN (SELECT s.location.id FROM Staff s WHERE s.user.id = :userId AND (s.adminLevel like 'Location' OR s.adminLevel like 'Business'))")
+	@Query("SELECT r FROM Room r WHERE r.location.id IN (SELECT s.location.id FROM Staff s WHERE s.user.id = :userId AND (s.adminLevel.name like 'Location' OR s.adminLevel.name like 'Business'))")
 	List<Room> findRoomsStaffIsAdmin(@Param("userId") Integer userId);
 
 	Page<Staff> findAll(Pageable pageable);

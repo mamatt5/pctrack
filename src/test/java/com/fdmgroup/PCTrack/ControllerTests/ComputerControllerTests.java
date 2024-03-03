@@ -16,13 +16,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.controller.ComputerController;
-import com.fdmgroup.PCTrack.controller.LocationController;
 import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Location;
+import com.fdmgroup.PCTrack.model.Software;
 import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.ComputerService;
-import com.fdmgroup.PCTrack.service.LocationService;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +31,9 @@ public class ComputerControllerTests {
 	ComputerService computerService;
 	
 	ComputerController computerController;
+	Software vscodeProgram;
+	Software eclipseProgram;
+	Software nodejsProgram;
 	Program vscode;
 	Program eclipse;
 	Program nodejs;
@@ -44,9 +46,12 @@ public class ComputerControllerTests {
 	@BeforeEach
 	void setup() {
 		this.computerController = new ComputerController(computerService);
-		vscode = new Program("Visual Studio Code", "1.46.1");
-		eclipse = new Program("Eclipse", "4.22");
-		nodejs = new Program("Node.js", "20.11.0");
+		vscodeProgram = new Software("Visual Studio Code");
+		eclipseProgram = new Software("Eclipse");
+		nodejsProgram = new Software("Node.js");
+		vscode = new Program(vscodeProgram,"1.46.1");
+		eclipse = new Program(eclipseProgram,"4.22");
+		nodejs = new Program(nodejsProgram,"20.11.0");
 		location1 = new Location("FDM Sydney", "Sydney");
 		room1 = new Room("Bondi", location1);
 	    room2 = new Room("Coogee", location1);

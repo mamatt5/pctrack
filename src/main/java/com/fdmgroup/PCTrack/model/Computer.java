@@ -21,11 +21,11 @@ public class Computer {
 	joinColumns =
 	@JoinColumn(name = "FK_COMPUTER_ID"),
 	inverseJoinColumns =
-	@JoinColumn(name = "FK_PROGRAM_ID"))
+	@JoinColumn(name = "FK_PROGRAM_VERSION_ID"))
 	private List<Program> programList;
-	
 	@Column(name = "ready_for_role")
 	private String role;
+
 	
 	public Computer(int computerCode, List<Program> programList) {
 		super();
@@ -63,25 +63,19 @@ public class Computer {
 	{
 		this.computerCode = computerCode;
 	}
+	public List<Program> getProgramList() {
+		return programList;
+	}
+	public void setProgramList(List<Program> programList) {
+		this.programList = programList;
+		this.role = determineRole(this).name();
+	}
 	public Room getRoom() {
 		return room;
 	}
 	public void setRoom(Room room) {
 		this.room = room;
-	}
-	public List<Program> getProgramList() {
-		return programList;
-	}
-	
-	public void setProgramList(List<Program> programList) {
-		this.programList = programList;
-		this.role = determineRole(this).name();
-	}
-	
-	public String getRole() {
-		return role;
-	}
-	
+	}	
 	public int programIndex(int programId) {
 		for (int i = 0; i < programList.size(); i++) {
 			if (programList.get(i).getProgramId() == programId) {
@@ -90,7 +84,13 @@ public class Computer {
 		}
 		return -1;
 	}
-	
+
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public Role determineRole(Computer computer) {
 		boolean devReady = true;
 		boolean biReady = true;
@@ -109,7 +109,7 @@ public class Computer {
 			boolean programFound = false;
 			
 			for (Program computerProgram : computerPrograms) {
-				if (computerProgram.getName().matches(program)) {
+				if (computerProgram.getSoftware().getName().matches(program)) {
 					programFound = true;
 					break;
 				}
@@ -125,7 +125,7 @@ public class Computer {
 			boolean programFound = false;
 			
 			for (Program computerProgram : computerPrograms) {
-				if (computerProgram.getName().matches(program)) {
+				if (computerProgram.getSoftware().getName().matches(program)) {
 					programFound = true;
 					break;
 				}

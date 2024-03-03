@@ -10,6 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { OutlinedInput, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormControl } from "@mui/material";
+
 // outside to prevent reredner
 let username = "";
 let password = "";
@@ -124,11 +125,14 @@ const login = () => {
 					/>
 
 					<FormControl sx={{ m: 1 }} variant="outlined">
-						<InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+						<InputLabel htmlFor="outlined-adornment-password" error={Boolean(passwordError)}>
+							Password
+						</InputLabel>
 						<OutlinedInput
 							error={Boolean(passwordError)}
 							helperText={passwordError ? passwordError : ""}
 							name="password"
+							label="Password"
 							onChange={(e) => checkInput("password", e.target.value)}
 							type={showPassword ? "text" : "password"}
 							endAdornment={
@@ -143,9 +147,16 @@ const login = () => {
 									</IconButton>
 								</InputAdornment>
 							}
-							label="Password"
 						/>
 					</FormControl>
+					<Typography
+						variant="caption"
+						color="error"
+						sx={{ mt: 0, ml: 3, mr: 1, marginRight: "auto" }}
+					>
+						{passwordError ? passwordError : ""}
+					</Typography>
+
 					<Button
 						type="submit"
 						variant="contained"
