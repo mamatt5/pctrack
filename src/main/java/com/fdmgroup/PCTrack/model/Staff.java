@@ -71,7 +71,7 @@ public class Staff {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	@Override
+	@Override 
 	public String toString() {
 		return "Staff [staffId=" + staffId + ", user=" + user + ", location=" + location + "]";
 	}

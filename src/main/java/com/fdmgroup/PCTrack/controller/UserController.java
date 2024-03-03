@@ -27,17 +27,42 @@ public class UserController {
 	public List<User> getUsers() {
 		return userService.findAllUsers();
 	}
+	 
+	@GetMapping("usersEmail/{email}")
+	public User findByEmail(@PathVariable String email) {
+		return userService.findUserEmail(email);
+	}
 	
-	@GetMapping("searchUsers/{query}")
-	public List<User> getUsersPartial(@PathVariable String query) {
-		return userService.findAllUsersPartialMatch(query);
+	// pagination 
+	@GetMapping("userPage")
+	public List<User> getStaffPage(@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "10") int pageSize) {
+		return userService.getUserPage(pageNumber, pageSize).getContent();
+
+	}
+
+	@GetMapping("countUserPartial/{query}")
+	public long countUser(@PathVariable String query) {
+		return userService.userCountPartial(query);
+	} 
+	
+	
+	@GetMapping("countUser")
+	public long countStaff() {  
+		return userService.userCount();
+	}
+	
+	@GetMapping("searchUser/{query}")
+	public List<User> getStaffPartial(@PathVariable String query, @RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "10") int pageSize) {
+		return userService.findAllUsersPartialMatch(query, pageNumber, pageSize).getContent();
 	}
 	
 	@GetMapping("users/{userId}")
 	public User findById(@PathVariable int userId) {
 		return userService.findUserId(userId);
 	}
-	
+	 
 	@GetMapping("username/{username}")
 	public User findByUsername(@PathVariable String username) {
 		return userService.findByUsername(username);

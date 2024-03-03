@@ -28,7 +28,9 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	@Query("SELECT COUNT(s) FROM Staff s WHERE s.user.username LIKE %:query%")
 	long countByUsernameLike(String query);
 
-	@Query("SELECT s FROM Staff s WHERE s.user.username LIKE %:query%")
+	@Query("SELECT s FROM Staff s WHERE s.user.username LIKE :query%")
 	Page<Staff> findPartial(@Param("query") String query, Pageable pageable);
 
+	
+	
 }

@@ -23,11 +23,13 @@ public class UserDataLoader implements ApplicationRunner {
 	private ProgramService programVersionService;
 	private MandateService mandateService;
 	private AdminLevelService adminService;
+	private RoomAdminService roomAdminService;
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
 			AdminLevelService adminService, ComputerService computerService, SoftwareService programService,
-			RoomService roomService, MandateService mandateService, ProgramService programVersionService)
+			RoomService roomService, MandateService mandateService, ProgramService programVersionService,
+			RoomAdminService roomAdminService)
 
 	{
 		super();
@@ -40,6 +42,7 @@ public class UserDataLoader implements ApplicationRunner {
 		this.mandateService = mandateService;
 		this.adminService = adminService;
 		this.programVersionService = programVersionService;
+		this.roomAdminService = roomAdminService;
 	}
 
 	@Override
@@ -68,7 +71,7 @@ public class UserDataLoader implements ApplicationRunner {
 
 		for (AdminLevel adminLevel : adminLevels) {
 			adminService.save(adminLevel);
-		}
+		} 
 
 		// Rooms
 		Room room1 = new Room("Bondi", location1);
@@ -933,48 +936,79 @@ public class UserDataLoader implements ApplicationRunner {
 		computerService.update(c147);
 
 		// no need to manuualy add date
-		User u0 = new User("admin1", "0000!!", "Root", "Admin");
-		User u1 = new User("andy.joe", "password123", "Andy", "Joe");
-		User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian");
-		User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion");
-		User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
+		User u0 = new User("admin", "0000!!", "Root1", "Admin", "admin1@example.com");
+		User u00 = new User("admin1", "0000!!", "Root", "Admin", "admin@example.com");
+		User u1 = new User("andy.joe", "password123", "Andy", "Joe", "andy.joe@example.com");
+		User u2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", "ahri.foxian@example.com");
+		User u3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", "aatrox.damion@example.com");
+		User u4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
 
-		User u5 = new User("roomadmin", "0000!!", "Room", "admin", LocalDate.of(2023, 11, 27));
-		User u6 = new User("baron.nashor", "password123", "Baron", "Nashor", LocalDate.of(2023, 11, 27));
-		User u7 = new User("darwin.norman", "password123", "Darwin", "Norman", LocalDate.of(2023, 11, 27));
-		User u8 = new User("camden.leonard", "password123", "Camden", "Leonard", LocalDate.of(2023, 11, 27));
-		User u9 = new User("quincy.jarvis", "password123", "Quincy", "Jarvis", LocalDate.of(2023, 11, 27));
-		User u10 = new User("chaim.harrison", "password123", "Chaim", "Harrison", LocalDate.of(2023, 11, 27));
+		User u5 = new User("roomadmin", "0000!!", "Room", "admin", LocalDate.of(2023, 11, 27), "roomadmin@example.com");
+		User u6 = new User("baron.nashor", "password123", "Baron", "Nashor", LocalDate.of(2023, 11, 27),
+				"baron.nashor@example.com");
+		User u7 = new User("darwin.norman", "password123", "Darwin", "Norman", LocalDate.of(2016, 11, 27),
+				"darwin.norman@example.com");
+		User u8 = new User("camden.leonard", "password123", "Camden", "Leonard", LocalDate.of(2023, 11, 27),
+				"camden.leonard@example.com");
+		User u9 = new User("quincy.jarvis", "password123", "Quincy", "Jarvis", LocalDate.of(2023, 11, 27),
+				"quincy.jarvis@example.com");
+		User u10 = new User("chaim.harrison", "password123", "Chaim", "Harrison", LocalDate.of(2023, 11, 27),
+				"chaim.harrison@example.com");
 
-		User u11 = new User("ryan.wilson", "password123", "Ryan", "Wilson", LocalDate.of(2023, 11, 27));
-		User u12 = new User("tejasva.saboo", "password123", "Tejasva", "Saboo", LocalDate.of(2023, 11, 27));
-		User u13 = new User("donald.witcombe", "password123", "Donald", "Witcombe", LocalDate.of(2023, 11, 27));
-		User u14 = new User("flor.crencic", "password123", "Florencia", "Crencic", LocalDate.of(2023, 11, 27));
-		User u15 = new User("james.mccarthy", "password123", "James", "McCarthy", LocalDate.of(2023, 11, 27));
-		User u16 = new User("dan.solomon", "password123", "Dan", "Solomon", LocalDate.of(2023, 11, 27));
-		User u17 = new User("chris.spencer", "password123", "Chris", "Spencer", LocalDate.of(2023, 11, 27));
-		User u18 = new User("carolina.portugal", "password123", "Carolina", "Portugal", LocalDate.of(2023, 11, 27));
-		User u19 = new User("alex.zlatevska", "password123", "Aleksandra", "Zlatevska", LocalDate.of(2023, 11, 27));
-		User u20 = new User("joe.mclaren", "password123", "Joe", "Mclaren", LocalDate.of(2023, 11, 27));
+		User u11 = new User("ryan.wilson", "password123", "Ryan", "Wilson", LocalDate.of(2023, 11, 27),
+				"ryan.wilson@example.com");
+		User u12 = new User("tejasva.saboo", "password123", "Tejasva", "Saboo", LocalDate.of(2021, 11, 27),
+				"tejasva.saboo@example.com");
+		User u13 = new User("donald.witcombe", "password123", "Donald", "Witcombe", LocalDate.of(2023, 11, 27),
+				"donald.witcombe@example.com");
+		User u14 = new User("flor.crencic", "password123", "Florencia", "Crencic", LocalDate.of(2023, 11, 27),
+				"flor.crencic@example.com");
+		User u15 = new User("james.mccarthy", "password123", "James", "McCarthy", LocalDate.of(2023, 11, 27),
+				"james.mccarthy@example.com");
+		User u16 = new User("dan.solomon", "password123", "Dan", "Solomon", LocalDate.of(2022, 11, 27),
+				"dan.solomon@example.com");
+		User u17 = new User("chris.spencer", "password123", "Chris", "Spencer", LocalDate.of(2023, 11, 27),
+				"chris.spencer@example.com");
+		User u18 = new User("carolina.portugal", "password123", "Carolina", "Portugal", LocalDate.of(2023, 11, 27),
+				"carolina.portugal@example.com");
+		User u19 = new User("alex.zlatevska", "password123", "Aleksandra", "Zlatevska", LocalDate.of(2023, 11, 27),
+				"alex.zlatevska@example.com");
+		User u20 = new User("joe.mclaren", "password123", "Joe", "Mclaren", LocalDate.of(2023, 10, 20),
+				"joe.mclaren@example.com");
 
-		List<User> users = Arrays.asList(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17,
-				u18, u19, u20);
+		List<User> users = Arrays.asList(u0, u00, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16,
+				u17, u18, u19, u20);
 
 		for (User user : users) {
 			userService.register(user);
 		}
 
+		// username: admin (u00)
+		// password: 0000 !!
+		// location, business and room admins in diff locations
+
 		// Business admin
-		BusinessAdmin businessAdmin = new BusinessAdmin(Business, u0, location1);
+		BusinessAdmin businessAdmin0 = new BusinessAdmin(Business, u0, location1);
+		BusinessAdmin businessAdmin = new BusinessAdmin(Business, u0, location2);
+		BusinessAdmin businessAdmin1 = new BusinessAdmin(Business, u00, location1);
+//		BusinessAdmin businessAdmin2 = new BusinessAdmin(Business, u00, location2);
+//		BusinessAdmin businessAdmin3 = new BusinessAdmin(Business, u00, location3);
+		staffService.save(businessAdmin0);
 		staffService.save(businessAdmin);
+		staffService.save(businessAdmin1);
+//		staffService.save(businessAdmin2);
+//		staffService.save(businessAdmin3);
 
 		// Location admin
+		LocationAdmin locationAdmin0 = new LocationAdmin(Location, u00, location2);
 		LocationAdmin locationAdmin1 = new LocationAdmin(Location, u20, location1);
 		LocationAdmin locationAdmin2 = new LocationAdmin(Location, u1, location1);
 		LocationAdmin locationAdmin3 = new LocationAdmin(Location, u2, location2);
 		LocationAdmin locationAdmin4 = new LocationAdmin(Location, u3, location2);
 		LocationAdmin locationAdmin5 = new LocationAdmin(Location, u4, location3);
 
+		staffService.save(locationAdmin0);
 		staffService.save(locationAdmin1);
 		staffService.save(locationAdmin2);
 		staffService.save(locationAdmin3);
@@ -982,17 +1016,19 @@ public class UserDataLoader implements ApplicationRunner {
 		staffService.save(locationAdmin5);
 
 		// Room admin
-		RoomAdmin roomAdmin1 = new RoomAdmin(Room, u5, location1);
+		RoomAdmin roomAdmin0 = new RoomAdmin(Room, u00, location3, Arrays.asList(room10, room11));
+		RoomAdmin roomAdmin1 = new RoomAdmin(Room, u5, location1, Arrays.asList(room1, room2));
 		RoomAdmin roomAdmin2 = new RoomAdmin(Room, u6, location1);
 		RoomAdmin roomAdmin3 = new RoomAdmin(Room, u7, location2);
 		RoomAdmin roomAdmin4 = new RoomAdmin(Room, u8, location3);
 		RoomAdmin roomAdmin5 = new RoomAdmin(Room, u9, location3);
 
-		staffService.save(roomAdmin1);
-		staffService.save(roomAdmin2);
-		staffService.save(roomAdmin3);
-		staffService.save(roomAdmin4);
-		staffService.save(roomAdmin5);
+		roomAdminService.save(roomAdmin0);
+		roomAdminService.save(roomAdmin1);
+		roomAdminService.save(roomAdmin2);
+		roomAdminService.save(roomAdmin3);
+		roomAdminService.save(roomAdmin4);
+		roomAdminService.save(roomAdmin5);
 
 		// Staff
 		Staff staff1 = new Staff(User, u10, location1);
@@ -1001,6 +1037,9 @@ public class UserDataLoader implements ApplicationRunner {
 		Staff staff4 = new Staff(User, u14, location1);
 		Staff staff5 = new Staff(User, u15, location1);
 		Staff staff6 = new Staff(User, u16, location1);
+		Staff staff7 = new Staff(User, u17, location1);
+		Staff staff8 = new Staff(User, u18, location1);
+		Staff staff9 = new Staff(User, u19, location1);
 
 		staffService.save(staff1);
 		staffService.save(staff2);
@@ -1008,6 +1047,9 @@ public class UserDataLoader implements ApplicationRunner {
 		staffService.save(staff4);
 		staffService.save(staff5);
 		staffService.save(staff6);
+//		staffService.save(staff7);
+//		staffService.save(staff8);
+//		staffService.save(staff9);
 
 		// Mandate
 		String mandate1Desc = "We need 10 DEV-ready computers.";
