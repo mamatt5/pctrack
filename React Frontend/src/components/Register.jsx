@@ -244,7 +244,7 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 					sx={{ margin: "0.5rem" }}
 				/>
 
-				<Box className="flexRow" sx={{ margin: "0.5rem" }} >
+				<Box sx={{ margin: "0.5rem" }} >
 					{MultipleSelect(
 						locations,
 						"city",
