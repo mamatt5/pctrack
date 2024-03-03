@@ -1,5 +1,6 @@
 package com.fdmgroup.PCTrack.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.DiscriminatorValue;
@@ -23,9 +24,15 @@ public class RoomAdmin extends Staff {
 	
 	public RoomAdmin(AdminLevel admin, User user, Location location) {
 		super(admin, user, location);
+		this.roomAssigned = new ArrayList<>();
+
 
 	}
 
+	public RoomAdmin(AdminLevel admin, User user, Location location, List<Room> rooms) {
+		super(admin, user, location);
+		this.roomAssigned = rooms;
+	}
 	
 	public List<Room> getRoomAssigned() {
 		return roomAssigned;

@@ -29,8 +29,10 @@ public class User {
 	@Column(name = "LAST NAME")
 	private String lastName;
 	
+	@Column(name = "EMAIL", unique = true)
+	private String email;
+	
 	@Column(name = "JOIN DATE")
-	@CreationTimestamp
 	private LocalDate joinDate;
 	
 	@JsonIgnore
@@ -39,22 +41,33 @@ public class User {
 	
 	
 	
-	public User(String username, String password, String firstName, String lastName) {
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public User(String username, String password, String firstName, String lastName, String email) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email= email;
+		this.joinDate = LocalDate.now(); 
 		this.roles = new ArrayList<>();
 	}
 	
-	public User(String username, String password, String firstName, String lastName, LocalDate joinDate) {
+	public User(String username, String password, String firstName, String lastName, LocalDate joinDate, String email) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.joinDate = joinDate;
+		this.email= email;
 		this.roles = new ArrayList<>();
 	}
 	public User() {

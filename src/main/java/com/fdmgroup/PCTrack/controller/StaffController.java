@@ -69,5 +69,11 @@ public class StaffController {
 	public List<Room> findRoomsWhereStaffIsAdmin(@PathVariable int userId) {
 		return staffService.getRoomsStaffIsAdmin(userId);
 	}
+	
+	@DeleteMapping("staff/{id}")
+	public void deleteRoom(@PathVariable int id) {
+		staffService.deleteById(id);
+	}
+	
 
-}
+} 
