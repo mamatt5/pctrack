@@ -8,97 +8,133 @@ import Checkbox from "@mui/material/Checkbox";
 import { Divider, Typography } from "@mui/material";
 import callApi from "../api/callApi";
 import { useEffect } from "react";
-
-const fields = ["firstName", "lastName", "password"];
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import { RegisterLocation } from "../partials/ManagePermission";
+import { MultipleSelect } from "../partials/CheckBoxDropDowns";
+// const fields = ["firstName", "lastName", "password", "email"];
 let formData = {
 	firstName: "",
 	lastName: "",
 	password: "",
+	email: "",
 };
-let updatedCheckedValues = {};
+// let updatedCheckedValues = {};
 
 const getUsername = (users, first, last) => {
 	console.log(users);
-	let count = 0;
+	console.log(first, last);
 	const expectedUsername = `${first}.${last}`;
-	for (let user of users) {
-		console.log(user.username);
-		if (user.username.startsWith(expectedUsername)) count++;
-	}
-
-	if (count === 0) return expectedUsername;
-	return `${first}.${last}${count}`;
+	if (users.length === 0) return expectedUsername;
+	let count = users.length;
+	return `${expectedUsername}${count}`;
 };
 
-const getLocations = (setLocations) => {
-	const config = {
-		method: "get",
-		endpoint: "locations",
-	};
-	callApi(
-		(locations) => {
-			setLocations(locations);
-		},
-		null,
-		config
+export const RegisterModal = ({ openModal, setOpenModal, locations, adminLevels, setChange }) => {
+	return (
+		<>
+			<Modal
+				open={openModal}
+				onClose={() => setOpenModal(false)}
+				closeAfterTransition
+				aria-labelledby="register modal"
+				aria-describedby="opens a modal to register a user"
+				sx={{
+					"& .MuiBackdrop-root": {
+						backgroundColor: "rgba(0, 0, 0, 0.2)", // Adjust opacity here (0.5 for 50% darkness)
+					},
+				}}
+			>
+				<Fade in={openModal}>
+					<Box
+						sx={{
+							position: "absolute",
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+							backgroundColor: "white",
+							borderRadius: 3,
+							width: "70vw",
+							maxWidth: 600,
+
+							borderRadius: "5px",
+							p: 4,
+						}}
+					>
+						<Register
+							setOpenModal={setOpenModal}
+							locations={locations}
+							adminLevels={adminLevels}
+							setChange={setChange}
+						/>
+					</Box>
+				</Fade>
+			</Modal>
+		</>
 	);
 };
-
-const Register = ({ users, setOpenModal }) => {
-	console.log(users);
-	const [locations, setLocations] = useState([]);
+let selectedOptions = []
+const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 	const [firstNameErr, setFirstNameErr] = useState("");
 	const [lastNameErr, setLastNameErr] = useState("");
 	const [passwordErr, setPasswordError] = useState("");
+	const [emailErr, setEmailErr] = useState("");
 	const [formValid, setFormValid] = useState(false);
-	const [checkedValues, setCheckedValues] = useState({});
+	const lowestAdminLevel = adminLevels.reduce((prev, curr) =>
+		prev.precedence < curr.precedence ? curr : prev
+	);
 
-	// Getting locatiosn
-
-	useEffect(() => {
-		getLocations(setLocations);
-
-		let locs = {};
-		locations.forEach((location) => {
-			locs[location.city] = false;
-		});
-		setCheckedValues(locs);
-	}, []);
 
 	// checks if all fields are filled
 	const isFormValid = () => {
 		const textInputsNotFilled = Object.values(formData).some((value) => value === "");
 		console.log(textInputsNotFilled);
 		if (textInputsNotFilled) return false;
-
-		// const obj = { a: 1, b: 2, c: 3 };
-		// console.log(Object.values(obj)); // Output: [1, 2, 3]
-
-		console.log(updatedCheckedValues);
-		const atLeastOneChecked = Object.values(updatedCheckedValues).some((value) => value === true);
-
-		if (!atLeastOneChecked) return false;
+		console.log(selectedOptions)
+		if (selectedOptions.length === 0 ) return false;
 		return true;
 	};
 
-	const checkRegister = (e) => {
+	const checkEmailExists = (e) => {
 		e.preventDefault();
 		const data = new FormData(e.currentTarget);
+		const email = new FormData(e.currentTarget).get("email").trim();
+		const config = {
+			method: "get",
+			endpoint: `usersEmail/${email}`,
+		};
+		console.log(email);
+		callApi(
+			() => checkRegister(data, true),
+			() => checkRegister(data, false),
+			config
+		);
+	};
+
+	const checkRegister = (data, emailExists) => {
 		console.log(data);
 		const firstName = data.get("firstName").trim();
 		const lastName = data.get("lastName").trim();
 		const password = data.get("password").trim();
+		const email = data.get("email").trim();
 
-		// assume that every user must then be made into a staff
+		// assume that every user must then be made into a x
 		// as a result, register will create a new user, and then make then a staff.
 		// same username and laste name simply adds 1
-
 		// Count the number of special characters
+
 		const hasTwoSpecialChars = () => {
 			const specialChars = password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || [];
 			return specialChars.length >= 2;
 		};
-		if (!/^[a-zA-Z]+$/.test(firstName)) {
+
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+			setEmailErr("Invalid Email format");
+		} else if (emailExists) {
+			setEmailErr(
+				'This user already exists. Toggle on "Users" if you wish to register them to a new location'
+			);
+		} else if (!/^[a-zA-Z]+$/.test(firstName)) {
 			setFirstNameErr("Name must only contain characters");
 		} else if (!/^[a-zA-Z]+$/.test(lastName)) {
 			setLastNameErr("Name must only contain characters");
@@ -107,57 +143,41 @@ const Register = ({ users, setOpenModal }) => {
 		} else if (!hasTwoSpecialChars()) {
 			setPasswordError("Password must have 2 or more special characters");
 		} else {
-			const username = getUsername(users, firstName, lastName);
-			console.log(username);
-
 			const config = {
-				method: "post",
-				endpoint: "users",
-				data: {
-					username: username,
-					password: password,
-					firstName: firstName,
-					lastName: lastName,
-				},
+				method: "get",
+				endpoint: `searchUser/${firstName}.${lastName}`,
 			};
-			console.log("hueh");
-			callApi(createStaff, null, config);
+
+			callApi(createUser, null, config, firstName, lastName, password, email);
 		}
 	};
 
+	const createUser = (users, firstName, lastName, password, email) => {
+		console.log(users, firstName, lastName);
+		const username = getUsername(users, firstName, lastName);
+		console.log(username);
+		const currentDate = new Date();
+		const config = {
+			method: "post",
+			endpoint: "users",
+			data: {
+				username: username,
+				password: password,
+				firstName: firstName,
+				lastName: lastName,
+				email: email,
+				joinDate: currentDate.toISOString().split("T")[0],
+			},
+		};
+
+		callApi(createStaff, null, config);
+	};
+
 	const createStaff = (data) => {
-		console.log(checkedValues);
-		console.log("huseh");
 		console.log(data);
-
-		// make new staff for each ticked location
-
-		Object.entries(checkedValues).forEach(([city, checked]) => {
-			console.log(city, checked);
-			let id = locations.find((location) => location.city === city).locationId;
-			console.log(id);
-			const config = {
-				method: "post",
-				endpoint: "staff",
-				data: {
-					user: {
-						userId: data.userId,
-					},
-					location: {
-						locationId: id,
-					},
-					adminLevel: null,
-				},
-			};
-
-			callApi(
-				() => {
-					setOpenModal(false);
-				},
-				null,
-				config
-			);
-		});
+		const userid = data.userId;
+		const adminid = lowestAdminLevel.id;
+		RegisterLocation(selectedOptions, userid, adminid, setOpenModal, setChange)
 	};
 
 	// checklist
@@ -165,6 +185,7 @@ const Register = ({ users, setOpenModal }) => {
 		setFirstNameErr("");
 		setLastNameErr("");
 		setPasswordError("");
+		setEmailErr("");
 
 		console.log(value, field);
 		formData = { ...formData, [field]: value };
@@ -172,82 +193,74 @@ const Register = ({ users, setOpenModal }) => {
 		setFormValid(isFormValid());
 	};
 
-	const handleCheck = (event) => {
-		setCheckedValues({
-			...checkedValues,
-			[event.target.name]: event.target.checked,
-		});
-		console.log(checkedValues);
-		updatedCheckedValues = { ...checkedValues, [event.target.name]: event.target.checked };
-		console.log(updatedCheckedValues);
-
+	const handleCheck = (value) => {
+		console.log(value)
+		selectedOptions = value
 		setFormValid(isFormValid());
 	};
 
 	//
 
-	console.log(checkedValues);
-	return (
-		<>
-			<Box sx={{ width: "95%", padding:"1.5rem" }}>
-				<Box>
-					<Typography variant="h5" >
-						Register a user
-					</Typography>
-				</Box>
-				<Divider  sx={{ margin:"1rem 0 1rem 0"}} />
-				<form onSubmit={checkRegister} className="flexCol">
-					<TextField
-					size="medium"
-						name="firstName"
-						label="Given Name"
-						error={Boolean(firstNameErr)}
-						helperText={firstNameErr ? firstNameErr : ""}
-						onChange={(e) => checkInput("firstName", e.target.value)}
-						sx={{ margin: "0.5rem" }}
-					/>
-					<TextField
-						name="lastName"
-						label="Family Name"
-						error={Boolean(lastNameErr)}
-						helperText={lastNameErr ? lastNameErr : ""}
-						onChange={(e) => checkInput("lastName", e.target.value)}
-						sx={{ margin: "0.5rem" }}
-					/>
-					<TextField
-						name="password"
-						label="Password"
-						error={Boolean(passwordErr)}
-						helperText={passwordErr ? passwordErr : ""}
-						onChange={(e) => checkInput("password", e.target.value)}
-						sx={{ margin: "0.5rem" }}
-					/>
-
-					<Typography variant="subtitle1">Office</Typography>
-					<Box className="flexRow" sx={{ alignItems: "center", paddingLeft: "2rem" }}>
-						<FormGroup>
-							{locations.map((item) => (
-								<FormControlLabel
-									control={
-										<Checkbox
-											checked={checkedValues.APAC}
-											onChange={handleCheck}
-											name={item.city}
-										/>
-									}
-									label={item.city}
-								/>
-							))}
-						</FormGroup>
-					</Box>
-					<Box className="centerHorizonal">
-						<Button type="submit" variant="contained" disabled={!formValid} onClick={() => {}}>
-							Register
-						</Button>
-					</Box>
-				</form>
+	// console.log(checkedValues);
+	return locations.length === 0 ? null : (
+		<Box sx={{ width: "95%", padding: "1.5rem" }}>
+			<Box>
+				<Typography variant="h4">Register a user</Typography>
 			</Box>
-		</>
+			<Divider sx={{ margin: "1rem 0 1rem 0" }} />
+			<form onSubmit={checkEmailExists} className="flexCol">
+				<TextField
+					size="medium"
+					name="firstName"
+					label="Given Name"
+					error={Boolean(firstNameErr)}
+					helperText={firstNameErr ? firstNameErr : ""}
+					onChange={(e) => checkInput("firstName", e.target.value)}
+					sx={{ margin: "0.5rem" }}
+				/>
+				<TextField
+					name="lastName"
+					label="Family Name"
+					error={Boolean(lastNameErr)}
+					helperText={lastNameErr ? lastNameErr : ""}
+					onChange={(e) => checkInput("lastName", e.target.value)}
+					sx={{ margin: "0.5rem" }}
+				/>
+
+				<TextField
+					name="email"
+					label="Email"
+					error={Boolean(emailErr)}
+					helperText={emailErr ? emailErr : ""}
+					onChange={(e) => checkInput("email", e.target.value)}
+					sx={{ margin: "0.5rem" }}
+				/>
+				<TextField
+					name="password"
+					label="Password"
+					error={Boolean(passwordErr)}
+					helperText={passwordErr ? passwordErr : ""}
+					onChange={(e) => checkInput("password", e.target.value)}
+					sx={{ margin: "0.5rem" }}
+				/>
+
+				<Box className="flexRow" sx={{ margin: "0.5rem" }} >
+					{MultipleSelect(
+						locations,
+						"city",
+						"Locations",
+						"Add Locations",
+						true,
+						handleCheck
+					)}
+				</Box>
+				<Box className="centerHorizonal">
+					<Button type="submit" variant="contained" disabled={!formValid} sx={{marginTop:"2rem"}}>
+						Register
+					</Button>
+				</Box>
+			</form>
+		</Box>
 	);
 };
 
