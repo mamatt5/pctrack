@@ -38,7 +38,7 @@ const createStaff = (funct, id, locId, adminLevel) => {
 		endpoint: "staff",
 		data: {
 			user: {
-				userId: staffId,
+				userId: id,
 			},
 			location: {
 				locationId: locId,

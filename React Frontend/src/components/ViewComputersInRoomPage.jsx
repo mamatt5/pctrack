@@ -45,7 +45,7 @@ const ViewComputersInRoomPage = (props) => {
 
         <Box style={{ position: 'flex' }}>
         <h1> You are now viewing room {room["name"]}</h1>
-        <Button onClick={()=> handleMandatesModal(true)}>View Mandates</Button>
+        <Button variant="contained" onClick={()=> handleMandatesModal(true)}>View Mandates</Button>
         </Box>
 
       </Box>
@@ -60,7 +60,7 @@ const ViewComputersInRoomPage = (props) => {
       <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}} marginTop={10}>
         
         
-          <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={4}>
+          <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={5}>
 
               <Grid item xs={12} >
                 <Grid container justifyContent="center" spacing={5} >
