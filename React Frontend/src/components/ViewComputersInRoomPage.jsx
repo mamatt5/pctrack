@@ -50,7 +50,7 @@ const ViewComputersInRoomPage = (props) => {
 
       </Box>
 
-      <Dialog open={mandatesModal} onClose={() => handleMandatesModal(false)} fullWidth>
+      <Dialog open={mandatesModal} onClose={() => handleMandatesModal(false)} fullWidth maxWidth="xl">
         <DialogContent>
             <RoomMandates room={room} />
         </DialogContent>
