@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,16 +34,20 @@ public class RoomAdminController {
 	@GetMapping("getRoomAdminRooms/{staffId}")
 	public List<Room> getRoomsOfRoomAdmin(@PathVariable int staffId) {
 		return roomAdminService.getRooms(staffId);
-	}
+	} 
 	
 	@PutMapping("editRoomAdmin/{staffId}")
 	public RoomAdmin findRoomsWhereStaffIsAdmin(@PathVariable int staffId, @RequestBody RoomAdmin admin) {
 		roomAdminService.update(admin); 
 		return roomAdminService.getRoomAdminById(admin.getStaffId());
-		 
+		     
 	}
-
 	
-	
-	
+	@PostMapping("createRoomAdmin")
+	public void findRoomsWhereStaffIsAdmin(@RequestBody RoomAdmin staff) {
+		roomAdminService.save(staff);
+		     
+	}
+  	   
+	 
 }

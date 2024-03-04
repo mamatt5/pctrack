@@ -70,9 +70,9 @@ public class StaffController {
 		return staffService.getRoomsStaffIsAdmin(userId);
 	}
 	
-	@DeleteMapping("staff/{id}")
-	public void deleteRoom(@PathVariable int id) {
-		staffService.deleteById(id);
+	@DeleteMapping("staff/{staffid}")
+	public void deleteStaff(@PathVariable int staffid) {
+		staffService.deleteById(staffid);
 	}
 	
 
