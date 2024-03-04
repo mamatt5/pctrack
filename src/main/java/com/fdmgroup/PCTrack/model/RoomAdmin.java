@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -12,7 +13,7 @@ import jakarta.persistence.OneToMany;
 public class RoomAdmin extends Staff {
 	
 	// Ask floor if she manages all rooms or multiple admins can manage one room
-	@OneToMany
+	@ManyToMany
 	private List<Room> roomAssigned;
 	
 	
@@ -32,7 +33,7 @@ public class RoomAdmin extends Staff {
 	public RoomAdmin(AdminLevel admin, User user, Location location, List<Room> rooms) {
 		super(admin, user, location);
 		this.roomAssigned = rooms;
-	}
+	} 
 	
 	public List<Room> getRoomAssigned() {
 		return roomAssigned;
@@ -47,15 +48,15 @@ public class RoomAdmin extends Staff {
 		
 	}
 	
-	public void addComputer(Computer computer, Room room) {
+	public void addComputer(Computer computer, Room room) {  
 		
-	}
+	} 
 	
 	public void addRoomAssigned(Room room) {
 		
 	}
 	
-	public void removeRoomAssigned(Room room) {
+	public void removeRoomAssigned(Room room) { 
 		
 	}
 
