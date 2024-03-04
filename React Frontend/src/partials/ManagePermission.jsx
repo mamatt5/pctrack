@@ -24,6 +24,7 @@ const getRoomsAtLocation = (setRooms, locationId) => {
 };
 
 const deleteStaff = (funct, staffId) => {
+	console.log(staffId);
 	const config = {
 		method: "delete",
 		endpoint: `staff/${staffId}`,
@@ -33,13 +34,14 @@ const deleteStaff = (funct, staffId) => {
 };
 
 // for all staff but room admin
-const createStaff = (funct, id, locId, adminLevel) => {
+const createStaff = (funct, userId, locId, adminLevel) => {
+	console.log(adminLevel, "admin level!!!! ");
 	const config = {
-		method: "delete",
+		method: "post",
 		endpoint: "staff",
 		data: {
 			user: {
-				userId: staffId,
+				userId: userId,
 			},
 			location: {
 				locationId: locId,
@@ -54,13 +56,13 @@ const createStaff = (funct, id, locId, adminLevel) => {
 };
 
 // for all staff
-const createRoomAdmin = (funct, id, locId, adminLevel, roomsArray) => {
+const createRoomAdmin = (funct, userId, locId, adminLevel, roomsArray) => {
 	const config = {
-		method: "delete",
-		endpoint: "staff",
+		method: "post",
+		endpoint: "createRoomAdmin",
 		data: {
 			user: {
-				userId: staffId,
+				userId: userId,
 			},
 			location: {
 				locationId: locId,
@@ -365,11 +367,11 @@ const PermissonModal = ({ openModal, setOpenModal, staff, adminLevels, admin, se
 // the staff is NOT us, is the staff were edting!!!
 const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 	const [permission, setPermission] = useState("");
-    const [adminRooms, setAdminRooms] = useState([]);
+	const [adminRooms, setAdminRooms] = useState([]);
 	const [selectedRooms, setSelectedRoom] = useState(adminRooms);
 	const [rooms, setRoom] = useState([]);
 
-
+	let newAdminId = "";
 
 	// disable the submite button if the different ice the same as before
 	const roomSelectedDifference =
@@ -382,11 +384,12 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 		getRoomsOfAdmin(setAdminRooms, staff.staffId);
 	}, []);
 
-    useEffect(() => {
-		setSelectedRoom(adminRooms)
+	useEffect(() => {
+		setSelectedRoom(adminRooms);
 	}, [adminRooms]);
 
-	console.log(selectedRooms);
+	console.log(adminLevels);
+	console.log(adminLevels.find((role) => role.name === "Business")?.id);
 	console.log(adminRooms);
 	console.log(roomSelectedDifference);
 
@@ -469,21 +472,68 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 			<Button
 				variant="contained"
 				// disabled if permissions == room and new permissions == room and the room isnt changed
-				disabled={permission === "" || roomSelectedDifference.length === 0}
+				disabled={
+					permission === "" ||
+					(staff.adminLevel.name === "Room" &&
+						permission === "Room" &&
+						roomSelectedDifference.length === 0)
+				}
 				sx={{ position: "absolute", bottom: 0, right: 0, margin: "2rem", width: "15%" }}
 				onClick={() => {
-					permission === "Room"
-						? //(funct, userId, STAFFid, locId, adminLevel, roomsArray)
-						  editRoomAdmin(
-								() => (setOpenModal(false), setChange((i) => !i)),
-								staff.user.userId,
-								staff.staffId,
-								staff.location.locationId,
-								staff.adminLevel.id,
-								selectedRooms
-						  )
-						: (deleteStaff(), createStaff());
-				}}
+                    if (permission === "Room" && staff.adminLevel.name === "Room") {
+                        editRoomAdmin(
+                            () => {
+                                setOpenModal(false);
+                                setChange((i) => !i);
+                            },
+                            staff.user.userId,
+                            staff.staffId,
+                            staff.location.locationId,
+                            staff.adminLevel.id,
+                            selectedRooms
+                        );
+                    } else if (permission === "none") {
+                        console.log("HIHIHHIHI");
+                        deleteStaff(() => {}, staff.staffId);
+                        createStaff(
+                            () => {
+                                setOpenModal(false);
+                                setChange((i) => !i);
+                            },
+                            staff.user.userId,
+                            staff.location.locationId,
+                            adminLevels.find((role) => role.name === "")?.id
+                        );
+                    } else if (permission === "Room") {
+                        console.log("OH NONOONO");
+                        deleteStaff(() => {}, staff.staffId);
+
+                        createRoomAdmin(
+                            () => {
+                                setOpenModal(false);
+                                setChange((i) => !i);
+                            },
+                            staff.user.userId,
+                            staff.location.locationId,
+                            adminLevels.find((role) => role.name === permission)?.id,
+                            selectedRooms
+                        );
+                    } else {
+                        console.log(permission);
+                        console.log("YUIKESSSSS");
+                        deleteStaff(() => {}, staff.staffId);
+                        createStaff(
+                            () => {
+                                setOpenModal(false);
+                                setChange((i) => !i);
+                            },
+                            staff.user.userId,
+                            staff.location.locationId,
+                            adminLevels.find((role) => role.name === permission)?.id
+                        );
+                    }
+                }}
+
 			>
 				Submit
 			</Button>

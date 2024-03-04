@@ -33,7 +33,7 @@ public class RoomAdmin extends Staff {
 	public RoomAdmin(AdminLevel admin, User user, Location location, List<Room> rooms) {
 		super(admin, user, location);
 		this.roomAssigned = rooms;
-	}
+	} 
 	
 	public List<Room> getRoomAssigned() {
 		return roomAssigned;
@@ -50,13 +50,13 @@ public class RoomAdmin extends Staff {
 	
 	public void addComputer(Computer computer, Room room) {  
 		
-	}
+	} 
 	
 	public void addRoomAssigned(Room room) {
 		
 	}
 	
-	public void removeRoomAssigned(Room room) {
+	public void removeRoomAssigned(Room room) { 
 		
 	}
 
