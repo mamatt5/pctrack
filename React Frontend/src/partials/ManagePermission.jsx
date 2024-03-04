@@ -10,7 +10,7 @@ import Config from "../configs.json";
 import { MultipleSelect } from "./CheckBoxDropDowns";
 import { getAdminsLevels } from "../components/Admin";
 import { TextField } from "@mui/material";
-
+import { subtractArrays } from "../helpers/helperFunctions";
 const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
 const MIN_PRECEDENCE = Config.MIN_PRECEDENCE;
 
@@ -32,6 +32,7 @@ const deleteStaff = (funct, staffId) => {
 	callApi(funct, null, config);
 };
 
+// for all staff but room admin
 const createStaff = (funct, id, locId, adminLevel) => {
 	const config = {
 		method: "delete",
@@ -47,6 +48,60 @@ const createStaff = (funct, id, locId, adminLevel) => {
 				id: adminLevel,
 			},
 		},
+	};
+
+	callApi(funct, null, config);
+};
+
+// for all staff
+const createRoomAdmin = (funct, id, locId, adminLevel, roomsArray) => {
+	const config = {
+		method: "delete",
+		endpoint: "staff",
+		data: {
+			user: {
+				userId: staffId,
+			},
+			location: {
+				locationId: locId,
+			},
+			adminLevel: {
+				id: adminLevel,
+			},
+			roomAssigned: roomsArray,
+		},
+	};
+
+	callApi(funct, null, config);
+};
+
+// for all staff
+const editRoomAdmin = (funct, userId, staffId, locId, adminLevel, roomsArray) => {
+	console.log(staffId, locId, adminLevel, roomsArray);
+	const config = {
+		method: "put",
+		endpoint: `editRoomAdmin/${staffId}`,
+		data: {
+			staffId: staffId,
+			user: { userId: userId },
+			location: {
+				locationId: locId,
+			},
+			adminLevel: {
+				id: adminLevel,
+			},
+			roomAssigned: roomsArray,
+		},
+	};
+
+	callApi(funct, null, config);
+};
+
+const getRoomsOfAdmin = (funct, staffId) => {
+	console.log(staffId);
+	const config = {
+		method: "get",
+		endpoint: `getRoomAdminRooms/${staffId}`,
 	};
 
 	callApi(funct, null, config);
@@ -261,7 +316,7 @@ const addLocation = (staff, userlocations, assignableLocations, setOpenModal, se
 	);
 };
 
-const PermissonModal = ({ openModal, setOpenModal, staff, adminLevels, admin }) => {
+const PermissonModal = ({ openModal, setOpenModal, staff, adminLevels, admin, setChange }) => {
 	// console.log(openModal);
 	// console.log(staff);
 	// console.log(adminLevels);
@@ -295,23 +350,46 @@ const PermissonModal = ({ openModal, setOpenModal, staff, adminLevels, admin }) 
 						height: "45rem",
 					}}
 				>
-					<ChangePerms staff={staff} adminLevels={assignableAdminLevels} />
+					<ChangePerms
+						staff={staff}
+						adminLevels={assignableAdminLevels}
+						setOpenModal={setOpenModal}
+						setChange={setChange}
+					/>
 				</Box>
 			</Fade>
 		</Modal>
 	);
 };
 
-const ChangePerms = ({ staff, adminLevels }) => {
+// the staff is NOT us, is the staff were edting!!!
+const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 	const [permission, setPermission] = useState("");
-	const [selectedRooms, setSelectedRoom] = useState([]);
+    const [adminRooms, setAdminRooms] = useState([]);
+	const [selectedRooms, setSelectedRoom] = useState(adminRooms);
 	const [rooms, setRoom] = useState([]);
+
+
+
+	// disable the submite button if the different ice the same as before
+	const roomSelectedDifference =
+		selectedRooms.length > adminRooms.length
+			? subtractArrays(selectedRooms, adminRooms)
+			: subtractArrays(adminRooms, selectedRooms);
 
 	useEffect(() => {
 		getRoomsAtLocation(setRoom, staff.location.locationId);
+		getRoomsOfAdmin(setAdminRooms, staff.staffId);
 	}, []);
 
+    useEffect(() => {
+		setSelectedRoom(adminRooms)
+	}, [adminRooms]);
+
 	console.log(selectedRooms);
+	console.log(adminRooms);
+	console.log(roomSelectedDifference);
+
 	return (
 		<>
 			<Typography variant="h4" sx={{ marginBottom: "2rem" }}>
@@ -338,7 +416,7 @@ const ChangePerms = ({ staff, adminLevels }) => {
 				Current Level{" "}
 			</Typography>
 			<TextField
-				sx={{ width: "50%", marginTop: "1rem" }}
+				sx={{ width: "80%", marginTop: "1rem" }}
 				InputProps={{
 					readOnly: true,
 				}}
@@ -354,18 +432,25 @@ const ChangePerms = ({ staff, adminLevels }) => {
 			<Typography variant="h6" sx={{ marginY: "1rem" }}>
 				Change Permissions to{" "}
 			</Typography>
-			<Box sx={{ width: "50%" }}>
+			<Box sx={{ width: "80%" }}>
 				<SelectSmall
 					array={adminLevels}
 					label={"name"}
 					item={permission}
 					setItem={setPermission}
-					disabledKey={staff.adminLevel.precedence === 100 ? "" : staff.adminLevel.name}
+					disabledKey={
+						staff.adminLevel.precedence === 100
+							? ""
+							: staff.adminLevel.name === "Room"
+							? "dobtnarch"
+							: staff.adminLevel.name
+					}
 				/>
 			</Box>
 
-			{permission === "Room" || staff.adminLevel.name === "Room" ? (
-				<Box sx={{ width: "50%" }}>
+			{/*  if new perms is a room or both level are stuck on room show the room select */}
+			{permission === "Room" || (staff.adminLevel.name === "Room" && permission === "Room") ? (
+				<Box sx={{ width: "80%" }}>
 					<Typography variant="h6" sx={{ marginY: "1rem" }}>
 						Rooms:{" "}
 					</Typography>
@@ -375,18 +460,29 @@ const ChangePerms = ({ staff, adminLevels }) => {
 						staff.adminLevel.name === "Room" ? "Update Rooms" : "Add Rooms",
 						"Room Name",
 						true,
-						setSelectedRoom
+						setSelectedRoom,
+						adminRooms
 					)}
 				</Box>
 			) : null}
 
 			<Button
 				variant="contained"
-				disabled={permission === "" ? true : false}
+				// disabled if permissions == room and new permissions == room and the room isnt changed
+				disabled={permission === "" || roomSelectedDifference.length === 0}
 				sx={{ position: "absolute", bottom: 0, right: 0, margin: "2rem", width: "15%" }}
 				onClick={() => {
-					deleteStaff();
-					createStaff();
+					permission === "Room"
+						? //(funct, userId, STAFFid, locId, adminLevel, roomsArray)
+						  editRoomAdmin(
+								() => (setOpenModal(false), setChange((i) => !i)),
+								staff.user.userId,
+								staff.staffId,
+								staff.location.locationId,
+								staff.adminLevel.id,
+								selectedRooms
+						  )
+						: (deleteStaff(), createStaff());
 				}}
 			>
 				Submit
