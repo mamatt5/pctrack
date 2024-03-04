@@ -1,5 +1,6 @@
 {
     "NAME": "PCTrack",
     "PORT": 8181,
-    "MAX_PRECEDENCE" : 1
+    "MAX_PRECEDENCE" : 1,
+    "MIN_PRECEDENCE" : 100
 }

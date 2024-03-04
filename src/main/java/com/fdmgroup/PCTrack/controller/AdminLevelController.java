@@ -26,5 +26,6 @@ public class AdminLevelController {
 	@GetMapping("adminLevels")
 	public List<AdminLevel> getComputers() {
 		return adminService.findAllLevels(); 
-	}
+	} 
 }
+ 

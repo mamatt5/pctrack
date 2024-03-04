@@ -2,10 +2,14 @@ package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.UserRepository;
+import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
 
 @Service
@@ -23,8 +27,30 @@ public class UserService {
 	public List<User> findAllUsers() {
 		return this.userRepository.findAll();
 	}
-	public List<User> findAllUsersPartialMatch(String query) {
-		return this.userRepository.findByUsernameContainingIgnoreCase(query);
+	
+	public long userCount() { 
+		return this.userRepository.count();
+	}
+
+
+// pagnates user
+	public Page<User> getUserPage(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return this.userRepository.findAll(pageable);
+    }
+	
+	// pagenates user with query match 
+	public Page<User> findAllUsersPartialMatch(String query, int pageNumber, int pageSize) {
+		   Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		return this.userRepository.findPartial(query, pageable);
+	}
+
+	public long userCountPartial(String query) {
+		return this.userRepository.countByUsernameLike(query);
+	}
+	
+	public User findUserEmail(String email) {
+		return this.userRepository.findByEmail(email).orElseThrow(()-> new RuntimeException("email not found."));
 	}
 	
 	public User findUserId(int userId) {
@@ -38,6 +64,7 @@ public class UserService {
 	public boolean existsByUsername(String username) {
 		return this.userRepository.existsByUsername(username);
 	}
+	
 	
 	public void register(User newUser) {
 		if (this.userRepository.existsById(newUser.getUserId())) {

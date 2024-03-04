@@ -11,6 +11,7 @@ import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
+import org.springframework.data.domain.Sort;
 
 
 @Service
@@ -23,14 +24,16 @@ public class StaffService {
 	}
 	
 	public List<Staff> findAllStaffs() {
-		return this.staffRepo.findAll();
+		return this.staffRepo.findAllByOrderByUserUsernameAsc();
 	}
 	
+	// pagnates staff
 	public Page<Staff> getStaffPage(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		 Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("user.username").ascending());
         return this.staffRepo.findAll(pageable);
     }
 	
+	// pagenates staff with query match 
 	public Page<Staff> findAllUsersPartialMatch(String query, int pageNumber, int pageSize) {
 		   Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		return this.staffRepo.findPartial(query, pageable);
@@ -38,6 +41,14 @@ public class StaffService {
 	
 	public long staffCount() {
 		return this.staffRepo.count();
+	}
+	
+	public void deleteById(int id) {
+		if (this.staffRepo.existsById(id)) {
+			staffRepo.deleteById(id);
+		} else {
+			throw new RuntimeException("Staff not found");
+		}
 	}
 
 	public long staffCountPartial(String query) {

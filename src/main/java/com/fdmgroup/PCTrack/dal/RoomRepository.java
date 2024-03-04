@@ -20,4 +20,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 	
 	@Query("SELECT c FROM Computer c WHERE c.room.id = :roomId")
 	List<Computer> getComputersInRoom(@Param("roomId") Integer roomId);
+	
+	@Query("SELECT r FROM Room r WHERE r.location.id = :locationId") 
+	List<Room> getRoomsInLocation(@Param("locationId") Integer locationId);
 }

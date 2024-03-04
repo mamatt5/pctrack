@@ -7,6 +7,11 @@ import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { Label } from "@mui/icons-material";
+import Chip from "@mui/material/Chip";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import callApi from "../api/callApi";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,32 +24,27 @@ const MenuProps = {
 	},
 };
 
-export default function SelectSmall({ array, label }) {
-	console.log(array);
-	const [item, setItem] = React.useState("");
-
-	const handleChange = (event) => {
-		setItem(event.target.value);
-	};
-
+export default function SelectSmall({ array, label, item, setItem, disabledKey }) {
+	console.log(disabledKey)
 	return (
-		<FormControl sx={{ m: 1, minWidth: 160 }} size="small">
-			<InputLabel id="demo-select-small-label">Permissions</InputLabel>
+		<FormControl sx={{ minWidth: "100%" }} component="div">
+			<InputLabel id="select">Permissions</InputLabel>
 			<Select
-
 				labelId="demo-select-small-label"
-				id="demo-select-small"
+				id="select"
 				value={item}
 				label="Permissions"
-				onChange={handleChange}
+				onChange={(e) => {
+					setItem(e.target.value);
+				}}
 			>
 				{array.map((name) =>
 					name[label] === "" ? (
-						<MenuItem key="none" value="">
+						<MenuItem key="none" value="none" disabled={name[label] === disabledKey ? true : false}>
 							<em>None</em>
 						</MenuItem>
 					) : (
-						<MenuItem key={name[label]} value={name[label]}>
+						<MenuItem key={name[label]} value={name[label]} disabled={name[label] === disabledKey ? true : false}>
 							{name[label]}
 						</MenuItem>
 					)
@@ -54,41 +54,42 @@ export default function SelectSmall({ array, label }) {
 	);
 }
 
-export function MultipleSelectCheckmarks({ array, label }) {
-	const [arrItem, setItem] = React.useState([]);
+//
+export function MultipleSelect(arrayOfObjects, key, label, placeholder, canEdit, setSelects, defaultValues) {
+	console.log(arrayOfObjects);
 
-	const handleChange = (event) => {
-		const {
-			target: { value },
-		} = event;
-		setItem(
-			// On autofill we get a stringified value.
-			typeof value === "string" ? value.split(",") : value
-		);
+
+	// freaking objects arent equal
+	//https://stackoverflow.com/questions/61947941/material-ui-autocomplete-warning-the-value-provided-to-autocomplete-is-invalid
+	const customOptionIsEqual = (option, value) => {
+	  // Customize the equality check here
+	  return option[key] === value[key];
 	};
 
 	return (
-		<div>
-			<FormControl sx={{ m: 1, width: 300 }}>
-				<InputLabel id="demo-multiple-checkbox-label">{label}</InputLabel>
-				<Select
-					labelId="multiple-checkbox"
-					id="multiple-checkbox"
-					multiple
-					value={arrItem}
-					onChange={handleChange}
-					input={<OutlinedInput label={label} />}
-					renderValue={(selected) => selected.join(", ")}
-					MenuProps={MenuProps}
-				>
-					{array.map((item) => (
-						<MenuItem key={item} value={item}>
-							<Checkbox checked={arrItem.indexOf(item) > -1} />
-							<ListItemText primary={item} />
-						</MenuItem>
-					))}
-				</Select>
-			</FormControl>
-		</div>
+	  <Stack spacing={3}>
+		<Autocomplete
+		  isOptionEqualToValue={customOptionIsEqual}
+		  sx={
+			!canEdit
+			  ? {
+				  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+					border: "1px solid #eee",
+				  },
+				}
+			  : {}
+		  }
+		  readOnly={!canEdit}
+		  onChange={(e, value) => setSelects(value)}
+		  defaultValue={canEdit ? defaultValues : arrayOfObjects}
+		  multiple
+		  disabled={arrayOfObjects.length === 0 ? true : false}
+		  id="tags-outlined"
+		  options={arrayOfObjects}
+		  getOptionLabel={(option) => option[key]}
+		  filterSelectedOptions
+		  renderInput={(params) => <TextField {...params} label={label} placeholder={placeholder} />}
+		/>
+	  </Stack>
 	);
-}
+  }

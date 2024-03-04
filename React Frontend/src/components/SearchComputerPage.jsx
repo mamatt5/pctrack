@@ -61,8 +61,10 @@ export const SearchComputerPage = () => {
 
     return (
         <>
+            
             <div className='dashBoardPadding'>
                 <h1>Computers</h1>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                 <OutlinedInput
                     id="search"
                     size="small"
@@ -81,11 +83,12 @@ export const SearchComputerPage = () => {
                         }
                     }}
                 />
+
                 <InputLabel id="search-by-room">Search By Room</InputLabel>
                 <Select
                     labelId='search-by-room'
                     value={roomId}
-                    label="Search By Room"
+                   
                     onChange={(e) => {
                         setRoomId(e.target.value);
                         onSearchChange(setComputers, search, e.target.value, role);
