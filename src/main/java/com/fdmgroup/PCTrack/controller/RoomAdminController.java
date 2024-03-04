@@ -35,11 +35,11 @@ public class RoomAdminController {
 		return roomAdminService.getRooms(staffId);
 	}
 	
-	@PutMapping("editRooms/{staffId}")
-	public RoomAdmin findRoomsWhereStaffIsAdmin(@RequestBody RoomAdmin admin) {
-		roomAdminService.update(admin);
+	@PutMapping("editRoomAdmin/{staffId}")
+	public RoomAdmin findRoomsWhereStaffIsAdmin(@PathVariable int staffId, @RequestBody RoomAdmin admin) {
+		roomAdminService.update(admin); 
 		return roomAdminService.getRoomAdminById(admin.getStaffId());
-		
+		 
 	}
 
 	
