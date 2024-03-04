@@ -62,6 +62,7 @@ export default function CustomizedTables({array}) {
 
     const openModal = (row) => {
       setSelectedRow(row);
+   
     };
 
     const closeModal = () => {
@@ -98,28 +99,32 @@ export default function CustomizedTables({array}) {
 
             <IconButton size="small" onClick={()=>openModal(row)}>
               <DeviceHubIcon />
+              
             </IconButton>
-
+               
 
           </StyledTableCell>
+          
         </StyledTableRow>
         
-        <Modal
-          open={!!selectedRow}
-          onClose={closeModal}
-          
-        >
-          <Box sx={style}>
-            {selectedRow && <RoomMandates room={selectedRow} />}
-            {console.log(row)}
-
-          </Box>
-        </Modal>
+        
         
         
         </>
         
       ))}
+
+<Modal
+              open={!!selectedRow}
+              onClose={closeModal}
+              
+              >
+                
+              <Box sx={style}>
+                {selectedRow && <RoomMandates room={selectedRow} />}
+                {console.log("modal opened")}
+              </Box>
+            </Modal>
     </TableBody>
   </Table>
 </TableContainer>

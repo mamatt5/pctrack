@@ -53,7 +53,7 @@ const RoomMandates = ({ room }) => {
 
   useEffect(() => {
     getRoomMandates(room.roomId, setRoomMandates);
-  }, [room])
+  }, [])
 
   const handleCreate = () => {
     createRoomMandate(room, mandateDescription, setRoomMandates)
