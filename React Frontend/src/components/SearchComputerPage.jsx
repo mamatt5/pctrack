@@ -6,6 +6,7 @@ import callApi from '../api/callApi'
 import { Button, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
 import SearchIcon from "@mui/icons-material/Search";
 import AddComputer from '../partials/AddComputer'
+import CreateReport from '../partials/CreateReport'
 
 const getComputers = (setComputers) => {
     const config = {
@@ -23,6 +24,15 @@ const getRooms = (setRooms) => {
     }
 
     callApi(setRooms, null, config);
+}
+
+const getReport = (setReport) => {
+    const config = {
+        method: "get",
+        endpoint: "reports"
+    }
+
+    callApi(setReport, null, config);
 }
 
 const onSearchChange = (setComputers, computerCode, roomId) => {
@@ -45,6 +55,8 @@ export const SearchComputerPage = () => {
     const [rooms, setRooms] = useState([]);
     const [search, setSearch] = useState("");
     const [updated, setUpdated] = useState(true);
+    const [report, setReport] = useState([])
+    const [reportUpdated, setReportUpdated] = useState(true);
     const [roomId, setRoomId] = useState("%%");
 
     useEffect(() => {
@@ -56,6 +68,11 @@ export const SearchComputerPage = () => {
         getComputers(setComputers);
         setUpdated(true);
     }, [updated])
+
+    useEffect(() => {
+        getReport(setReport);
+        setReportUpdated(true);
+    }, [reportUpdated])
 
     return (
         <>
@@ -104,7 +121,10 @@ export const SearchComputerPage = () => {
                     }
                 </div>
             </div>
-            <AddComputer updated={[updated, setUpdated]} />
+            <div>
+                <AddComputer updated={[updated, setUpdated]} />
+                <CreateReport reportUpdated={[reportUpdated,setReportUpdated]}/>
+            </div>
         </>
     )
 }

@@ -15,14 +15,10 @@ export const SearchSoftwarePage = () => {
     }, []);
 
     const getSoftware = (setSoftware) => {
-      // Functionality to get users
       const config = {
         method: "get",
         endpoint: "programs",
       };
-
-      // if we cant find the user, its a username issue
-      // if we can, its a password issue.
       callApi(setSoftware, null, config);
     };
 

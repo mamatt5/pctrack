@@ -346,7 +346,7 @@ public class UserDataLoader implements ApplicationRunner {
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c42);
 
-		Computer c43 = new Computer(15091, room5);
+		Computer c43 = new Computer(15092, room5);
 		computerService.save(c43);
 		c43.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
@@ -424,13 +424,13 @@ public class UserDataLoader implements ApplicationRunner {
 				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c55);
 
-		Computer c56 = new Computer(15091, room5);
+		Computer c56 = new Computer(15093, room5);
 		computerService.save(c56);
 		c56.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c56);
 
-		Computer c57 = new Computer(72196, room5);
+		Computer c57 = new Computer(72190, room5);
 		computerService.save(c57);
 		c57.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
