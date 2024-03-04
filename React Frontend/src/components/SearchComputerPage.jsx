@@ -29,7 +29,7 @@ const onSearchChange = (setComputers, computerCode, roomId, role) => {
     const searchConfig = {
         "computerCode": computerCode,
         "roomId": roomId,
-        "role" : role
+        "role": role
     }
 
     const config = {
