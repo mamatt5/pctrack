@@ -62,70 +62,74 @@ export const SearchComputerPage = () => {
     return (
         <>
             
-            <div className='dashBoardPadding'>
-                <h1>Computers</h1>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <OutlinedInput
-                    id="search"
-                    size="small"
-                    placeholder={'Search By Code'}
-                    value={search}
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <SearchIcon />
-                        </InputAdornment>
+        <div className='dashBoardPadding'>
+            <h1>Computers</h1>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+            <OutlinedInput
+                id="search"
+                size="small"
+                placeholder={'Search By Code'}
+                value={search}
+                startAdornment={
+                    <InputAdornment position="start">
+                        <SearchIcon />
+                    </InputAdornment>
+                }
+                sx={{ borderRadius: 5 }}
+                onChange={(e) => {
+                    if (/^\d+$/.test(e.target.value) || e.target.value == "") {
+                        setSearch(e.target.value);
+                        onSearchChange(setComputers, e.target.value, roomId, role);
                     }
-                    sx={{ borderRadius: 5 }}
-                    onChange={(e) => {
-                        if (/^\d+$/.test(e.target.value) || e.target.value == "") {
-                            setSearch(e.target.value);
-                            onSearchChange(setComputers, e.target.value, roomId, role);
-                        }
-                    }}
-                />
+                }}
+            />
 
-                <InputLabel id="search-by-room">Search By Room</InputLabel>
-                <Select
-                    labelId='search-by-room'
-                    value={roomId}
-                   
-                    onChange={(e) => {
-                        setRoomId(e.target.value);
-                        onSearchChange(setComputers, search, e.target.value, role);
-                    }}
-                >
-                    <MenuItem value="%%">None</MenuItem>
-                    {
-                        rooms.map(room =>
-                            <MenuItem value={room.roomId} key={room.roomId}>{room.name}, {room.location.name}</MenuItem>
-                        )
-                    }
-                </Select>
-                <InputLabel id="search-by-roles">Search By Roles</InputLabel>
-                <Select
-                    labelId='search-by-roles'
-                    value={role}
-                    label="Search By Role"
-                    onChange={(e) => {
-                        setRole(e.target.value);
-                        onSearchChange(setComputers, search, roomId, e.target.value);
-                    }}
-                >
-                    <MenuItem value="%%">Unfiltered</MenuItem>
-                    <MenuItem value="NONE">None</MenuItem>
-                    <MenuItem value="DEV">Dev</MenuItem>
-                    <MenuItem value="BI">BI</MenuItem>
-                    <MenuItem value="BOTH">Both</MenuItem>
-                </Select>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {
-                        computers.map(computer =>
-                            <ComputerCard computer={computer} key={computer.computerId} />
-                        )
-                    }
-                </div>
+            <InputLabel id="search-by-room">Filter By Room</InputLabel>
+            <Select
+                labelId='search-by-room'
+                value={roomId}
+               
+                onChange={(e) => {
+                    setRoomId(e.target.value);
+                    onSearchChange(setComputers, search, e.target.value, role);
+                }}
+            >
+                <MenuItem value="%%">None</MenuItem>
+                {
+                    rooms.map(room =>
+                        <MenuItem value={room.roomId} key={room.roomId}>{room.name}, {room.location.name}</MenuItem>
+                    )
+                }
+            </Select>
+            <InputLabel id="search-by-roles">Filter By Roles</InputLabel>
+            <Select
+                labelId='search-by-roles'
+                value={role}
+               
+                onChange={(e) => {
+                    setRole(e.target.value);
+                    onSearchChange(setComputers, search, roomId, e.target.value);
+                }}
+            >
+                <MenuItem value="%%">Unfiltered</MenuItem>
+                <MenuItem value="NONE">None</MenuItem>
+                <MenuItem value="DEV">Dev</MenuItem>
+                <MenuItem value="BI">BI</MenuItem>
+                <MenuItem value="BOTH">Both</MenuItem>
+            </Select>
             </div>
-            <AddComputer updated={[updated, setUpdated]} />
-        </>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {
+                    computers.map(computer =>
+                        <ComputerCard computer={computer} key={computer.computerId} />
+                    )
+                }
+            </div>
+        </div>
+        <AddComputer updated={[updated, setUpdated]} />
+        
+    </>
     )
+       
+    
 }
