@@ -25,10 +25,11 @@ const getRooms = (setRooms) => {
     callApi(setRooms, null, config);
 }
 
-const onSearchChange = (setComputers, computerCode, roomId) => {
+const onSearchChange = (setComputers, computerCode, roomId, role) => {
     const searchConfig = {
         "computerCode": computerCode,
-        "roomId": roomId
+        "roomId": roomId,
+        "role" : role
     }
 
     const config = {
@@ -46,6 +47,7 @@ export const SearchComputerPage = () => {
     const [search, setSearch] = useState("");
     const [updated, setUpdated] = useState(true);
     const [roomId, setRoomId] = useState("%%");
+    const [role, setRole] = useState("%%");
 
     useEffect(() => {
         getComputers(setComputers);
@@ -75,7 +77,7 @@ export const SearchComputerPage = () => {
                     onChange={(e) => {
                         if (/^\d+$/.test(e.target.value) || e.target.value == "") {
                             setSearch(e.target.value);
-                            onSearchChange(setComputers, e.target.value, roomId);
+                            onSearchChange(setComputers, e.target.value, roomId, role);
                         }
                     }}
                 />
@@ -86,7 +88,7 @@ export const SearchComputerPage = () => {
                     label="Search By Room"
                     onChange={(e) => {
                         setRoomId(e.target.value);
-                        onSearchChange(setComputers, search, e.target.value);
+                        onSearchChange(setComputers, search, e.target.value, role);
                     }}
                 >
                     <MenuItem value="%%">None</MenuItem>
@@ -95,6 +97,22 @@ export const SearchComputerPage = () => {
                             <MenuItem value={room.roomId} key={room.roomId}>{room.name}, {room.location.name}</MenuItem>
                         )
                     }
+                </Select>
+                <InputLabel id="search-by-roles">Search By Roles</InputLabel>
+                <Select
+                    labelId='search-by-roles'
+                    value={role}
+                    label="Search By Role"
+                    onChange={(e) => {
+                        setRole(e.target.value);
+                        onSearchChange(setComputers, search, roomId, e.target.value);
+                    }}
+                >
+                    <MenuItem value="%%">Unfiltered</MenuItem>
+                    <MenuItem value="NONE">None</MenuItem>
+                    <MenuItem value="DEV">Dev</MenuItem>
+                    <MenuItem value="BI">BI</MenuItem>
+                    <MenuItem value="BOTH">Both</MenuItem>
                 </Select>
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {

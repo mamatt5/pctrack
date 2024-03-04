@@ -6,9 +6,12 @@ public class SearchConfig {
 	
 	private String roomId;
 	
-	public SearchConfig(String computerCode, String roomId) {
+	private String role;
+	
+	public SearchConfig(String computerCode, String roomId, String role) {
 		this.computerCode = computerCode;
 		this.roomId = roomId;
+		this.role = role;
 	}
 
 	public SearchConfig() {
@@ -29,5 +32,13 @@ public class SearchConfig {
 
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }
