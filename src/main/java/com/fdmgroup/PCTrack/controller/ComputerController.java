@@ -33,7 +33,7 @@ public class ComputerController {
 	
 	@PostMapping("computers/search")
 	public List<Computer> searchByComputerCode(@RequestBody SearchConfig searchConfig) {
-		return computerService.searchByComputerCode(searchConfig.getComputerCode(), searchConfig.getRoomId());
+		return computerService.searchByComputerCode(searchConfig.getComputerCode(), searchConfig.getRoomId(), searchConfig.getRole());
 	}
 	
 	@PostMapping("computers")

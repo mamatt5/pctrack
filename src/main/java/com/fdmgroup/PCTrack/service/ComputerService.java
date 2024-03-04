@@ -24,8 +24,8 @@ public class ComputerService {
 		return this.computerRepo.findById(computerId).orElseThrow(() -> new RuntimeException("Computer not found"));
 	}
 	
-	public List<Computer> searchByComputerCode(String code, String roomId) {
-		return this.computerRepo.searchComputer(code, roomId);
+	public List<Computer> searchByComputerCode(String code, String roomId, String role) {
+		return this.computerRepo.searchComputer(code, roomId, role);
 	}
 	
 	public void save(Computer newComputer) {
