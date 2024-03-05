@@ -12,6 +12,7 @@ import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
 import { Box } from "@mui/material";
+import HelpPage from "./HelpPage";
 
 const checkAdmin = (setAdmin, setStaff, id) => {
 	const config = {
@@ -81,6 +82,7 @@ const LoggedInHomePage = () => {
 				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
+				<Route path="/help" element={<HelpPage />} />
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>
