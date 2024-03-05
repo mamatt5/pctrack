@@ -14,6 +14,7 @@ import { SearchSoftwarePage } from "./components/SearchSoftwarePage";
 import UpdateDetailsPage from "./components/UpdateDetailsPage";
 import NavBar from "./partials/NavBar";
 import ViewComputersInRoomPage from "./components/ViewComputersInRoomPage";
+import { ReportsPage } from "./components/ReportsPage";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
 					<Route path="/" element={<Login />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/home/:id/*" element={<LoggedInHomePage />} />
+					<Route path="/home/reports" element={<ReportsPage/>} />
 					
 					
 				</Routes>

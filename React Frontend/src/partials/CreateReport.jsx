@@ -26,12 +26,12 @@ const getComputers = (setComputers) => {
     callApi(setComputers, null, config);
 }
 
-const getStaff = (id, setStaff) => {
+const getUser = (id, setUser) => {
 	const config = {
 		method: "get",
-		endpoint: `staff/${id}`,
+		endpoint: `users/${id}`,
 	};
-	callApi(setStaff, null, config);
+	callApi(setUser, null, config);
 };
 
 const CreateReport  = (props) => {
@@ -42,14 +42,14 @@ const CreateReport  = (props) => {
     const [selectedComputer, setSelectedComputer] = useState({});
     const [issueDescription, setIssueDescription] = useState("");
     const [error, setError] = useState(false);
-    const [staff, setStaff] = useState({});
+    const [user, setUser] = useState([]);
 
     useEffect(() => {
         getComputers(setComputers);
     }, [])
 
     useEffect(() => {
-        getStaff(id, setStaff);
+        getUser(id, setUser);
     },[])
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const CreateReport  = (props) => {
     };
 
     const submitReport = () => {
-        console.log("staff when submitting" + staff)
+        console.log("user when submitting" + user)
         if (computer == "") {
             setError(true);
             return;
@@ -76,9 +76,8 @@ const CreateReport  = (props) => {
         const report = {
             "computer": selectedComputer,
             "dateCreated": currentDate.toISOString().split("T")[0],
-            "staff": staff,
-            "description": issueDescription,
-            "resolved": false,
+            "user": user,
+            "description": issueDescription
         }
         
         const config = {
@@ -139,7 +138,7 @@ const CreateReport  = (props) => {
                 sx={{
                     position: "fixed",
                     bottom: "10%",
-                    right: "10%",
+                    right: "20%",
                     zIndex: 1000,
                 }}
                 onClick={openModal}

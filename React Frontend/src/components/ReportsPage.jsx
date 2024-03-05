@@ -3,27 +3,27 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import NavBar from "../partials/NavBar";
 import { useState } from "react";
-import SoftwareTable from "../partials/SoftwareTable";
+import ReportsTable from "../partials/ReportsTable";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 
-export const SearchSoftwarePage = () => {
-    const [software, setSoftware] = useState([]);
+export const ReportsPage = () => {
+    const [reports, setReports] = useState([]);
 
     useEffect (() => {
-        getSoftware(setSoftware)
+        getReports(setReports)
     }, []);
 
-    const getSoftware = (setSoftware) => {
+    const getReports = (setReports) => {
       const config = {
         method: "get",
-        endpoint: "programs",
+        endpoint: "reports",
       };
-      callApi(setSoftware, null, config);
+      callApi(setReports, null, config);
     };
 
 
-    const SoftwareTab = () => {
+    const ReportTab = () => {
       return <></>;
     };
 
@@ -31,14 +31,14 @@ export const SearchSoftwarePage = () => {
 
       <>
         <Box className="dashBoardPadding">
-          <h1>Software</h1>
+          <h1>Reports</h1>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <SoftwareTab />
+                    <ReportTab />
                   </Box>
-                  <SoftwareTable array={software} />
+                  <ReportsTable array={reports} />
         </Box>
 
       </>
     )
 }
-//export default SearchSoftwarePage;
+//export default ReportsPage;
