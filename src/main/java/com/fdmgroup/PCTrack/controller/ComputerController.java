@@ -38,8 +38,11 @@ public class ComputerController {
 	
 	@PostMapping("computers")
 	public Computer createNewComputer(@RequestBody Computer newComputer) {
-		computerService.save(newComputer);
-		return computerService.findById(newComputer.getComputerId());
+		Computer computer = new Computer(newComputer.getComputerCode(), newComputer.getRoom());
+		computerService.save(computer);
+		computer.setProgramList(newComputer.getProgramList());
+		computerService.update(computer);
+		return computerService.findById(computer.getComputerId());
 	}
 	
 	@PutMapping("computers")

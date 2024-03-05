@@ -33,7 +33,7 @@ const AddComputer = (props) => {
     const [rooms, setRooms] = useState([]);
     const [selectedRoom, setSelectedRoom] = useState({});
     const [error, setError] = useState(false);
-    const [softwares, setSoftwares] = useState([]);
+    const [programList, setProgramList] = useState([]);
 
     useEffect(() => {
         getRooms(setRooms);
@@ -60,7 +60,7 @@ const AddComputer = (props) => {
         const computer = {
             "computerCode": parseInt(code),
             "room": selectedRoom,
-            "programList": []
+            "programList": programList
         }
 
         const config = {
@@ -103,7 +103,7 @@ const AddComputer = (props) => {
                             }
                         </Select>
                     </h3>
-                    <ProgramTransferList />
+                    <ProgramTransferList programs={[programList, setProgramList]}/>
                     <Button
                         variant="contained"
                         onClick={submitComputer}

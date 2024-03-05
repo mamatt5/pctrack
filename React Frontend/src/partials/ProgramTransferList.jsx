@@ -21,6 +21,17 @@ const getPrograms = (setPrograms) => {
     callApi(setPrograms, null, config);
 }
 
+const returnProgram = (programs, num) => {
+    var object = {};
+    programs.map(program => {
+        if (program.programId == num) {
+            object = program;
+
+        }
+    })
+    return object;
+}
+
 const delCheck = (num, programs) => {
     let arr = []
     programs.map(program => {
@@ -31,7 +42,7 @@ const delCheck = (num, programs) => {
     return arr;
 }
 
-const customList = (array, [open, setOpen], [softwaresSelected, setSoftwaresSelected], [programsSelected, setProgramsSelected]) => {
+const customList = (array, programs, [open, setOpen], [softwaresSelected, setSoftwaresSelected], [programsSelected, setProgramsSelected]) => {
 
     const style = {
         py: 0,
@@ -54,29 +65,20 @@ const customList = (array, [open, setOpen], [softwaresSelected, setSoftwaresSele
                                 {
                                     software.versions.map(program =>
                                         <ListItemButton key={program.programId} sx={style} onClick={() => {
-                                            // const id = program.programId;
-                                            // if (!checked[id]) {
-                                            //     var changes = checked;
-                                            //     let arr = delCheck(software.softwareId, programs);
-                                            //     arr.map(index => {
-                                            //         changes[index] = false;
-                                            //     })
-                                            //     setChecked(changes);
-                                            //     setChecked({ ...checked, [program.programId]: true });
-                                            //     if (!softwaresSelected.includes(software)) setSoftwaresSelected([...softwaresSelected, software]);
-                                            // }
-                                            // else {
-                                            //     setChecked({ ...checked, [program.programId]: false });
-                                            //     setSoftwaresSelected(softwaresSelected.filter(a => a.softwareId !== software.softwareId))
-                                            // }
-                                            var tempProg = programsSelected.filter(a => a.softwareId !== software.softwareId);
-                                            tempProg.push(program);
+                                            if (programsSelected.find((x) => x.programId == program.programId) == undefined) {
+                                                var tempProg = programsSelected.filter(a => a.software.softwareId !== software.softwareId);
+                                                tempProg.push(returnProgram(programs, program.programId));
 
-                                            setSoftwaresSelected([...softwaresSelected, software]);
-                                            setProgramsSelected(tempProg);
+                                                setSoftwaresSelected([...softwaresSelected, software]);
+                                                setProgramsSelected(tempProg);
+                                            } else {
+                                                setSoftwaresSelected(softwaresSelected.filter(a => a.softwareId !== software.softwareId))
+                                                setProgramsSelected(programsSelected.filter(a => a.programId !== program.programId));
+                                            }
+
                                         }}>
                                             <ListItemIcon>
-                                                <Checkbox checked={programsSelected.includes(program)} />
+                                                <Checkbox checked={programsSelected.find((x) => x.programId == program.programId) != undefined} />
                                             </ListItemIcon>
                                             <ListItemText primary={program.version} />
                                         </ListItemButton>
@@ -97,18 +99,18 @@ const confirmList = (array, [softwaresDeselected, setSoftwaresDeselected]) => {
         <Paper sx={{ width: 200, height: 400, overflow: 'auto' }}>
             <List dense component="div" role="list">
                 {
-                    array.map(item => 
-                        <ListItemButton key={item.softwareId} onClick={() => {
-                            if (!softwaresDeselected.includes(item)) {
-                                setSoftwaresDeselected([...softwaresDeselected, item]);
+                    array.map(program =>
+                        <ListItemButton key={program.programId} onClick={() => {
+                            if (softwaresDeselected.find((x) => x.softwareId == program.software.softwareId) == undefined){
+                                setSoftwaresDeselected([...softwaresDeselected, program.software]);
                             } else {
-                                setSoftwaresDeselected(softwaresDeselected.filter(a => a.softwareId !== item.softwareId));
+                                setSoftwaresDeselected(softwaresDeselected.filter(a => a.softwareId !== program.software.softwareId));
                             }
                         }}>
                             <ListItemIcon>
-                                <Checkbox checked={softwaresDeselected.includes(item)}/>
+                                <Checkbox checked={softwaresDeselected.find((x) => x.softwareId == program.software.softwareId) != undefined}/>
                             </ListItemIcon>
-                            <ListItemText />
+                            <ListItemText primary={program.software.name + " " + program.version}/>
                         </ListItemButton>
                     )
                 }
@@ -122,12 +124,11 @@ const ProgramTransferList = (props) => {
     const [softwares, setSoftwares] = useState([]);
     const [programs, setPrograms] = useState([]);
     const [leftSide, setLeftSide] = useState([]);
-    const [rightSide, setRightSide] = useState([]);
     const [open, setOpen] = useState([]);
-    const [checked, setChecked] = useState({});
     const [softwaresSelected, setSoftwaresSelected] = useState([]);
     const [programsSelected, setProgramsSelected] = useState([]);
     const [softwaresDeselected, setSoftwaresDeselected] = useState([]);
+    const [programList, setProgramList] = props.programs;
 
     useEffect(() => {
         getSoftwares(setSoftwares);
@@ -140,19 +141,37 @@ const ProgramTransferList = (props) => {
 
     const handleLeft = () => {
         var tempLeft = leftSide;
-        var tempRight = rightSide;
+        var tempRight = programList;
 
+        programsSelected.map(program => {
+            tempRight.push(program);
+            tempLeft = tempLeft.filter(a => a.softwareId !== program.software.softwareId);
+        })
+        setProgramList(tempRight);
+        setLeftSide(tempLeft);
+        setSoftwaresSelected([]);
+        setProgramsSelected([]);
     }
 
     const handleRight = () => {
+        var tempLeft = leftSide;
+        var tempRight = programList;
 
+        softwaresDeselected.map(software => {
+            tempLeft.push(software);
+            tempRight = tempRight.filter(a => a.software.softwareId !== software.softwareId);
+        });
+
+        setProgramList(tempRight);
+        setLeftSide(tempLeft);
+        setSoftwaresDeselected([]);
     }
 
-    const programList = () => {
+    const programsList = () => {
 
         return (
             <Grid container spacing={2} justifyContent="center" alignItems="center">
-                {leftSide.length != 0 && <Grid item>{customList(leftSide, [open, setOpen], [softwaresSelected, setSoftwaresSelected], [programsSelected, setProgramsSelected])}</Grid>}
+                {leftSide.length != 0 && <Grid item>{customList(leftSide, programs, [open, setOpen], [softwaresSelected, setSoftwaresSelected], [programsSelected, setProgramsSelected])}</Grid>}
                 <Grid item>
                     <Grid container direction={"column"} alignItems={"center"}>
                         <Button
@@ -179,21 +198,21 @@ const ProgramTransferList = (props) => {
                             size="small"
                             aria-label="move selected left"
                             onClick={() => {
-                                console.log(programsSelected);
+                                console.log(programList);
                             }}
                         >
                             Test
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid item>{confirmList(rightSide, [softwaresDeselected, setSoftwaresDeselected])}</Grid>
+                <Grid item>{confirmList(programList, [softwaresDeselected, setSoftwaresDeselected])}</Grid>
             </Grid>
         )
     }
 
     return (
         <>
-            {softwares.length != 0 && programList()}
+            {softwares.length != 0 && programsList()}
         </>
 
     )
