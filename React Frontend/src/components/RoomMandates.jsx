@@ -1,8 +1,22 @@
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton } from '@mui/material'
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import callApi from '../api/callApi'
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
+import { useParams } from 'react-router-dom';
+
+const getStaff = (userId, setStaff, setHasPermission) => {
+  const config = {
+    method: 'get',
+    endpoint: `staff/${userId}`
+  };
+  callApi((response) => {
+    const adminLevels = ['Room', 'Location', 'Business']
+    const roomAdmin = response.find(staff => adminLevels.some(level => staff.adminLevel.name === level));
+    setStaff(roomAdmin);
+    setHasPermission(!!roomAdmin)
+  }, null, config);
+}
 
 const getRoomMandates = (roomId, setRoomMandates) => {
   const config = {
@@ -12,10 +26,15 @@ const getRoomMandates = (roomId, setRoomMandates) => {
   callApi(setRoomMandates, null, config)
 }
 
-const createRoomMandate = (room, description, setRoomMandates) => {
+const createRoomMandate = (staff, room, description, deadline, setRoomMandates) => {
   const newMandate = { 
+    roomAdmin: staff,
     room: room,
-    description: description }
+    description: description,
+    dateCreated: new Date(new Date().getTime() + 36000000).toISOString().split('T')[0],
+    deadline: deadline }
+  
+  console.log('New mandate:', newMandate)
 
   const config = {
     method: 'post',
@@ -45,18 +64,24 @@ const deleteRoomMandate = (roomId, mandateId, setRoomMandates) => {
 }
 
 const RoomMandates = ({ room }) => {
+  const { id } = useParams()
+  const userId = id
+  const [staff, setStaff] = useState('')
+  const [hasPermission, setHasPermission] = useState(false)
   const [roomMandates, setRoomMandates] = useState([])
   const [mandate, setMandate] = useState('')
   const [mandateDescription, setMandateDescription] = useState('')
+  const [mandateDeadline, setMandateDeadline] = useState(new Date().toISOString().split('T')[0])
   const [createMandateDialogue, setCreateMandateDialogue] = useState(false)
   const [editMandateDialogue, setEditMandateDialogue] = useState(false)
 
   useEffect(() => {
     getRoomMandates(room.roomId, setRoomMandates);
+    getStaff(userId, setStaff, setHasPermission);
   }, [])
 
   const handleCreate = () => {
-    createRoomMandate(room, mandateDescription, setRoomMandates)
+    createRoomMandate(staff, room, mandateDescription, mandateDeadline, setRoomMandates)
     setCreateMandateDialogue(false)
     setMandateDescription('')
   }
@@ -64,11 +89,12 @@ const RoomMandates = ({ room }) => {
   const editMandate = (mandate) => {
     setMandate(mandate)
     setMandateDescription(mandate.description)
+    setMandateDeadline(mandate.deadline)
     setEditMandateDialogue(true)
   }
 
   const handleUpdate = () => {
-    const updatedMandate = { ...mandate, description: mandateDescription}
+    const updatedMandate = { ...mandate, description: mandateDescription, deadline: mandateDeadline}
     updateRoomMandate(updatedMandate, setRoomMandates);
     setEditMandateDialogue(false)
     setMandateDescription('')
@@ -78,31 +104,53 @@ const RoomMandates = ({ room }) => {
   return (
     <>
       <div>
-        <ul style={{listStyle: 'none'}}>
-          <h2>Mandates for {room.name} room</h2>
-          {roomMandates.map(mandate =>
-            <li key={mandate.mandateId} style={{ paddingBottom: '10px' }} >{mandate.description}
-      
-              {/* <Button variant="outlined" onClick={()=> deleteRoomMandate(room.roomId,mandate.mandateId,setRoomMandates)} sx={{marginLeft: 3}}>
-                Satisfied</Button> */}
-              <IconButton color='success' onClick={()=> deleteRoomMandate(room.roomId,mandate.mandateId,setRoomMandates)} sx={{marginLeft: 3}}>
-                <DoneIcon />
-              </IconButton>
-
-              {/* <Button variant="outlined" onClick={()=> editMandate(mandate)} sx={{marginLeft: 3}}>Edit</Button> */}
-              <IconButton onClick={()=> editMandate(mandate)} sx={{marginLeft: 3}}>
-                <EditIcon />
-
-              </IconButton>
-                </li>
-                
-                )}
-        </ul>
+        <h2>Mandates for {room.name} Room</h2>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow sx={{backgroundColor: '#1976d2'}}>
+                    <TableCell sx={{width: '50%', color: 'white'}}>Description</TableCell>
+                    <TableCell sx={{width: '10%', color: 'white'}}>Date Created</TableCell>
+                    <TableCell sx={{width: '10%', color: 'white'}}>Deadline</TableCell>
+                    <TableCell sx={{width: '15%', color: 'white'}}>Created By</TableCell>
+                    <TableCell sx={{width: '15%', color: 'white'}}>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {roomMandates.length > 0 ? (
+                    roomMandates.map((mandate) => (
+                      <TableRow key={mandate.mandateId}>
+                        <TableCell>{mandate.description}</TableCell>
+                        <TableCell>{new Date(mandate.dateCreated).toLocaleDateString('en-GB')}</TableCell>
+                        <TableCell>{new Date(mandate.deadline).toLocaleDateString('en-GB')}</TableCell>
+                        <TableCell>{mandate.roomAdmin.user.firstName} {mandate.roomAdmin.user.lastName}</TableCell>
+                        <TableCell>
+                          <IconButton color="success" onClick={() => deleteRoomMandate(room.roomId, mandate.mandateId, setRoomMandates)}>
+                            <DoneIcon />
+                          </IconButton>
+                          { hasPermission &&
+                            <IconButton onClick={() => editMandate(mandate)}>
+                              <EditIcon />
+                            </IconButton>}
+                        </TableCell>
+                      </TableRow>
+                    ))) : (
+                      <TableRow>
+                        <TableCell colSpan={5} align="center">No mandates available for {room.name} </TableCell>
+                      </TableRow>
+                    )}
+                </TableBody>
+              </Table>
+            </TableContainer>
       </div>
 
-      <Button variant="contained" onClick={()=>setCreateMandateDialogue(true)} sx={{marginLeft: 4.2}}>Create mandate</Button>
+      
 
-      <Dialog open={editMandateDialogue} onClose={()=>setEditMandateDialogue(false)} fullWidth>
+      {hasPermission && 
+      <Button variant="contained" onClick={()=>setCreateMandateDialogue(true)} sx={{marginLeft: 4.2, marginTop: 2}}>
+        Create mandate</Button>}
+
+      <Dialog open={editMandateDialogue} onClose={()=>setEditMandateDialogue(false)} fullWidth maxWidth='lg'>
 
         <DialogTitle>Editing mandate</DialogTitle>
         <DialogContent>
@@ -112,6 +160,13 @@ const RoomMandates = ({ room }) => {
             multiline
             fullWidth
             />
+          <TextField
+            type='date'
+            label='Deadline'
+            value={mandateDeadline}
+            onChange={(e) => setMandateDeadline(e.target.value)}
+            sx={{marginTop: 2}}
+            />
         </DialogContent>
         <DialogActions>
           <Button onClick={()=>{setMandateDescription('');setEditMandateDialogue(false)}}>Cancel</Button>
@@ -120,7 +175,7 @@ const RoomMandates = ({ room }) => {
 
       </Dialog>
 
-      <Dialog open={createMandateDialogue} onClose={()=>setCreateMandateDialogue(false)} fullWidth>
+      <Dialog open={createMandateDialogue} onClose={()=>setCreateMandateDialogue(false)} fullWidth maxWidth='lg'>
 
         <DialogTitle>Create a new mandate for {room.name}</DialogTitle>
         <DialogContent>
@@ -130,6 +185,13 @@ const RoomMandates = ({ room }) => {
             multiline
             fullWidth
           />
+          <TextField
+            type='date'
+            label='Deadline'
+            value={mandateDeadline}
+            onChange={(e) => setMandateDeadline(e.target.value)}
+            sx={{marginTop: 2}}
+            />
         </DialogContent>
 
         <DialogActions>

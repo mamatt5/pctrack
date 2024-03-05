@@ -1053,15 +1053,15 @@ public class UserDataLoader implements ApplicationRunner {
 
 		// Mandate
 		String mandate1Desc = "We need 10 DEV-ready computers.";
-		Mandate mandate1 = new Mandate(room1, roomAdmin1, mandate1Desc);
+		Mandate mandate1 = new Mandate(room1, roomAdmin1, mandate1Desc, "2024-03-10");
 		mandateService.save(mandate1);
 
 		String mandate2Desc = "We need 10 BI-ready computers.";
-		Mandate mandate2 = new Mandate(room2, roomAdmin2, mandate2Desc);
+		Mandate mandate2 = new Mandate(room2, roomAdmin2, mandate2Desc, "2024-03-10");
 		mandateService.save(mandate2);
 
 		String mandate3Desc = "We need 10 DEV and BI-ready computers.";
-		Mandate mandate3 = new Mandate(room3, roomAdmin3, mandate3Desc);
+		Mandate mandate3 = new Mandate(room3, roomAdmin3, mandate3Desc, "2024-03-10");
 		mandateService.save(mandate3);
 	}
 }

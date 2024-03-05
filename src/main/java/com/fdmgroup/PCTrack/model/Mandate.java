@@ -1,6 +1,8 @@
 package com.fdmgroup.PCTrack.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -19,24 +21,21 @@ public class Mandate {
 	private RoomAdmin roomAdmin;
 		
 	@Column(name = "DATE_CREATED")
-	private LocalDate dateCreated;
+	private String dateCreated;
 	
 	@Column(name = "DESCRIPTION")
 	private String description;
+	
+	@Column(name = "DEADLINE")
+	private String deadline;
 
-	public Mandate(Room room, RoomAdmin roomAdmin, String description) {
+	public Mandate(Room room, RoomAdmin roomAdmin, String description, String deadline) {
 		super();
 		this.room = room;
 		this.roomAdmin = roomAdmin;
-		this.dateCreated = LocalDate.now();
+		this.dateCreated = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
 		this.description = description;
-	}
-	
-	public Mandate(Room room, String description) {
-		super();
-		this.room = room;
-		this.dateCreated = LocalDate.now();
-		this.description = description;
+		this.deadline = LocalDate.parse(deadline).format(DateTimeFormatter.ISO_DATE);
 	}
 	
 	public Mandate() {
@@ -54,11 +53,23 @@ public class Mandate {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	public LocalDate getDateCreated() {
+	public RoomAdmin getRoomAdmin() {
+		return roomAdmin;
+	}
+	public void setRoomAdmin(RoomAdmin roomAdmin) {
+		this.roomAdmin = roomAdmin;
+	}
+	public String getDateCreated() {
 		return dateCreated;
 	}
-	public void setDateCreated(LocalDate dateCreated) {
+	public void setDateCreated(String dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+	public String getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
 	}
 	public String getDescription() {
 		return description;
