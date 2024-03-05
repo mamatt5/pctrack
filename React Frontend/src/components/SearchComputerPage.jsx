@@ -29,7 +29,7 @@ const onSearchChange = (setComputers, computerCode, roomId, role) => {
     const searchConfig = {
         "computerCode": computerCode,
         "roomId": roomId,
-        "role" : role
+        "role": role
     }
 
     const config = {
@@ -61,10 +61,8 @@ export const SearchComputerPage = () => {
 
     return (
         <>
-            
             <div className='dashBoardPadding'>
                 <h1>Computers</h1>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
                 <OutlinedInput
                     id="search"
                     size="small"
@@ -88,7 +86,7 @@ export const SearchComputerPage = () => {
                 <Select
                     labelId='search-by-room'
                     value={roomId}
-                   
+
                     onChange={(e) => {
                         setRoomId(e.target.value);
                         onSearchChange(setComputers, search, e.target.value, role);
@@ -117,15 +115,18 @@ export const SearchComputerPage = () => {
                     <MenuItem value="BI">BI</MenuItem>
                     <MenuItem value="BOTH">Both</MenuItem>
                 </Select>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {
-                        computers.map(computer =>
-                            <ComputerCard computer={computer} key={computer.computerId} />
-                        )
-                    }
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {
+                            computers.map(computer =>
+                                <ComputerCard computer={computer} key={computer.computerId} />
+                            )
+                        }
+                    </div>
                 </div>
+                <AddComputer updated={[updated, setUpdated]} />
             </div>
-            <AddComputer updated={[updated, setUpdated]} />
         </>
     )
 }

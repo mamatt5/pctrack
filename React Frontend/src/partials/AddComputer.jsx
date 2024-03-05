@@ -2,6 +2,8 @@ import { Box, Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mu
 import { useState } from "react";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
+import { CheckBox } from "@mui/icons-material";
+import ProgramTransferList from "./ProgramTransferList";
 
 const style = {
     position: 'absolute',
@@ -31,6 +33,7 @@ const AddComputer = (props) => {
     const [rooms, setRooms] = useState([]);
     const [selectedRoom, setSelectedRoom] = useState({});
     const [error, setError] = useState(false);
+    const [softwares, setSoftwares] = useState([]);
 
     useEffect(() => {
         getRooms(setRooms);
@@ -85,7 +88,7 @@ const AddComputer = (props) => {
                             }
                         }}
                     />
-                    {error && <p style={{color: 'red'}}>Must be filled</p>}
+                    {error && <p style={{ color: 'red' }}>Must be filled</p>}
                     <h3>Room:
                         <InputLabel id="select-room">Select Room</InputLabel>
                         <Select
@@ -100,6 +103,7 @@ const AddComputer = (props) => {
                             }
                         </Select>
                     </h3>
+                    <ProgramTransferList />
                     <Button
                         variant="contained"
                         onClick={submitComputer}
