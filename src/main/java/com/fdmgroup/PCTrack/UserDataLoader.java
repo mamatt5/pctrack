@@ -1112,6 +1112,36 @@ public class UserDataLoader implements ApplicationRunner {
 		for (Report r : reports) {
 			reportService.save(r);
 		}
+		
+		r1.setResolved(true);
+		reportService.update(r1);
+		r2.setResolved(true);
+		reportService.update(r2);
+		r3.setResolved(true);
+		reportService.update(r3);
+		r6.setResolved(true);
+		reportService.update(r6);
+		r10.setResolved(true);
+		reportService.update(r10);
+		r12.setResolved(true);
+		reportService.update(r12);
+		r13.setResolved(true);
+		reportService.update(r13);
+		r16.setResolved(true);
+		reportService.update(r16);
+		r18.setResolved(true);
+		reportService.update(r18);
+		r20.setResolved(true);
+		reportService.update(r20);
+		r26.setResolved(true);
+		reportService.update(r26);
+		r29.setResolved(true);
+		reportService.update(r29);
+		r31.setResolved(true);
+		reportService.update(r31);
+		r32.setResolved(true);
+		reportService.update(r32);
+		
 
 	}
 }

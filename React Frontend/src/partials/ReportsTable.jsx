@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import { IconButton } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import {useEffect, useState} from 'react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,12 +32,48 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const changeStatus = () => {
 
+const updateReportActive = (reports, setReports) => {
+  const config = {
+    method: 'put',
+    endpoint: 'reports',
+    data : {
+      resolved: false
+    }
+  };
+
+  callApi(()=> getReports(setReports), null, config)
 }
 
+const updateReportResolved = (reports, setReport) => {
+  const config = {
+    method: 'put',
+    endpoint: 'reports',
+    data : {
+      resolved: true
+    }
+  };
+
+  callApi(()=> getReports(setReports), null, config)
+}
+
+  useEffect (() => {
+      getReports(setReports)
+  }, []);
+
+  const getReports = (setReports) => {
+    const config = {
+      method: "get",
+      endpoint: "reports",
+    };
+    callApi(setReports, null, config);
+  };
+
+
 export default function ReportsTable({array}) {
-    console.log(array)
+    const [reports, setReports] = useState([])
+
+    //console.log(reports)
   return (
     <TableContainer component={Paper} sx={{maxWidth:"70vw"}}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -60,11 +97,11 @@ export default function ReportsTable({array}) {
               <StyledTableCell align="left">{row.resolved ? 'Resolved': 'Active'}</StyledTableCell>
               <StyledTableCell align="right" sx={{ width: '100px' }}>  
               {row.resolved ? 
-                <IconButton size="small" onClick={()=>changeStatus()}>
+                <IconButton size="small" onClick={()=>updateReportActive()}>
                   <RemoveCircleIcon />
                 </IconButton> 
                 : 
-                <IconButton size="small" onClick={()=>changeStatus()}>
+                <IconButton size="small" onClick={()=>updateReportResolved()}>
                   <CheckCircleIcon />
                 </IconButton> 
                 }
