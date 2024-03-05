@@ -45,11 +45,20 @@ const welcomePage = (staff) => {
 				<>
 					{index === 0 ? (
 						<Box>
-							Welcome {roles.user.firstName} {roles.user.lastName}{" "}
+							<h1>
+								Welcome {roles.user.firstName} {roles.user.lastName}{" "}
+							</h1>
+
+							<h2>
+								Your Current Admin Permissions are:{" "}
+							</h2>
+							
 						</Box>
 					) : null}
 					<Box>
-						{roles.adminLevel.name} {roles.location.city}
+					
+						{roles.adminLevel.name} Admin at {roles.location.city}
+						{console.log(roles.user.firstName)}
 					</Box>
 				</>
 			))}
