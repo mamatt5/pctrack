@@ -33,41 +33,50 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const updateReportActive = (reports, setReports) => {
-  const config = {
-    method: 'put',
-    endpoint: 'reports',
-    data : {
-      resolved: false
-    }
-  };
+const updateReport = (reports, setReports, rowId) => {
+  const updatedReports = [...reports]; // Create a copy of the reports array
+  const indexToUpdate = updatedReports.findIndex(
+    (report) => report.reportId === rowId
+  );
 
-  callApi(()=> getReports(setReports), null, config)
-}
+  if (indexToUpdate !== -1) {
+    const reportToUpdate = updatedReports[indexToUpdate];
+    reportToUpdate.resolved = !reportToUpdate.resolved; // Toggle resolved status
 
-const updateReportResolved = (reports, setReport) => {
-  const config = {
-    method: 'put',
-    endpoint: 'reports',
-    data : {
-      resolved: true
-    }
-  };
-
-  callApi(()=> getReports(setReports), null, config)
-}
-
-  useEffect (() => {
-      getReports(setReports)
-  }, []);
-
-  const getReports = (setReports) => {
     const config = {
-      method: "get",
-      endpoint: "reports",
+      method: 'put',
+      endpoint: 'reports',
+      data: reportToUpdate, // Send the updated report object
     };
-    callApi(setReports, null, config);
+
+    callApi(() => getReports(setReports), null, config);
+  }
+};
+
+// const updateReportResolved = (reports, setReport) => {
+//   const config = {
+//     method: 'put',
+//     endpoint: 'reports',
+//     data : {
+//       resolved: true
+//     }
+//   };
+
+//   callApi(()=> getReports(setReports), null, config)
+// }
+
+// useEffect(() => {
+//   getReports(setReports); 
+// }, []); 
+
+
+const getReports = (setReports) => {
+  const config = {
+    method: "get",
+    endpoint: "reports",
   };
+  callApi(setReports, null, config);
+};
 
 
 export default function ReportsTable({array}) {
@@ -97,14 +106,14 @@ export default function ReportsTable({array}) {
               <StyledTableCell align="left">{row.resolved ? 'Resolved': 'Active'}</StyledTableCell>
               <StyledTableCell align="right" sx={{ width: '100px' }}>  
               {row.resolved ? 
-                <IconButton size="small" onClick={()=>updateReportActive()}>
+                <IconButton size="small" onClick={()=>updateReport(reports, setReports, row.reportId)}>
                   <RemoveCircleIcon />
                 </IconButton> 
                 : 
-                <IconButton size="small" onClick={()=>updateReportResolved()}>
+                <IconButton size="small" onClick={()=>updateReport(reports, setReports, row.reportId)}>
                   <CheckCircleIcon />
                 </IconButton> 
-                }
+              }
                 
 
 
