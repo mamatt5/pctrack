@@ -1,5 +1,10 @@
 package com.fdmgroup.PCTrack.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,12 +15,14 @@ public class Software {
 	private int softwareId;
 	@Column(name = "NAME")
 	private String name;
+	@JsonIgnoreProperties("software")
+	@OneToMany(mappedBy = "software")
+	private List<Program> versions;
 	
 	public Software(String name) {
 		super();
 		this.name = name;
 	}
-	
 
 	public Software()
 	{
@@ -41,6 +48,14 @@ public class Software {
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public List<Program> getVersions() {
+		return versions;
+	}
+
+	public void setVersions(List<Program> versions) {
+		this.versions = versions;
 	}
 
 	@Override
