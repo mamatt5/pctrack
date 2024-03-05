@@ -23,7 +23,7 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
-const timeout = 10_000
+const timeout = 10000_000
 const promptBeforeIdle = 4_000
 
 
