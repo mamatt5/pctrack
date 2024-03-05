@@ -27,13 +27,13 @@ public class Report {
 	@Column(name = "RESOLVED")
 	private boolean resolved;
 
-	public Report(Computer computer, User user, LocalDate dateCreated, String description, boolean resolved) {
+	public Report(Computer computer, User user, LocalDate dateCreated, String description) {
 		super();
 		this.computer = computer;
 		this.user = user;
 		this.dateCreated = dateCreated;
 		this.description = description;
-		this.resolved = resolved;
+		this.resolved = false;
 	}
 	public Report() {
 		super();
