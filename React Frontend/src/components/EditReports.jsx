@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 import { useNavigate } from "react-router-dom";
 
-// const getReports = (reportId, setReports) => {
-//   const config = {
-//     method: 'get',
-//     endpoint: `reports/${reportId}`
-//   };
-//   callApi(setReports, null, config)
-// }
+const getReports = (reportId, setReports) => {
+  const config = {
+    method: 'get',
+    endpoint: `reports/${reportId}`
+  };
+  callApi(setReports, null, config)
+}
 
 // const createReport = (computer, description, setReports) => {
 //   const newReport = { 
