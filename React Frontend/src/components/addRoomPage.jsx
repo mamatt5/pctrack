@@ -56,15 +56,13 @@ const addRoomPage = (props) => {
 
 
 	const handleCheck = (value) => {
-		console.log("LOCATION IS")
-		console.log(value)
 		setLocation(value)
 	
 	};
 
     const createRoom = (e) => {
         e.preventDefault();
-		console.log(e)
+	
         const config = {
             method: "post",
             endpoint: "rooms",
