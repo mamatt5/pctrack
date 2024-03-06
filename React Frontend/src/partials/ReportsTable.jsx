@@ -151,7 +151,7 @@ export default function ReportsTable({array, getReports, setReports}) {
           open={!!selectedRow}
           onClose={closeModal}>
           <Box sx={style}>
-            {selectedRow && <EditReports report={selectedRow} getReportsFunc={getReports} setReports={setReports}/>}
+            {selectedRow && <EditReports report={selectedRow} getAllReports={getReports} setReportsFunc={setReports}/>}
 
           </Box>
         </Modal>

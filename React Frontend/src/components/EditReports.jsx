@@ -5,12 +5,12 @@ import { useParams } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 import { useNavigate } from "react-router-dom";
 
-const getReports = (reportId, setReports) => {
+const getReports = (reportId, setReportsFunc, getAllReports) => {
   const config = {
     method: 'get',
     endpoint: `reports/${reportId}`
   };
-  callApi(setReports, null, config)
+  callApi(setReportsFunc(getAllReports), null, config)
 }
 
 // const createReport = (computer, description, setReports) => {
@@ -37,7 +37,7 @@ const updateReport = (updatedRpt, setReports) => {
   callApi(()=> getReports(setReports), null, config)
 }
 
-const Reports = ({report, getReports, setReportsFunc}) => {
+const Reports = ({report, getAllReports, setReportsFunc}) => {
   const navigate = useNavigate();
   const [reports, setReports] = useState([])
   const [reportDescription, setReportDescription] = useState('')
@@ -63,7 +63,7 @@ const Reports = ({report, getReports, setReportsFunc}) => {
 
   const handleUpdate = () => {
     const updatedReport = { ...report, description: reportDescription, resolved: reportResolved}
-    updateReport(updatedReport, setReports);
+    updateReport(updatedReport, setReportsFunc, getAllReports);
     setEditReportDialogue(false)
     //setReportDescription('')
     //setReports(null)
