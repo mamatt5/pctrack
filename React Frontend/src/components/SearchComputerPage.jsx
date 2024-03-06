@@ -120,13 +120,15 @@ export const SearchComputerPage = () => {
                         <MenuItem value="BOTH">Both</MenuItem>
                     </Select>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {
-                        computers.map(computer =>
-                            <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} />
-                        )
-                    }
-                </div>
+                <Fade in={true}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {
+                            computers.map(computer =>
+                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} />
+                            )
+                        }
+                    </div>
+                </Fade>
             </div>
             <AddComputer updated={[updated, setUpdated]} computer={null} />
             <Box sx={{
