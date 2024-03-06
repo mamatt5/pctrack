@@ -11,6 +11,12 @@ import { IconButton } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import {useEffect, useState} from 'react';
+import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Modal } from '@mui/material';
+import { Box } from '@mui/material';
+import EditReports from '../components/EditReports';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,6 +38,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 700,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  padding: 6,
+  borderRadius: 8,
+
+};
 
 const updateReport = (reports, setReports, rowId) => {
   const updatedReports = [...reports]; // Create a copy of the reports array
@@ -80,7 +98,21 @@ const getReports = (setReports) => {
 
 
 export default function ReportsTable({array}) {
-    const [reports, setReports] = useState([])
+  const [selectedRow, setSelectedRow] = useState(null)
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const openModal = (row) => {
+    setSelectedRow(row);
+  };
+
+  const closeModal = () => {
+    setSelectedRow(null);
+  };
+
+  const goToReportsPage = () => {
+    navigate("/reports")
+  }
 
     //console.log(reports)
   return (
@@ -98,28 +130,33 @@ export default function ReportsTable({array}) {
         </TableHead>
         <TableBody>
           {array.map((row) => (
-            <StyledTableRow key={row.reportId}>
+            <><StyledTableRow key={row.reportId}>
               <StyledTableCell align="left">{row.computer.computerCode} - {row.computer.room.name} {row.computer.room.location.city} </StyledTableCell>
               <StyledTableCell align="left">{row.user.username}</StyledTableCell>
               <StyledTableCell align="left">{row.dateCreated}</StyledTableCell>
               <StyledTableCell align="left">{row.description}</StyledTableCell>
-              <StyledTableCell align="left">{row.resolved ? 'Resolved': 'Active'}</StyledTableCell>
+              <StyledTableCell align="center">{row.resolved ? <CheckCircleIcon/>: 'Active'}</StyledTableCell>
               <StyledTableCell align="right" sx={{ width: '100px' }}>  
-              {row.resolved ? 
-                <IconButton size="small" onClick={()=>updateReport(reports, setReports, row.reportId)}>
-                  <RemoveCircleIcon />
-                </IconButton> 
-                : 
-                <IconButton size="small" onClick={()=>updateReport(reports, setReports, row.reportId)}>
-                  <CheckCircleIcon />
-                </IconButton> 
-              }
-                
 
+                <IconButton size="small" onClick={()=>openModal(row)}>
+                  <EditIcon />
+                </IconButton> 
+              </StyledTableCell>
+          </StyledTableRow>
+          
 
-          </StyledTableCell>
-            </StyledTableRow>
-          ))}
+        <Modal
+          open={!!selectedRow}
+          onClose={closeModal}
+          
+        >
+          <Box sx={style}>
+            {selectedRow && <EditReports report={selectedRow}/>}
+            {console.log(row)}
+
+          </Box>
+        </Modal></>
+        ))}
         </TableBody>
       </Table>
     </TableContainer>

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fdmgroup.PCTrack.model.Report;
 import com.fdmgroup.PCTrack.service.ReportService;
 @RestController
-@CrossOrigin("http://localhost:5813")
+@CrossOrigin("http://localhost:5173")
 public class ReportController {
 	private ReportService reportService;
 
@@ -32,7 +32,7 @@ public class ReportController {
 	
 	@GetMapping("reports/{reportId}")
 	public Report findById(@PathVariable int reportId) {
-		return reportService.findById(reportId);
+		return reportService.findById(reportId); 
 	}
 	
 	@PostMapping("reports")
@@ -46,7 +46,7 @@ public class ReportController {
 		reportService.update(newReport);
 		return reportService.findById(newReport.getReportId());
 	}
-	
+	 
 	@DeleteMapping("reports/{reportId}")
 	public void deleteReport(@PathVariable int reportId) {
 		reportService.deleteById(reportId);
