@@ -50,6 +50,8 @@ export const SearchComputerPage = () => {
     const [roomId, setRoomId] = useState("%%");
     const [role, setRole] = useState("%%");
 
+    const [isHovered, setIsHovered] = useState(false)
+
     useEffect(() => {
         getComputers(setComputers);
         getRooms(setRooms);
@@ -128,24 +130,45 @@ export const SearchComputerPage = () => {
             </div>
         </div>
         <AddComputer updated={[updated, setUpdated]} />
-        <Box sx={{
-        position: 'fixed',
-        top: 80,
-        right: 20,
-        backgroundColor: 'lightgray',
-        padding: '10px',
-        borderRadius: '10px'
-          }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
-        </div>
-      </Box>
+        <Box
+            sx={{
+                position: 'fixed',
+                top: 80,
+                right: 20,
+                backgroundColor: 'lightgray',
+                padding: '10px',
+                borderRadius: '10px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignContent: 'left'
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            >
+            {isHovered && (
+                <>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                        <ComputerIcon style={{ color: '#77DD77'}} /> Both roles
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                        <ComputerIcon style={{ color: '#ffff66'}} /> Dev/BI-ready
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <ComputerIcon style={{ color: '#FF6961'}} /> None
+                    </div>
+                    <div style={{fontSize: '11px'}}><em>
+                        *Check help for Dev/BI software list
+                        </em></div>
+                </>
+            )}
+            {!isHovered && (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <ComputerIcon style={{ color: '#77DD77'}} />
+                    <ComputerIcon style={{ color: '#ffff66'}} />
+                    <ComputerIcon style={{ color: '#FF6961'}} />
+                </div>
+            )}
+        </Box>
         
     </>
     )
