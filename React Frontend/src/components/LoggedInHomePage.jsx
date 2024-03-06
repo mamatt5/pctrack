@@ -9,6 +9,12 @@ import { SearchSoftwarePage } from "./SearchSoftwarePage";
 import { useParams } from "react-router-dom";
 import Admin from "./Admin";
 import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
+import { Fade, Typography } from "@mui/material";
+import { Grow } from "@mui/material";
+import { createTheme } from '@mui/material/styles'
+import { Collapse } from "@mui/material";
+import AddLocationPage from "./addLocationPage";
+
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
 import { Box } from "@mui/material";
@@ -40,17 +46,38 @@ const checkAdminLevel = (data, setAdmin, setStaff) => {
 };
 
 const welcomePage = (staff) => {
+	
+
 	return (
 		<>
 			{staff.map((roles, index) => (
 				<>
 					{index === 0 ? (
 						<Box>
-							Welcome {roles.user.firstName} {roles.user.lastName}{" "}
-						</Box>
+							<Fade in={true} timeout={500}>
+								<h1>
+									Welcome {roles.user.firstName} {roles.user.lastName}{" "}
+								</h1>
+							</Fade>
+							
+							<Fade in={true} timeout={1000}>
+							<h2>
+								Your Current Admin Permissions are:{" "}
+							</h2>
+							</Fade>
+							
+						</Box> 
 					) : null}
+					
 					<Box>
-						{roles.adminLevel.name} {roles.location.city}
+						<Fade in={true} timeout={2000}>
+							<Typography>
+								{roles.adminLevel.name} Admin at {roles.location.city}
+							</Typography>
+
+						</Fade>
+						
+						
 					</Box>
 				</>
 			))}
@@ -83,6 +110,7 @@ const LoggedInHomePage = () => {
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 				<Route path="/help" element={<HelpPage />} />
+				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>

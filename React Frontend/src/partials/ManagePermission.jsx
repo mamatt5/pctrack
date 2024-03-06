@@ -34,7 +34,7 @@ const deleteStaff = (funct, staffId) => {
 };
 
 // for all staff but room admin
-const createStaff = (funct, userId, locId, adminLevel) => {
+export const createStaff = (funct, userId, locId, adminLevel) => {
 	console.log(adminLevel, "admin level!!!! ");
 	const config = {
 		method: "post",

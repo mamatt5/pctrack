@@ -5,15 +5,19 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.PCTrack.dal.LocationRepository;
+import com.fdmgroup.PCTrack.dal.UserRepository;
+import com.fdmgroup.PCTrack.model.AdminLevel;
 import com.fdmgroup.PCTrack.model.Location;
 
 @Service
-public class LocationService {
+public class LocationService { 
 	private LocationRepository locationRepository;
+
 
 	public LocationService(LocationRepository locationRepository) {
 		super();
 		this.locationRepository = locationRepository;
+		
 	}
 	
 	public List<Location> findAllLocations() {
@@ -50,5 +54,7 @@ public class LocationService {
 			throw new RuntimeException("Location does not exist");
 		}
 	}
+
+	
 	
 }
