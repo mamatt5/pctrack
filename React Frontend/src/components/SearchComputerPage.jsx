@@ -3,9 +3,10 @@ import ComputerCard from '../partials/ComputerCard'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import callApi from '../api/callApi'
-import { Button, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
-import SearchIcon from "@mui/icons-material/Search";
+import { Box, Button, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
+import SearchIcon from "@mui/icons-material/Search"
 import AddComputer from '../partials/AddComputer'
+import ComputerIcon from '@mui/icons-material/Computer';
 
 const getComputers = (setComputers) => {
     const config = {
@@ -127,6 +128,24 @@ export const SearchComputerPage = () => {
             </div>
         </div>
         <AddComputer updated={[updated, setUpdated]} />
+        <Box sx={{
+        position: 'fixed',
+        top: 80,
+        right: 20,
+        backgroundColor: 'lightgray',
+        padding: '10px',
+        borderRadius: '10px'
+          }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
+        </div>
+      </Box>
         
     </>
     )
