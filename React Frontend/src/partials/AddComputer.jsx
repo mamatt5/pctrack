@@ -34,13 +34,23 @@ const AddComputer = (props) => {
     const [selectedRoom, setSelectedRoom] = useState({});
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
+    const { computer } = props;
 
     useEffect(() => {
         getRooms(setRooms);
+        if (computer != null) {
+            setCode(computer.computerCode);
+            setProgramList(computer.programList);
+        }
     }, [])
 
     useEffect(() => {
-        setSelectedRoom(rooms[0]);
+        if (computer != null) {
+            setSelectedRoom(rooms.find((x) => x.roomId == computer.room.roomId))
+        } else {
+            setSelectedRoom(rooms[0]);
+        }
+
     }, [rooms])
 
     const openModal = () => {
@@ -57,18 +67,35 @@ const AddComputer = (props) => {
             setError(true);
             return;
         }
-        const computer = {
-            "computerCode": parseInt(code),
-            "room": selectedRoom,
-            "programList": programList
-        }
 
-        const config = {
-            method: "post",
-            endpoint: "computers",
-            data: computer
+        if (computer == null) {
+            const computer = {
+                "computerCode": parseInt(code),
+                "room": selectedRoom,
+                "programList": programList
+            }
+
+            const config = {
+                method: "post",
+                endpoint: "computers",
+                data: computer
+            }
+            callApi(closeModal, null, config);
+        } else {
+            const computerClass = {
+                "computerId": computer.computerId,
+                "computerCode": parseInt(code),
+                "room": selectedRoom,
+                "programList": programList
+            }
+
+            const config = {
+                method: "put",
+                endpoint: "computers",
+                data: computerClass
+            }
+            callApi(closeModal, null, config);
         }
-        callApi(closeModal, null, config);
     }
 
     return (
@@ -103,28 +130,47 @@ const AddComputer = (props) => {
                             }
                         </Select>
                     </h3>
-                    <ProgramTransferList programs={[programList, setProgramList]}/>
-                    <Button
-                        variant="contained"
-                        onClick={submitComputer}
-                    >
-                        Add Computer
-                    </Button>
+                    <ProgramTransferList programs={[programList, setProgramList]} />
+                    <br></br>
+                    {computer == null ?
+                        <Button
+                            variant="contained"
+                            onClick={submitComputer}
+                        >
+                            Add Computer
+                        </Button>
+                        :
+                        <Button
+                            variant="contained"
+                            onClick={submitComputer}
+                        >
+                            Update Computer
+                        </Button>
+                    }
                 </Box>
             </Modal>
-            <Button
-                variant="contained"
-                disableElevation
-                sx={{
-                    position: "fixed",
-                    bottom: "10%",
-                    right: "10%",
-                    zIndex: 1000,
-                }}
-                onClick={openModal}
-            >
-                Add New Computer
-            </Button>
+            {computer == null ?
+                <Button
+                    variant="contained"
+                    disableElevation
+                    sx={{
+                        position: "fixed",
+                        bottom: "10%",
+                        right: "10%",
+                        zIndex: 1000,
+                    }}
+                    onClick={openModal}
+                >
+                    Add New Computer
+                </Button>
+                :
+                <Button
+                    variant="contained"
+                    color="success"
+                    sx={{ margin: "50px" }}
+                    onClick={openModal}
+                >Edit Computer</Button>
+            }
         </>
     )
 }
