@@ -7,6 +7,11 @@ import { TextField } from '@mui/material'
 import { Button } from '@mui/material'
 import { useState } from "react";
 import callApi from '../api/callApi'
+import { createStaff } from '../partials/ManagePermission'
+import { useParams } from 'react-router-dom';
+import { Alert } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check';
+import { Snackbar } from '@mui/material'
 
 
 const style = {
@@ -25,11 +30,26 @@ const style = {
 const addLocationPage = (props) => {
     const [locationName, setLocationName] = useState("")
     const [city, setCity] = useState("")
+    const { id } = useParams();
+    const [open, setOpen] = useState(false);
 
-    const onCreation = () => {
 
-        console.log("created that shit")
+    const successNotification = () => {
+        setOpen(true);
+
     }
+
+    const handleClose = () => {
+    
+        setOpen(false);
+      };
+
+    const onCreation = (e) => {
+        createStaff(successNotification, id, e.locationId, 1)
+
+    }
+
+
     const createLocation = (e) => {
         e.preventDefault();
         console.log(locationName)
@@ -49,6 +69,21 @@ const addLocationPage = (props) => {
   return (
     <>
     <NavBar admin={props.admin} />
+        
+
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+            onClose={handleClose}
+            severity="success"
+            variant="filled"
+            sx={{ width: '100%' }}
+        >
+            Location has been created!
+        </Alert>
+        </Snackbar>
+
+
+
 
     <Box sx={style}>
 			<Box>

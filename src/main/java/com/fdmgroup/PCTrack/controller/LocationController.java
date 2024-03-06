@@ -43,7 +43,7 @@ public class LocationController {
 		locationService.save(newLocation);
 		return locationService.findById(newLocation.getLocationId());
 	}
-	
+
 	@PutMapping("location")
 	public Location updateLocation(@RequestBody Location newLocation) {
 		locationService.update(newLocation);
@@ -51,8 +51,10 @@ public class LocationController {
 	}
 	
 	@DeleteMapping("locations")
+	
 	public void deleteLocation(@PathVariable int locationId) {
 		locationService.deleteById(locationId);
-	}    
-  
+	}  
+	
+	
 }
