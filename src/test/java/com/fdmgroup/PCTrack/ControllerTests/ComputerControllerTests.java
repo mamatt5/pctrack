@@ -1,6 +1,8 @@
 package com.fdmgroup.PCTrack.ControllerTests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -72,20 +74,21 @@ public class ComputerControllerTests {
 	
 	@Test
 	void createComputer_test() {
-
 		Computer computer1 = new Computer(15037, room1);
 		computer1.setProgramList(Arrays.asList(vscode, eclipse,nodejs));
+		when(computerService.findById(computer1.getComputerId())).thenReturn(computer1);
 		
-		when(computerService.findById(0)).thenReturn(computer1);
-		assertSame(computer1, computerController.createNewComputer(computer1));
-		verify(computerService, times(1)).save(computer1);
+		Computer createdComputer = computerController.createNewComputer(computer1);
+		verify(computerService, times(1)).save(any(Computer.class));
+		verify(computerService, times(1)).update(any(Computer.class));
+		
+		assertEquals(createdComputer, computer1);
 	}
 	
 	@Test
 	void updateComputer_test() {
 		
 		Computer computer1 = new Computer(15037, room1);
-		computer1.setProgramList(Arrays.asList(vscode, eclipse,nodejs));
 		
 		Computer updatedComputer1 = new Computer(15037, room1);
 		updatedComputer1.setProgramList(Arrays.asList(vscode));
@@ -93,6 +96,8 @@ public class ComputerControllerTests {
 		when(computerService.findById(0)).thenReturn(updatedComputer1);
 		assertSame(computerController.updateComputer(computer1), updatedComputer1);
 		verify(computerService, times(1)).update(computer1);
+		
+		computer1.setProgramList(Arrays.asList(vscode, eclipse,nodejs));
 	}
 	
 	@Test

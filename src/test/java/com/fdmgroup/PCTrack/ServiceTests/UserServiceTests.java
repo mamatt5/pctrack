@@ -45,7 +45,8 @@ public class UserServiceTests {
 	@Test
 	void save_user_test() {
 		
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
+		User user1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
 		
 		userService.register(user1);
 		verify(userRepo, times(1)).save(user1);
@@ -55,10 +56,12 @@ public class UserServiceTests {
 	void save_multiple_users_test() {
 		
 
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
-        User user2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(2023, 11, 27));
-        User user3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(2023, 11, 27));
-        User user4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
+		User user1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
+		User user2 = new User("aatrox.damion", "password123", "Aatrox", "Damion", "aatrox.damion@example.com");
+		User user3 = new User("ahri.foxian", "password123", "Ahri", "Foxian", "ahri.foxian@example.com");
+		User user4 = new User("andy.joe", "password123", "Andy", "Joe", "andy.joe@example.com");
+
 		
 		userService.register(user1);
 		verify(userRepo, times(1)).save(user1);
@@ -77,8 +80,10 @@ public class UserServiceTests {
 	void save_already_existing_user_test() {
 		
 
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
-		User duplicateUser1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
+		User user1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
+		User duplicateUser1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
 		
 		RuntimeException exception = new RuntimeException("Username already exists");
 		
@@ -94,10 +99,11 @@ public class UserServiceTests {
 	void find_all_user_test() {
 		
 	
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
-        User user2 = new User("ahri.foxian", "password123", "Ahri", "Foxian", LocalDate.of(2023, 11, 27));
-        User user3 = new User("aatrox.damion", "password123", "Aatrox", "Damion", LocalDate.of(2023, 11, 27));
-        User user4 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27));
+		User user1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
+		User user2 = new User("aatrox.damion", "password123", "Aatrox", "Damion", "aatrox.damion@example.com");
+		User user3 = new User("ahri.foxian", "password123", "Ahri", "Foxian", "ahri.foxian@example.com");
+		User user4 = new User("andy.joe", "password123", "Andy", "Joe", "andy.joe@example.com");
         
 		List<User> allUsers = new ArrayList<>();
 		allUsers.add(user1);
@@ -116,7 +122,7 @@ public class UserServiceTests {
 	@Test
 	void find_user_by_id_test() {
 		
-		Optional<User> user1 = Optional.of(new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27)));
+		Optional<User> user1 = Optional.of(new User("andy.joe", "password123", "Andy", "Joe", "andy.joe@example.com"));
 
 		when(userRepo.findById(1)).thenReturn(user1);
 		User foundUser1 = userService.findUserId(1);
@@ -136,7 +142,8 @@ public class UserServiceTests {
 	@Test
 	void update_user_test() {
 		
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
+		User user1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
 		user1.setUserId(1);
 		
 		when(userRepo.existsById(1)).thenReturn(true);
@@ -150,7 +157,8 @@ public class UserServiceTests {
 	@Test
 	void update_user_fail_test() {
 		
-		User user1 = new User("andy.joe", "password123", "Andy", "Joe", LocalDate.of(2023, 11, 27));
+		User user1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
+				"amumu.munsen@example.com");
 		user1.setUserId(1);
 		
 		when(userRepo.existsById(1)).thenReturn(false);

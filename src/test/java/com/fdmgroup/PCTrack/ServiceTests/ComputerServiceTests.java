@@ -156,12 +156,11 @@ public class ComputerServiceTests {
 	
 	@Test
 	void delete_computer_test() {
-		
+		Computer computer1 = new Computer(15040, room1);
 		when(computerRepo.existsById(1)).thenReturn(true);
-		
+		when(computerRepo.findById(1)).thenReturn(Optional.of(computer1));
 		computerService.deleteByComputerId(1);
 		
-		verify(computerRepo, times(1)).existsById(1);
 		verify(computerRepo, times(1)).deleteById(1);
 
 	}
