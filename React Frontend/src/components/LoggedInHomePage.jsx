@@ -9,6 +9,12 @@ import { SearchSoftwarePage } from "./SearchSoftwarePage";
 import { useParams } from "react-router-dom";
 import Admin from "./Admin";
 import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
+import { Fade, Typography } from "@mui/material";
+import { Grow } from "@mui/material";
+import { createTheme } from '@mui/material/styles'
+import { Collapse } from "@mui/material";
+
+
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
 import { Box } from "@mui/material";
@@ -39,26 +45,38 @@ const checkAdminLevel = (data, setAdmin, setStaff) => {
 };
 
 const welcomePage = (staff) => {
+	
+
 	return (
 		<>
 			{staff.map((roles, index) => (
 				<>
 					{index === 0 ? (
 						<Box>
-							<h1>
-								Welcome {roles.user.firstName} {roles.user.lastName}{" "}
-							</h1>
-
+							<Fade in={true} timeout={500}>
+								<h1>
+									Welcome {roles.user.firstName} {roles.user.lastName}{" "}
+								</h1>
+							</Fade>
+							
+							<Fade in={true} timeout={1000}>
 							<h2>
 								Your Current Admin Permissions are:{" "}
 							</h2>
+							</Fade>
 							
-						</Box>
+						</Box> 
 					) : null}
-					<Box>
 					
-						{roles.adminLevel.name} Admin at {roles.location.city}
-						{console.log(roles.user.firstName)}
+					<Box>
+						<Fade in={true} timeout={2000}>
+							<Typography>
+								{roles.adminLevel.name} Admin at {roles.location.city}
+							</Typography>
+
+						</Fade>
+						
+						
 					</Box>
 				</>
 			))}
