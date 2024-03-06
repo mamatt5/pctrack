@@ -18,11 +18,8 @@ import { Collapse } from "@mui/material";
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
 import { Box } from "@mui/material";
-<<<<<<< HEAD
 import { ReportsPage } from "./ReportsPage";
-=======
 import HelpPage from "./HelpPage";
->>>>>>> main
 
 const checkAdmin = (setAdmin, setStaff, id) => {
 	const config = {
@@ -113,11 +110,8 @@ const LoggedInHomePage = () => {
 				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
-<<<<<<< HEAD
 				<Route path="/reports" element={<ReportsPage/>}/>
-=======
 				<Route path="/help" element={<HelpPage />} />
->>>>>>> main
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>

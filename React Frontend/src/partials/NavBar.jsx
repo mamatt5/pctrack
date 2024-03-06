@@ -137,16 +137,13 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/searchroom`);
 		} else if (page === "Update Details") {
 			navigate(`/home/${id}/searchcomputer`);
-<<<<<<< HEAD
 		}else if (page === "View Reports"){
 			navigate(`/home/${id}/reports`)
 		} 
 		else if (page === "Log Out") {
-=======
 		} else if (page === "Help") {
 			navigate(`/home/${id}/help`);
 		} else if (page === "Log Out") {
->>>>>>> main
 			localStorage.removeItem("token");
 			navigate("/");
 		}

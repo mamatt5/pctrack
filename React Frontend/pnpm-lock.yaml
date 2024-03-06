@@ -39,13 +39,8 @@ dependencies:
     specifier: ^6.22.1
     version: 6.22.1(react-dom@18.2.0)(react@18.2.0)
   vite:
-<<<<<<< HEAD
-    specifier: ^5.1.4
-    version: 5.1.4
-=======
     specifier: ^5.1.5
     version: 5.1.5
->>>>>>> main
 
 devDependencies:
   '@types/react':

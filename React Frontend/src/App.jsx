@@ -14,9 +14,7 @@ import { SearchSoftwarePage } from "./components/SearchSoftwarePage";
 import UpdateDetailsPage from "./components/UpdateDetailsPage";
 import NavBar from "./partials/NavBar";
 import ViewComputersInRoomPage from "./components/ViewComputersInRoomPage";
-<<<<<<< HEAD
 import { ReportsPage } from "./components/ReportsPage";
-=======
 import { useIdleTimer } from 'react-idle-timer'
 import { useEffect } from "react";
 import { Modal } from "@mui/material";
@@ -29,7 +27,6 @@ import { useLocation } from 'react-router-dom';
 const timeout = 10000_000
 const promptBeforeIdle = 4_000
 
->>>>>>> main
 
 function App() {
 
