@@ -64,7 +64,7 @@ const Reports = ({report}) => {
     const updatedReport = { ...report, description: reportDescription, resolved: reportResolved}
     updateReport(updatedReport, setReports, navToReportsPage);
     setEditReportDialogue(false)
-    //navigate(`/home/${id}/reports`)
+    navigate(`/home/${id}/reports`)
     //setReportDescription('')
     //setReports(null)
   }

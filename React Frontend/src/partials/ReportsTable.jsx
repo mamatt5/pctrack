@@ -145,6 +145,8 @@ export default function ReportsTable({array}) {
           </StyledTableRow>
           
 
+        </>
+        ))}
         <Modal
           open={!!selectedRow}
           onClose={closeModal}
@@ -152,11 +154,9 @@ export default function ReportsTable({array}) {
         >
           <Box sx={style}>
             {selectedRow && <EditReports report={selectedRow}/>}
-            {console.log(row)}
 
           </Box>
-        </Modal></>
-        ))}
+        </Modal>
         </TableBody>
       </Table>
     </TableContainer>
