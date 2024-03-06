@@ -26,7 +26,6 @@ const returnProgram = (programs, num) => {
     programs.map(program => {
         if (program.programId == num) {
             object = program;
-
         }
     })
     return object;
@@ -52,6 +51,7 @@ const customList = (array, programs, [open, setOpen], [softwaresSelected, setSof
     return (
         <Paper sx={{ width: 200, height: 400, overflow: 'auto' }}>
             <List dense component="div" role="list">
+                <>
                 {
                     array.map(software =>
                         <div key={software.softwareId}>
@@ -88,7 +88,7 @@ const customList = (array, programs, [open, setOpen], [softwaresSelected, setSof
                         </div>
                     )
                 }
-
+                </>
             </List>
         </Paper>
     )
@@ -137,6 +137,14 @@ const ProgramTransferList = (props) => {
 
     useEffect(() => {
         setLeftSide(softwares);
+        if (programList.length != 0) {
+            console.log('%c open', 'background: #222; color: #bada55')
+            var tempLeft = softwares;
+            programList.map(program => {
+                tempLeft = tempLeft.filter(a => a.softwareId !== program.software.softwareId);
+            });
+            setLeftSide(tempLeft);
+        }
     }, [softwares]);
 
     const handleLeft = () => {
@@ -171,7 +179,7 @@ const ProgramTransferList = (props) => {
 
         return (
             <Grid container spacing={2} justifyContent="center" alignItems="center">
-                {leftSide.length != 0 && <Grid item>{customList(leftSide, programs, [open, setOpen], [softwaresSelected, setSoftwaresSelected], [programsSelected, setProgramsSelected])}</Grid>}
+                <Grid item>{customList(leftSide, programs, [open, setOpen], [softwaresSelected, setSoftwaresSelected], [programsSelected, setProgramsSelected])}</Grid>
                 <Grid item>
                     <Grid container direction={"column"} alignItems={"center"}>
                         <Button

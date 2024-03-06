@@ -62,93 +62,93 @@ export const SearchComputerPage = () => {
 
     return (
         <>
-            
-        <div className='dashBoardPadding'>
-            <h1>Computers</h1>
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-            <OutlinedInput
-                id="search"
-                size="small"
-                placeholder={'Search By Code'}
-                value={search}
-                startAdornment={
-                    <InputAdornment position="start">
-                        <SearchIcon />
-                    </InputAdornment>
-                }
-                sx={{ borderRadius: 5 }}
-                onChange={(e) => {
-                    if (/^\d+$/.test(e.target.value) || e.target.value == "") {
-                        setSearch(e.target.value);
-                        onSearchChange(setComputers, e.target.value, roomId, role);
-                    }
-                }}
-            />
 
-            <InputLabel id="search-by-room">Filter By Room</InputLabel>
-            <Select
-                labelId='search-by-room'
-                value={roomId}
-               
-                onChange={(e) => {
-                    setRoomId(e.target.value);
-                    onSearchChange(setComputers, search, e.target.value, role);
-                }}
-            >
-                <MenuItem value="%%">None</MenuItem>
-                {
-                    rooms.map(room =>
-                        <MenuItem value={room.roomId} key={room.roomId}>{room.name}, {room.location.name}</MenuItem>
-                    )
-                }
-            </Select>
-            <InputLabel id="search-by-roles">Filter By Roles</InputLabel>
-            <Select
-                labelId='search-by-roles'
-                value={role}
-               
-                onChange={(e) => {
-                    setRole(e.target.value);
-                    onSearchChange(setComputers, search, roomId, e.target.value);
-                }}
-            >
-                <MenuItem value="%%">Unfiltered</MenuItem>
-                <MenuItem value="NONE">None</MenuItem>
-                <MenuItem value="DEV">Dev</MenuItem>
-                <MenuItem value="BI">BI</MenuItem>
-                <MenuItem value="BOTH">Both</MenuItem>
-            </Select>
+            <div className='dashBoardPadding'>
+                <h1>Computers</h1>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                    <OutlinedInput
+                        id="search"
+                        size="small"
+                        placeholder={'Search By Code'}
+                        value={search}
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        }
+                        sx={{ borderRadius: 5 }}
+                        onChange={(e) => {
+                            if (/^\d+$/.test(e.target.value) || e.target.value == "") {
+                                setSearch(e.target.value);
+                                onSearchChange(setComputers, e.target.value, roomId, role);
+                            }
+                        }}
+                    />
+
+                    <InputLabel id="search-by-room">Filter By Room</InputLabel>
+                    <Select
+                        labelId='search-by-room'
+                        value={roomId}
+
+                        onChange={(e) => {
+                            setRoomId(e.target.value);
+                            onSearchChange(setComputers, search, e.target.value, role);
+                        }}
+                    >
+                        <MenuItem value="%%">None</MenuItem>
+                        {
+                            rooms.map(room =>
+                                <MenuItem value={room.roomId} key={room.roomId}>{room.name}, {room.location.name}</MenuItem>
+                            )
+                        }
+                    </Select>
+                    <InputLabel id="search-by-roles">Filter By Roles</InputLabel>
+                    <Select
+                        labelId='search-by-roles'
+                        value={role}
+
+                        onChange={(e) => {
+                            setRole(e.target.value);
+                            onSearchChange(setComputers, search, roomId, e.target.value);
+                        }}
+                    >
+                        <MenuItem value="%%">Unfiltered</MenuItem>
+                        <MenuItem value="NONE">None</MenuItem>
+                        <MenuItem value="DEV">Dev</MenuItem>
+                        <MenuItem value="BI">BI</MenuItem>
+                        <MenuItem value="BOTH">Both</MenuItem>
+                    </Select>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    {
+                        computers.map(computer =>
+                            <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} />
+                        )
+                    }
+                </div>
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {
-                    computers.map(computer =>
-                        <ComputerCard computer={computer} key={computer.computerId} />
-                    )
-                }
-            </div>
-        </div>
-        <AddComputer updated={[updated, setUpdated]} />
-        <Box sx={{
-        position: 'fixed',
-        top: 80,
-        right: 20,
-        backgroundColor: 'lightgray',
-        padding: '10px',
-        borderRadius: '10px'
-          }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
-        </div>
-      </Box>
-        
-    </>
+            <AddComputer updated={[updated, setUpdated]} computer={null} />
+            <Box sx={{
+                position: 'fixed',
+                top: 80,
+                right: 20,
+                backgroundColor: 'lightgray',
+                padding: '10px',
+                borderRadius: '10px'
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                    <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                    <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
+                </div>
+            </Box>
+
+        </>
     )
-       
-    
+
+
 }
