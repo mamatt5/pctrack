@@ -11,6 +11,7 @@ import { createStaff } from '../partials/ManagePermission'
 import { useParams } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import { Snackbar } from '@mui/material'
+import { MultipleSelect } from "../partials/CheckBoxDropDowns";
 
 const style = {
     position: 'absolute',
@@ -28,10 +29,18 @@ const style = {
 
 const addRoomPage = (props) => {
 
-    const [locationName, setLocationName] = useState("")
-    const [city, setCity] = useState("")
-    const { id } = useParams();
+    const [location, setLocation] = useState(null)
+    const [roomName, setRoomName] = useState("")
+
     const [open, setOpen] = useState(false);
+	const registerableLocations = props.currStaff.map((item) => {
+
+		if (item.adminLevel.precedence < 3) {
+			return item.location
+		} else {
+			return null
+		}
+	}).filter((location) => location !== null);
 
 
     const successNotification = () => {
@@ -44,26 +53,27 @@ const addRoomPage = (props) => {
         setOpen(false);
       };
 
-    const onCreation = (e) => {
-        createStaff(successNotification, id, e.locationId, 1)
-
-    }
 
 
-    const createLocation = (e) => {
+	const handleCheck = (value) => {
+		console.log("LOCATION IS")
+		console.log(value)
+		setLocation(value)
+	
+	};
+
+    const createRoom = (e) => {
         e.preventDefault();
-        console.log(locationName)
-        console.log(city)
-
+		console.log(e)
         const config = {
             method: "post",
-            endpoint: "locations",
+            endpoint: "rooms",
             data: {
-                "name": locationName, 
-                "city": city
+                "name": roomName, 
+                "location": location[0]
             }
         }
-        callApi(onCreation, null, config);
+        callApi(successNotification, null, config);
     }
   return (
 
@@ -79,9 +89,8 @@ const addRoomPage = (props) => {
         >
             A Room has been added!
         </Alert>
+
         </Snackbar>
-
-
 
 
     <Box sx={style}>
@@ -89,54 +98,29 @@ const addRoomPage = (props) => {
 				<Typography variant="h4">Create a New Room</Typography>
 			</Box>
 			<Divider sx={{ margin: "1rem 0 1rem 0" }} />
-			<form onSubmit={createLocation} className="flexCol">
-				<TextField
-					size="medium"
-					name="Location"
-					label="Location"
-					// error={Boolean(firstNameErr)}
-					// helperText={firstNameErr ? firstNameErr : ""}
-					// onChange={(e) => checkInput("firstName", e.target.value)}
-                    onChange={(e) => setLocationName(e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/>
-				<TextField
-					name="Room Name"
-					label="Room Name"
-					// error={Boolean(lastNameErr)}
-					// helperText={lastNameErr ? lastNameErr : ""}
-					// onChange={(e) => checkInput("lastName", e.target.value)}
-                    onChange={(e) => setCity(e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/>
+			<form onSubmit={createRoom} className="flexCol">
 
-				{/* <TextField
-					name="email"
-					label="Email"
-					// error={Boolean(emailErr)}
-					// helperText={emailErr ? emailErr : ""}
-					// onChange={(e) => checkInput("email", e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/>
-				<TextField
-					name="password"
-					label="Password"
-					// error={Boolean(passwordErr)}
-					// helperText={passwordErr ? passwordErr : ""}
-					// onChange={(e) => checkInput("password", e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/> */}
-
-				{/* <Box sx={{ margin: "0.5rem" }} >
+				<Box sx={{ margin: "0.5rem" }} >
 					{MultipleSelect(
-						locations,
+						registerableLocations,
 						"city",
 						"Locations",
 						"Add Locations",
 						true,
 						handleCheck
 					)}
-				</Box> */}
+				</Box>
+
+				<TextField
+					name="Room Name"
+					label="Room Name"
+					// error={Boolean(lastNameErr)}
+					// helperText={lastNameErr ? lastNameErr : ""}
+					// onChange={(e) => checkInput("lastName", e.target.value)}
+                    onChange={(e) => setRoomName(e.target.value)}
+					sx={{ margin: "0.5rem" }}
+				/>
+
 				<Box className="centerHorizonal">
 					<Button type="submit" variant="contained"  sx={{marginTop:"2rem"}}>
 						Create

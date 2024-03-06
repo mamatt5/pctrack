@@ -112,7 +112,7 @@ const LoggedInHomePage = () => {
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 				<Route path="/help" element={<HelpPage />} />
 				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
-				<Route path="/addroom" element={<AddRoomPage admin={admin} />} />
+				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} />
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>

@@ -9,7 +9,7 @@ import com.fdmgroup.PCTrack.security.RsaKeyProperties;
 @EnableConfigurationProperties(RsaKeyProperties.class)
 @SpringBootApplication
 public class PcTrackApplication {
-
+ 
 	public static void main(String[] args) {
 		SpringApplication.run(PcTrackApplication.class, args);
 		System.out.println("_______________________________________");
