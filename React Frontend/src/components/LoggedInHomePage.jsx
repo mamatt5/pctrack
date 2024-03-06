@@ -13,7 +13,7 @@ import { Fade, Typography } from "@mui/material";
 import { Grow } from "@mui/material";
 import { createTheme } from '@mui/material/styles'
 import { Collapse } from "@mui/material";
-
+import AddLocationPage from "./addLocationPage";
 
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
@@ -110,6 +110,7 @@ const LoggedInHomePage = () => {
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 				<Route path="/help" element={<HelpPage />} />
+				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>
