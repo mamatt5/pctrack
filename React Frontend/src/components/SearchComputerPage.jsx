@@ -7,6 +7,7 @@ import { Box, Button, InputAdornment, InputLabel, MenuItem, OutlinedInput, Selec
 import SearchIcon from "@mui/icons-material/Search"
 import AddComputer from '../partials/AddComputer'
 import ComputerIcon from '@mui/icons-material/Computer';
+import { Fade } from '@mui/material'
 
 const getComputers = (setComputers) => {
     const config = {
@@ -119,13 +120,19 @@ export const SearchComputerPage = () => {
                 <MenuItem value="BOTH">Both</MenuItem>
             </Select>
             </div>
+            <Fade in={true}>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {
                     computers.map(computer =>
-                        <ComputerCard computer={computer} key={computer.computerId} />
+
+                       
+                            <ComputerCard computer={computer} key={computer.computerId} />
+                        
+                        
                     )
                 }
             </div>
+            </Fade>
         </div>
         <AddComputer updated={[updated, setUpdated]} />
         <Box sx={{
