@@ -3,13 +3,14 @@ import NavBar from '../partials/NavBar'
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Box, Button, Dialog, DialogContent } from '@mui/material';
+import { Box, Button, Dialog, DialogContent, Tooltip } from '@mui/material';
 import callApi from '../api/callApi';
 import ComputerCard from '../partials/ComputerCard';
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Divider } from '@mui/material';
 import RoomMandates from './RoomMandates';
+import ComputerIcon from '@mui/icons-material/Computer';
 
 
 
@@ -45,12 +46,12 @@ const ViewComputersInRoomPage = (props) => {
 
         <Box style={{ position: 'flex' }}>
         <h1> You are now viewing room {room["name"]}</h1>
-        <Button onClick={()=> handleMandatesModal(true)}>View Mandates</Button>
+        <Button variant="contained" onClick={()=> handleMandatesModal(true)}>View Mandates</Button>
         </Box>
 
       </Box>
 
-      <Dialog open={mandatesModal} onClose={() => handleMandatesModal(false)} fullWidth>
+      <Dialog open={mandatesModal} onClose={() => handleMandatesModal(false)} fullWidth maxWidth="xl">
         <DialogContent>
             <RoomMandates room={room} />
         </DialogContent>
@@ -60,7 +61,7 @@ const ViewComputersInRoomPage = (props) => {
       <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}} marginTop={10}>
         
         
-          <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={4}>
+          <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={5}>
 
               <Grid item xs={12} >
                 <Grid container justifyContent="center" spacing={5} >
@@ -76,6 +77,25 @@ const ViewComputersInRoomPage = (props) => {
               
           </Grid>
       </Box>
+      <Box sx={{
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+        backgroundColor: 'lightgray',
+        padding: '10px',
+        borderRadius: '10px'
+          }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
+        </div>
+      </Box>
+
     </Box>
 
 

@@ -54,6 +54,18 @@ const style = {
 
 };
 
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '80%',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  padding: 4,
+};
+
+
 
 export default function CustomizedTables({array}) {
     const [selectedRow, setSelectedRow] = useState(null)
@@ -62,6 +74,7 @@ export default function CustomizedTables({array}) {
 
     const openModal = (row) => {
       setSelectedRow(row);
+   
     };
 
     const closeModal = () => {
@@ -84,7 +97,7 @@ export default function CustomizedTables({array}) {
     </TableHead>
     <TableBody>
       {array.map((row) => (
-        <><StyledTableRow key={row.name}>
+        <StyledTableRow key={row.name}>
           <StyledTableCell align="left">{row.location.name}</StyledTableCell>
           <StyledTableCell align="left">{row.name}</StyledTableCell>
           <StyledTableCell align="left" sx={{ width: '100px' }}>
@@ -98,28 +111,26 @@ export default function CustomizedTables({array}) {
 
             <IconButton size="small" onClick={()=>openModal(row)}>
               <DeviceHubIcon />
+              
             </IconButton>
-
+               
 
           </StyledTableCell>
-        </StyledTableRow>
-        
-        <Modal
-          open={!!selectedRow}
-          onClose={closeModal}
           
-        >
-          <Box sx={style}>
-            {selectedRow && <RoomMandates room={selectedRow} />}
-            {console.log(row)}
-
-          </Box>
-        </Modal>
-        
-        
-        </>
-        
+        </StyledTableRow>       
       ))}
+
+<Modal
+              open={!!selectedRow}
+              onClose={closeModal}
+              
+              >
+                
+              <Box sx={modalStyle}>
+                {selectedRow && <RoomMandates room={selectedRow} />}
+                {console.log("modal opened")}
+              </Box>
+            </Modal>
     </TableBody>
   </Table>
 </TableContainer>

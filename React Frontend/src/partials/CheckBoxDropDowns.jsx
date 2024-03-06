@@ -25,6 +25,7 @@ const MenuProps = {
 };
 
 export default function SelectSmall({ array, label, item, setItem, disabledKey }) {
+	console.log(disabledKey)
 	return (
 		<FormControl sx={{ minWidth: "100%" }} component="div">
 			<InputLabel id="select">Permissions</InputLabel>
@@ -54,30 +55,41 @@ export default function SelectSmall({ array, label, item, setItem, disabledKey }
 }
 
 //
-export function MultipleSelect(arrayOfObjects, key, label, placeholder, canEdit, setSelects) {
+export function MultipleSelect(arrayOfObjects, key, label, placeholder, canEdit, setSelects, defaultValues) {
+	console.log(arrayOfObjects);
+
+
+	// freaking objects arent equal
+	//https://stackoverflow.com/questions/61947941/material-ui-autocomplete-warning-the-value-provided-to-autocomplete-is-invalid
+	const customOptionIsEqual = (option, value) => {
+	  // Customize the equality check here
+	  return option[key] === value[key];
+	};
+
 	return (
-		<Stack spacing={3} >
-			<Autocomplete
-				sx={
-					!canEdit
-						? {
-								"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-									border: "1px solid #eee",
-								},
-						  }
-						: {}
+	  <Stack spacing={3}>
+		<Autocomplete
+		  isOptionEqualToValue={customOptionIsEqual}
+		  sx={
+			!canEdit
+			  ? {
+				  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+					border: "1px solid #eee",
+				  },
 				}
-				readOnly={!canEdit}
-				onChange={(e, value) => setSelects(value)}
-				defaultValue={canEdit ? [] : arrayOfObjects}
-				multiple
-				disabled={arrayOfObjects.length === 0 ? true : false}
-				id="tags-outlined"
-				options={arrayOfObjects}
-				getOptionLabel={(option) => option[key]}
-				filterSelectedOptions
-				renderInput={(params) => <TextField {...params} label={label} placeholder={placeholder} />}
-			/>
-		</Stack>
+			  : {}
+		  }
+		  readOnly={!canEdit}
+		  onChange={(e, value) => setSelects(value)}
+		  defaultValue={canEdit ? defaultValues : arrayOfObjects}
+		  multiple
+		  disabled={arrayOfObjects.length === 0 ? true : false}
+		  id="tags-outlined"
+		  options={arrayOfObjects}
+		  getOptionLabel={(option) => option[key]}
+		  filterSelectedOptions
+		  renderInput={(params) => <TextField {...params} label={label} placeholder={placeholder} />}
+		/>
+	  </Stack>
 	);
-}
+  }

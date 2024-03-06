@@ -35,6 +35,7 @@ import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import { HelpCenter } from "@mui/icons-material";
 
 const drawerWidth = 240;
 
@@ -136,10 +137,16 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/searchroom`);
 		} else if (page === "Update Details") {
 			navigate(`/home/${id}/searchcomputer`);
+<<<<<<< HEAD
 		}else if (page === "View Reports"){
 			navigate(`/home/${id}/reports`)
 		} 
 		else if (page === "Log Out") {
+=======
+		} else if (page === "Help") {
+			navigate(`/home/${id}/help`);
+		} else if (page === "Log Out") {
+>>>>>>> main
 			localStorage.removeItem("token");
 			navigate("/");
 		}
@@ -248,7 +255,7 @@ export default function NavBar(props) {
 				{/* logging out and updating deets */}
 
 				<List>
-					{["Update Details", "Log Out"].map((text, index) => (
+					{["Update Details", "Help", "Log Out"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
 								<ListItemButton
@@ -267,7 +274,8 @@ export default function NavBar(props) {
 										}}
 									>
 										{index === 0 && <UpgradeOutlinedIcon />}
-										{index === 1 && <LogoutOutlinedIcon />}
+										{index === 1 && <HelpCenter />}
+										{index === 2 && <LogoutOutlinedIcon />}
 									</ListItemIcon>
 									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 								</ListItemButton>

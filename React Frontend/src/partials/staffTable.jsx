@@ -341,6 +341,7 @@ export default function CustomizedTables({
 															staff={row}
 															adminLevels={adminLevels}
 															admin={currStaff}
+                              setChange={setChange}
 														/>
 													</>
 												) : (

@@ -9,10 +9,20 @@ import { SearchSoftwarePage } from "./SearchSoftwarePage";
 import { useParams } from "react-router-dom";
 import Admin from "./Admin";
 import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
+import { Fade, Typography } from "@mui/material";
+import { Grow } from "@mui/material";
+import { createTheme } from '@mui/material/styles'
+import { Collapse } from "@mui/material";
+
+
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
 import { Box } from "@mui/material";
+<<<<<<< HEAD
 import { ReportsPage } from "./ReportsPage";
+=======
+import HelpPage from "./HelpPage";
+>>>>>>> main
 
 const checkAdmin = (setAdmin, setStaff, id) => {
 	const config = {
@@ -40,17 +50,38 @@ const checkAdminLevel = (data, setAdmin, setStaff) => {
 };
 
 const welcomePage = (staff) => {
+	
+
 	return (
 		<>
 			{staff.map((roles, index) => (
 				<>
 					{index === 0 ? (
 						<Box>
-							Welcome {roles.user.firstName} {roles.user.lastName}{" "}
-						</Box>
+							<Fade in={true} timeout={500}>
+								<h1>
+									Welcome {roles.user.firstName} {roles.user.lastName}{" "}
+								</h1>
+							</Fade>
+							
+							<Fade in={true} timeout={1000}>
+							<h2>
+								Your Current Admin Permissions are:{" "}
+							</h2>
+							</Fade>
+							
+						</Box> 
 					) : null}
+					
 					<Box>
-						{roles.adminLevel.name} {roles.location.city}
+						<Fade in={true} timeout={2000}>
+							<Typography>
+								{roles.adminLevel.name} Admin at {roles.location.city}
+							</Typography>
+
+						</Fade>
+						
+						
 					</Box>
 				</>
 			))}
@@ -82,7 +113,11 @@ const LoggedInHomePage = () => {
 				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
+<<<<<<< HEAD
 				<Route path="/reports" element={<ReportsPage/>}/>
+=======
+				<Route path="/help" element={<HelpPage />} />
+>>>>>>> main
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>

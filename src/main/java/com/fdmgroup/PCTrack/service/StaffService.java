@@ -11,6 +11,7 @@ import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
+import org.springframework.data.domain.Sort;
 
 
 @Service
@@ -23,12 +24,12 @@ public class StaffService {
 	}
 	
 	public List<Staff> findAllStaffs() {
-		return this.staffRepo.findAll();
+		return this.staffRepo.findAllByOrderByUserUsernameAsc();
 	}
 	
 	// pagnates staff
 	public Page<Staff> getStaffPage(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		 Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("user.username").ascending());
         return this.staffRepo.findAll(pageable);
     }
 	
