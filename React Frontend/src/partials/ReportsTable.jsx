@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 import { Modal } from '@mui/material';
 import { Box } from '@mui/material';
 import EditReports from '../components/EditReports';
+import callApi from "../api/callApi";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,25 +52,22 @@ const style = {
 
 };
 
-const updateReport = (reports, setReports, rowId) => {
-  const updatedReports = [...reports]; // Create a copy of the reports array
-  const indexToUpdate = updatedReports.findIndex(
-    (report) => report.reportId === rowId
-  );
-
-  if (indexToUpdate !== -1) {
-    const reportToUpdate = updatedReports[indexToUpdate];
-    reportToUpdate.resolved = !reportToUpdate.resolved; // Toggle resolved status
-
-    const config = {
-      method: 'put',
-      endpoint: 'reports',
-      data: reportToUpdate, // Send the updated report object
-    };
-
-    callApi(() => getReports(setReports), null, config);
-  }
-};
+// const updateReport = (reports, setReports, rowId) => {
+//   const updatedReports = [...reports]; 
+//   const indexToUpdate = updatedReports.findIndex(
+//     (report) => report.reportId === rowId
+//   );
+//   if (indexToUpdate !== -1) {
+//     const reportToUpdate = updatedReports[indexToUpdate];
+//     reportToUpdate.resolved = !reportToUpdate.resolved; 
+//     const config = {
+//       method: 'put',
+//       endpoint: 'reports',
+//       data: reportToUpdate, 
+//     };
+//     callApi(() => getReports(setReports), null, config);
+//   }
+// };
 
 // const updateReportResolved = (reports, setReport) => {
 //   const config = {
@@ -88,16 +86,16 @@ const updateReport = (reports, setReports, rowId) => {
 // }, []); 
 
 
-const getReports = (setReports) => {
-  const config = {
-    method: "get",
-    endpoint: "reports",
-  };
-  callApi(setReports, null, config);
-};
+// const getReports = (setReports) => {
+//   const config = {
+//     method: "get",
+//     endpoint: "reports",
+//   };
+//   callApi(setReports, null, config);
+// };
 
 
-export default function ReportsTable({array}) {
+export default function ReportsTable({array, getReports, setReports}) {
   const [selectedRow, setSelectedRow] = useState(null)
   const navigate = useNavigate();
   const { id } = useParams();
@@ -108,6 +106,8 @@ export default function ReportsTable({array}) {
 
   const closeModal = () => {
     setSelectedRow(null);
+    // getReports(setReports);
+    // console.log("closing Model 123")
   };
 
   const goToReportsPage = () => {
@@ -149,11 +149,9 @@ export default function ReportsTable({array}) {
         ))}
         <Modal
           open={!!selectedRow}
-          onClose={closeModal}
-          
-        >
+          onClose={closeModal}>
           <Box sx={style}>
-            {selectedRow && <EditReports report={selectedRow}/>}
+            {selectedRow && <EditReports report={selectedRow} getReportsFunc={getReports} setReports={setReports}/>}
 
           </Box>
         </Modal>

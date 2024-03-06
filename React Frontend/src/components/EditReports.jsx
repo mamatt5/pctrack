@@ -26,17 +26,18 @@ const getReports = (reportId, setReports) => {
 //   callApi(()=> getReports(setReports), null, config)
 // }
 
-const updateReport = (updatedRpt, setReports, navToReportsPage) => {
+const updateReport = (updatedRpt, setReports) => {
+  console.log(updatedRpt.reportId + "THIS IS ID ID ID 123")
   const config = {
     method: 'put',
     endpoint: 'reports',
     data : updatedRpt
   };
 
-  callApi(()=> getReports(setReports, navToReportsPage), navToReportsPage, config)
+  callApi(()=> getReports(setReports), null, config)
 }
 
-const Reports = ({report}) => {
+const Reports = ({report, getReports, setReportsFunc}) => {
   const navigate = useNavigate();
   const [reports, setReports] = useState([])
   const [reportDescription, setReportDescription] = useState('')
@@ -62,9 +63,8 @@ const Reports = ({report}) => {
 
   const handleUpdate = () => {
     const updatedReport = { ...report, description: reportDescription, resolved: reportResolved}
-    updateReport(updatedReport, setReports, navToReportsPage);
+    updateReport(updatedReport, setReports);
     setEditReportDialogue(false)
-    navigate(`/home/${id}/reports`)
     //setReportDescription('')
     //setReports(null)
   }
