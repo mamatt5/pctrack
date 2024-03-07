@@ -131,3 +131,4 @@ const addRoomPage = (props) => {
 }
 
 export default addRoomPage
+

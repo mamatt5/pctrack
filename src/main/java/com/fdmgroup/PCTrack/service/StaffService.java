@@ -92,14 +92,11 @@ public class StaffService {
 	}
 	
 	public List<Room> getRoomsStaffIsAdmin(int userId) {
-		System.out.println(userId);
+	
 		return this.staffRepo.findRoomsStaffIsAdmin(userId);
 	}
 	
-//	public void assignLocationAdmin(int locationId, int userId) {
-//		AdminLevel adminLevel = new AdminLevel("Location", 2);
-//		Location location = this.locationRepository.findById(locationId).get();
-//		User user = this.userRepository.findById(userId).get();
-//		
-//	}
+	public List<Room> getRoomStaffIsRegisterdIn (int userId) {
+		return this.staffRepo.findRoomsStaffIsRegisteredIn(userId);
+	}
 }
