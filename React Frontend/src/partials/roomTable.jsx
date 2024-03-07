@@ -51,6 +51,7 @@ const style = {
   boxShadow: 24,
   padding: 6,
   borderRadius: 8,
+  
 
 };
 
@@ -63,6 +64,7 @@ const modalStyle = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   padding: 4,
+  
 };
 
 
@@ -86,7 +88,18 @@ export default function CustomizedTables({array}) {
     }
 
   return (
-    <TableContainer component={Paper}  sx={{maxWidth:"40vw"}}>
+    <TableContainer component={Paper}  sx={
+      {    
+    overflowY: 'scroll', // Enable vertical scrolling
+    maxHeight: '90vh',
+    padding: '20px',
+    '-ms-overflow-style': 'none',  // Hide scrollbar for Internet Explorer and Edge
+    'scrollbar-width': 'none', // Hide scrollbar for Firefox
+    '&::-webkit-scrollbar': {
+        display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari)
+    },
+    marginTop: '90px'
+        }}>
   <Table sx={{ minWidth: 700 }} aria-label="customized table">
     <TableHead>
       <TableRow>

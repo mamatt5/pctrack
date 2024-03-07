@@ -121,19 +121,23 @@ const HelpPage = () => {
             </AccordionDetails>
             </Accordion>
 
-            <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography> </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <Typography align='left'>
-                     
-                </Typography>
-            </AccordionDetails>
-            </Accordion>
+            
         </AccordionDetails>
       
       </Accordion>
+
+
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>Location</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography align='left'>
+            Users with business admin permissions are allowed to create locations in the Add Location tab.
+            </Typography>
+        </AccordionDetails>
+      </Accordion>
+
 
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -152,6 +156,18 @@ const HelpPage = () => {
                 <Typography align='left'>
                     and mandates registered for that room. If permissions allow, the user can also create/edit a mandate.
                 </Typography>
+            </AccordionDetails>
+            </Accordion>
+
+            <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Creating rooms</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <Typography align='left'>
+                    Users with location admin permissions are able to create rooms at the locations where they hold these permissions.
+                </Typography>
+           
             </AccordionDetails>
             </Accordion>
 
@@ -232,14 +248,18 @@ const HelpPage = () => {
         </AccordionDetails>
       </Accordion>
 
+
+      
+      
+
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Software</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Guides on using software applications, updating software, and resolving software-related problems.
-          </Typography>
+          <Typography align='left'>
+          In the View Software tab, users are presented with a comprehensive list of all installed software, including their respective versions, across all computers.
+            </Typography>
         </AccordionDetails>
       </Accordion>
     </div>
