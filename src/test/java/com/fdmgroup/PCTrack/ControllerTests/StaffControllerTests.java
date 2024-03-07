@@ -99,4 +99,11 @@ public class StaffControllerTests {
 		when(staffService.findAllUsersPartialMatch("test", 1, 10)).thenReturn(page);
 		assertEquals(paginatedStaffList, staffController.getStaffPartial("test",1, 10));
 	}
+	
+	@Test
+	void get_rooms_where_staff_is_registered() {
+		List<Room> registeredRoomList = new ArrayList<>();
+		when(staffService.getRoomStaffIsRegisterdIn(0)).thenReturn(registeredRoomList);
+		assertEquals(registeredRoomList, staffController.findRoomsWhereStaffIsRegistered(0));
+	}
 }
