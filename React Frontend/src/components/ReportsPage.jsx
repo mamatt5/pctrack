@@ -32,7 +32,7 @@ export const ReportsPage = () => {
       <>
         <Box className="dashBoardPadding">
           <h1>Reports</h1>
-          <Button onClick={()=>{getReports(setReports)}}>Refresh</Button>
+          <Button variant="outlined" sx={{margin: '0px 0px 15px 0px'}}onClick={()=>{getReports(setReports)}}>Refresh</Button>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <ReportTab />
                   </Box>
