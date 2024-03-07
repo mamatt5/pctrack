@@ -137,8 +137,6 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/searchcomputer`);
 		} else if (page === "Search Rooms") {
 			navigate(`/home/${id}/searchroom`);
-		} else if (page === "Update Details") {
-			navigate(`/home/${id}/searchcomputer`);
 		} else if (page === "Help") {
 			navigate(`/home/${id}/help`);
 		} else if (page === "Add Location") {
@@ -255,7 +253,7 @@ export default function NavBar(props) {
 				{/* logging out and updating deets */}
 
 				<List>
-					{["Update Details", "Help", "Log Out"].map((text, index) => (
+					{["Help", "Log Out"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
 								<ListItemButton
@@ -273,9 +271,9 @@ export default function NavBar(props) {
 											justifyContent: "center",
 										}}
 									>
-										{index === 0 && <UpgradeOutlinedIcon />}
-										{index === 1 && <HelpCenter />}
-										{index === 2 && <LogoutOutlinedIcon />}
+									
+										{index === 0 && <HelpCenter />}
+										{index === 1 && <LogoutOutlinedIcon />}
 									</ListItemIcon>
 									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 								</ListItemButton>
