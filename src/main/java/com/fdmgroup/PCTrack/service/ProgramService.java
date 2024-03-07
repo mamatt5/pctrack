@@ -67,13 +67,14 @@ public class ProgramService {
 
 	public void deleteBySoftwareId(int softwareId)
 	{
-		for (Program p : findAllPrograms()) {
+		List<Program> programs = findAllPrograms();
+		if (programs.isEmpty()){
+			throw new RuntimeException("Program does not exist");
+		}
+		for (Program p : programs) {
 			int index = p.getSoftware().getSoftwareId();
 			if(index == softwareId) {
 				programRepository.deleteById(softwareId);
-			}
-			else {
-				throw new RuntimeException("Program does not exist");
 			}
 		}
 	}
