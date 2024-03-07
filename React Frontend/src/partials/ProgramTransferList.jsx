@@ -31,16 +31,6 @@ const returnProgram = (programs, num) => {
     return object;
 }
 
-const delCheck = (num, programs) => {
-    let arr = []
-    programs.map(program => {
-        if (program.software.softwareId == num) {
-            arr.push(program.programId);
-        }
-    });
-    return arr;
-}
-
 const customList = (array, programs, [open, setOpen], [softwaresSelected, setSoftwaresSelected], [programsSelected, setProgramsSelected]) => {
 
     const style = {

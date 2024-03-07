@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import AddComputer from '../partials/AddComputer'
 import ComputerIcon from '@mui/icons-material/Computer';
 import { Fade } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
 const getComputers = (setComputers) => {
     const config = {
@@ -25,6 +26,16 @@ const getRooms = (setRooms) => {
     }
 
     callApi(setRooms, null, config);
+}
+
+const getStaff = (setStaff, id) => {
+    
+    const config = {
+        method: "get",
+        endpoint: `staff/${id}`
+    }
+
+    callApi(setStaff, null, config);
 }
 
 const onSearchChange = (setComputers, computerCode, roomId, role) => {
@@ -50,16 +61,19 @@ export const SearchComputerPage = () => {
     const [updated, setUpdated] = useState(true);
     const [roomId, setRoomId] = useState("%%");
     const [role, setRole] = useState("%%");
+    const [staff, setStaff] = useState([]);
+    const { id } = useParams();
 
     useEffect(() => {
         getComputers(setComputers);
         getRooms(setRooms);
+        getStaff(setStaff, id);
     }, []);
 
     useEffect(() => {
         getComputers(setComputers);
         setUpdated(true);
-    }, [updated])
+    }, [updated]);
 
     return (
         <>
@@ -120,15 +134,17 @@ export const SearchComputerPage = () => {
                         <MenuItem value="BOTH">Both</MenuItem>
                     </Select>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {
-                        computers.map(computer =>
-                            <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} />
-                        )
-                    }
-                </div>
+                <Fade in={true}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {
+                            computers.map(computer =>
+                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} staff={staff} />
+                            )
+                        }
+                    </div>
+                </Fade>
             </div>
-            <AddComputer updated={[updated, setUpdated]} computer={null} />
+            <AddComputer updated={[updated, setUpdated]} computer={null} staff={staff} />
             <Box sx={{
                 position: 'fixed',
                 top: 80,

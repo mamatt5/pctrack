@@ -11,6 +11,7 @@ import ComputerIcon from '@mui/icons-material/Computer';
 import callApi from '../api/callApi';
 import { ThemeProvider } from '@emotion/react';
 import AddComputer from './AddComputer';
+import { useEffect } from 'react';
 
 const style = {
     position: 'absolute',
@@ -34,8 +35,34 @@ const theme = createTheme({
     },
 });
 
+const checkStaff = (staff, computer) => {
+    var bool = false;
+    staff.map(role => {
+        if (role.location.locationId == computer.room.location.locationId) {
+            switch(role.adminLevel.precedence) {
+                case 100:
+                    break;
+                case 3:
+                    if (role.roomAssigned.length == 0) {
+                        bool = true;
+                    } else {
+                        if (role.roomAssigned.includes(computer.room)) {
+                            bool = true;
+                        }
+                    }
+                    break;
+                default:
+                    bool = true;
+                    break;
+            }
+        }
+    })
+    return bool;
+}
+
+
 const ComputerCard = (props) => {
-    const { computer } = props;
+    const { computer, staff } = props;
     const [open, setModal] = useState(false);
     const [render, setRender] = useState(false);
     const [updated, setUpdated] = props.updated;
@@ -139,15 +166,17 @@ const ComputerCard = (props) => {
                     {computer.role !== 'NONE' && <h3>Role: {computer.role}</h3>}
                     {computer.programList?.length > 0 && <ProgramTable array={computer.programList} />}
                     <br></br>
-                    <ThemeProvider theme={theme}>
-                        <AddComputer updated={[updated,setUpdated]} computer={computer} />
-                        <Button
-                            variant="contained"
-                            color="error"
-                            sx={{margin: "50px"}}
-                            onClick={delComputer}
-                        >Delete Computer</Button>
-                    </ThemeProvider>
+                    {checkStaff(staff, computer) &&
+                        <ThemeProvider theme={theme}>
+                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} />
+                            <Button
+                                variant="contained"
+                                color="error"
+                                sx={{ margin: "50px" }}
+                                onClick={delComputer}
+                            >Delete Computer</Button>
+                        </ThemeProvider>
+                    }
                 </Box>
             </Modal>
         </Card>
