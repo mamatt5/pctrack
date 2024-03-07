@@ -63,7 +63,7 @@ const welcomePage = (staff) => {
 							
 							<Fade in={true} timeout={1000}>
 							<h2>
-								Your Current Admin Permissions are:{" "}
+								Your Current Permissions are:{" "}
 							</h2>
 							</Fade>
 							
@@ -72,9 +72,16 @@ const welcomePage = (staff) => {
 					
 					<Box>
 						<Fade in={true} timeout={2000}>
+							{roles.adminLevel.name === "" ? 
+							<Typography>
+								User at {roles.location.city}
+							</Typography>:
+
 							<Typography>
 								{roles.adminLevel.name} Admin at {roles.location.city}
 							</Typography>
+							}
+							
 
 						</Fade>
 						
