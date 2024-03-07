@@ -194,13 +194,13 @@ const AddComputer = (props) => {
                                 disableElevation
                                 sx={{
                                     position: "fixed",
-                                    bottom: "10%",
-                                    right: "10%",
+                                    top: "28%",
+                                    right: "1.5%",
                                     zIndex: 1000,
                                 }}
                                 onClick={openModal}
                             >
-                                Add New Computer
+                                Add Computer
                             </Button>
                         )
                     } else {

@@ -137,8 +137,8 @@ const CreateReport  = (props) => {
                 disableElevation
                 sx={{
                     position: "fixed",
-                    bottom: "15%",
-                    right: "10%",
+                    top: "23%",
+                    right: "1.5%",
                     zIndex: 1000,
                 }}
                 onClick={openModal}

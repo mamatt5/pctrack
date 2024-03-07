@@ -105,7 +105,7 @@ const ViewComputersInRoomPage = (props) => {
                     <ComputerIcon style={{ color: '#FF6961'}} /> None
                 </div>
                 <div style={{fontSize: '11px'}}><em>
-                  *Check help for Dev/BI software list
+                  *Check Help for Dev/BI software list
                   </em></div>
             </>
         )}
