@@ -15,6 +15,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ReportIcon from '@mui/icons-material/Report';
 import ListItemText from "@mui/material/ListItemText";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -36,6 +37,9 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { HelpCenter } from "@mui/icons-material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
+import LivingIcon from '@mui/icons-material/Living';
+import { checkAdmin } from "../components/LoggedInHomePage";
+
 
 const drawerWidth = 240;
 
@@ -105,16 +109,41 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 );
 
 export default function NavBar(props) {
-	const { admin } = props;
+	
+	const [admin, setAdmin] = useState(false);
+	const [staff, setStaff] = useState([]);
 	const { id } = useParams();
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
+ 
+	const [businessAdmin, setBusinessAdmin] = useState(false);
+	const [locationAdmin, setLocationAdmin] = useState(false);
+	const [roomAdmin, setRoomAdmin] = useState(false);
+	const [test, setTest] = useState(null)
 
-	const [openExpenseCreator, setOpenExpenseCreator] = useState(false);
 
-	const handleOpen = () => setOpenExpenseCreator(true);
-	const handleClose = () => setOpenExpenseCreator(false);
+
+
+	useEffect(() => {
+	
+		checkAdmin(setAdmin, setStaff, id);
+
+		staff.forEach(staffMember => {
+ 
+			let precedence = staffMember.adminLevel.precedence;
+	
+
+			if (precedence === 1) {  
+				setBusinessAdmin(true);
+			} else if (precedence === 2) {
+				setLocationAdmin(true);
+			} else if (precedence === 3) {  
+				setRoomAdmin(true);
+			}
+		});
+	}, [props]);
+
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -137,10 +166,14 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/searchroom`);
 		} else if (page === "Update Details") {
 			navigate(`/home/${id}/searchcomputer`);
-		} else if (page === "Help") {
+		}else if (page === "View Reports"){
+			navigate(`/home/${id}/reports`)
+		}else if (page === "Help") {
 			navigate(`/home/${id}/help`);
 		} else if (page === "Add Location") {
 			navigate(`/home/${id}/addlocation`);
+		} else if (page === "Add Room") {
+			navigate(`/home/${id}/addroom`);
 		} else if (page === "Log Out") {
 			localStorage.removeItem("token");
 			navigate("/");
@@ -185,10 +218,19 @@ export default function NavBar(props) {
 				{/* admin stuff  */}
 				{admin ? (
 					<>
-						{["Manage Users", "Add Location"].map((text, index) => (
+						{["Manage Users", "Add Location", "Add Room"].map((text, index) => (
+							
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<Tooltip title={text} placement="right">
+									{console.log(businessAdmin)}
 									<ListItemButton
+										
+										disabled={
+											// index === 0 ? !businessAdmin :
+											index === 1 ? !businessAdmin  :
+											index === 2 ? !(businessAdmin || locationAdmin)  :
+											false
+										}
 										sx={{
 											minHeight: 48,
 											justifyContent: open ? "initial" : "center",
@@ -201,10 +243,13 @@ export default function NavBar(props) {
 												minWidth: 0,
 												mr: open ? 3 : "auto",
 												justifyContent: "center",
+												
+												
 											}}
 										>
-											{index === 0 && <AdminPanelSettingsIcon />}
+											{index === 0 && <AdminPanelSettingsIcon/>}
 											{index === 1 && <AddLocationIcon />}
+											{index === 2 && <ChairIcon />}
 										</ListItemIcon>
 										<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 									</ListItemButton>
@@ -216,7 +261,7 @@ export default function NavBar(props) {
 
 				{/* staff + admin stuff */}
 				<List sx={{ padding: 0 }}>
-					{["Search Rooms", "Search Computer", "Search Software"].map((text, index) => (
+					{["Search Rooms", "Search Computer", "Search Software","View Reports"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
 								<ListItemButton
@@ -237,6 +282,7 @@ export default function NavBar(props) {
 										{index === 0 && <MeetingRoomIcon />}
 										{index === 1 && <ComputerIcon />}
 										{index === 2 && <ApiIcon />}
+										{index === 3 && <ReportIcon/>}
 									</ListItemIcon>
 									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 								</ListItemButton>
@@ -250,7 +296,7 @@ export default function NavBar(props) {
 				{/* logging out and updating deets */}
 
 				<List>
-					{["Update Details", "Help", "Log Out"].map((text, index) => (
+					{["Help", "Log Out"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
 								<ListItemButton
@@ -268,9 +314,9 @@ export default function NavBar(props) {
 											justifyContent: "center",
 										}}
 									>
-										{index === 0 && <UpgradeOutlinedIcon />}
-										{index === 1 && <HelpCenter />}
-										{index === 2 && <LogoutOutlinedIcon />}
+									
+										{index === 0 && <HelpCenter />}
+										{index === 1 && <LogoutOutlinedIcon />}
 									</ListItemIcon>
 									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 								</ListItemButton>

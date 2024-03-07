@@ -37,14 +37,14 @@ public class RoomAdminController {
 	} 
 	
 	@PutMapping("editRoomAdmin/{staffId}")
-	public RoomAdmin findRoomsWhereStaffIsAdmin(@PathVariable int staffId, @RequestBody RoomAdmin admin) {
+	public RoomAdmin assignRoomAdminToStaff(@PathVariable int staffId, @RequestBody RoomAdmin admin) {
 		roomAdminService.update(admin); 
 		return roomAdminService.getRoomAdminById(admin.getStaffId());
 		     
 	}
 	
 	@PostMapping("createRoomAdmin")
-	public void findRoomsWhereStaffIsAdmin(@RequestBody RoomAdmin staff) {
+	public void createNewRoomAdmin(@RequestBody RoomAdmin staff) {
 		roomAdminService.save(staff);
 		     
 	}

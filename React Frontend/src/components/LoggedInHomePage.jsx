@@ -14,13 +14,15 @@ import { Grow } from "@mui/material";
 import { createTheme } from '@mui/material/styles'
 import { Collapse } from "@mui/material";
 import AddLocationPage from "./addLocationPage";
+import AddRoomPage from "./addRoomPage";
 
 
-import UpdateDetailsPage from "./UpdateDetailsPage";
+
 import { Box } from "@mui/material";
+import { ReportsPage } from "./ReportsPage";
 import HelpPage from "./HelpPage";
 
-const checkAdmin = (setAdmin, setStaff, id) => {
+export const checkAdmin = (setAdmin, setStaff, id) => {
 	const config = {
 		method: "get",
 		endpoint: `staff/${id}`,
@@ -62,7 +64,7 @@ const welcomePage = (staff) => {
 							
 							<Fade in={true} timeout={1000}>
 							<h2>
-								Your Current Admin Permissions are:{" "}
+								Your Current Permissions are:{" "}
 							</h2>
 							</Fade>
 							
@@ -71,9 +73,16 @@ const welcomePage = (staff) => {
 					
 					<Box>
 						<Fade in={true} timeout={2000}>
+							{roles.adminLevel.name === "" ? 
+							<Typography>
+								User at {roles.location.city}
+							</Typography>:
+
 							<Typography>
 								{roles.adminLevel.name} Admin at {roles.location.city}
 							</Typography>
+							}
+							
 
 						</Fade>
 						
@@ -96,6 +105,7 @@ const LoggedInHomePage = () => {
 		checkAdmin(setAdmin, setStaff, id);
 	}, []);
 
+	console.log(staff)
 	const isHomePage = useMatch("/home/:id");
 
 	return (
@@ -106,13 +116,16 @@ const LoggedInHomePage = () => {
 				<Route path="/searchroom" element={<SearchRoomPage />} />
 				<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
 				<Route path="/searchcomputer" element={<SearchComputerPage />} />
-				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
+				<Route path="/reports" element={<ReportsPage/>}/>
 				<Route path="/help" element={<HelpPage />} />
 				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
+				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} />
 			</Routes>
-			<NavBar admin={admin} />
+			{console.log("boi")}
+			{console.log(staff)}
+			<NavBar admin={admin} staff={staff} />
 		</Box>
 	);
 };

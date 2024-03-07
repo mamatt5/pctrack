@@ -1,6 +1,8 @@
 package com.fdmgroup.PCTrack.ControllerTests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,6 +23,7 @@ import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Software;
 import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.model.Room;
+import com.fdmgroup.PCTrack.model.SearchConfig;
 import com.fdmgroup.PCTrack.service.ComputerService;
 
 
@@ -41,6 +44,7 @@ public class ComputerControllerTests {
     Room room2;
     Room room3;
     Location location1;
+    SearchConfig searchConfig;
      
      
 	@BeforeEach
@@ -72,20 +76,21 @@ public class ComputerControllerTests {
 	
 	@Test
 	void createComputer_test() {
-
 		Computer computer1 = new Computer(15037, room1);
 		computer1.setProgramList(Arrays.asList(vscode, eclipse,nodejs));
+		when(computerService.findById(computer1.getComputerId())).thenReturn(computer1);
 		
-		when(computerService.findById(0)).thenReturn(computer1);
-		assertSame(computer1, computerController.createNewComputer(computer1));
-		verify(computerService, times(1)).save(computer1);
+		Computer createdComputer = computerController.createNewComputer(computer1);
+		verify(computerService, times(1)).save(any(Computer.class));
+		verify(computerService, times(1)).update(any(Computer.class));
+		
+		assertEquals(createdComputer, computer1);
 	}
 	
 	@Test
 	void updateComputer_test() {
 		
 		Computer computer1 = new Computer(15037, room1);
-		computer1.setProgramList(Arrays.asList(vscode, eclipse,nodejs));
 		
 		Computer updatedComputer1 = new Computer(15037, room1);
 		updatedComputer1.setProgramList(Arrays.asList(vscode));
@@ -93,6 +98,8 @@ public class ComputerControllerTests {
 		when(computerService.findById(0)).thenReturn(updatedComputer1);
 		assertSame(computerController.updateComputer(computer1), updatedComputer1);
 		verify(computerService, times(1)).update(computer1);
+		
+		computer1.setProgramList(Arrays.asList(vscode, eclipse,nodejs));
 	}
 	
 	@Test
@@ -120,5 +127,28 @@ public class ComputerControllerTests {
 		when(computerService.findAllComputers()).thenReturn(allComputers);
 		assertSame(computerController.getComputers(), allComputers);
 		verify(computerService, times(1)).findAllComputers();
+	}
+	
+	@Test
+	public void search_computer_by_code() {
+		Computer computer1 = new Computer(1);
+		Computer computer2 = new Computer(2);
+		Computer computer3 = new Computer(3);
+		Computer computer4 = new Computer(4);
+		
+		SearchConfig searchConfig1 = new SearchConfig("1", "FDM", "BOTH");
+		SearchConfig searchConfig2 = new SearchConfig("2", "FDM", "BOTH");
+		SearchConfig searchConfig3 = new SearchConfig("3", "FDM", "BOTH");
+		SearchConfig searchConfig4 = new SearchConfig("4", "FDM", "BOTH");
+		
+		when(computerService.searchByComputerCode("1", "FDM", "BOTH")).thenReturn(Arrays.asList(computer1));
+		when(computerService.searchByComputerCode("2", "FDM", "BOTH")).thenReturn(Arrays.asList(computer2));
+		when(computerService.searchByComputerCode("3", "FDM", "BOTH")).thenReturn(Arrays.asList(computer3));
+		when(computerService.searchByComputerCode("4", "FDM", "BOTH")).thenReturn(Arrays.asList(computer4));
+		
+		assertEquals(Arrays.asList(computer1), computerController.searchByComputerCode(searchConfig1));
+		assertEquals(Arrays.asList(computer2), computerController.searchByComputerCode(searchConfig2));
+		assertEquals(Arrays.asList(computer3), computerController.searchByComputerCode(searchConfig3));
+		assertEquals(Arrays.asList(computer4), computerController.searchByComputerCode(searchConfig4));
 	}
 }

@@ -70,6 +70,11 @@ public class StaffController {
 		return staffService.getRoomsStaffIsAdmin(userId);
 	}
 	
+	@GetMapping("staff/getregisteredrooms/{userId}")
+	public List<Room> findRoomsWhereStaffIsRegistered(@PathVariable int userId) {
+		return staffService.getRoomStaffIsRegisterdIn(userId);
+	}
+	
 	@DeleteMapping("staff/{staffid}")
 	public void deleteStaff(@PathVariable int staffid) {
 		staffService.deleteById(staffid);
