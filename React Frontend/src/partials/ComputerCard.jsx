@@ -46,7 +46,7 @@ const checkStaff = (staff, computer) => {
                     if (role.roomAssigned.length == 0) {
                         bool = true;
                     } else {
-                        if (role.roomAssigned.includes(computer.room)) {
+                        if (role.roomAssigned.filter(x => x.roomId === computer.room.roomId).length > 0) {
                             bool = true;
                         }
                     }
