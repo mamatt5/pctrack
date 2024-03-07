@@ -61,7 +61,7 @@ export const SearchRoomPage = (props) => {
 
   return (
     <>
-      <h1>Rooms</h1>
+      
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         
         <CustomizedTables array={rooms} />

@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check';
 import { Snackbar } from '@mui/material'
+import Fade from '@mui/material/Fade';
 
 
 const style = {
@@ -84,8 +85,12 @@ const addLocationPage = (props) => {
 
 
 
+	<Fade in={true}>
+    	<Box sx={style}>
+		
 
-    <Box sx={style}>
+
+		
 			<Box>
 				<Typography variant="h4">Create a New Location</Typography>
 			</Box>
@@ -144,7 +149,10 @@ const addLocationPage = (props) => {
 					</Button>
 				</Box>
 			</form>
+			
 		</Box>
+		</Fade>
+		
     </>
   )
 }
