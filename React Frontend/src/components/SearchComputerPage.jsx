@@ -37,7 +37,7 @@ const getReport = (setReport) => {
     callApi(setReport, null, config);
 }
 
-const onSearchChange = (setComputers, computerCode, roomId) => {
+const onSearchChange = (setComputers, computerCode, roomId, role) => {
     //const onSearchChange = (setComputers, computerCode, roomId, role) => {
     const searchConfig = {
         "computerCode": computerCode,
@@ -151,7 +151,7 @@ export const SearchComputerPage = () => {
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {
                     computers.map(computer =>
-                        <ComputerCard computer={computer} key={computer.computerId} />
+                        <ComputerCard computer={computer} key={computer.computerId} updated={[updated,setUpdated]}/>
                     )
                 }
             </div>
