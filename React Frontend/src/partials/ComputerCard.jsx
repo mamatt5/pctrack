@@ -38,7 +38,7 @@ const ComputerCard = (props) => {
     const { computer } = props;
     const [open, setModal] = useState(false);
     const [render, setRender] = useState(false);
-    const [updated, setUpdated] = props.updated;
+    const [updated, setUpdated] = useState(true);
     const [addComputer, setAddComputer] = useState(false);
 
     const openModal = () => {
