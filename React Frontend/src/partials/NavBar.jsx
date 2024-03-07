@@ -15,6 +15,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ReportIcon from '@mui/icons-material/Report';
 import ListItemText from "@mui/material/ListItemText";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -137,7 +138,11 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/searchcomputer`);
 		} else if (page === "Search Rooms") {
 			navigate(`/home/${id}/searchroom`);
-		} else if (page === "Help") {
+		} else if (page === "Update Details") {
+			navigate(`/home/${id}/searchcomputer`);
+		}else if (page === "View Reports"){
+			navigate(`/home/${id}/reports`)
+		}else if (page === "Help") {
 			navigate(`/home/${id}/help`);
 		} else if (page === "Add Location") {
 			navigate(`/home/${id}/addlocation`);
@@ -219,7 +224,7 @@ export default function NavBar(props) {
 
 				{/* staff + admin stuff */}
 				<List sx={{ padding: 0 }}>
-					{["Search Rooms", "Search Computer", "Search Software"].map((text, index) => (
+					{["Search Rooms", "Search Computer", "Search Software","View Reports"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
 								<ListItemButton
@@ -240,6 +245,7 @@ export default function NavBar(props) {
 										{index === 0 && <MeetingRoomIcon />}
 										{index === 1 && <ComputerIcon />}
 										{index === 2 && <ApiIcon />}
+										{index === 3 && <ReportIcon/>}
 									</ListItemIcon>
 									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 								</ListItemButton>

@@ -15,8 +15,8 @@ public class Report {
 	private Computer computer;
 	
 	@ManyToOne
-	@JoinColumn(name = "FK_STAFF_ID")
-	private Staff staff;
+	@JoinColumn(name = "FK_USER_ID")
+	private User user;
 	
 	@Column(name = "DATE_CREATED")
 	private LocalDate dateCreated;
@@ -27,13 +27,13 @@ public class Report {
 	@Column(name = "RESOLVED")
 	private boolean resolved;
 
-	public Report(Computer computer, Staff staff, LocalDate dateCreated, String description, boolean resolved) {
+	public Report(Computer computer, User user, LocalDate dateCreated, String description) {
 		super();
 		this.computer = computer;
-		this.staff = staff;
+		this.user = user;
 		this.dateCreated = dateCreated;
 		this.description = description;
-		this.resolved = resolved;
+		this.resolved = false;
 	}
 	public Report() {
 		super();
@@ -50,11 +50,11 @@ public class Report {
 	public void setComputer(Computer computer) {
 		this.computer = computer;
 	}
-	public Staff getStaff() {
-		return staff;
+	public User getUser() {
+		return user;
 	}
-	public void setStaff(Staff staff) {
-		this.staff = staff;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public LocalDate getDateCreated() {
 		return dateCreated;
@@ -76,7 +76,7 @@ public class Report {
 	}
 	@Override
 	public String toString() {
-		return "Report [reportId=" + reportId + ", computer=" + computer + ", staff=" + staff + ", dateCreated="
+		return "Report [reportId=" + reportId + ", computer=" + computer + ", user=" + user + ", dateCreated="
 				+ dateCreated + ", description=" + description + ", resolved=" + resolved + "]";
 	}
 }

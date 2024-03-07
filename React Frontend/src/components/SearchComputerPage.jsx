@@ -6,6 +6,7 @@ import callApi from '../api/callApi'
 import { Box, Button, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
 import SearchIcon from "@mui/icons-material/Search"
 import AddComputer from '../partials/AddComputer'
+import CreateReport from '../partials/CreateReport'
 import ComputerIcon from '@mui/icons-material/Computer';
 import { Fade } from '@mui/material'
 
@@ -27,7 +28,17 @@ const getRooms = (setRooms) => {
     callApi(setRooms, null, config);
 }
 
-const onSearchChange = (setComputers, computerCode, roomId, role) => {
+const getReport = (setReport) => {
+    const config = {
+        method: "get",
+        endpoint: "reports"
+    }
+
+    callApi(setReport, null, config);
+}
+
+const onSearchChange = (setComputers, computerCode, roomId) => {
+    //const onSearchChange = (setComputers, computerCode, roomId, role) => {
     const searchConfig = {
         "computerCode": computerCode,
         "roomId": roomId,
@@ -48,6 +59,8 @@ export const SearchComputerPage = () => {
     const [rooms, setRooms] = useState([]);
     const [search, setSearch] = useState("");
     const [updated, setUpdated] = useState(true);
+    const [report, setReport] = useState([])
+    const [reportUpdated, setReportUpdated] = useState(true);
     const [roomId, setRoomId] = useState("%%");
     const [role, setRole] = useState("%%");
 
@@ -60,6 +73,11 @@ export const SearchComputerPage = () => {
         getComputers(setComputers);
         setUpdated(true);
     }, [updated])
+
+    useEffect(() => {
+        getReport(setReport);
+        setReportUpdated(true);
+    }, [reportUpdated])
 
     return (
         <>
@@ -130,27 +148,36 @@ export const SearchComputerPage = () => {
                     </div>
                 </Fade>
             </div>
-            <AddComputer updated={[updated, setUpdated]} computer={null} />
-            <Box sx={{
-                position: 'fixed',
-                top: 80,
-                right: 20,
-                backgroundColor: 'lightgray',
-                padding: '10px',
-                borderRadius: '10px'
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                    <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                    <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
-                </div>
-            </Box>
-
-        </>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {
+                    computers.map(computer =>
+                        <ComputerCard computer={computer} key={computer.computerId} />
+                    )
+                }
+            </div>
+        
+        <AddComputer updated={[updated, setUpdated]} computer={null} />
+        <CreateReport reportUpdated={[reportUpdated,setReportUpdated]}/>
+        <Box sx={{
+            position: 'fixed',
+            top: 80,
+            right: 20,
+            backgroundColor: 'lightgray',
+            padding: '10px',
+            borderRadius: '10px'
+          }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+          <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
+        </div>
+      </Box>
+        
+    </>
     )
 
 

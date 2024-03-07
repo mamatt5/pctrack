@@ -24,12 +24,13 @@ public class UserDataLoader implements ApplicationRunner {
 	private MandateService mandateService;
 	private AdminLevelService adminService;
 	private RoomAdminService roomAdminService;
+	private ReportService reportService;
 
 	@Autowired
 	public UserDataLoader(UserService userService, LocationService locationService, StaffService staffService,
 			AdminLevelService adminService, ComputerService computerService, SoftwareService programService,
 			RoomService roomService, MandateService mandateService, ProgramService programVersionService,
-			RoomAdminService roomAdminService)
+			RoomAdminService roomAdminService, ReportService reportService)
 
 	{
 		super();
@@ -43,6 +44,7 @@ public class UserDataLoader implements ApplicationRunner {
 		this.adminService = adminService;
 		this.programVersionService = programVersionService;
 		this.roomAdminService = roomAdminService;
+		this.reportService = reportService;
 	}
 
 	@Override
@@ -346,7 +348,7 @@ public class UserDataLoader implements ApplicationRunner {
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c42);
 
-		Computer c43 = new Computer(15091, room5);
+		Computer c43 = new Computer(15092, room5);
 		computerService.save(c43);
 		c43.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV3, pythonV1, npmV4, sql8wbV1, sqlShellV1, excelV1,
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
@@ -424,13 +426,13 @@ public class UserDataLoader implements ApplicationRunner {
 				microsoftSSMSV1, gitV1, jdkV1));
 		computerService.update(c55);
 
-		Computer c56 = new Computer(15091, room5);
+		Computer c56 = new Computer(15093, room5);
 		computerService.save(c56);
 		c56.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV2, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
 		computerService.update(c56);
 
-		Computer c57 = new Computer(72196, room5);
+		Computer c57 = new Computer(72190, room5);
 		computerService.save(c57);
 		c57.setProgramList(Arrays.asList(vscodeV1, eclipseV1, nodejsV7, pythonV1, npmV1, sql8wbV1, sqlShellV1, excelV1,
 				microsoftSSMSV1, gitV1, jdkV1, powerBiV1));
@@ -1063,5 +1065,83 @@ public class UserDataLoader implements ApplicationRunner {
 		String mandate3Desc = "We need 10 DEV and BI-ready computers.";
 		Mandate mandate3 = new Mandate(room3, roomAdmin3, mandate3Desc, "2024-03-10");
 		mandateService.save(mandate3);
+		
+		//Reports
+		String reportDesc1 = "No mouse and keyboard.";
+		String reportDesc2 = "Can't connect to internet.";
+		String reportDesc3 = "No mouse.";
+		String reportDesc4 = "No keyboard.";
+		String reportDesc5 = "Cannot boot up.";
+		Report r1 = new Report(c6, u00, LocalDate.of(2024,1,1), reportDesc5);
+		Report r2 = new Report(c9, u00, LocalDate.of(2024,1,1), reportDesc1);
+		Report r3 = new Report(c14, u00, LocalDate.of(2024,1,1), reportDesc1);
+		Report r4 = new Report(c15, u00, LocalDate.of(2024,1,1), reportDesc2);
+		Report r5 = new Report(c17, u0, LocalDate.of(2024,1,4), reportDesc3);
+		Report r6 = new Report(c19, u0, LocalDate.of(2024,1,4), reportDesc3);
+		Report r7 = new Report(c20, u0, LocalDate.of(2024,1,4), reportDesc2);
+		Report r8 = new Report(c21, u0, LocalDate.of(2024,1,5), reportDesc5);
+		Report r9 = new Report(c22, u0, LocalDate.of(2024,2,5), reportDesc5);
+		Report r10 = new Report(c23, u2, LocalDate.of(2024,1,6), reportDesc1);
+		Report r11 = new Report(c24, u13, LocalDate.of(2024,1,12), reportDesc1);
+		Report r12 = new Report(c27, u15, LocalDate.of(2024,1,13), reportDesc1);
+		Report r13 = new Report(c30, u1, LocalDate.of(2024,1,13), reportDesc5);
+		Report r14 = new Report(c31, u00, LocalDate.of(2024,1,15), reportDesc5);
+		Report r15 = new Report(c32, u3, LocalDate.of(2024,1,17), reportDesc5);
+		Report r16 = new Report(c33, u2, LocalDate.of(2024,1,17), reportDesc5);
+		Report r17 = new Report(c38, u10, LocalDate.of(2024,1,18), reportDesc1);
+		Report r18 = new Report(c39, u9, LocalDate.of(2024,1,19), reportDesc2);
+		Report r19 = new Report(c40, u3, LocalDate.of(2024,2,3), reportDesc5);
+		Report r20 = new Report(c41, u9, LocalDate.of(2024,2,4), reportDesc5);
+		Report r21 = new Report(c77, u00, LocalDate.of(2024,2,6), reportDesc2);
+		Report r22 = new Report(c78, u3, LocalDate.of(2024,2,14), reportDesc4);
+		Report r23 = new Report(c79, u4, LocalDate.of(2024,2,14), reportDesc1);
+		Report r24 = new Report(c84, u00, LocalDate.of(2024,2,15), reportDesc2);
+		Report r25 = new Report(c86, u7, LocalDate.of(2024,2,15), reportDesc5);
+		Report r26 = new Report(c97, u0, LocalDate.of(2024,2,16), reportDesc2);
+		Report r27 = new Report(c103, u2, LocalDate.of(2024,2,18), reportDesc1);
+		Report r28 = new Report(c106, u0, LocalDate.of(2024,2,18), reportDesc5);
+		Report r29 = new Report(c107, u0, LocalDate.of(2024,2,19), reportDesc2);
+		Report r30 = new Report(c131, u2, LocalDate.of(2024,2,20), reportDesc1);
+		Report r31 = new Report(c143, u8, LocalDate.of(2024,2,22), reportDesc1);
+		Report r32 = new Report(c144, u0, LocalDate.of(2024,2,22), reportDesc2);
+		Report r33 = new Report(c145, u11, LocalDate.of(2024,2,24), reportDesc5);
+		Report r34 = new Report(c146, u5, LocalDate.of(2024,2,25), reportDesc3);
+		
+		List<Report> reports = Arrays.asList(r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r30,r31,r32,r33,r34);
+		
+		for (Report r : reports) {
+			reportService.save(r);
+		}
+		
+		r1.setResolved(true);
+		reportService.update(r1);
+		r2.setResolved(true);
+		reportService.update(r2);
+		r3.setResolved(true);
+		reportService.update(r3);
+		r6.setResolved(true);
+		reportService.update(r6);
+		r10.setResolved(true);
+		reportService.update(r10);
+		r12.setResolved(true);
+		reportService.update(r12);
+		r13.setResolved(true);
+		reportService.update(r13);
+		r16.setResolved(true);
+		reportService.update(r16);
+		r18.setResolved(true);
+		reportService.update(r18);
+		r20.setResolved(true);
+		reportService.update(r20);
+		r26.setResolved(true);
+		reportService.update(r26);
+		r29.setResolved(true);
+		reportService.update(r29);
+		r31.setResolved(true);
+		reportService.update(r31);
+		r32.setResolved(true);
+		reportService.update(r32);
+		
+
 	}
 }

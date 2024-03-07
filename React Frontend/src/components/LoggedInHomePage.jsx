@@ -19,6 +19,7 @@ import AddRoomPage from "./addRoomPage";
 
 
 import { Box } from "@mui/material";
+import { ReportsPage } from "./ReportsPage";
 import HelpPage from "./HelpPage";
 
 const checkAdmin = (setAdmin, setStaff, id) => {
@@ -109,6 +110,7 @@ const LoggedInHomePage = () => {
 				<Route path="/searchcomputer" element={<SearchComputerPage />} />
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
+				<Route path="/reports" element={<ReportsPage/>}/>
 				<Route path="/help" element={<HelpPage />} />
 				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
 				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} />
