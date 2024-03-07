@@ -138,11 +138,11 @@ export default function NavBar(props) {
 				setBusinessAdmin(true);
 			} else if (precedence === 2) {
 				setLocationAdmin(true);
-			} else if (precedence === 3) { 
+			} else if (precedence === 3) {  
 				setRoomAdmin(true);
 			}
 		});
-	}, []);
+	}, [props]);
 
 
 	const handleDrawerOpen = () => {
