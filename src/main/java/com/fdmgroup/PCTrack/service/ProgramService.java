@@ -11,12 +11,12 @@ import com.fdmgroup.PCTrack.model.Software;
 
 @Service
 public class ProgramService {
-	private ProgramRepository softwareRepository;
+	private SoftwareRepository softwareRepository;
 	private ProgramRepository programRepository;
 
 	public ProgramService(ProgramRepository programRepository, SoftwareRepository softwareRepository) {
 		super();
-		this.softwareRepository = programRepository;
+		this.softwareRepository = softwareRepository;
 		this.programRepository = programRepository;
 	}
 	
