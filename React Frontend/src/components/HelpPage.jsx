@@ -121,16 +121,7 @@ const HelpPage = () => {
             </AccordionDetails>
             </Accordion>
 
-            <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography> </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <Typography align='left'>
-                     
-                </Typography>
-            </AccordionDetails>
-            </Accordion>
+            
         </AccordionDetails>
       
       </Accordion>
