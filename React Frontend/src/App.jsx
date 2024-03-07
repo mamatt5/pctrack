@@ -82,8 +82,9 @@ function App() {
 			pause(true)
 		} else {
 			console.log("resuming")
-			resume(true)
-			activate(true)
+			// resume(true)
+			// activate(true)
+			pause(true)
 		}
 	  }, [location])
 	

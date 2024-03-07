@@ -14,6 +14,7 @@ import { Grow } from "@mui/material";
 import { createTheme } from '@mui/material/styles'
 import { Collapse } from "@mui/material";
 import AddLocationPage from "./addLocationPage";
+import AddRoomPage from "./addRoomPage";
 
 
 import UpdateDetailsPage from "./UpdateDetailsPage";
@@ -111,6 +112,7 @@ const LoggedInHomePage = () => {
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 				<Route path="/help" element={<HelpPage />} />
 				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
+				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} />
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>

@@ -36,6 +36,8 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { HelpCenter } from "@mui/icons-material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
+import LivingIcon from '@mui/icons-material/Living';
+
 
 const drawerWidth = 240;
 
@@ -141,6 +143,8 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/help`);
 		} else if (page === "Add Location") {
 			navigate(`/home/${id}/addlocation`);
+		} else if (page === "Add Room") {
+			navigate(`/home/${id}/addroom`);
 		} else if (page === "Log Out") {
 			localStorage.removeItem("token");
 			navigate("/");
@@ -185,7 +189,7 @@ export default function NavBar(props) {
 				{/* admin stuff  */}
 				{admin ? (
 					<>
-						{["Manage Users", "Add Location"].map((text, index) => (
+						{["Manage Users", "Add Location", "Add Room"].map((text, index) => (
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<Tooltip title={text} placement="right">
 									<ListItemButton
@@ -205,6 +209,7 @@ export default function NavBar(props) {
 										>
 											{index === 0 && <AdminPanelSettingsIcon />}
 											{index === 1 && <AddLocationIcon />}
+											{index === 2 && <ChairIcon />}
 										</ListItemIcon>
 										<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 									</ListItemButton>
