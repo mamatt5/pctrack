@@ -8,12 +8,19 @@ import { useEffect } from "react";
 import callApi from "../api/callApi";
 import Config from "../configs.json";
 import { MultipleSelect } from "./CheckBoxDropDowns";
-import { getAdminsLevels } from "../components/Admin";
+import { GetAdminsLevels } from "../components/Admin";
 import { TextField } from "@mui/material";
 import { subtractArrays } from "../helpers/helperFunctions";
+import WarningIcon from "@mui/icons-material/Warning";
+
+
+//#####
+// TODO:
+// refactor the modals if bothered. they can all be reused
+//#####
+
 const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
 const MIN_PRECEDENCE = Config.MIN_PRECEDENCE;
-
 const getRoomsAtLocation = (setRooms, locationId) => {
 	const config = {
 		method: "get",
@@ -34,7 +41,7 @@ const deleteStaff = (funct, staffId) => {
 };
 
 // for all staff but room admin
-export const createStaff = (funct, userId, locId, adminLevel) => {
+export const CreateStaff = (funct, userId, locId, adminLevel) => {
 	console.log(adminLevel, "admin level!!!! ");
 	const config = {
 		method: "post",
@@ -239,7 +246,7 @@ const addLocation = (staff, userlocations, assignableLocations, setOpenModal, se
 	const [selectedOptions, setSelectedOptions] = useState([]);
 	let lowestAdminLevel = "";
 	useEffect(() => {
-		getAdminsLevels(setAdminLevels);
+		GetAdminsLevels(setAdminLevels);
 	}, []);
 
 	if (adminLevels.length !== 0) {
@@ -480,60 +487,59 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 				}
 				sx={{ position: "absolute", bottom: 0, right: 0, margin: "2rem", width: "15%" }}
 				onClick={() => {
-                    if (permission === "Room" && staff.adminLevel.name === "Room") {
-                        editRoomAdmin(
-                            () => {
-                                setOpenModal(false);
-                                setChange((i) => !i);
-                            },
-                            staff.user.userId,
-                            staff.staffId,
-                            staff.location.locationId,
-                            staff.adminLevel.id,
-                            selectedRooms
-                        );
-                    } else if (permission === "none") {
-                        console.log("HIHIHHIHI");
-                        deleteStaff(() => {}, staff.staffId);
-                        createStaff(
-                            () => {
-                                setOpenModal(false);
-                                setChange((i) => !i);
-                            },
-                            staff.user.userId,
-                            staff.location.locationId,
-                            adminLevels.find((role) => role.name === "")?.id
-                        );
-                    } else if (permission === "Room") {
-                        console.log("OH NONOONO");
-                        deleteStaff(() => {}, staff.staffId);
+					if (permission === "Room" && staff.adminLevel.name === "Room") {
+						editRoomAdmin(
+							() => {
+								setOpenModal(false);
+								setChange((i) => !i);
+							},
+							staff.user.userId,
+							staff.staffId,
+							staff.location.locationId,
+							staff.adminLevel.id,
+							selectedRooms
+						);
+					} else if (permission === "none") {
+						console.log("HIHIHHIHI");
+						deleteStaff(() => {}, staff.staffId);
+						createStaff(
+							() => {
+								setOpenModal(false);
+								setChange((i) => !i);
+							},
+							staff.user.userId,
+							staff.location.locationId,
+							adminLevels.find((role) => role.name === "")?.id
+						);
+					} else if (permission === "Room") {
+						console.log("OH NONOONO");
+						deleteStaff(() => {}, staff.staffId);
 
-                        createRoomAdmin(
-                            () => {
-                                setOpenModal(false);
-                                setChange((i) => !i);
-                            },
-                            staff.user.userId,
-                            staff.location.locationId,
-                            adminLevels.find((role) => role.name === permission)?.id,
-                            selectedRooms
-                        );
-                    } else {
-                        console.log(permission);
-                        console.log("YUIKESSSSS");
-                        deleteStaff(() => {}, staff.staffId);
-                        createStaff(
-                            () => {
-                                setOpenModal(false);
-                                setChange((i) => !i);
-                            },
-                            staff.user.userId,
-                            staff.location.locationId,
-                            adminLevels.find((role) => role.name === permission)?.id
-                        );
-                    }
-                }}
-
+						createRoomAdmin(
+							() => {
+								setOpenModal(false);
+								setChange((i) => !i);
+							},
+							staff.user.userId,
+							staff.location.locationId,
+							adminLevels.find((role) => role.name === permission)?.id,
+							selectedRooms
+						);
+					} else {
+						console.log(permission);
+						console.log("YUIKESSSSS");
+						deleteStaff(() => {}, staff.staffId);
+						createStaff(
+							() => {
+								setOpenModal(false);
+								setChange((i) => !i);
+							},
+							staff.user.userId,
+							staff.location.locationId,
+							adminLevels.find((role) => role.name === permission)?.id
+						);
+					}
+				}}
 			>
 				Submit
 			</Button>
@@ -542,6 +548,89 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 };
 
 // for room admins, you need to select a room in that location.
-const getRoomsAtLoc = () => {};
+export const DeleteModal = ({ openModal, setOpenModal, staff, setChange }) => {
+	console.log(staff);
+	return (
+		<Modal
+			open={openModal}
+			onClose={() => setOpenModal(false)}
+			closeAfterTransition
+			aria-labelledby="edit perm modal"
+			aria-describedby="edits perm"
+			sx={{
+				"& .MuiBackdrop-root": {
+					backgroundColor: "rgba(0, 0, 0, 0.2)", // Adjust opacity here (0.5 for 50% darkness)
+				},
+			}}
+		>
+			<Fade in={openModal}>
+				<Box
+					sx={{
+						position: "absolute",
+						top: "50%",
+						left: "50%",
+						transform: "translate(-50%, -50%)",
+						backgroundColor: "white",
+						borderRadius: 3,
+						p: 7,
+						width: "64vw",
+						maxWidth: 700,
+					}}
+				>
+					{DeleteStaff(staff, setOpenModal, setChange)}
+				</Box>
+			</Fade>
+		</Modal>
+	);
+};
+
+const DeleteStaff = (staff, setOpenModal, setChange) => {
+	console.log(staff);
+	return (
+		<Box className="centerHorizonal" sx={{}}>
+			<IconButton sx={{ color: "#fb8723", fontSize: "30%" }}>
+				<WarningIcon />
+			</IconButton>
+			<Typography variant="h5" sx={{ marginY: "1rem" }}>
+				Delete Staff Member
+			</Typography>
+			<Typography sx={{ marginBottom: "1rem" }}>
+				{staff.user.firstName} <i style={{ color: "gray" }}>{staff.user.email} </i>
+				{staff.location.name}
+			</Typography>
+			<Typography variant="subtitle2" sx={{ color: "gray", marginY: "20px" }}>
+				Are you sure you want to delete this Staff member? This action cannot be reversed.
+			</Typography>
+
+			<Box sx={{ marginY: "1rem" }}>
+				<Button
+					variant="contained"
+					color="primary"
+					disableElevation
+					sx={{ marginX: "10px", borderRadius: "20px" }}
+					onClick={() => {
+						deleteStaff(() => {
+							setOpenModal(false), setChange((c) => !c);
+						}, staff.staffId);
+					}}
+				>
+					Confirm
+				</Button>
+				<Button
+					variant="contained"
+					color="inherit"
+					disableElevation
+					sx={{ marginX: "10px", borderRadius: "20px" }}
+					onClick={() => setOpenModal(false)}
+				>
+					Cancel
+				</Button>
+			</Box>
+		</Box>
+	);
+};
+
+
+
 
 export default PermissonModal;

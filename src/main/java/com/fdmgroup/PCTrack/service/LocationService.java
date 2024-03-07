@@ -55,6 +55,11 @@ public class LocationService {
 		}
 	}
 
+	// gets a list of Locations given a list of locationIds 
+	public List<Location> getLocationsByIds(List<Integer> locationIds) {
+		return this.locationRepository.findAllById(locationIds);
+	}
+
 	
 	
 }

@@ -7,7 +7,7 @@ import { TextField } from '@mui/material'
 import { Button } from '@mui/material'
 import { useState } from "react";
 import callApi from '../api/callApi'
-import { createStaff } from '../partials/ManagePermission'
+import { CreateStaff } from '../partials/ManagePermission'
 import { useParams } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check';
@@ -40,12 +40,12 @@ const addLocationPage = (props) => {
     }
 
     const handleClose = () => {
-    
+
         setOpen(false);
       };
 
     const onCreation = (e) => {
-        createStaff(successNotification, id, e.locationId, 1)
+        CreateStaff(successNotification, id, e.locationId, 1)
 
     }
 
@@ -59,7 +59,7 @@ const addLocationPage = (props) => {
             method: "post",
             endpoint: "locations",
             data: {
-                "name": locationName, 
+                "name": locationName,
                 "city": city
             }
         }
@@ -69,7 +69,7 @@ const addLocationPage = (props) => {
   return (
     <>
     <NavBar admin={props.admin} />
-        
+
 
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert

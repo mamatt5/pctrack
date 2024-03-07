@@ -32,4 +32,9 @@ public class AdminLevelService {
 			this.AdminRepo.save(admin);
 		}
 	}
+
+
+	public List<AdminLevel> getAdminLevelsByIds(List<Integer> adminLevelIds) {
+		return AdminRepo.findAllById(adminLevelIds);
+	}
 }
