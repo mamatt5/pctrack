@@ -13,10 +13,11 @@ import { Fade, Typography } from "@mui/material";
 import { Grow } from "@mui/material";
 import { createTheme } from '@mui/material/styles'
 import { Collapse } from "@mui/material";
+import AddLocationPage from "./addLocationPage";
+import AddRoomPage from "./addRoomPage";
 
 
 
-import UpdateDetailsPage from "./UpdateDetailsPage";
 import { Box } from "@mui/material";
 import { ReportsPage } from "./ReportsPage";
 import HelpPage from "./HelpPage";
@@ -107,11 +108,12 @@ const LoggedInHomePage = () => {
 				<Route path="/searchroom" element={<SearchRoomPage />} />
 				<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
 				<Route path="/searchcomputer" element={<SearchComputerPage />} />
-				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 				<Route path="/reports" element={<ReportsPage/>}/>
 				<Route path="/help" element={<HelpPage />} />
+				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
+				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} />
 			</Routes>
 			<NavBar admin={admin} />
 		</Box>

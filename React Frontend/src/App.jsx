@@ -11,7 +11,6 @@ import LoggedInHomePage from "./components/LoggedInHomePage";
 import { SearchComputerPage } from "./components/SearchComputerPage";
 import { SearchRoomPage } from "./components/SearchRoomPage";
 import { SearchSoftwarePage } from "./components/SearchSoftwarePage";
-import UpdateDetailsPage from "./components/UpdateDetailsPage";
 import NavBar from "./partials/NavBar";
 import ViewComputersInRoomPage from "./components/ViewComputersInRoomPage";
 import { ReportsPage } from "./components/ReportsPage";
@@ -83,8 +82,9 @@ function App() {
 			pause(true)
 		} else {
 			console.log("resuming")
-			resume(true)
-			activate(true)
+			// resume(true)
+			// activate(true)
+			pause(true)
 		}
 	  }, [location])
 	

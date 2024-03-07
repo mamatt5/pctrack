@@ -36,6 +36,9 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { HelpCenter } from "@mui/icons-material";
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import LivingIcon from '@mui/icons-material/Living';
+
 
 const drawerWidth = 240;
 
@@ -123,7 +126,7 @@ export default function NavBar(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-
+	
 	const handleIconNav = (page, id) => {
 		if (page === "Search Rooms") {
 			navigate(`/home/${id}/searchroom`);
@@ -139,10 +142,12 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/searchcomputer`);
 		}else if (page === "View Reports"){
 			navigate(`/home/${id}/reports`)
-		} 
-		else if (page === "Log Out") {
-		} else if (page === "Help") {
+		}else if (page === "Help") {
 			navigate(`/home/${id}/help`);
+		} else if (page === "Add Location") {
+			navigate(`/home/${id}/addlocation`);
+		} else if (page === "Add Room") {
+			navigate(`/home/${id}/addroom`);
 		} else if (page === "Log Out") {
 			localStorage.removeItem("token");
 			navigate("/");
@@ -187,7 +192,7 @@ export default function NavBar(props) {
 				{/* admin stuff  */}
 				{admin ? (
 					<>
-						{["Manage Users"].map((text, index) => (
+						{["Manage Users", "Add Location", "Add Room"].map((text, index) => (
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<Tooltip title={text} placement="right">
 									<ListItemButton
@@ -196,7 +201,7 @@ export default function NavBar(props) {
 											justifyContent: open ? "initial" : "center",
 											px: 2.5,
 										}}
-										onClickCapture={() => handleIconNav("Manage Users", id)}
+										onClickCapture={() => handleIconNav(text, id)}
 									>
 										<ListItemIcon
 											sx={{
@@ -206,6 +211,8 @@ export default function NavBar(props) {
 											}}
 										>
 											{index === 0 && <AdminPanelSettingsIcon />}
+											{index === 1 && <AddLocationIcon />}
+											{index === 2 && <ChairIcon />}
 										</ListItemIcon>
 										<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 									</ListItemButton>
@@ -252,7 +259,7 @@ export default function NavBar(props) {
 				{/* logging out and updating deets */}
 
 				<List>
-					{["Update Details", "Help", "Log Out"].map((text, index) => (
+					{["Help", "Log Out"].map((text, index) => (
 						<ListItem key={text} disablePadding sx={{ display: "block" }}>
 							<Tooltip title={text} placement="right">
 								<ListItemButton
@@ -270,9 +277,9 @@ export default function NavBar(props) {
 											justifyContent: "center",
 										}}
 									>
-										{index === 0 && <UpgradeOutlinedIcon />}
-										{index === 1 && <HelpCenter />}
-										{index === 2 && <LogoutOutlinedIcon />}
+									
+										{index === 0 && <HelpCenter />}
+										{index === 1 && <LogoutOutlinedIcon />}
 									</ListItemIcon>
 									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 								</ListItemButton>

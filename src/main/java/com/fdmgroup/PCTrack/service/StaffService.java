@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.fdmgroup.PCTrack.dal.StaffRepository;
+import com.fdmgroup.PCTrack.model.AdminLevel;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
@@ -21,6 +22,7 @@ public class StaffService {
 	public StaffService(StaffRepository staffRepo) {
 		super();
 		this.staffRepo = staffRepo;
+		
 	}
 	
 	public List<Staff> findAllStaffs() {
@@ -93,4 +95,11 @@ public class StaffService {
 		System.out.println(userId);
 		return this.staffRepo.findRoomsStaffIsAdmin(userId);
 	}
+	
+//	public void assignLocationAdmin(int locationId, int userId) {
+//		AdminLevel adminLevel = new AdminLevel("Location", 2);
+//		Location location = this.locationRepository.findById(locationId).get();
+//		User user = this.userRepository.findById(userId).get();
+//		
+//	}
 }

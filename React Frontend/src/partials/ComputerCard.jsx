@@ -1,13 +1,16 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { CardActionArea } from '@mui/material';
+import { Button, CardActionArea, createTheme } from '@mui/material';
 import ComputerTwoToneIcon from '@mui/icons-material/ComputerTwoTone';
 import { useState } from 'react';
 import { Modal } from '@mui/material';
 import { Box } from '@mui/material';
 import ProgramTable from './programTable';
 import ComputerIcon from '@mui/icons-material/Computer';
+import callApi from '../api/callApi';
+import { ThemeProvider } from '@emotion/react';
+import AddComputer from './AddComputer';
 
 const style = {
     position: 'absolute',
@@ -20,11 +23,23 @@ const style = {
     padding: 6,
     borderRadius: 8,
 };
+const theme = createTheme({
+    palette: {
+        yellow: {
+            main: '#E3D026',
+            light: '#E9DB5D',
+            dark: '#A29415',
+            contrastText: '#242105',
+        },
+    },
+});
 
 const ComputerCard = (props) => {
     const { computer } = props;
     const [open, setModal] = useState(false);
     const [render, setRender] = useState(false);
+    const [updated, setUpdated] = props.updated;
+    const [addComputer, setAddComputer] = useState(false);
 
     const openModal = () => {
         setModal(true);
@@ -32,29 +47,39 @@ const ComputerCard = (props) => {
 
     const closeModal = () => {
         setModal(false);
+        setUpdated(false);
     };
 
     const t = () => {
         setRender(true)
     }
 
+    const delComputer = () => {
+        const config = {
+            method: "delete",
+            endpoint: "computers/" + computer.computerId
+        }
+
+        callApi(closeModal, null, config);
+    }
+
     const getColor = (computer) => {
 
-        switch(computer.role) {
+        switch (computer.role) {
             case 'NONE':
                 return '#FF6961'
 
             case 'BI':
             case 'DEV':
                 return '#ffff66';
-            
+
             case 'BOTH':
                 return '#77DD77';
 
             default:
                 return 'gray'
         }
-        
+
     }
 
     return (
@@ -74,7 +99,7 @@ const ComputerCard = (props) => {
 
             backgroundColor: getColor(computer),
             margin: '5px',
-           
+
         }}>
             <CardActionArea onClick={openModal}>
                 {/* <CardHeader title="Computer Details"/> */}
@@ -93,10 +118,10 @@ const ComputerCard = (props) => {
                 open={open}
                 onClose={closeModal}
                 onClick={t}
-                
-                
+
+
             >
-                <Box  sx={{
+                <Box sx={{
                     ...style,
                     overflowY: 'scroll', // Enable vertical scrolling
                     maxHeight: '90vh',
@@ -105,14 +130,24 @@ const ComputerCard = (props) => {
                     'scrollbar-width': 'none', // Hide scrollbar for Firefox
                     '&::-webkit-scrollbar': {
                         display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari)
-                    
                     },
+                    textAlign: 'center'
                 }}>
                     <h1>Computer Details</h1>
                     <h2>{computer.computerCode}</h2>
                     <h3>Room: {computer.room.name}, {computer.room.location.name}</h3>
                     {computer.role !== 'NONE' && <h3>Role: {computer.role}</h3>}
-                    {computer.programList?.length > 0 && <ProgramTable array = {computer.programList} />}
+                    {computer.programList?.length > 0 && <ProgramTable array={computer.programList} />}
+                    <br></br>
+                    <ThemeProvider theme={theme}>
+                        <AddComputer updated={[updated,setUpdated]} computer={computer} />
+                        <Button
+                            variant="contained"
+                            color="error"
+                            sx={{margin: "50px"}}
+                            onClick={delComputer}
+                        >Delete Computer</Button>
+                    </ThemeProvider>
                 </Box>
             </Modal>
         </Card>
