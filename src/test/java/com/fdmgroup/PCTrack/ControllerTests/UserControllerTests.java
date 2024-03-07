@@ -3,15 +3,20 @@ package com.fdmgroup.PCTrack.ControllerTests;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.fdmgroup.PCTrack.controller.UserController;
+import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
 import com.fdmgroup.PCTrack.service.StaffService;
 import com.fdmgroup.PCTrack.service.UserService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,6 +37,8 @@ public class UserControllerTests {
 	StaffService staffService;
 	
 	UserController userController;
+	User user;
+	Page<User> page;
 	
 	@BeforeEach
 	void setup() {
@@ -95,6 +102,70 @@ public class UserControllerTests {
 		when(userService.findAllUsers()).thenReturn(allUsers);
 		assertSame(userController.getUsers(), allUsers);
 		verify(userService, times(1)).findAllUsers();
+	}
+	
+	@Test
+	void find_user_by_email() {
+		when(userService.findUserEmail("testing@testing.com")).thenReturn(user);
+		assertEquals(user, userController.findByEmail("testing@testing.com"));
+	}
+	
+	@Test
+	void user_count() {
+		when(userService.userCountPartial("test")).thenReturn((long) 10);
+		assertEquals((long) 10, userController.countUser("test"));
+	}
+	
+	@Test
+	void staff_count() {
+		when(userService.userCount()).thenReturn((long) 10);
+		assertEquals((long) 10, userController.countStaff());
+	}
+	
+	@Test
+	void find_by_username() {
+		when(userService.findByUsername("test")).thenReturn(user);
+		assertEquals(user, userController.findByUsername("test"));
+	}
+	
+	@Test
+	void get_paginated_users() {
+		List<User> paginatedUserList = new ArrayList<>();
+		page = new PageImpl<User>(paginatedUserList);
+		when(userService.getUserPage(1, 10)).thenReturn(page);
+		assertEquals(paginatedUserList, userController.getStaffPage(1, 10));
+	}
+	
+	@Test
+	void get_paginated_partial_users() {
+		List<User> paginatedUserList = new ArrayList<>();
+		page = new PageImpl<User>(paginatedUserList);
+		when(userService.findAllUsersPartialMatch("test", 1, 10)).thenReturn(page);
+		assertEquals(paginatedUserList, userController.getStaffPartial("test",1, 10));
+	}
+	
+	@Test
+	void count_partial_users() {
+		when(userService.userCountPartial("test")).thenReturn((long) 10);
+		assertEquals((long) 10, userController.countUser("test"));
+	}
+	
+	@Test
+	void delete_user() {
+		List<Staff> staffList = new ArrayList<>();
+		staffList.add(new Staff());
+		when(staffService.findByUserId(0)).thenReturn(staffList);
+		userController.deleteUser(0);
+		verify(staffService, times(1)).findByUserId(0);
+		verify(userService, times(1)).deleteByUserId(0);
+	}
+	
+	@Test
+	void throws_when_username_exists() {
+		user = new User();
+		user.setUsername("test");
+		when(userService.existsByUsername("test")).thenReturn(true);
+		assertThrows(RuntimeException.class, ()-> userController.createNewUser(user));
 	}
 
 }

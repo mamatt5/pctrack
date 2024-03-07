@@ -13,10 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.fdmgroup.PCTrack.controller.StaffController;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
+import com.fdmgroup.PCTrack.model.User;
 import com.fdmgroup.PCTrack.service.StaffService;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +31,7 @@ public class StaffControllerTests {
 	Staff staff;
 	Room room;
 	StaffController staffController;
+	Page<Staff> page;
 	
 	@BeforeEach
 	public void setup() {
@@ -78,5 +82,21 @@ public class StaffControllerTests {
 	public void delete_staff() {
 		staffController.deleteStaff(0);
 		verify(staffService, times(1)).deleteById(0);
+	}
+	
+	@Test
+	void get_paginated_staff() {
+		List<Staff> paginatedStaffList = new ArrayList<>();
+		page = new PageImpl<Staff>(paginatedStaffList);
+		when(staffService.getStaffPage(1, 10)).thenReturn(page);
+		assertEquals(paginatedStaffList, staffController.getStaffPage(1, 10));
+	}
+	
+	@Test
+	void get_paginated_partial_staff() {
+		List<Staff> paginatedStaffList = new ArrayList<>();
+		page = new PageImpl<Staff>(paginatedStaffList);
+		when(staffService.findAllUsersPartialMatch("test", 1, 10)).thenReturn(page);
+		assertEquals(paginatedStaffList, staffController.getStaffPartial("test",1, 10));
 	}
 }

@@ -7,7 +7,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fdmgroup.PCTrack.controller.RoomController;
 import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Location;
-import com.fdmgroup.PCTrack.model.Software;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.RoomService;
 
@@ -20,7 +19,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
