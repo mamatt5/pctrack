@@ -53,6 +53,7 @@ const getStaffCount = (setStaffCount, locationIds, adminLevelIds) => {
 };
 
 const getStaff = (setStaff, locationIds, adminLevelIds) => {
+	console.log(pageNum, "JELLO!!");
 	// Functionality to get staff on pagination
 	// console.log(pageNum, pageSize);
 	const config = {
@@ -191,6 +192,7 @@ const Admin = ({ currStaff }) => {
 
 	const [query, setQuery] = useState("");
 	const [change, setChange] = useState(true); // notifies theres been a page size/page change
+	const [pageZero, setPageZero] = useState(true); // reserts pages to 0
 	const [allStaffCount, setAllStaffCount] = useState(-1); // ALL staff count
 	const [staffCount, setStaffCount] = useState(-1); // this is the staff count for PAGINATION.
 	const [userCount, setUserCount] = useState(-1);
@@ -206,6 +208,8 @@ const Admin = ({ currStaff }) => {
 
 	useEffect(() => {
 		getAllStaffCount(setAllStaffCount);
+		getLocations(setLocations);
+		GetAdminsLevels(setAdminLevels);
 	}, []);
 
 	useEffect(() => {
@@ -232,6 +236,7 @@ const Admin = ({ currStaff }) => {
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
+		pageNum = 0;
 		setChange((c) => !c);
 	};
 
@@ -245,6 +250,7 @@ const Admin = ({ currStaff }) => {
 			...locationCheckBox,
 			[event.target.name]: event.target.checked,
 		});
+		setPageZero((pageZero) => !pageZero);
 	};
 
 	const handleCheckBoxAdminChange = (event) => {
@@ -252,16 +258,12 @@ const Admin = ({ currStaff }) => {
 			...permissionsCheckBox,
 			[event.target.name]: event.target.checked,
 		});
+		setPageZero((pageZero) => !pageZero);
 	};
 
 	// admins can only register users in locations they have admin permissions in
 	const registerableLocations = currStaff.map((item) => item.location);
 	// Getting locatiosn
-
-	useEffect(() => {
-		getLocations(setLocations);
-		GetAdminsLevels(setAdminLevels);
-	}, []);
 
 	useEffect(() => {
 		pageNum = 0;
@@ -301,7 +303,6 @@ const Admin = ({ currStaff }) => {
 
 	const setUserLocations = (user) => {
 		// setUser(users);
-
 		for (const person of user) {
 			//console.log(person);
 			findUserRegisteredLocs(handleSetUserLocation, person.userId, person);
@@ -333,7 +334,7 @@ const Admin = ({ currStaff }) => {
 	console.log(locationCheckBox, permissionsCheckBox);
 
 	return (
-		// staff.length === 0 && allStaffCount !== 0 ? <Loading/> :
+		// staff.length === 0 && allStaffCount === -1 ? <Loading/> :
 		<Box className="centerHorizonal" sx={{ paddingTop: "5rem", marginLeft: "8%" }}>
 			<Box sx={{ display: "flex", flexDirection: "row" }}></Box>
 
@@ -397,6 +398,8 @@ const Admin = ({ currStaff }) => {
 										<Tooltip title="Select All">
 											<IconButton
 												onClick={() => {
+													pageNum = 0;
+													setPageZero((pageZero) => !pageZero);
 													const updatedPermissionsCheckBox = Object.fromEntries(
 														Object.keys(permissionsCheckBox).map((key) => [key, true])
 													);
@@ -413,6 +416,8 @@ const Admin = ({ currStaff }) => {
 										<Tooltip title="Clear All">
 											<IconButton
 												onClick={() => {
+													pageNum = 0;
+													setPageZero((pageZero) => !pageZero);
 													const updatedPermissionsCheckBox = Object.fromEntries(
 														Object.keys(permissionsCheckBox).map((key) => [key, false])
 													);
@@ -487,6 +492,7 @@ const Admin = ({ currStaff }) => {
 						pageNum = pNum;
 						pageSize = pSize;
 					}}
+					pageZero={pageZero}
 				/>
 			</Paper>
 		</Box>

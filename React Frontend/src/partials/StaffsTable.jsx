@@ -120,6 +120,7 @@ export default function CustomizedTables({
 	userLocation,
 	setChange,
 	onChangePage,
+	pageZero
 }) {
 	// the modal for editing permissions, its a collection of all the modals for each user
 	const [openModals, setOpenModals] = React.useState({});
@@ -132,8 +133,9 @@ export default function CustomizedTables({
 	console.log(array, "rendering ????? -------------------");
 	React.useEffect(() => {
 		setPage(0);
-	}, [usersOn]);
+	}, [usersOn, pageZero]);
 
+	console.log(page, "PAGE WERE ON IN STAFF TABLE")
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 		onChangePage(newPage, rowsPerPage);

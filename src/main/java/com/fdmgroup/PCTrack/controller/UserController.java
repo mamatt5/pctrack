@@ -62,7 +62,7 @@ public class UserController {
 	public User findById(@PathVariable int userId) {
 		return userService.findUserId(userId);
 	}
-	 
+	  
 	@GetMapping("username/{username}")
 	public User findByUsername(@PathVariable String username) {
 		return userService.findByUsername(username);

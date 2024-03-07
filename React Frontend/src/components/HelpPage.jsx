@@ -231,6 +231,20 @@ const HelpPage = () => {
                 </Typography>
             </AccordionDetails>
             </Accordion>
+
+            <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Software required to be Dev/BI-ready</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <Typography align='left'>
+                     DEV: Visual Studio, Eclipse, Python, MySQL, JDK, Git, Node.js
+                </Typography>
+                <Typography align='left'>
+                     BI: Excel, PowerBI
+                </Typography>
+            </AccordionDetails>
+            </Accordion>
         </AccordionDetails>
       </Accordion>
 

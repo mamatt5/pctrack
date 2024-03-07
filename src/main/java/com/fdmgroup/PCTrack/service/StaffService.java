@@ -100,9 +100,9 @@ public class StaffService {
 	}
 
 	public List<Room> getRoomsStaffIsAdmin(int userId) {
-		System.out.println(userId);
+	
 		return this.staffRepo.findRoomsStaffIsAdmin(userId);
-	}
+	} 
 
 	public long staffCountFiltered(List<Location> locations, List<AdminLevel> adminLevels) {
 		return this.staffRepo.countByLocationInAndAdminLevelIn(locations, adminLevels);
@@ -114,4 +114,10 @@ public class StaffService {
 //		User user = this.userRepository.findById(userId).get();
 //		
 //	}
+
+	
+	public List<Room> getRoomStaffIsRegisterdIn (int userId) {
+		return this.staffRepo.findRoomsStaffIsRegisteredIn(userId);
+	}
+
 }
