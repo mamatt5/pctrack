@@ -73,7 +73,7 @@ public class UserDataLoader implements ApplicationRunner {
 
 		for (AdminLevel adminLevel : adminLevels) {
 			adminService.save(adminLevel);
-		} 
+		}  
 
 		// Rooms
 		Room room1 = new Room("Bondi", location1);
