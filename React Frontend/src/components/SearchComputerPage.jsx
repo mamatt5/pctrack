@@ -64,6 +64,8 @@ export const SearchComputerPage = () => {
     const [roomId, setRoomId] = useState("%%");
     const [role, setRole] = useState("%%");
 
+    const [isHovered, setIsHovered] = useState(false)
+
     useEffect(() => {
         getComputers(setComputers);
         getRooms(setRooms);
