@@ -17,7 +17,7 @@ import AddLocationPage from "./addLocationPage";
 import AddRoomPage from "./addRoomPage";
 
 
-import UpdateDetailsPage from "./UpdateDetailsPage";
+
 import { Box } from "@mui/material";
 import HelpPage from "./HelpPage";
 
@@ -107,7 +107,6 @@ const LoggedInHomePage = () => {
 				<Route path="/searchroom" element={<SearchRoomPage />} />
 				<Route path="/searchsoftware" element={<SearchSoftwarePage />} />
 				<Route path="/searchcomputer" element={<SearchComputerPage />} />
-				<Route path="/updatedetails" element={<UpdateDetailsPage />} />
 				<Route path="/admin" element={<Admin currStaff={staff} />} />
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 				<Route path="/help" element={<HelpPage />} />
