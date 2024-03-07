@@ -13,6 +13,7 @@ import com.fdmgroup.PCTrack.service.RoomService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -110,5 +111,26 @@ public class RoomControllerTests {
 		when(roomService.findAllRooms()).thenReturn(allRooms);
 		assertSame(roomController.getRooms(), allRooms);
 		verify(roomService, times(1)).findAllRooms();
+	}
+	
+	@Test
+	public void find_rooms_at_location() {
+		List<Room> locationRooms = new ArrayList<>();
+		when(roomService.getRoomsInLocation(0)).thenReturn(locationRooms);
+		assertEquals(locationRooms, roomController.getRoomsAtLocation(0));
+	}
+	
+	@Test
+	public void find_room_by_name() {
+		List<Room> locationRooms = new ArrayList<>();
+		when(roomService.searchByName("Sydney")).thenReturn(locationRooms);
+		assertEquals(locationRooms, roomController.searchByName("Sydney"));
+	}
+	
+	@Test
+	public void find_computers_in_room() {
+		List<Computer> roomComputers = new ArrayList<>();
+		when(roomService.getComptuersInRoom(0)).thenReturn(roomComputers);
+		assertEquals(roomComputers, roomController.getComputersInRoom(0));
 	}
 }
