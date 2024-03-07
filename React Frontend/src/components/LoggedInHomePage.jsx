@@ -13,8 +13,8 @@ import { Fade, Typography } from "@mui/material";
 import { Grow } from "@mui/material";
 import { createTheme } from '@mui/material/styles'
 import { Collapse } from "@mui/material";
-import AddLocationPage from "./addLocationPage";
-import AddRoomPage from "./addRoomPage";
+import AddLocationPage from "./AddLocationPage";
+import AddRoomPage from "./AddRoomPage";
 
 
 
@@ -48,7 +48,7 @@ const checkAdminLevel = (data, setAdmin, setStaff) => {
 };
 
 const welcomePage = (staff) => {
-	
+
 
 	return (
 		<>
@@ -61,16 +61,16 @@ const welcomePage = (staff) => {
 									Welcome {roles.user.firstName} {roles.user.lastName}{" "}
 								</h1>
 							</Fade>
-							
+
 							<Fade in={true} timeout={1000}>
 							<h2>
 								Your Current Admin Permissions are:{" "}
 							</h2>
 							</Fade>
-							
-						</Box> 
+
+						</Box>
 					) : null}
-					
+
 					<Box>
 						<Fade in={true} timeout={2000}>
 							<Typography>
@@ -78,8 +78,8 @@ const welcomePage = (staff) => {
 							</Typography>
 
 						</Fade>
-						
-						
+
+
 					</Box>
 				</>
 			))}
