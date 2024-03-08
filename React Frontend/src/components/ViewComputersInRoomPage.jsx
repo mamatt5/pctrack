@@ -79,7 +79,7 @@ const ViewComputersInRoomPage = (props) => {
                             {
                                 computers.map(computer =>
 
-                                    <ComputerCard key={computer.computerId} computer={computer} staff={staff}/>
+                                    <ComputerCard key={computer.computerId} computer={computer} rooms={[]}/>
 
                                 )
                             }
