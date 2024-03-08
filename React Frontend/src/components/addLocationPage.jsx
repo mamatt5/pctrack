@@ -17,19 +17,19 @@ import Collapse from '@mui/material/Collapse';
 
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    // position: 'absolute',
+    // top: '50%',
+    // left: '50%',
+    // transform: 'translate(-50%, -50%)',
     width: 700,
     bgcolor: 'background.paper',
-    boxShadow: 24,
+    // boxShadow: 24,
     padding: 6,
     borderRadius: 8,
 };
 
 
-const addLocationPage = (props) => {
+const AddLocationPage = (props) => {
     const [locationName, setLocationName] = useState("")
     const [city, setCity] = useState("")
     const { id } = useParams();
@@ -88,10 +88,10 @@ const addLocationPage = (props) => {
 
 	<Fade in={true}>
     	<Box sx={style}>
-		
 
 
-		
+
+
 			<Box>
 				<Typography variant="h4">Create a New Location</Typography>
 			</Box>
@@ -117,45 +117,19 @@ const addLocationPage = (props) => {
 					sx={{ margin: "0.5rem" }}
 				/>
 
-				{/* <TextField
-					name="email"
-					label="Email"
-					// error={Boolean(emailErr)}
-					// helperText={emailErr ? emailErr : ""}
-					// onChange={(e) => checkInput("email", e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/>
-				<TextField
-					name="password"
-					label="Password"
-					// error={Boolean(passwordErr)}
-					// helperText={passwordErr ? passwordErr : ""}
-					// onChange={(e) => checkInput("password", e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/> */}
 
-				{/* <Box sx={{ margin: "0.5rem" }} >
-					{MultipleSelect(
-						locations,
-						"city",
-						"Locations",
-						"Add Locations",
-						true,
-						handleCheck
-					)}
-				</Box> */}
 				<Box className="centerHorizonal">
 					<Button type="submit" variant="contained"  sx={{marginTop:"2rem"}}>
 						Create
 					</Button>
 				</Box>
 			</form>
-			
+
 		</Box>
 		</Fade>
-		
+
     </>
   )
 }
 
-export default addLocationPage
+export default AddLocationPage

@@ -16,20 +16,20 @@ import { Collapse } from '@mui/material'
 import Fade from '@mui/material/Fade';
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    // position: 'absolute',
+    // top: '50%',
+    // left: '50%',
+    // transform: 'translate(-50%, -50%)',
     width: 700,
     bgcolor: 'background.paper',
-    boxShadow: 24,
+    // boxShadow: 24,
     padding: 6,
     borderRadius: 8,
 };
 
 
 
-const addRoomPage = (props) => {
+const AddRoomPage = (props) => {
 
     const [location, setLocation] = useState(null)
     const [roomName, setRoomName] = useState("")
@@ -94,7 +94,7 @@ const addRoomPage = (props) => {
 
     <Fade in={true}>
     <Box sx={style}>
-   
+
 			<Box>
 				<Typography variant="h4">Create a New Room</Typography>
 			</Box>
@@ -130,12 +130,12 @@ const addRoomPage = (props) => {
 					</Button>
 				</Box>
 			</form>
-           
+
 		</Box>
         </Fade>
     </>
   )
 }
 
-export default addRoomPage
+export default AddRoomPage
 
