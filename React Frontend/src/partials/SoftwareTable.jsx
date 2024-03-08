@@ -38,7 +38,7 @@ export default function SoftwareTables({array}) {
 
             <StyledTableCell align="left">Name</StyledTableCell>
             <StyledTableCell align="left">Version Number</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
+            {/* <StyledTableCell align="right">Action</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,10 +46,10 @@ export default function SoftwareTables({array}) {
             <StyledTableRow key={row.programId}>
               <StyledTableCell align="left">{row.software.name}</StyledTableCell>
               <StyledTableCell align="left">{row.version}</StyledTableCell>
-              <StyledTableCell align="right" component="th" scope="row">
+              {/* <StyledTableCell align="right" component="th" scope="row">
                 {row.id}
                 edit
-              </StyledTableCell>
+              </StyledTableCell> */}
             </StyledTableRow>
           ))}
         </TableBody>
