@@ -88,18 +88,7 @@ export default function CustomizedTables({array}) {
     }
 
   return (
-    <TableContainer component={Paper}  sx={
-      {    
-    overflowY: 'scroll', // Enable vertical scrolling
-    maxHeight: '90vh',
-    padding: '20px',
-    '-ms-overflow-style': 'none',  // Hide scrollbar for Internet Explorer and Edge
-    'scrollbar-width': 'none', // Hide scrollbar for Firefox
-    '&::-webkit-scrollbar': {
-        display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari)
-    },
-    marginTop: '90px'
-        }}>
+    <TableContainer component={Paper} >
   <Table sx={{ minWidth: 700 }} aria-label="customized table">
     <TableHead>
       <TableRow>

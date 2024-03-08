@@ -35,7 +35,7 @@ export const SearchSoftwarePage = () => {
           <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <SoftwareTab />
                   </Box>
-                  <SoftwareTable array={software} />
+            <SoftwareTable array={software} />
         </Box>
 
       </>

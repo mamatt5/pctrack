@@ -3,7 +3,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 import ProgramTransferList from "./ProgramTransferList";
+
+import { Snackbar } from '@mui/material'
+import { Alert } from '@mui/material'
+
 import { useParams } from "react-router-dom";
+
 
 const style = {
     position: 'absolute',
@@ -24,7 +29,10 @@ const AddComputer = (props) => {
     const [selectedRoom, setSelectedRoom] = useState({});
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
+    const { computer, staff } = props;
+    const [openAlert, setOpen] = useState(false);
     const { computer, rooms } = props;
+
 
     useEffect(() => {
         if (computer != null) {
@@ -42,6 +50,40 @@ const AddComputer = (props) => {
 
     }, [rooms]);
 
+    
+   
+    const getRooms = () => {
+        const config = {
+            method: "get",
+            endpoint: "rooms"
+        }
+    
+        callApi((e) => {
+            var rooms = [];
+         
+            staff.map(role => {
+                switch(role.adminLevel.precedence) {
+                    case 2:
+                    case 1:
+                        var arr = e.filter(x => x.location.locationId == role.location.locationId);
+                        rooms = rooms.concat(arr);
+                        break;
+                    case 3:
+                        if (role.roomAssigned.length != 0) {
+                            rooms = rooms.concat(role.roomAssigned);
+                        } else {
+                            var arr = e.filter(x => x.location.locationId == role.location.locationId);
+                            rooms = rooms.concat(arr);
+                        }
+                        break;
+                }
+            });
+            
+            setSelectedRoom(rooms);
+        }, null, config);
+    }
+
+
     const openModal = () => {
         setModal(true);
     };
@@ -49,6 +91,7 @@ const AddComputer = (props) => {
     const closeModal = () => {
         setUpdated(false);
         setModal(false);
+        
     };
 
     const submitComputer = () => {
@@ -84,11 +127,24 @@ const AddComputer = (props) => {
                 data: computerClass
             }
             callApi(closeModal, null, config);
+            
         }
+        setOpen(true);
     }
 
     return (
         <>
+
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={()=>setOpen(false)}>
+                    <Alert
+                        onClose={()=>setOpen(false)}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        A new Computer has been Added!
+                    </Alert>
+                </Snackbar>
             <Modal
                 open={open}
                 onClose={closeModal}
@@ -147,13 +203,13 @@ const AddComputer = (props) => {
                                 disableElevation
                                 sx={{
                                     position: "fixed",
-                                    bottom: "10%",
-                                    right: "10%",
+                                    top: "28%",
+                                    right: "1.5%",
                                     zIndex: 1000,
                                 }}
                                 onClick={openModal}
                             >
-                                Add New Computer
+                                Add Computer
                             </Button>
                         )
                     } else {

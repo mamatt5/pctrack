@@ -103,30 +103,30 @@ const ViewComputersInRoomPage = (props) => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}>
 
-                {isHovered && (
-                    <>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                            <ComputerIcon style={{ color: '#77DD77' }} /> Both roles
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                            <ComputerIcon style={{ color: '#ffff66' }} /> Dev/BI-ready
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <ComputerIcon style={{ color: '#FF6961' }} /> None
-                        </div>
-                        <div style={{ fontSize: '11px' }}><em>
-                            *Check help for Dev/BI software list
-                        </em></div>
-                    </>
-                )}
-                {!isHovered && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <ComputerIcon style={{ color: '#77DD77' }} />
-                        <ComputerIcon style={{ color: '#ffff66' }} />
-                        <ComputerIcon style={{ color: '#FF6961' }} />
-                    </div>
-                )}
-            </Box>
+        {isHovered && (
+            <>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                    <ComputerIcon style={{ color: '#77DD77'}} /> Both roles
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                    <ComputerIcon style={{ color: '#ffff66'}} /> Dev/BI-ready
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <ComputerIcon style={{ color: '#FF6961'}} /> None
+                </div>
+                <div style={{fontSize: '11px'}}><em>
+                  *Check Help for Dev/BI software list
+                  </em></div>
+            </>
+        )}
+        {!isHovered && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <ComputerIcon style={{ color: '#77DD77'}} />
+                <ComputerIcon style={{ color: '#ffff66'}} />
+                <ComputerIcon style={{ color: '#FF6961'}} />
+            </div>
+        )}
+      </Box>
 
         </Box>
     )

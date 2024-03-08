@@ -57,14 +57,20 @@ export const SearchRoomPage = (props) => {
     callApi(test, null, config);
 
   }, []);
-
+  const RoomTab = () => {
+    return <></>;
+  };
 
   return (
     <>
+      <Box className="dashBoardPadding">
       <h1>Rooms</h1>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        
-        <CustomizedTables array={rooms} />
+       
+
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                    <RoomTab />
+                  </Box>
+            <CustomizedTables array={rooms} />
       </Box>
 
 

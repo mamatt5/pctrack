@@ -12,6 +12,8 @@ import { useParams } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import { Snackbar } from '@mui/material'
 import { MultipleSelect } from "../partials/CheckBoxDropDowns";
+import { Collapse } from '@mui/material'
+import Fade from '@mui/material/Fade';
 
 const style = {
     position: 'absolute',
@@ -90,12 +92,15 @@ const addRoomPage = (props) => {
 
         </Snackbar>
 
-
+    <Fade in={true}>
     <Box sx={style}>
+   
 			<Box>
 				<Typography variant="h4">Create a New Room</Typography>
 			</Box>
+
 			<Divider sx={{ margin: "1rem 0 1rem 0" }} />
+
 			<form onSubmit={createRoom} className="flexCol">
 
 				<Box sx={{ margin: "0.5rem" }} >
@@ -125,11 +130,12 @@ const addRoomPage = (props) => {
 					</Button>
 				</Box>
 			</form>
+           
 		</Box>
+        </Fade>
     </>
   )
 }
 
 export default addRoomPage
 
-// 
