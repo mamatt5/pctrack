@@ -13,8 +13,8 @@ import { Fade, Typography } from "@mui/material";
 import { Grow } from "@mui/material";
 import { createTheme } from '@mui/material/styles'
 import { Collapse } from "@mui/material";
-import AddLocationPage from "./AddLocationPage";
-import AddRoomPage from "./AddRoomPage";
+import AddLocationPage from "./addLocationPage";
+import AddRoomPage from "./addRoomPage";
 
 
 

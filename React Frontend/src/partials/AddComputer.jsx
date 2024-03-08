@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 import ProgramTransferList from "./ProgramTransferList";
+import { useParams } from "react-router-dom";
 
 const style = {
     position: 'absolute',
@@ -16,25 +17,14 @@ const style = {
     borderRadius: 8,
 };
 
-const checkStaff = (staff) => {
-    var bool = false;
-    staff.map(role => {
-        if (role.adminLevel.precedence != 100) {
-            bool = true;
-        }
-    })
-    return bool;
-}
-
 const AddComputer = (props) => {
     const [updated, setUpdated] = props.updated;
     const [open, setModal] = useState(false);
     const [code, setCode] = useState("");
-    const [rooms, setRooms] = useState([]);
     const [selectedRoom, setSelectedRoom] = useState({});
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
-    const { computer, staff } = props;
+    const { computer, rooms } = props;
 
     useEffect(() => {
         if (computer != null) {
@@ -44,12 +34,6 @@ const AddComputer = (props) => {
     }, []);
 
     useEffect(() => {
-        if (staff.length != 0) {
-            getRooms();
-        }
-    }, [staff]);
-
-    useEffect(() => {
         if (computer != null) {
             setSelectedRoom(rooms.find((x) => x.roomId == computer.room.roomId))
         } else {
@@ -57,37 +41,6 @@ const AddComputer = (props) => {
         }
 
     }, [rooms]);
-    
-    const getRooms = () => {
-        const config = {
-            method: "get",
-            endpoint: "rooms"
-        }
-    
-        callApi((e) => {
-            var rooms = [];
-            console.log(staff);
-            staff.map(role => {
-                switch(role.adminLevel.precedence) {
-                    case 2:
-                    case 1:
-                        var arr = e.filter(x => x.location.locationId == role.location.locationId);
-                        rooms = rooms.concat(arr);
-                        break;
-                    case 3:
-                        if (role.roomAssigned.length != 0) {
-                            rooms = rooms.concat(role.roomAssigned);
-                        } else {
-                            var arr = e.filter(x => x.location.locationId == role.location.locationId);
-                            rooms = rooms.concat(arr);
-                        }
-                        break;
-                }
-            });
-            console.log(rooms);
-            setRooms(rooms);
-        }, null, config);
-    }
 
     const openModal = () => {
         setModal(true);
@@ -186,7 +139,7 @@ const AddComputer = (props) => {
                 </Box>
             </Modal>
             {(() => {
-                if (checkStaff(staff)) {
+                if (rooms.length > 0) {
                     if (computer == null) {
                         return (
                             <Button

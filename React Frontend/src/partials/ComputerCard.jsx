@@ -11,7 +11,6 @@ import ComputerIcon from '@mui/icons-material/Computer';
 import callApi from '../api/callApi';
 import { ThemeProvider } from '@emotion/react';
 import AddComputer from './AddComputer';
-import { useEffect } from 'react';
 
 const style = {
     position: 'absolute',
@@ -24,6 +23,7 @@ const style = {
     padding: 6,
     borderRadius: 8,
 };
+
 const theme = createTheme({
     palette: {
         yellow: {
@@ -35,38 +35,21 @@ const theme = createTheme({
     },
 });
 
-const checkStaff = (staff, computer) => {
-    var bool = false;
-    staff.map(role => {
-        if (role.location.locationId == computer.room.location.locationId) {
-            switch(role.adminLevel.precedence) {
-                case 100:
-                    break;
-                case 3:
-                    if (role.roomAssigned.length == 0) {
-                        bool = true;
-                    } else {
-                        if (role.roomAssigned.filter(x => x.roomId === computer.room.roomId).length > 0) {
-                            bool = true;
-                        }
-                    }
-                    break;
-                default:
-                    bool = true;
-                    break;
-            }
-        }
-    })
-    return bool;
+const checkPerm = (computer, rooms) => {
+    var boolean = false;
+    if (rooms.filter(x => x.roomId == computer.room.roomId).length > 0) {
+        boolean = true;
+    }
+
+    return boolean;
 }
 
 
 const ComputerCard = (props) => {
-    const { computer, staff } = props;
+    const { computer, staff, rooms } = props;
     const [open, setModal] = useState(false);
     const [render, setRender] = useState(false);
     const [updated, setUpdated] = useState(true);
-    const [addComputer, setAddComputer] = useState(false);
 
     const openModal = () => {
         setModal(true);
@@ -166,9 +149,9 @@ const ComputerCard = (props) => {
                     {computer.role !== 'NONE' && <h3>Role: {computer.role}</h3>}
                     {computer.programList?.length > 0 && <ProgramTable array={computer.programList} />}
                     <br></br>
-                    {checkStaff(staff, computer) &&
+                    { checkPerm(computer, rooms) &&
                         <ThemeProvider theme={theme}>
-                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} />
+                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} rooms={rooms}/>
                             <Button
                                 variant="contained"
                                 color="error"
