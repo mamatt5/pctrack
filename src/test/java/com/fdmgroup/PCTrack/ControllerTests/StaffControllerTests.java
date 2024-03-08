@@ -20,6 +20,8 @@ import com.fdmgroup.PCTrack.controller.StaffController;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
+import com.fdmgroup.PCTrack.service.AdminLevelService;
+import com.fdmgroup.PCTrack.service.LocationService;
 import com.fdmgroup.PCTrack.service.StaffService;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +29,10 @@ public class StaffControllerTests {
 	
 	@Mock
 	StaffService staffService;
+	@Mock
+	LocationService locationService;
+	@Mock
+	AdminLevelService adminLevelService;
 	
 	Staff staff;
 	Room room;
@@ -35,7 +41,7 @@ public class StaffControllerTests {
 	
 	@BeforeEach
 	public void setup() {
-		staffController = new StaffController(staffService);
+		staffController = new StaffController(staffService, locationService, adminLevelService);
 	}
 	
 	@Test

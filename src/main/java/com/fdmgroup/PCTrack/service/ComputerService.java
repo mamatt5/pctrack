@@ -36,16 +36,6 @@ public class ComputerService {
 		}
 	}
 	
-	public void saveAll(List<Computer> newComputers) {
-		for (Computer c : newComputers) {
-			if (this.computerRepo.existsById(c.getComputerId())) {
-				throw new RuntimeException("Computer already exists");
-			} else {
-				this.computerRepo.save(c);
-			}
-		}
-	}
-	
 	public void deleteByComputerId(int computerId) {
 		if (this.computerRepo.existsById(computerId)) {
 			findById(computerId).setProgramList(null);
@@ -55,9 +45,9 @@ public class ComputerService {
 		}
 	}
 	
-	public void deleteByProgramVersionId(int programVersionId) {
+	public void deleteByProgramId(int programId) {
 		for (Computer computer : findAllComputers()) {
-			int index = computer.programIndex(programVersionId);
+			int index = computer.programIndex(programId);
 			if (index != -1) {
 				computer.getProgramList().remove(index);
 			}

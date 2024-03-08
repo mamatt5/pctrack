@@ -9,8 +9,11 @@ import com.fdmgroup.PCTrack.service.SoftwareService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -48,6 +51,22 @@ public class SoftwareServiceTests {
 	}
 	
 	@Test
+	void save_software_exists_test() {
+		Software sql8wb = new Software("MySQL 8 Workbench");
+		sql8wb.setSoftwareId(1);
+		
+		when(softwareRepo.existsById(1)).thenReturn(true);
+		
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            softwareService.save(sql8wb);
+        });
+		
+		assertEquals("Software already exists", exception.getMessage());
+        verify(softwareRepo, times(1)).existsById(1);
+        verify(softwareRepo, never()).save(sql8wb);
+	}
+	
+	@Test
 	void save_multiple_software_test() {
 		
 
@@ -81,6 +100,44 @@ public class SoftwareServiceTests {
 
 	}
 	
+	  @Test
+	    public void save_all_software_exists_test() {
+	        Software existingSoftware = new Software();
+	        existingSoftware.setSoftwareId(1);
+
+	        List<Software> softwares = new ArrayList<>();
+	        softwares.add(existingSoftware);
+
+	        when(softwareRepo.existsById(existingSoftware.getSoftwareId())).thenReturn(true);
+
+	       assertThrows(RuntimeException.class, () -> {softwareService.saveAll(softwares);});
+
+	        verify(softwareRepo, times(1)).existsById(existingSoftware.getSoftwareId());
+	        verify(softwareRepo, never()).save(any(Software.class));
+	    }
+
+	    @Test
+	    public void save_all_software_test() {
+	        Software newSoftware1 = new Software();
+	        newSoftware1.setSoftwareId(2);
+
+	        Software newSoftware2 = new Software();
+	        newSoftware2.setSoftwareId(3);
+
+	        List<Software> softwares = new ArrayList<>();
+	        softwares.add(newSoftware1);
+	        softwares.add(newSoftware2);
+
+	        when(softwareRepo.existsById(newSoftware1.getSoftwareId())).thenReturn(false);
+	        when(softwareRepo.existsById(newSoftware2.getSoftwareId())).thenReturn(false);
+
+	        softwareService.saveAll(softwares);
+
+	        verify(softwareRepo, times(1)).existsById(newSoftware1.getSoftwareId());
+	        verify(softwareRepo, times(1)).existsById(newSoftware2.getSoftwareId());
+	        verify(softwareRepo, times(1)).save(newSoftware1);
+	        verify(softwareRepo, times(1)).save(newSoftware2);
+	    }
 	
 	@Test
 	void find_all_software_test() {

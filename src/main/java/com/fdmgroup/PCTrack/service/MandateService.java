@@ -42,6 +42,8 @@ public class MandateService {
 	public void deleteById(int mandateId) {
 		if (this.mandateRepo.existsById(mandateId)) {
 			this.mandateRepo.deleteById(mandateId);
+		} else {
+			throw new RuntimeException("Mandate does not exist");
 		}
 	}
 	
