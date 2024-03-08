@@ -1,6 +1,7 @@
 package com.fdmgroup.PCTrack.service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +12,6 @@ import com.fdmgroup.PCTrack.model.AdminLevel;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
-import com.fdmgroup.PCTrack.model.User;
 import org.springframework.data.domain.Sort;
 
 @Service
@@ -100,8 +100,9 @@ public class StaffService {
 	}
 
 	public List<Room> getRoomsStaffIsAdmin(int userId) {
-	
-		return this.staffRepo.findRoomsStaffIsAdmin(userId);
+		List<Room> returnList = this.staffRepo.findRoomsStaffIsAdmin(userId);
+		returnList.addAll(this.staffRepo.findRoomAssignedByUserId(userId));
+		return returnList;
 	} 
 
 	public long staffCountFiltered(List<Location> locations, List<AdminLevel> adminLevels) {
