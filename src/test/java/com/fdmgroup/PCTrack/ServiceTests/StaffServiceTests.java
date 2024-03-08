@@ -19,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import com.fdmgroup.PCTrack.dal.StaffRepository;
+import com.fdmgroup.PCTrack.model.AdminLevel;
+import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
@@ -65,8 +67,10 @@ public class StaffServiceTests {
 	
 	@Test
 	public void staff_count_partial_search() {
-		when(staffRepo.countByUsernameLike("test")).thenReturn((long) 10);
-		assertEquals((long) 10, staffService.staffCountPartial("test"));
+		List<Integer> locationList = new ArrayList<>();
+		List<Integer> adminLevels = new ArrayList<>();
+		when(staffRepo.countByUsernameLike("test", locationList, adminLevels)).thenReturn((long) 10);
+		assertEquals((long) 10, staffService.staffCountPartial("test", locationList, adminLevels));
 	}
 	
 	@Test
