@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import com.fdmgroup.PCTrack.controller.StaffController;
+import com.fdmgroup.PCTrack.model.AdminLevel;
+import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
@@ -114,5 +116,36 @@ public class StaffControllerTests {
 		List<Room> registeredRoomList = new ArrayList<>();
 		when(staffService.getRoomStaffIsRegisterdIn(0)).thenReturn(registeredRoomList);
 		assertEquals(registeredRoomList, staffController.findRoomsWhereStaffIsRegistered(0));
+	}
+	
+	@Test
+	void get_staff_by_location_and_admin_levels() {
+		List<Integer> locationIds = new ArrayList<>();
+		List<Integer> adminLevelIds = new ArrayList<>();
+		
+		List<Staff> staffList = new ArrayList<>();
+		List<Location> locations = new ArrayList<>();
+		List<AdminLevel> adminLevels = new ArrayList<>();
+		
+		when(locationService.getLocationsByIds(locationIds)).thenReturn(locations);
+		when(adminLevelService.getAdminLevelsByIds(adminLevelIds)).thenReturn(adminLevels);
+		when(staffService.getLocationAdminFilteredStaff(1, 10, locations, adminLevels)).thenReturn(staffList);
+		
+		assertEquals(staffList, staffController.getStaffByLocationsAndAdminLevels(locationIds, adminLevelIds, 1, 10));
+	}
+	
+	@Test
+	void count_filtered_staff_by_location_and_admin_level() {
+		List<Integer> locationIds = new ArrayList<>();
+		List<Integer> adminLevelIds = new ArrayList<>();
+		
+		List<Location> locations = new ArrayList<>();
+		List<AdminLevel> adminLevels = new ArrayList<>();
+		
+		when(locationService.getLocationsByIds(locationIds)).thenReturn(locations);
+		when(adminLevelService.getAdminLevelsByIds(adminLevelIds)).thenReturn(adminLevels);
+		when(staffService.staffCountFiltered(locations, adminLevels)).thenReturn(10L);
+		
+		assertEquals(10L, staffController.countStaffFiltered(locationIds, adminLevelIds));
 	}
 }

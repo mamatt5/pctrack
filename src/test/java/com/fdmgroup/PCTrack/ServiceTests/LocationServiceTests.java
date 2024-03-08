@@ -13,6 +13,7 @@ import com.fdmgroup.PCTrack.service.LocationService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +35,7 @@ public class LocationServiceTests {
 	LocationRepository locationRepo;
 	
 	LocationService locationService;
+	Location location;
 	Location location1;
 
 	
@@ -50,6 +53,13 @@ public class LocationServiceTests {
 		
 		locationService.save(location1);
 		verify(locationRepo, times(1)).save(location1);
+	}
+	
+	@Test
+	void save_throws_when_location_already_exists() {
+		location = new Location();
+		when(locationRepo.existsById(location.getLocationId())).thenReturn(true);
+		assertThrows(RuntimeException.class, ()-> locationService.save(location));
 	}
 	
 	@Test
@@ -165,5 +175,13 @@ public class LocationServiceTests {
 		assertThrows(RuntimeException.class, () -> locationService.deleteById(1));
 		verify(locationRepo, times(1)).existsById(1);
 		verify(locationRepo, times(0)).deleteById(1);
+	}
+	
+	@Test
+	void get_locations_by_ids() {
+		List<Location> locations = new ArrayList<>();
+		List<Integer> locationIds = new ArrayList<>();
+		when(locationRepo.findAllById(locationIds)).thenReturn(locations);
+		assertEquals(locations, locationService.getLocationsByIds(locationIds));
 	}
 }

@@ -17,7 +17,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import com.fdmgroup.PCTrack.controller.StaffController;
 import com.fdmgroup.PCTrack.dal.StaffRepository;
 import com.fdmgroup.PCTrack.model.AdminLevel;
 import com.fdmgroup.PCTrack.model.Location;
@@ -120,7 +124,7 @@ public class StaffServiceTests {
 	@Test
 	public void update_staff() {
 		staff = new Staff();
-		when(staffRepo.existsById(0)).thenReturn(true);
+		when(staffRepo.existsById(staff.getStaffId())).thenReturn(true);
 		staffService.update(staff);
 		verify(staffRepo, times(1)).save(staff);
 	}
@@ -143,4 +147,47 @@ public class StaffServiceTests {
 		when(staffRepo.findRoomsStaffIsRegisteredIn(0)).thenReturn(roomList);
 		assertEquals(roomList, staffService.getRoomStaffIsRegisterdIn(0));
 	}
+	
+	@Test
+	public void get_location_admin_with_staff_filter() {
+	    List<Staff> staffList = new ArrayList<>();
+	    List<Location> locations = new ArrayList<>();
+	    List<AdminLevel> adminLevels = new ArrayList<>();
+	    Page<Staff> page = new PageImpl<>(staffList);
+	    Pageable pageable = PageRequest.of(1, 10, Sort.by("user.username").ascending());
+
+	    when(staffRepo.findByLocationInAndAdminLevelIn(locations, adminLevels, pageable)).thenReturn(page);
+	    assertEquals(staffList, staffService.getLocationAdminFilteredStaff(1, 10, locations, adminLevels));
+	}
+	
+	@Test
+	public void get_staff_page() {
+		List<Staff> staffList = new ArrayList<>();
+		Page<Staff> page = new PageImpl<>(staffList);
+		Pageable pageable = PageRequest.of(1,10, Sort.by("user.username").ascending());
+		
+		when(staffRepo.findAll(pageable)).thenReturn(page);
+		assertEquals(page, staffService.getStaffPage(1, 10));
+	}
+	
+	@Test
+	public void get_staff_page_with_partial_match() {
+		List<Staff> staffList = new ArrayList<>();
+		List<Integer> adminLevels = new ArrayList<>();
+		List<Integer> locations = new ArrayList<>();
+		Page<Staff> page = new PageImpl<>(staffList);
+		Pageable pageable = PageRequest.of(1,10);
+		
+		when(staffRepo.findPartial("test", pageable, locations, adminLevels)).thenReturn(page);
+		assertEquals(staffList, staffService.findAllUsersPartialMatch("test", 1, 10, locations, adminLevels));
+	}
+	
+	@Test
+	public void count_staff_by_location_and_admin_levels() {
+	    List<Location> locations = new ArrayList<>();
+	    List<AdminLevel> adminLevels = new ArrayList<>();
+		when(staffRepo.countByLocationInAndAdminLevelIn(locations, adminLevels)).thenReturn(10L);
+		assertEquals(10L, staffService.staffCountFiltered(locations, adminLevels));
+	}
+
 }

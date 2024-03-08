@@ -42,7 +42,7 @@ public class UserServiceTests {
 	
 	UserService userService;
 	User user;
-	Page page;
+	Page<User> page;
 	
 	@BeforeEach
 	void setup() {
@@ -256,8 +256,19 @@ public class UserServiceTests {
 
 	@Test
 	void get_user_page() {
-		page = new PageImpl<User>();
-		Pageable pageable = PageRequest.of(0, 0);
+		List<User> userPageContents = new ArrayList<>();
+		page = new PageImpl<User>(userPageContents);
+		Pageable pageable = PageRequest.of(1, 10);
 		when(userRepo.findAll(pageable)).thenReturn(page);
+		assertEquals(page, userService.getUserPage(1, 10));
+	}
+	
+	@Test
+	void get_partial_user_page() {
+		List<User> userPageContents = new ArrayList<>();
+		page = new PageImpl<User>(userPageContents);
+		Pageable pageable = PageRequest.of(1, 10);
+		when(userRepo.findPartial("test", pageable)).thenReturn(page);
+		assertEquals(page, userService.findAllUsersPartialMatch("test", 1, 10));
 	}
 }
