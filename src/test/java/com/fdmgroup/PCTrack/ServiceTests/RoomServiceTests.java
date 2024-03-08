@@ -12,6 +12,7 @@ import com.fdmgroup.PCTrack.service.RoomService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
@@ -33,6 +34,7 @@ public class RoomServiceTests {
 	RoomService roomService;
 	
 	Location location1;
+	Room room;
 
 	
 	@BeforeEach
@@ -51,6 +53,13 @@ public class RoomServiceTests {
 		
 		roomService.save(room1);
 		verify(roomRepo, times(1)).save(room1);
+	}
+	
+	@Test
+	void save_room_fails_when_already_exists() {
+		room = new Room();
+		when(roomRepo.existsById(room.getRoomId())).thenReturn(true);
+		assertThrows(RuntimeException.class, ()-> roomService.save(room));
 	}
 	
 	@Test
@@ -180,5 +189,20 @@ public class RoomServiceTests {
 		assertThrows(RuntimeException.class, () -> roomService.deleteById(1));
 		verify(roomRepo, times(1)).existsById(1);
 		verify(roomRepo, times(0)).deleteById(1);
+	}
+	
+	@Test
+	void search_room_by_name() {
+		List<Room> roomsByName = new ArrayList<>();
+		when(roomRepo.searchByName("test")).thenReturn(roomsByName);
+		assertEquals(roomsByName, roomService.searchByName("test"));
+	
+	}
+	
+	@Test
+	void search_rooms_by_location() {
+		List<Room> roomsByLocation = new ArrayList<>();
+		when(roomRepo.getRoomsInLocation(0)).thenReturn(roomsByLocation);
+		assertEquals(roomsByLocation, roomService.getRoomsInLocation(0));
 	}
 }
