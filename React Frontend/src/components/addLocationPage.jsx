@@ -9,9 +9,9 @@ import { useState } from "react";
 import callApi from '../api/callApi'
 import { CreateStaff } from '../partials/ManagePermission'
 import { useParams } from 'react-router-dom';
-import { Alert } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check';
 import { Snackbar } from '@mui/material'
+import { Alert } from '@mui/material'
 import Fade from '@mui/material/Fade';
 import Collapse from '@mui/material/Collapse';
 
@@ -44,7 +44,7 @@ const addLocationPage = (props) => {
     const handleClose = () => {
 
         setOpen(false);
-      };
+    };
 
     const onCreation = (e) => {
         CreateStaff(successNotification, id, e.locationId, 1)
@@ -73,7 +73,7 @@ const addLocationPage = (props) => {
     <NavBar admin={props.admin} />
 
 
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
             onClose={handleClose}
             severity="success"

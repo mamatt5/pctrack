@@ -190,17 +190,7 @@ const ProgramTransferList = (props) => {
                         >
                             &lt;
                         </Button>
-                        <Button
-                            sx={{ my: 0.5 }}
-                            variant="outlined"
-                            size="small"
-                            aria-label="move selected left"
-                            onClick={() => {
-                                console.log(programList);
-                            }}
-                        >
-                            Test
-                        </Button>
+                      
                     </Grid>
                 </Grid>
                 <Grid item>{confirmList(programList, [softwaresDeselected, setSoftwaresDeselected])}</Grid>

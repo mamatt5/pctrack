@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 import ProgramTransferList from "./ProgramTransferList";
+import { Snackbar } from '@mui/material'
+import { Alert } from '@mui/material'
 
 const style = {
     position: 'absolute',
@@ -35,6 +37,7 @@ const AddComputer = (props) => {
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
     const { computer, staff } = props;
+    const [openAlert, setOpen] = useState(false);
 
     useEffect(() => {
         if (computer != null) {
@@ -58,6 +61,7 @@ const AddComputer = (props) => {
 
     }, [rooms]);
     
+   
     const getRooms = () => {
         const config = {
             method: "get",
@@ -66,7 +70,7 @@ const AddComputer = (props) => {
     
         callApi((e) => {
             var rooms = [];
-            console.log(staff);
+         
             staff.map(role => {
                 switch(role.adminLevel.precedence) {
                     case 2:
@@ -84,7 +88,7 @@ const AddComputer = (props) => {
                         break;
                 }
             });
-            console.log(rooms);
+            
             setRooms(rooms);
         }, null, config);
     }
@@ -96,6 +100,7 @@ const AddComputer = (props) => {
     const closeModal = () => {
         setUpdated(false);
         setModal(false);
+        setOpen(true);
     };
 
     const submitComputer = () => {
@@ -136,6 +141,17 @@ const AddComputer = (props) => {
 
     return (
         <>
+
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={()=>setOpen(false)}>
+                    <Alert
+                        onClose={()=>setOpen(false)}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        A new Computer has been Added!
+                    </Alert>
+                </Snackbar>
             <Modal
                 open={open}
                 onClose={closeModal}

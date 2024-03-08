@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 import { useNavigate } from "react-router-dom";
 
+
 const getReports = (reportId, setReportsFunc, getAllReports) => {
   const config = {
     method: 'get',
@@ -43,6 +44,7 @@ const Reports = ({report, getAllReports, setReportsFunc}) => {
   const [reportDescription, setReportDescription] = useState('')
   const [reportResolved, setReportResolved] = useState()
   const [editReportDialogue, setEditReportDialogue] = useState(false)
+
   const reportId = report.reportId
   const { id } = useParams()
 
@@ -65,6 +67,7 @@ const Reports = ({report, getAllReports, setReportsFunc}) => {
     const updatedReport = { ...report, description: reportDescription, resolved: reportResolved}
     updateReport(updatedReport, setReportsFunc, getAllReports);
     setEditReportDialogue(false)
+    setOpen(true)
     //setReportDescription('')
     //setReports(null)
   }
@@ -81,10 +84,10 @@ const Reports = ({report, getAllReports, setReportsFunc}) => {
                 <li></li>
                 <li key={report.reportId}> Description: {report.description} </li>
                 <li>Report status: {report.resolved ? "Resolved" : "Active"}</li>
-                <li><Button onClick={()=> editReport(report)}>Edit</Button>
-                </li>
+                <li><Button onClick={()=> editReport(report)} variant='contained' sx={{marginTop: "15px"}}>Edit</Button></li>
         </ul>
       </div>
+      
 
       <Dialog open={editReportDialogue} onClose={()=>setEditReportDialogue(false)} fullWidth>
 
