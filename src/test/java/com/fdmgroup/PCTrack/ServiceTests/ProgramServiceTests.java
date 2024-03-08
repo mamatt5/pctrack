@@ -8,6 +8,7 @@ import com.fdmgroup.PCTrack.dal.SoftwareRepository;
 import com.fdmgroup.PCTrack.dal.ProgramRepository;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.model.Report;
 import com.fdmgroup.PCTrack.model.Software;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.LocationService;
@@ -16,8 +17,13 @@ import com.fdmgroup.PCTrack.service.SoftwareService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -49,7 +55,7 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void save_software_test() {
+	void save_program_test() {
 		
 		Program sql8wb = new Program(new Software("MySQL 8 Workbench"), "8.0.32");
 		
@@ -58,7 +64,20 @@ public class ProgramServiceTests {
 	}
 	
 	@Test
-	void save_multiple_software_test() {
+	void save_program_exists_test() {
+		Program program1 = new Program(new Software("MySQL 8 Workbench"), "8.0.32");
+		
+		when(programRepo.existsById(program1.getProgramId())).thenReturn(true);
+		
+		assertThrows(RuntimeException.class, () -> programService.save(program1));
+		
+		
+		verify(programRepo, times(1)).existsById(program1.getProgramId());
+		verify(programRepo, never()).save(program1);
+	}
+	
+	@Test
+	void save_multiple_programs_test() {
 		
 
 		Program microsoftSSMS = new Program(new Software("Microsoft MySQL"), "15.0.18333.0");
@@ -91,6 +110,47 @@ public class ProgramServiceTests {
 
 	}
 	
+	@Test
+	void save_all_programs_test() {
+		Program newProgram1 = new Program();
+        newProgram1.setProgramId(1);
+
+        Program newProgram2 = new Program();
+        newProgram2.setProgramId(2);
+
+        List<Program> programs = new ArrayList<>();
+        programs.add(newProgram1);
+        programs.add(newProgram2);
+
+        when(programRepo.existsById(newProgram1.getProgramId())).thenReturn(false);
+        when(programRepo.existsById(newProgram2.getProgramId())).thenReturn(false);
+
+       programService.saveAll(programs);
+
+        verify(programRepo, times(1)).existsById(newProgram1.getProgramId());
+        verify(programRepo, times(1)).existsById(newProgram2.getProgramId());
+        verify(programRepo, times(1)).save(newProgram1);
+        verify(programRepo, times(1)).save(newProgram2);
+	}
+	
+    @Test
+    public void saveAll_program_exists_test() {
+        Program existingProgram = new Program();
+        existingProgram.setProgramId(1);
+
+        List<Program> programs = new ArrayList<>();
+        programs.add(existingProgram);
+
+        when(programRepo.existsById(existingProgram.getProgramId())).thenReturn(true);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            programService.saveAll(programs);
+        });
+        
+        assertEquals("Program already exists", exception.getMessage());
+        verify(programRepo, times(1)).existsById(existingProgram.getProgramId());
+        verify(programRepo, never()).save(any(Program.class));
+    }
 	
 	@Test
 	void find_all_program_test() {
@@ -183,4 +243,34 @@ public class ProgramServiceTests {
 		verify(programRepo, times(1)).existsById(1);
 		verify(programRepo, times(0)).deleteById(1);
 	}
+	
+    @Test
+    public void delete_program_by_softwareId_test() {
+        Program program = new Program();
+        Software software = new Software();
+        software.setSoftwareId(1);
+        program.setSoftware(software);
+        List<Program> programs = new ArrayList<>();
+        programs.add(program);
+        when(programRepo.findAll()).thenReturn(programs);
+
+        doNothing().when(programRepo).deleteById(1);
+
+        // Call the method under test
+        programService.deleteBySoftwareId(1);
+
+        verify(programRepo, times(1)).deleteById(1);
+    }
+    
+    @Test
+    public void deleteBySoftwareId_programDoesNotExist() {
+        when(programRepo.findAll()).thenReturn(new ArrayList<>());
+
+        assertThrows(RuntimeException.class, () -> {
+            programService.deleteBySoftwareId(99);
+        });
+
+
+        verify(programRepo, never()).deleteById(anyInt());
+    }
 }
