@@ -20,6 +20,15 @@ const getComputers = (setComputers) => {
     callApi(setComputers, null, config);
 }
 
+const getRegRooms = (setRegRooms, id) => {
+    const config = {
+        method: "get",
+        endpoint: `staff/getregisteredrooms/${id}`
+    }
+
+    callApi(setRegRooms, null, config);
+}
+
 const getRooms = (setRooms) => {
     const config = {
         method: "get",
@@ -27,16 +36,6 @@ const getRooms = (setRooms) => {
     }
 
     callApi(setRooms, null, config);
-}
-
-const getStaff = (setStaff, id) => {
-
-    const config = {
-        method: "get",
-        endpoint: `staff/${id}`
-    }
-
-    callApi(setStaff, null, config);
 }
 
 const getReport = (setReport) => {
@@ -74,7 +73,7 @@ export const SearchComputerPage = () => {
     const [reportUpdated, setReportUpdated] = useState(true);
     const [roomId, setRoomId] = useState("%%");
     const [role, setRole] = useState("%%");
-    const [staff, setStaff] = useState([]);
+    const [regRooms, setRegRooms] = useState([]);
     const { id } = useParams();
 
     const [isHovered, setIsHovered] = useState(false)
@@ -82,7 +81,7 @@ export const SearchComputerPage = () => {
     useEffect(() => {
         getComputers(setComputers);
         getRooms(setRooms);
-        getStaff(setStaff, id);
+        getRegRooms(setRegRooms, id);
     }, []);
 
     useEffect(() => {
@@ -157,13 +156,13 @@ export const SearchComputerPage = () => {
                     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {
                             computers.map(computer =>
-                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} staff={staff} />
+                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} rooms={regRooms} />
                             )
                         }
                     </div>
                 </Fade>
             </div>
-            <AddComputer updated={[updated, setUpdated]} computer={null} staff={staff} />
+            <AddComputer updated={[updated, setUpdated]} computer={null} rooms={regRooms}/>
             <Box sx={{
                 position: 'fixed',
                 top: 80,
