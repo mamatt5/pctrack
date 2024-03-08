@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import { IconButton } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import {useEffect, useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
@@ -135,7 +136,7 @@ export default function ReportsTable({array, getReports, setReports}) {
               <StyledTableCell align="left">{row.user.username}</StyledTableCell>
               <StyledTableCell align="left">{row.dateCreated}</StyledTableCell>
               <StyledTableCell align="left">{row.description}</StyledTableCell>
-              <StyledTableCell align="center">{row.resolved ? <CheckCircleIcon/>: 'Active'}</StyledTableCell>
+              <StyledTableCell align="center">{row.resolved ? <CheckCircleIcon color='success'/>: <CancelIcon color='error'/>}</StyledTableCell>
               <StyledTableCell align="right" sx={{ width: '100px' }}>  
 
                 <IconButton size="small" onClick={()=>openModal(row)}>
