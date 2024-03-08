@@ -110,9 +110,7 @@ public class SoftwareServiceTests {
 
 	        when(softwareRepo.existsById(existingSoftware.getSoftwareId())).thenReturn(true);
 
-	       assertThrows(RuntimeException.class, () -> {
-	            softwareService.saveAll(softwares);
-	       });
+	       assertThrows(RuntimeException.class, () -> {softwareService.saveAll(softwares);});
 
 	        verify(softwareRepo, times(1)).existsById(existingSoftware.getSoftwareId());
 	        verify(softwareRepo, never()).save(any(Software.class));
