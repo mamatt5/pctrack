@@ -60,8 +60,10 @@ public class StaffControllerTests {
 	
 	@Test
 	public void count_staff_partial_query() {
-		when(staffService.staffCountPartial("testing")).thenReturn((long) 5);
-		assertEquals((long) 5, staffController.countStaff("testing"));
+		List<Integer> locations = new ArrayList<>();
+		List<Integer> adminLevels = new ArrayList<>();
+		when(staffService.staffCountPartial("testing", locations, adminLevels)).thenReturn((long) 5);
+		assertEquals((long) 5, staffController.countStaff("testing", locations, adminLevels));
 	}
 	
 	@Test
@@ -100,10 +102,11 @@ public class StaffControllerTests {
 	
 	@Test
 	void get_paginated_partial_staff() {
+		List<Integer> locations = new ArrayList<>();
+		List<Integer> adminLevels = new ArrayList<>();
 		List<Staff> paginatedStaffList = new ArrayList<>();
-		page = new PageImpl<Staff>(paginatedStaffList);
-		when(staffService.findAllUsersPartialMatch("test", 1, 10)).thenReturn(page);
-		assertEquals(paginatedStaffList, staffController.getStaffPartial("test",1, 10));
+		when(staffService.findAllUsersPartialMatch("test", 1, 10, locations, adminLevels)).thenReturn(paginatedStaffList);
+		assertEquals(paginatedStaffList, staffController.getStaffPartial("test", locations, adminLevels, 1, 10));
 	}
 	
 	@Test
