@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import AddComputer from '../partials/AddComputer'
 import CreateReport from '../partials/CreateReport'
 import ComputerIcon from '@mui/icons-material/Computer';
-import Fade from '@mui/material/Fade'
+import { Fade } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
 const getComputers = (setComputers) => {
@@ -153,13 +153,11 @@ export const SearchComputerPage = () => {
                         <MenuItem value="BOTH">Both</MenuItem>
                     </Select>
                 </div>
-                <Fade in={true} timeout={1000}>
+                <Fade in={true}>
                     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {
                             computers.map(computer =>
-                                
-                                    <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} staff={staff} />
-                               
+                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} staff={staff} />
                             )
                         }
                     </div>

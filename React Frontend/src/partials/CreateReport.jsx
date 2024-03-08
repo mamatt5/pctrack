@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import callApi from "../api/callApi";
 import { Autocomplete } from '@mui/material';
 import { useParams } from "react-router-dom";
+import { Snackbar } from '@mui/material'
+import { Alert } from '@mui/material'
 
 const style = {
     position: 'absolute',
@@ -43,6 +45,7 @@ const CreateReport  = (props) => {
     const [issueDescription, setIssueDescription] = useState("");
     const [error, setError] = useState(false);
     const [user, setUser] = useState([]);
+    const [openAlert, setOpen] = useState(false);
 
     useEffect(() => {
         getComputers(setComputers);
@@ -86,10 +89,25 @@ const CreateReport  = (props) => {
             data: report
         }
         callApi(closeModal, null, config);
+        setOpen(true)
     }
 
     return (
-        <>
+        <div>
+           
+           <Snackbar open={openAlert} autoHideDuration={6000} onClose={()=>setOpen(false)} 
+           
+           >
+                    <Alert
+                        onClose={()=>setOpen(false)}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        A new Report has been created!
+                    </Alert>
+                </Snackbar>
+
             <Modal
                 open={open}
                 onClose={closeModal}
@@ -145,7 +163,7 @@ const CreateReport  = (props) => {
             >
                 Create Report
             </Button>
-        </>
+        </div>
     )
 }
 

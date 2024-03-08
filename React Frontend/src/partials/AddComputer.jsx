@@ -100,7 +100,7 @@ const AddComputer = (props) => {
     const closeModal = () => {
         setUpdated(false);
         setModal(false);
-        setOpen(true);
+        
     };
 
     const submitComputer = () => {
@@ -136,7 +136,9 @@ const AddComputer = (props) => {
                 data: computerClass
             }
             callApi(closeModal, null, config);
+            
         }
+        setOpen(true);
     }
 
     return (
