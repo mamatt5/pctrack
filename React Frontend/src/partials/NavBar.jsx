@@ -225,8 +225,7 @@ export default function NavBar(props) {
 
 										disabled={
 											// index === 0 ? !businessAdmin :
-											index === 1 ? !businessAdmin  :
-											index === 2 ? !(businessAdmin || locationAdmin)  :
+											index === 1 ? !(businessAdmin || locationAdmin)  :
 											false
 										}
 										sx={{
