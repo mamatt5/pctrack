@@ -18,7 +18,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ReportIcon from '@mui/icons-material/Report';
 import ListItemText from "@mui/material/ListItemText";
 import Tooltip from "@mui/material/Tooltip";
-
+import ConstructionIcon from '@mui/icons-material/Construction';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
@@ -38,7 +38,7 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { HelpCenter } from "@mui/icons-material";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import LivingIcon from '@mui/icons-material/Living';
-import { checkAdmin } from "../components/LoggedInHomePage";
+import { CheckAdmin } from "../components/LoggedInHomePage";
 
 
 const drawerWidth = 240;
@@ -109,14 +109,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 );
 
 export default function NavBar(props) {
-	
+
 	const [admin, setAdmin] = useState(false);
 	const [staff, setStaff] = useState([]);
 	const { id } = useParams();
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
- 
+
 	const [businessAdmin, setBusinessAdmin] = useState(false);
 	const [locationAdmin, setLocationAdmin] = useState(false);
 	const [roomAdmin, setRoomAdmin] = useState(false);
@@ -126,19 +126,19 @@ export default function NavBar(props) {
 
 
 	useEffect(() => {
-	
-		checkAdmin(setAdmin, setStaff, id);
+
+		CheckAdmin(setAdmin, setStaff, id);
 
 		staff.forEach(staffMember => {
- 
-			let precedence = staffMember.adminLevel.precedence;
-	
 
-			if (precedence === 1) {  
+			let precedence = staffMember.adminLevel.precedence;
+
+
+			if (precedence === 1) {
 				setBusinessAdmin(true);
 			} else if (precedence === 2) {
 				setLocationAdmin(true);
-			} else if (precedence === 3) {  
+			} else if (precedence === 3) {
 				setRoomAdmin(true);
 			}
 		});
@@ -152,7 +152,7 @@ export default function NavBar(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-	
+
 	const handleIconNav = (page, id) => {
 		if (page === "Search Rooms") {
 			navigate(`/home/${id}/searchroom`);
@@ -170,10 +170,8 @@ export default function NavBar(props) {
 			navigate(`/home/${id}/reports`)
 		}else if (page === "Help") {
 			navigate(`/home/${id}/help`);
-		} else if (page === "Add Location") {
-			navigate(`/home/${id}/addlocation`);
-		} else if (page === "Add Room") {
-			navigate(`/home/${id}/addroom`);
+		} else if (page === "Manage Facilities") {
+			navigate(`/home/${id}/ManageFacilities`);
 		} else if (page === "Log Out") {
 			localStorage.removeItem("token");
 			navigate("/");
@@ -218,13 +216,13 @@ export default function NavBar(props) {
 				{/* admin stuff  */}
 				{admin ? (
 					<>
-						{["Manage Users", "Add Location", "Add Room"].map((text, index) => (
-							
+						{["Manage Users", "Manage Facilities"].map((text, index) => (
+
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<Tooltip title={text} placement="right">
 									{console.log(businessAdmin)}
 									<ListItemButton
-										
+
 										disabled={
 											// index === 0 ? !businessAdmin :
 											index === 1 ? !businessAdmin  :
@@ -243,13 +241,12 @@ export default function NavBar(props) {
 												minWidth: 0,
 												mr: open ? 3 : "auto",
 												justifyContent: "center",
-												
-												
+
+
 											}}
 										>
 											{index === 0 && <AdminPanelSettingsIcon/>}
-											{index === 1 && <AddLocationIcon />}
-											{index === 2 && <ChairIcon />}
+											{index === 1 && <ConstructionIcon />}
 										</ListItemIcon>
 										<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 									</ListItemButton>
@@ -314,7 +311,7 @@ export default function NavBar(props) {
 											justifyContent: "center",
 										}}
 									>
-									
+
 										{index === 0 && <HelpCenter />}
 										{index === 1 && <LogoutOutlinedIcon />}
 									</ListItemIcon>

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CustomizedTables from '../partials/roomTable'
 import { Box } from '@mui/material';
-import { checkAdmin } from "../components/LoggedInHomePage";
+import { CheckAdmin } from "../components/LoggedInHomePage";
 
 export const SearchRoomPage = (props) => {
 
@@ -23,14 +23,14 @@ export const SearchRoomPage = (props) => {
   const { id } = useParams()
 
   useEffect(()=>{
-    checkAdmin(setAdmin, setStaff, id);
- 
+    CheckAdmin(setAdmin, setStaff, id);
+
     staff.forEach(staffMember => {
- 
+
 			let precedence = staffMember.adminLevel.precedence;
       console.log("BUBU")
       console.log(staffMember)
-			if (precedence === 1) {  
+			if (precedence === 1) {
 				setBusinessAdmin(true);
       }
 		});
@@ -41,19 +41,19 @@ export const SearchRoomPage = (props) => {
       config = {
         method: "get",
         endpoint: "staff/getrooms/"+id,
-  
+
       }
     } else {
       // get rooms where user is register at
-     
+
       config = {
         method: "get",
         endpoint: "staff/getregisteredrooms/"+ id,
-  
+
       }
 
     }
-    
+
     callApi(test, null, config);
 
   }, []);
@@ -65,7 +65,7 @@ export const SearchRoomPage = (props) => {
     <>
       <Box className="dashBoardPadding">
       <h1>Rooms</h1>
-       
+
 
         <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <RoomTab />

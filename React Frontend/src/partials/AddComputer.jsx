@@ -29,9 +29,8 @@ const AddComputer = (props) => {
     const [selectedRoom, setSelectedRoom] = useState({});
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
-    const { computer, staff } = props;
+    const { computer, staff, rooms } = props;
     const [openAlert, setOpen] = useState(false);
-    const { computer, rooms } = props;
 
 
     useEffect(() => {
@@ -50,17 +49,17 @@ const AddComputer = (props) => {
 
     }, [rooms]);
 
-    
-   
+
+
     const getRooms = () => {
         const config = {
             method: "get",
             endpoint: "rooms"
         }
-    
+
         callApi((e) => {
             var rooms = [];
-         
+
             staff.map(role => {
                 switch(role.adminLevel.precedence) {
                     case 2:
@@ -78,7 +77,7 @@ const AddComputer = (props) => {
                         break;
                 }
             });
-            
+
             setSelectedRoom(rooms);
         }, null, config);
     }
@@ -91,7 +90,7 @@ const AddComputer = (props) => {
     const closeModal = () => {
         setUpdated(false);
         setModal(false);
-        
+
     };
 
     const submitComputer = () => {
@@ -127,7 +126,7 @@ const AddComputer = (props) => {
                 data: computerClass
             }
             callApi(closeModal, null, config);
-            
+
         }
         setOpen(true);
     }

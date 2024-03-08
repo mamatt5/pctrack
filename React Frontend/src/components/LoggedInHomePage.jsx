@@ -15,14 +15,14 @@ import { createTheme } from '@mui/material/styles'
 import { Collapse } from "@mui/material";
 import AddLocationPage from "./addLocationPage";
 import AddRoomPage from "./addRoomPage";
-
+import ManageFacilities from "./ManageFacilities";
 
 
 import { Box } from "@mui/material";
 import { ReportsPage } from "./ReportsPage";
 import HelpPage from "./HelpPage";
 
-export const checkAdmin = (setAdmin, setStaff, id) => {
+export const CheckAdmin = (setAdmin, setStaff, id) => {
 	const config = {
 		method: "get",
 		endpoint: `staff/${id}`,
@@ -73,7 +73,7 @@ const welcomePage = (staff) => {
 
 					<Box>
 						<Fade in={true} timeout={2000}>
-							{roles.adminLevel.name === "" ? 
+							{roles.adminLevel.name === "" ?
 							<Typography>
 								User at {roles.location.city}
 							</Typography>:
@@ -82,7 +82,7 @@ const welcomePage = (staff) => {
 								{roles.adminLevel.name} Admin at {roles.location.city}
 							</Typography>
 							}
-							
+
 
 						</Fade>
 
@@ -102,7 +102,7 @@ const LoggedInHomePage = () => {
 	console.log(staff);
 	useEffect(() => {
 		console.log("checking");
-		checkAdmin(setAdmin, setStaff, id);
+		CheckAdmin(setAdmin, setStaff, id);
 	}, []);
 
 	console.log(staff)
@@ -120,8 +120,9 @@ const LoggedInHomePage = () => {
 				<Route path="/viewcomputerroom" element={<ViewComputersInRoomPage />} />
 				<Route path="/reports" element={<ReportsPage/>}/>
 				<Route path="/help" element={<HelpPage />} />
-				<Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
-				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} />
+				{/* <Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
+				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} /> */}
+				<Route path="/manageFacilities" element={< ManageFacilities  admin={admin} currStaff={staff}/>} />
 			</Routes>
 			{console.log("boi")}
 			{console.log(staff)}
