@@ -25,6 +25,7 @@ import com.fdmgroup.PCTrack.model.Program;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.SearchConfig;
 import com.fdmgroup.PCTrack.service.ComputerService;
+import com.fdmgroup.PCTrack.service.ReportService;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +33,8 @@ public class ComputerControllerTests {
 	
 	@Mock
 	ComputerService computerService;
+	@Mock
+	ReportService reportService;
 	
 	ComputerController computerController;
 	Software vscodeProgram;
@@ -49,7 +52,7 @@ public class ComputerControllerTests {
      
 	@BeforeEach
 	void setup() {
-		this.computerController = new ComputerController(computerService);
+		this.computerController = new ComputerController(computerService, reportService);
 		vscodeProgram = new Software("Visual Studio Code");
 		eclipseProgram = new Software("Eclipse");
 		nodejsProgram = new Software("Node.js");

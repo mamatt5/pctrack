@@ -49,7 +49,7 @@ const ComputerCard = (props) => {
     const { computer, staff, rooms } = props;
     const [open, setModal] = useState(false);
     const [render, setRender] = useState(false);
-    const [updated, setUpdated] = useState(true);
+    const [updated, setUpdated] = props.updated;
 
     const openModal = () => {
         setModal(true);

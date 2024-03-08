@@ -7,8 +7,6 @@ import ProgramTransferList from "./ProgramTransferList";
 import { Snackbar } from '@mui/material'
 import { Alert } from '@mui/material'
 
-import { useParams } from "react-router-dom";
-
 
 const style = {
     position: 'absolute',
@@ -34,11 +32,15 @@ const AddComputer = (props) => {
 
 
     useEffect(() => {
+        reset();
+    }, []);
+
+    const reset = () => {
         if (computer != null) {
             setCode(computer.computerCode);
             setProgramList(computer.programList);
         }
-    }, []);
+    }
 
     useEffect(() => {
         if (computer != null) {
@@ -49,40 +51,6 @@ const AddComputer = (props) => {
 
     }, [rooms]);
 
-
-
-    const getRooms = () => {
-        const config = {
-            method: "get",
-            endpoint: "rooms"
-        }
-
-        callApi((e) => {
-            var rooms = [];
-
-            staff.map(role => {
-                switch(role.adminLevel.precedence) {
-                    case 2:
-                    case 1:
-                        var arr = e.filter(x => x.location.locationId == role.location.locationId);
-                        rooms = rooms.concat(arr);
-                        break;
-                    case 3:
-                        if (role.roomAssigned.length != 0) {
-                            rooms = rooms.concat(role.roomAssigned);
-                        } else {
-                            var arr = e.filter(x => x.location.locationId == role.location.locationId);
-                            rooms = rooms.concat(arr);
-                        }
-                        break;
-                }
-            });
-
-            setSelectedRoom(rooms);
-        }, null, config);
-    }
-
-
     const openModal = () => {
         setModal(true);
     };
@@ -90,7 +58,7 @@ const AddComputer = (props) => {
     const closeModal = () => {
         setUpdated(false);
         setModal(false);
-
+        reset();
     };
 
     const submitComputer = () => {
@@ -128,6 +96,7 @@ const AddComputer = (props) => {
             callApi(closeModal, null, config);
 
         }
+        setUpdated(false);
         setOpen(true);
     }
 
