@@ -10,8 +10,11 @@ import com.fdmgroup.PCTrack.service.UserService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -34,6 +37,7 @@ public class UserServiceTests {
 	PasswordEncoder passwordEncoder;
 	
 	UserService userService;
+	User user;
 	
 	@BeforeEach
 	void setup() {
@@ -188,6 +192,61 @@ public class UserServiceTests {
 		assertThrows(RuntimeException.class, () -> userService.deleteByUserId(1));
 		verify(userRepo, times(1)).existsById(1);
 		verify(userRepo, times(0)).deleteById(1);
+	}
+	
+	@Test
+	void count_users() {
+		when(userRepo.count()).thenReturn((long) 10);
+		assertEquals((long) 10, userService.userCount());
+	}
+	
+	@Test
+	void count_partial_users() {
+		when(userRepo.countByUsernameLike("test")).thenReturn((long) 10);
+		assertEquals((long) 10, userService.userCountPartial("test"));
+	}
+	
+	@Test
+	void find_user_email() {
+		user = new User();
+		when(userRepo.findByEmail("test@test")).thenReturn(Optional.of(user));
+		assertEquals(user, userService.findUserEmail("test@test"));
+	}
+	
+	@Test
+	void find_by_username() {
+		user = new User();
+		when(userRepo.findByUsername("test")).thenReturn(Optional.of(user));
+		assertEquals(user, userService.findByUsername("test"));
+	}
+	
+	@Test
+	void user_exists_by_username() {
+		when(userRepo.existsByUsername("test")).thenReturn(true);
+		assertTrue(userService.existsByUsername("test"));
+	}
+	
+	@Test
+	void new_user_registered() {
+		user = new User();
+		when(userRepo.existsById(user.getUserId())).thenReturn(false);
+		userService.register(user);
+		verify(userRepo, times(1)).save(user);
+		verify(passwordEncoder, times(1)).encode(user.getPassword());
+	}
+	
+	@Test
+	void register_throws_when_existing_user_is_registered() {
+		user = new User();
+		when(userRepo.existsById(user.getUserId())).thenReturn(true);
+		assertThrows(RuntimeException.class, ()-> userService.register(user));
+	}
+	
+	@Test
+	void encoder_encodes_password() {
+		String password = "test";
+		when(passwordEncoder.encode("test")).thenReturn("encoded");
+		assertEquals("encoded", userService.encodePw(password));
 	}
 
 }
