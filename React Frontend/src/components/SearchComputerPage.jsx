@@ -9,6 +9,7 @@ import AddComputer from '../partials/AddComputer'
 import CreateReport from '../partials/CreateReport'
 import ComputerIcon from '@mui/icons-material/Computer';
 import { Fade } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
 const getComputers = (setComputers) => {
     const config = {
@@ -26,6 +27,16 @@ const getRooms = (setRooms) => {
     }
 
     callApi(setRooms, null, config);
+}
+
+const getStaff = (setStaff, id) => {
+
+    const config = {
+        method: "get",
+        endpoint: `staff/${id}`
+    }
+
+    callApi(setStaff, null, config);
 }
 
 const getReport = (setReport) => {
@@ -63,16 +74,21 @@ export const SearchComputerPage = () => {
     const [reportUpdated, setReportUpdated] = useState(true);
     const [roomId, setRoomId] = useState("%%");
     const [role, setRole] = useState("%%");
+    const [staff, setStaff] = useState([]);
+    const { id } = useParams();
+
+    const [isHovered, setIsHovered] = useState(false)
 
     useEffect(() => {
         getComputers(setComputers);
         getRooms(setRooms);
+        getStaff(setStaff, id);
     }, []);
 
     useEffect(() => {
         getComputers(setComputers);
         setUpdated(true);
-    }, [updated])
+    }, [updated]);
 
     useEffect(() => {
         getReport(setReport);
@@ -81,7 +97,6 @@ export const SearchComputerPage = () => {
 
     return (
         <>
-
             <div className='dashBoardPadding'>
                 <h1>Computers</h1>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
@@ -142,43 +157,62 @@ export const SearchComputerPage = () => {
                     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {
                             computers.map(computer =>
-                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} />
+                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} staff={staff} />
                             )
                         }
                     </div>
                 </Fade>
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {
-                    computers.map(computer =>
-                        <ComputerCard computer={computer} key={computer.computerId} updated={[updated,setUpdated]}/>
-                    )
-                }
-            </div>
-        
-        <AddComputer updated={[updated, setUpdated]} computer={null} />
-        <CreateReport reportUpdated={[reportUpdated,setReportUpdated]}/>
-        <Box sx={{
-            position: 'fixed',
-            top: 80,
-            right: 20,
-            backgroundColor: 'lightgray',
-            padding: '10px',
-            borderRadius: '10px'
-          }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
-        </div>
-      </Box>
-        
-    </>
+            <AddComputer updated={[updated, setUpdated]} computer={null} staff={staff} />
+            <Box sx={{
+                position: 'fixed',
+                top: 80,
+                right: 20,
+                backgroundColor: 'lightgray',
+                padding: '10px',
+                borderRadius: '10px'
+            }}>
+                <CreateReport reportUpdated={[reportUpdated, setReportUpdated]} />
+                <Box
+                    sx={{
+                        position: 'fixed',
+                        top: 80,
+                        right: 20,
+                        backgroundColor: 'lightgray',
+                        padding: '10px',
+                        borderRadius: '10px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'left'
+                    }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}>
+
+                    {isHovered && (
+                        <>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                                <ComputerIcon style={{ color: '#77DD77' }} /> Both roles
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                                <ComputerIcon style={{ color: '#ffff66' }} /> Dev/BI-ready
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <ComputerIcon style={{ color: '#FF6961' }} /> None
+                            </div>
+                            <div style={{ fontSize: '11px' }}><em>
+                                *Check help for Dev/BI software list
+                            </em></div>
+                        </>
+                    )}
+                    {!isHovered && (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <ComputerIcon style={{ color: '#77DD77' }} />
+                            <ComputerIcon style={{ color: '#ffff66' }} />
+                            <ComputerIcon style={{ color: '#FF6961' }} />
+                        </div>
+                    )}
+                </Box>
+            </Box>
+        </>
     )
-
-
 }

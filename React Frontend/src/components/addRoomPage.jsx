@@ -7,7 +7,7 @@ import { TextField } from '@mui/material'
 import { Button } from '@mui/material'
 import { useState } from "react";
 import callApi from '../api/callApi'
-import { createStaff } from '../partials/ManagePermission'
+import { CreateStaff } from '../partials/ManagePermission'
 import { useParams } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import { Snackbar } from '@mui/material'
@@ -49,7 +49,7 @@ const addRoomPage = (props) => {
     }
 
     const handleClose = () => {
-    
+
         setOpen(false);
       };
 
@@ -57,17 +57,17 @@ const addRoomPage = (props) => {
 
 	const handleCheck = (value) => {
 		setLocation(value)
-	
+
 	};
 
     const createRoom = (e) => {
         e.preventDefault();
-	
+
         const config = {
             method: "post",
             endpoint: "rooms",
             data: {
-                "name": roomName, 
+                "name": roomName,
                 "location": location[0]
             }
         }
@@ -77,7 +77,7 @@ const addRoomPage = (props) => {
 
     <>
         <NavBar admin={props.admin} />
-        
+
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
             onClose={handleClose}
@@ -131,3 +131,5 @@ const addRoomPage = (props) => {
 }
 
 export default addRoomPage
+
+// 

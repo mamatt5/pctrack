@@ -2,7 +2,6 @@ import { Box, Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mu
 import { useState } from "react";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
-import { CheckBox } from "@mui/icons-material";
 import ProgramTransferList from "./ProgramTransferList";
 
 const style = {
@@ -17,13 +16,14 @@ const style = {
     borderRadius: 8,
 };
 
-const getRooms = (setRooms) => {
-    const config = {
-        method: "get",
-        endpoint: "rooms"
-    }
-
-    callApi(setRooms, null, config);
+const checkStaff = (staff) => {
+    var bool = false;
+    staff.map(role => {
+        if (role.adminLevel.precedence != 100) {
+            bool = true;
+        }
+    })
+    return bool;
 }
 
 const AddComputer = (props) => {
@@ -34,15 +34,20 @@ const AddComputer = (props) => {
     const [selectedRoom, setSelectedRoom] = useState({});
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
-    const { computer } = props;
+    const { computer, staff } = props;
 
     useEffect(() => {
-        getRooms(setRooms);
         if (computer != null) {
             setCode(computer.computerCode);
             setProgramList(computer.programList);
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (staff.length != 0) {
+            getRooms();
+        }
+    }, [staff]);
 
     useEffect(() => {
         if (computer != null) {
@@ -51,7 +56,38 @@ const AddComputer = (props) => {
             setSelectedRoom(rooms[0]);
         }
 
-    }, [rooms])
+    }, [rooms]);
+    
+    const getRooms = () => {
+        const config = {
+            method: "get",
+            endpoint: "rooms"
+        }
+    
+        callApi((e) => {
+            var rooms = [];
+            console.log(staff);
+            staff.map(role => {
+                switch(role.adminLevel.precedence) {
+                    case 2:
+                    case 1:
+                        var arr = e.filter(x => x.location.locationId == role.location.locationId);
+                        rooms = rooms.concat(arr);
+                        break;
+                    case 3:
+                        if (role.roomAssigned.length != 0) {
+                            rooms = rooms.concat(role.roomAssigned);
+                        } else {
+                            var arr = e.filter(x => x.location.locationId == role.location.locationId);
+                            rooms = rooms.concat(arr);
+                        }
+                        break;
+                }
+            });
+            console.log(rooms);
+            setRooms(rooms);
+        }, null, config);
+    }
 
     const openModal = () => {
         setModal(true);
@@ -149,28 +185,39 @@ const AddComputer = (props) => {
                     }
                 </Box>
             </Modal>
-            {computer == null ?
-                <Button
-                    variant="contained"
-                    disableElevation
-                    sx={{
-                        position: "fixed",
-                        bottom: "10%",
-                        right: "10%",
-                        zIndex: 1000,
-                    }}
-                    onClick={openModal}
-                >
-                    Add New Computer
-                </Button>
-                :
-                <Button
-                    variant="contained"
-                    color="success"
-                    sx={{ margin: "50px" }}
-                    onClick={openModal}
-                >Edit Computer</Button>
+            {(() => {
+                if (checkStaff(staff)) {
+                    if (computer == null) {
+                        return (
+                            <Button
+                                variant="contained"
+                                disableElevation
+                                sx={{
+                                    position: "fixed",
+                                    bottom: "10%",
+                                    right: "10%",
+                                    zIndex: 1000,
+                                }}
+                                onClick={openModal}
+                            >
+                                Add New Computer
+                            </Button>
+                        )
+                    } else {
+                        return (
+                            <Button
+                                variant="contained"
+                                color="success"
+                                sx={{ margin: "50px" }}
+                                onClick={openModal}
+                            >
+                                Edit Computer
+                            </Button>
+                        )
+                    }
+                }
             }
+            )()}
         </>
     )
 }

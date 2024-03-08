@@ -3,7 +3,7 @@ import NavBar from '../partials/NavBar'
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Box, Button, Dialog, DialogContent, Tooltip } from '@mui/material';
+import { Box, Button, Dialog, DialogContent, Modal, Tooltip } from '@mui/material';
 import callApi from '../api/callApi';
 import ComputerCard from '../partials/ComputerCard';
 import { Typography } from '@mui/material';
@@ -20,6 +20,7 @@ const ViewComputersInRoomPage = (props) => {
     const [room, setRoom] = useState({});
     const [computers, setComputers] = useState([])
     const [mandatesModal, setMandatesModal] = useState(false);
+    const [isHovered, setIsHovered] = useState(false)
 
     const handleMandatesModal = (open) => {
       setMandatesModal(open)
@@ -77,34 +78,47 @@ const ViewComputersInRoomPage = (props) => {
               
           </Grid>
       </Box>
-      <Box sx={{
-        position: 'fixed',
-        bottom: 20,
-        right: 20,
-        backgroundColor: 'lightgray',
-        padding: '10px',
-        borderRadius: '10px'
-          }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#77DD77', marginRight: '5px' }} /> Both roles
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-          <ComputerIcon style={{ color: '#ffff66', marginRight: '5px' }} /> Dev/BI
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <ComputerIcon style={{ color: '#FF6961', marginRight: '5px' }} /> None
-        </div>
+      <Box
+        sx={{
+            position: 'fixed',
+            bottom: 20,
+            right: 20,
+            backgroundColor: 'lightgray',
+            padding: '10px',
+            borderRadius: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'left'
+            }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}>
+
+        {isHovered && (
+            <>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                    <ComputerIcon style={{ color: '#77DD77'}} /> Both roles
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                    <ComputerIcon style={{ color: '#ffff66'}} /> Dev/BI-ready
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <ComputerIcon style={{ color: '#FF6961'}} /> None
+                </div>
+                <div style={{fontSize: '11px'}}><em>
+                  *Check help for Dev/BI software list
+                  </em></div>
+            </>
+        )}
+        {!isHovered && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <ComputerIcon style={{ color: '#77DD77'}} />
+                <ComputerIcon style={{ color: '#ffff66'}} />
+                <ComputerIcon style={{ color: '#FF6961'}} />
+            </div>
+        )}
       </Box>
 
     </Box>
-
-
-
-
-
-       
-    
-
   )
 }
 

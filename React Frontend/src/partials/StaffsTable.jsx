@@ -16,7 +16,7 @@ import EditOffIcon from "@mui/icons-material/EditOff";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { LocationsPermsModal } from "./ManagePermission";
+import { LocationsPermsModal, DeleteModal } from "./ManagePermission";
 import Config from "../configs.json";
 
 const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
@@ -118,20 +118,24 @@ export default function CustomizedTables({
 	adminLevels,
 	usersOn,
 	userLocation,
-  setChange,
+	setChange,
 	onChangePage,
+	pageZero
 }) {
 	// the modal for editing permissions, its a collection of all the modals for each user
 	const [openModals, setOpenModals] = React.useState({});
 	const [openUserModals, setOpenUserModals] = React.useState({});
+	const [openDeleteModals, setOpenDeleteModals] = React.useState({});
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+	// for al the modals.
 	console.log(array, "rendering ????? -------------------");
 	React.useEffect(() => {
 		setPage(0);
-	}, [usersOn]);
+	}, [usersOn, pageZero]);
 
+	console.log(page, "PAGE WERE ON IN STAFF TABLE")
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 		onChangePage(newPage, rowsPerPage);
@@ -158,6 +162,19 @@ export default function CustomizedTables({
 		}));
 	};
 
+	const handleOpenDeleteModal = (id) => {
+		setOpenDeleteModals((otherModals) => ({
+			...otherModals,
+			[id]: true,
+		}));
+	};
+
+	const handleCloseDeleteModal = (id) => {
+		setOpenDeleteModals((otherModals) => ({
+			...otherModals,
+			[id]: false,
+		}));
+	};
 	// set the STAFF modal we're opening correpsonding to id as true.
 	const handleOpenModal = (id) => {
 		setOpenModals((otherModals) => ({
@@ -290,7 +307,7 @@ export default function CustomizedTables({
 																userLocation,
 																row
 															)}
-                              setChange={setChange}
+															setChange={setChange}
 														/>
 													</>
 												) : (
@@ -310,18 +327,17 @@ export default function CustomizedTables({
 													</span>
 												) : null}
 											</StyledTableCell>
-
 											<StyledTableCell align="left">{row.location.city}</StyledTableCell>
-											{/* <StyledTableCell align="left">{row.user.email}</StyledTableCell> */}
 											<StyledTableCell align="left">{row.adminLevel.name}</StyledTableCell>
 											<StyledTableCell align="right" component="th" scope="row">
 												{row.name}
+												{/* has sprecencent simply means am i allowed to edit or delete */}
 												{hasPrecedence(currStaff, row) ? (
 													<>
 														<IconButton onClick={() => handleOpenModal(row.staffId)}>
 															<EditIcon sx={iconStyle} />
 														</IconButton>
-														<IconButton>
+														<IconButton onClick={() => handleOpenDeleteModal(row.staffId)}>
 															<DeleteOutlineIcon sx={iconStyle} />
 														</IconButton>
 														{/* setOpenModal={(isOpen) => isOpen ? handleOpenModal(row.id) :
@@ -341,7 +357,17 @@ export default function CustomizedTables({
 															staff={row}
 															adminLevels={adminLevels}
 															admin={currStaff}
-                              setChange={setChange}
+															setChange={setChange}
+														/>
+														<DeleteModal
+															openModal={!!openDeleteModals[row.staffId]}
+															setOpenModal={(isOpen) =>
+																isOpen
+																	? handleOpenDeleteModal(row.staffId)
+																	: handleCloseDeleteModal(row.staffId)
+															}
+															staff={row}
+															setChange={setChange}
 														/>
 													</>
 												) : (
