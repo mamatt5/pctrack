@@ -23,7 +23,7 @@ const getComputers = (setComputers) => {
 const getRegRooms = (setRegRooms, id) => {
     const config = {
         method: "get",
-        endpoint: `staff/getregisteredrooms/${id}`
+        endpoint: `staff/getrooms/${id}`
     }
 
     callApi(setRegRooms, null, config);
