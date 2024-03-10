@@ -10,7 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { OutlinedInput, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormControl } from "@mui/material";
-
+import { Grow } from "@mui/material";
 // outside to prevent reredner
 let username = "";
 let password = "";
@@ -106,7 +106,7 @@ const login = () => {
 			
 		
 
-		
+			<Grow in={true} timeout={1000}>
 			<Box sx={{
             marginTop: 8,
             display: 'flex',
@@ -181,6 +181,7 @@ const login = () => {
 					</Button>
 				</form>
 			</Box>
+			</Grow>
 		</div>
 	);
 };
