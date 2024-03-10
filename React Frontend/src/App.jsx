@@ -32,8 +32,8 @@ function App() {
 	const defaultTheme = createTheme({
 		palette: {
 		  background: {
-			default : "white", //#e3f2fd
-		  }
+			default : "#edf1f9 ",
+		  } 
 		},
 	  });
 	  
@@ -94,8 +94,9 @@ function App() {
 
 	return (
 		
-		<div  >
-			{console.log(timeTillPrompt)}
+		<>
+			<ThemeProvider theme={defaultTheme} >
+		
 			
 			<Modal
 				open={openModal}
@@ -127,7 +128,7 @@ function App() {
 
 			
 
-			<ThemeProvider theme={defaultTheme} >
+			
 
 			
 		
@@ -141,7 +142,7 @@ function App() {
 
 			</ThemeProvider>
 
-		</div>
+		</>
 	);
 }
 
