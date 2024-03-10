@@ -91,7 +91,7 @@ const ViewComputersInRoomPage = (props) => {
             <Box
                 sx={{
                     position: 'fixed',
-                    bottom: 20,
+                    top: 80,
                     right: 20,
                     backgroundColor: 'lightgray',
                     padding: '10px',
