@@ -78,7 +78,7 @@ const AddRoomPage = (props) => {
         e.preventDefault();
         let localRoomError = false;
 
-        if (!/^[a-zA-Z]+$/.test(roomName.trim())) {
+        if (!/^[a-zA-Z\s]*$/.test(roomName.trim())) {
            
             setRoomError(true)
             localRoomError = true;

@@ -79,14 +79,14 @@ const AddLocationPage = (props) => {
         let locallocationError = false;
         let localcityError = false;
      
-        if (!/^[a-zA-Z]+$/.test(locationName.trim())) {
+        if (!/^[a-zA-Z\s]*$/.test(locationName.trim())) {
             console.log("location name error")
             setLocationError(true)
             locallocationError = true;
            
         }
 
-        if (!/^[a-zA-Z]+$/.test(cityName.trim())) {
+        if (!/^[a-zA-Z\s]*$/.test(cityName.trim())) {
             console.log("city name error")
             setCityErrorr(true)
             citlocalcityErroryError = true;
