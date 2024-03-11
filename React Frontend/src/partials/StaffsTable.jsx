@@ -231,7 +231,7 @@ export default function CustomizedTables({
 									</StyledTableCell>
 								</TableRow>
 							</TableHead>
-						</>
+						</> 
 					) : (
 						<>
 							<TableHead>

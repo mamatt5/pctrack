@@ -31,11 +31,20 @@ const style = {
 
 
 const AddLocationPage = (props) => {
+
     const [locationName, setLocationName] = useState("")
-    const [city, setCity] = useState("")
+    const [cityName, setCityName] = useState("")
+
+
     const { id } = useParams();
     const [open, setOpen] = useState(false);
-    const render = props.handle;
+
+    
+    const [locationError, setLocationError] = useState(false);
+    const [cityError, setCityErrorr] = useState(false);
+
+
+  
 
 
 
@@ -54,26 +63,54 @@ const AddLocationPage = (props) => {
         props.setRender(c => !c)
     }
 
+    const locationHandle = (name) => {
+        setLocationName(name)
+        setLocationError(false);
+        
+    }
 
+    const cityHandle = (name) => {
+        setCityName(name)
+        setCityErrorr(false);
+    }
     const createLocation = (e) => {
         e.preventDefault();
-        console.log(locationName)
-        console.log(city)
 
-        const config = {
-            method: "post",
-            endpoint: "locations",
-            data: {
-                "name": locationName,
-                "city": city
-            }
+        let locallocationError = false;
+        let localcityError = false;
+     
+        if (!/^[a-zA-Z\s]*$/.test(locationName.trim())) {
+            console.log("location name error")
+            setLocationError(true)
+            locallocationError = true;
+           
         }
-        callApi(onCreation, null, config);
+
+        if (!/^[a-zA-Z\s]*$/.test(cityName.trim())) {
+            console.log("city name error")
+            setCityErrorr(true)
+            citlocalcityErroryError = true;
+          
+        }
+
+        if (!locallocationError && !localcityError) {
+            const config = {
+                method: "post",
+                endpoint: "locations",
+                data: {
+                    "name": locationName,
+                    "city": cityName
+                }
+            }
+            callApi(onCreation, null, config);
+        }
+
+        
     }
 
   return (
     <>
-    <NavBar admin={props.admin} />
+    
 
 
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -89,7 +126,7 @@ const AddLocationPage = (props) => {
 
 
 
-	<Fade in={true}>
+	    <Fade in={true}>
     	<Box sx={style}>
 
 
@@ -100,29 +137,35 @@ const AddLocationPage = (props) => {
 			</Box>
 			<Divider sx={{ margin: "1rem 0 1rem 0" }} />
 			<form onSubmit={createLocation} className="flexCol">
+
+            <TextField
+					name="City"
+					label="City"
+					error={cityError}
+					helperText={cityError ? "Invalid City Name" : ""}
+                    onChange={(e) => cityHandle(e.target.value)}
+					sx={{ margin: "0.5rem" }}
+                   
+                   
+				/>
+
+
 				<TextField
 					size="medium"
 					name="Location Name"
 					label="Location Name"
-					// error={Boolean(firstNameErr)}
-					// helperText={firstNameErr ? firstNameErr : ""}
-					// onChange={(e) => checkInput("firstName", e.target.value)}
-                    onChange={(e) => setLocationName(e.target.value)}
+					error={locationError}
+					helperText={locationError ? "Invalid Location Name" : ""}
+                    onChange={(e) => locationHandle(e.target.value)}
 					sx={{ margin: "0.5rem" }}
+                    
+                   
 				/>
-				<TextField
-					name="City"
-					label="City"
-					// error={Boolean(lastNameErr)}
-					// helperText={lastNameErr ? lastNameErr : ""}
-					// onChange={(e) => checkInput("lastName", e.target.value)}
-                    onChange={(e) => setCity(e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/>
+				
 
 
 				<Box className="centerHorizonal">
-					<Button type="submit" variant="contained"  sx={{marginTop:"2rem"}}>
+					<Button type="submit" variant="contained" sx={{marginTop:"2rem"}}>
 						Create
 					</Button>
 				</Box>
