@@ -399,6 +399,7 @@ const Admin = ({ currStaff }) => {
 											<IconButton
 												onClick={() => {
 													pageNum = 0;
+													setChange((C) => !C)
 													setPageZero((pageZero) => !pageZero);
 													const updatedPermissionsCheckBox = Object.fromEntries(
 														Object.keys(permissionsCheckBox).map((key) => [key, true])
@@ -417,6 +418,7 @@ const Admin = ({ currStaff }) => {
 											<IconButton
 												onClick={() => {
 													pageNum = 0;
+													setChange((C) => !C)
 													setPageZero((pageZero) => !pageZero);
 													const updatedPermissionsCheckBox = Object.fromEntries(
 														Object.keys(permissionsCheckBox).map((key) => [key, false])

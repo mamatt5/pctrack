@@ -24,7 +24,7 @@ const MenuProps = {
 	},
 };
 
-export default function SelectSmall({ array, label, item, setItem, disabledKey }) {
+export default function SelectSmall({ array, label, item, setItem, disabledKey, setChange }) {
 	console.log(disabledKey)
 	return (
 		<FormControl sx={{ minWidth: "100%" }} component="div">
@@ -36,6 +36,7 @@ export default function SelectSmall({ array, label, item, setItem, disabledKey }
 				label="Permissions"
 				onChange={(e) => {
 					setItem(e.target.value);
+					setChange(c => !c);
 				}}
 			>
 				{array.map((name) =>

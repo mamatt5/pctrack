@@ -139,7 +139,7 @@ const getAssignableLevels = (admin, allAdminlevels, locationId) => {
 		});
 	} else {
 		filteredAdminLevel = allAdminlevels.filter((levels) => {
-			return levels.precedence > adminLevel;
+			return levels.precedence >= adminLevel;
 		});
 	}
 
@@ -377,6 +377,7 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 	const [adminRooms, setAdminRooms] = useState([]);
 	const [selectedRooms, setSelectedRoom] = useState(adminRooms);
 	const [rooms, setRoom] = useState([]);
+	const [changeDropDown, setChangeDropdown] = useState(false);
 
 	let newAdminId = "";
 
@@ -393,7 +394,7 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 
 	useEffect(() => {
 		setSelectedRoom(adminRooms);
-	}, [adminRooms]);
+	}, [adminRooms, changeDropDown]);
 
 	console.log(adminLevels);
 	console.log(adminLevels.find((role) => role.name === "Business")?.id);
@@ -455,6 +456,7 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 							? "dobtnarch"
 							: staff.adminLevel.name
 					}
+					setChange={setChangeDropdown}
 				/>
 			</Box>
 
@@ -502,7 +504,7 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 					} else if (permission === "none") {
 						console.log("HIHIHHIHI");
 						deleteStaff(() => {}, staff.staffId);
-						createStaff(
+						CreateStaff(
 							() => {
 								setOpenModal(false);
 								setChange((i) => !i);
@@ -529,7 +531,7 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 						console.log(permission);
 						console.log("YUIKESSSSS");
 						deleteStaff(() => {}, staff.staffId);
-						createStaff(
+						CreateStaff(
 							() => {
 								setOpenModal(false);
 								setChange((i) => !i);
