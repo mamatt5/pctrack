@@ -10,6 +10,9 @@ import CreateReport from '../partials/CreateReport'
 import ComputerIcon from '@mui/icons-material/Computer';
 import { Fade } from '@mui/material'
 import { useParams } from 'react-router-dom'
+import { Snackbar } from '@mui/material'
+import { Alert } from '@mui/material'
+
 
 const getComputers = (setComputers) => {
     const config = {
@@ -75,8 +78,11 @@ export const SearchComputerPage = () => {
     const [role, setRole] = useState("%%");
     const [regRooms, setRegRooms] = useState([]);
     const { id } = useParams();
-
     const [isHovered, setIsHovered] = useState(false)
+
+    const [updatedComputer, onUpdatedComputer] = useState(false);
+    const [deleteComputer, onDeletedComputer] = useState(false);
+    const [openAlert, setOpen] = useState(false);
 
     useEffect(() => {
         getComputers(setComputers);
@@ -96,6 +102,50 @@ export const SearchComputerPage = () => {
 
     return (
         <>
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={()=>setOpen(false)} 
+           
+           >
+                    <Alert
+                        onClose={()=>setOpen(false)}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        A new Report has been created!
+                    </Alert>
+            </Snackbar>
+
+
+            <Snackbar
+                    open={updatedComputer}
+                    autoHideDuration={6000}
+                    onClose={()=>onUpdatedComputer(false)}
+            >
+                    <Alert
+                        onClose={()=>onUpdatedComputer(false)}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        Computer has been Updated!
+                    </Alert>
+            </Snackbar>
+
+            <Snackbar
+                    open={deleteComputer}
+                    autoHideDuration={6000}
+                    onClose={()=>onDeletedComputer(false)}
+            >
+                    <Alert
+                        onClose={()=>onDeletedComputer(false)}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        Computer has been Deleted!
+                    </Alert>
+            </Snackbar>
+
             <div className='dashBoardPadding'>
                 <h1>Computers</h1>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
@@ -156,7 +206,12 @@ export const SearchComputerPage = () => {
                     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {
                             computers.map(computer =>
-                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} rooms={regRooms} />
+                                <ComputerCard computer={computer} key={computer.computerId} updated={[updated, setUpdated]} 
+                                rooms={regRooms}
+                                onUpdate={()=>onUpdatedComputer(true)}
+                                onDelete={()=>onDeletedComputer(true)}
+                                />
+                           
                             )
                         }
                     </div>
@@ -171,7 +226,7 @@ export const SearchComputerPage = () => {
                 padding: '10px',
                 borderRadius: '10px'
             }}>
-                <CreateReport reportUpdated={[reportUpdated, setReportUpdated]} />
+                <CreateReport  reportUpdated={[reportUpdated, setReportUpdated]} created={()=>setOpen(true)} />
                 <Box
                     sx={{
                         position: 'fixed',

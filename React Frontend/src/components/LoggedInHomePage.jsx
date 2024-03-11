@@ -89,7 +89,7 @@ const welcomePage = (staff) => {
 								User at {roles.location.city}
 							</Typography>:
 
-							<Typography>
+							<Typography variant="h6">
 								{roles.adminLevel.name} Admin at {roles.location.city}
 							</Typography>
 							}

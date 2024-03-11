@@ -50,27 +50,14 @@ const checkPerm = (computer, rooms) => {
     return boolean;
 }
 
-const MySnackbar = memo(function MySnackBar({ open, onClose }) {
-    return (
-      <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
-        <Alert onClose={onClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-          A Computer has been Deleted!
-        </Alert>
-      </Snackbar>
-    );
-  });
-
 
 const ComputerCard = (props) => {
     const { computer, staff, rooms } = props;
     const [open, setModal] = useState(false);
     const [updated, setUpdated] = props.updated;
-    // const [deleteComputer, onDeleteComputer] = useState(() => {
-    //     // This function is called only once during the initial render
-    //     return false; // Initial value
-    //   });
+  
 
-    const deleteComputer = useRef(false);
+  
 
 
 
@@ -92,6 +79,7 @@ const ComputerCard = (props) => {
         }
 
         callApi(closeModal, null, config);
+        props.onDelete();
         
     }
 
@@ -174,7 +162,7 @@ const ComputerCard = (props) => {
                     <br></br>
                     { checkPerm(computer, rooms) &&
                         <ThemeProvider theme={theme}>
-                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} rooms={rooms}/>
+                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} rooms={rooms} onUpdate={props.onUpdate}/>
                             <Button
                                 variant="contained"
                                 color="error"

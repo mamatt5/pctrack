@@ -21,6 +21,7 @@ const style = {
 };
 
 const AddComputer = (props) => {
+            
     const [updated, setUpdated] = props.updated;
     const [open, setModal] = useState(false);
     const [code, setCode] = useState("");
@@ -29,7 +30,7 @@ const AddComputer = (props) => {
     const [programList, setProgramList] = useState([]);
     const { computer, staff, rooms } = props;
     const [newComputer, onNewComputer] = useState(false);
-    const [updatedComputer, onUpdatedComputer] = useState(false);
+    
     
     useEffect(() => {
         reset();
@@ -97,11 +98,9 @@ const AddComputer = (props) => {
 
         }
         setUpdated(false);
-        
-        console.log("bacl");
-        console.log(update);
+
         if (update) {
-            onUpdatedComputer(true);
+            props.onUpdate();
         } else {
             onNewComputer(true);
         }
@@ -123,21 +122,7 @@ const AddComputer = (props) => {
 
             
 
-            <Snackbar
-                    zIndex={2147483647}
-                    open={updatedComputer}
-                    autoHideDuration={6000}
-                    onClose={()=>onUpdatedComputer(false)}
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
-                    <Alert
-                        onClose={()=>onUpdatedComputer(false)}
-                        severity="success"
-                        variant="filled"
-                        sx={{ width: '100%' }}
-                    >
-                        Computer has been Updated!
-                    </Alert>
-            </Snackbar>
+            
 
             <Modal
                 open={open}
