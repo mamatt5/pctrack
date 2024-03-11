@@ -71,6 +71,8 @@ public class UserController {
 	@PostMapping("users")
 	public User createNewUser(@RequestBody User newUser) {
 		if (!userService.existsByUsername(newUser.getUsername())) {
+			System.out.println(newUser.toString());
+			System.out.println("dude");
 			userService.register(newUser);
 			return userService.findUserId(newUser.getUserId());
 		} else {
