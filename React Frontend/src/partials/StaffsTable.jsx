@@ -63,7 +63,8 @@ const hasPrecedence = (logginedInStaff, toBeManagedStaff) => {
 				// console.log(staff.adminLevel.precedence),
 
 				staff.location.locationId === toBeManagedStaff.location.locationId &&
-				staff.adminLevel.precedence < toBeManagedStaff.adminLevel.precedence
+				staff.adminLevel.precedence <= toBeManagedStaff.adminLevel.precedence &&
+				staff.user.userId != toBeManagedStaff.user.userId
 			);
 		} else {
 			return (
@@ -120,7 +121,7 @@ export default function CustomizedTables({
 	userLocation,
 	setChange,
 	onChangePage,
-	pageZero
+	pageZero,
 }) {
 	// the modal for editing permissions, its a collection of all the modals for each user
 	const [openModals, setOpenModals] = React.useState({});
@@ -135,7 +136,7 @@ export default function CustomizedTables({
 		setPage(0);
 	}, [usersOn, pageZero]);
 
-	console.log(page, "PAGE WERE ON IN STAFF TABLE")
+	console.log(page, "PAGE WERE ON IN STAFF TABLE", staffCount);
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 		onChangePage(newPage, rowsPerPage);
@@ -231,7 +232,7 @@ export default function CustomizedTables({
 									</StyledTableCell>
 								</TableRow>
 							</TableHead>
-						</> 
+						</>
 					) : (
 						<>
 							<TableHead>
@@ -259,11 +260,19 @@ export default function CustomizedTables({
 					{/* BODY */}
 					<TableBody>
 						{/* actual rows */}
-						{emptyRows === rowsPerPage ? (
+						{array.length === 0 && staffCount === 0 ? (
 							<TableRow style={{ height: 53 * 10 }}>
 								<TableCell colSpan={6} align="center">
 									<Typography variant="h6" sx={{ color: "gray", fontStyle: "italic" }}>
-										User not found
+										Nothing to show
+									</Typography>
+								</TableCell>
+							</TableRow>
+						) : array.length === 0 ? (
+							<TableRow style={{ height: 53 * 10 }}>
+								<TableCell colSpan={6} align="center">
+									<Typography variant="h6" sx={{ color: "gray", fontStyle: "italic" }}>
+										Fetching Data
 									</Typography>
 								</TableCell>
 							</TableRow>
