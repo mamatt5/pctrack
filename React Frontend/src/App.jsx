@@ -103,17 +103,14 @@ function App() {
 			pause(true)
 		} else {
 
-			// resume(true)
-			// activate(true)
-			pause(true)
+			resume(true)
+			activate(true)
+			
 			
 		}
 	  }, [location, demoMode])
 
-	  
-	
-	
-	  
+
 	
 
 	return (
