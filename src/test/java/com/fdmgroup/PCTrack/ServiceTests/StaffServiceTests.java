@@ -2,6 +2,7 @@ package com.fdmgroup.PCTrack.ServiceTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,10 +23,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.fdmgroup.PCTrack.controller.StaffController;
+import com.fdmgroup.PCTrack.dal.MandateRepository;
+import com.fdmgroup.PCTrack.dal.RoomAdminRepository;
 import com.fdmgroup.PCTrack.dal.StaffRepository;
 import com.fdmgroup.PCTrack.model.AdminLevel;
 import com.fdmgroup.PCTrack.model.Location;
+import com.fdmgroup.PCTrack.model.Mandate;
 import com.fdmgroup.PCTrack.model.Room;
+import com.fdmgroup.PCTrack.model.RoomAdmin;
 import com.fdmgroup.PCTrack.model.Staff;
 import com.fdmgroup.PCTrack.model.User;
 import com.fdmgroup.PCTrack.service.StaffService;
@@ -35,6 +40,10 @@ public class StaffServiceTests {
 
 	@Mock
 	StaffRepository staffRepo;
+	@Mock
+	MandateRepository mandateRepo;
+	@Mock
+	RoomAdminRepository roomAdminRepo;
 
 	StaffService staffService;
 	Staff staff;
@@ -42,7 +51,7 @@ public class StaffServiceTests {
 
 	@BeforeEach
 	public void setup() {
-		staffService = new StaffService(staffRepo);
+		staffService = new StaffService(staffRepo, mandateRepo, roomAdminRepo);
 	}
 
 	@Test
@@ -59,9 +68,15 @@ public class StaffServiceTests {
 	
 	@Test
 	public void delete_staff_by_id() {
+		RoomAdmin roomAdmin = new RoomAdmin();
+		List<Mandate> roomMandates = new ArrayList<>();
+		roomMandates.add(new Mandate());
+		when(roomAdminRepo.findById(0)).thenReturn(Optional.of(roomAdmin));
 		when(staffRepo.existsById(0)).thenReturn(true);
+		when(mandateRepo.findByRoomAdmin(roomAdmin)).thenReturn(roomMandates);
 		staffService.deleteById(0);
 		verify(staffRepo, times(1)).existsById(0);
+		verify(mandateRepo).delete(any(Mandate.class));
 	}
 	
 	@Test
