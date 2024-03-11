@@ -22,8 +22,9 @@ import { Style } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import { Switch } from "@mui/material";
 
-const timeout = 10000_000
+
 const promptBeforeIdle = 4_000
 
 
@@ -37,16 +38,36 @@ function App() {
 		},
 	  });
 	  
+	let timeout = 10000_000
+	//   const [timeout, setTime] = useState(10000_000)
+	  const [openModal, setOpen] = useState(false)
+	  const [demoMode, setDemoMode] = useState(false);
+
+	  if (demoMode) {
+		timeout = 10_000
+	  } else {
+		timeout = 10000_000
+	  }
 
 	  const [remaining, setRemaining] = useState(timeout)
-	  const [openModal, setOpen] = useState(false)
-	  const [logout, setLogOut] = useState(false)
 	  let location = useLocation();
-
 	  const navigate = useNavigate();
+
+	 
 	 
 	  const onPrompt = () => {
 		setOpen(true)
+	  }
+
+	  const change = () => {
+		
+		setDemoMode(!demoMode)
+		console.log(demoMode);
+		if (demoMode) {
+			timeout = 10_000
+		  } else {
+			timeout = 10000_000
+		  }
 	  }
 
 	  const closeModal = () => {
@@ -78,25 +99,33 @@ function App() {
 	  useEffect(() => {
 		console.log(location)
 		if (location.pathname === "/") {
-			console.log("pausing")
+	
 			pause(true)
 		} else {
-			console.log("resuming")
-			// resume(true)
-			// activate(true)
-			pause(true)
-		}
-	  }, [location])
-	
-	
-	  const timeTillPrompt = Math.max(remaining - promptBeforeIdle / 1000, 0) 
 
+			resume(true)
+			activate(true)
+			
+		}
+	  }, [location, demoMode])
+
+	  
+	
+	
+	  
+	
 
 	return (
 		
 		<>
 			<ThemeProvider theme={defaultTheme} >
+			
 		
+			{location.pathname === "/" && 
+			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+			<span>Idle Mode</span>
+			<Switch checked={demoMode} onClick={change} />
+			</div>}
 			
 			<Modal
 				open={openModal}
@@ -115,7 +144,6 @@ function App() {
                     padding: '20px',
                 }}>
 
-
 					<Typography variant="h3" align="center">
 							Idle Alert
 						</Typography>
@@ -126,15 +154,10 @@ function App() {
 
 			</Modal>
 
-			
 
-			
-
-			
-		
 				<Routes>
-					<Route path="/" element={<Login />} />
-					<Route path="/login" element={<Login />} />
+					<Route path="/" element={<Login changeDemoMode={change}/>} />
+					<Route path="/login" element={<Login changeDemoMode={change}/>} />
 					<Route path="/home/:id/*" element={<LoggedInHomePage />} />
 					<Route path="/home/reports" element={<ReportsPage/>} />
 					

@@ -11,6 +11,9 @@ import { OutlinedInput, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormControl } from "@mui/material";
 import { Grow } from "@mui/material";
+import { FormControlLabel } from "@mui/material";
+import { Switch } from "@mui/material";
+
 // outside to prevent reredner
 let username = "";
 let password = "";
@@ -18,7 +21,7 @@ let password = "";
 /**
  * @returns
  */
-const login = () => {
+const login = (props) => {
 	const navigate = useNavigate();
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -105,8 +108,10 @@ const login = () => {
 		<div className="centerHorizonal">
 			
 		
-
+			
 			<Grow in={true} timeout={1000}>
+			
+			
 			<Box sx={{
             marginTop: 8,
             display: 'flex',

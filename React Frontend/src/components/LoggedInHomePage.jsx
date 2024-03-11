@@ -112,7 +112,7 @@ const LoggedInHomePage = () => {
 	const [admin, setAdmin] = useState(false);
 	const [staff, setStaff] = useState([]); // gives all the staff info
 	const [render, setRender] = useState(false);
-	console.log(staff);
+	
 
 
 	useEffect(() => {
@@ -120,7 +120,7 @@ const LoggedInHomePage = () => {
 		CheckAdmin(setAdmin, setStaff, id);
 	}, [render]);
 
-	console.log(staff)
+	
 	const isHomePage = useMatch("/home/:id");
 
 	return (
