@@ -103,8 +103,9 @@ function App() {
 			pause(true)
 		} else {
 
-			resume(true)
-			activate(true)
+			// resume(true)
+			// activate(true)
+			pause(true)
 			
 		}
 	  }, [location, demoMode])
