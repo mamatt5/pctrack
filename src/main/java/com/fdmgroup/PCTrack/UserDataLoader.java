@@ -1068,7 +1068,7 @@ public class UserDataLoader implements ApplicationRunner {
 		
 		//Reports
 		String reportDesc1 = "No mouse and keyboard.";
-		String reportDesc2 = "Can't connect to internet.";
+		String reportDesc2 = "Can't connect to internet."; 
 		String reportDesc3 = "No mouse.";
 		String reportDesc4 = "No keyboard.";
 		String reportDesc5 = "Cannot boot up.";
