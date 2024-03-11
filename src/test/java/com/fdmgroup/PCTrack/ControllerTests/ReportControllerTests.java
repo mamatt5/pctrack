@@ -5,7 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.controller.ReportController;
+import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Report;
+import com.fdmgroup.PCTrack.model.SearchConfig;
 import com.fdmgroup.PCTrack.service.ReportService;
 
 import org.mockito.Mock;
@@ -15,7 +17,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -54,6 +58,57 @@ public class ReportControllerTests {
 	public void find_report_by_id() {
 		when(reportService.findById(0)).thenReturn(report1);
 		assertEquals(report1, reportController.findById(0));
+	}
+	
+	@Test
+	public void filter_by_date() {
+		Report report1 = new Report();
+		Report report2 = new Report();
+		Report report3 = new Report();
+		Report report4 = new Report();
+		List<Report> reports = new ArrayList<>();
+		reports.add(report1);
+		reports.add(report2);
+		reports.add(report3);
+		reports.add(report4);
+		
+		when(reportService.sortReportsByDate()).thenReturn(reports);
+		
+		assertEquals(reports, reportController.sortReportsByDate());
+	}
+	
+	@Test
+	public void filter_by_computer_code() {
+		Report report1 = new Report();
+		Report report2 = new Report();
+		Report report3 = new Report();
+		Report report4 = new Report();
+		List<Report> reports = new ArrayList<>();
+		reports.add(report1);
+		reports.add(report2);
+		reports.add(report3);
+		reports.add(report4);
+		
+		when(reportService.sortReportsByComputerCode()).thenReturn(reports);
+		
+		assertEquals(reports, reportController.sortReportsByComputerCode());
+	}
+	
+	@Test
+	public void filter_by_resolved_status() {
+		Report report1 = new Report();
+		Report report2 = new Report();
+		Report report3 = new Report();
+		Report report4 = new Report();
+		List<Report> reports = new ArrayList<>();
+		reports.add(report1);
+		reports.add(report2);
+		reports.add(report3);
+		reports.add(report4);
+		
+		when(reportService.sortReportsByResolvedStatus()).thenReturn(reports);
+		
+		assertEquals(reports, reportController.sortReportsByResolvedStatus());
 	}
 	
 	@Test

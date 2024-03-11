@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fdmgroup.PCTrack.dal.ReportRepository;
 import com.fdmgroup.PCTrack.model.Report;
+import com.fdmgroup.PCTrack.model.Staff;
 
 @Service
 public class ReportService {
@@ -20,8 +21,24 @@ public class ReportService {
 		return this.reportRepo.findAll();
 	}
 	
+	public List<Report> sortReportsByDate() {
+		return this.reportRepo.sortReportsByDate();
+	}
+	
+	public List<Report> sortReportsByComputerCode() {
+		return this.reportRepo.sortReportsByComputerCode();
+	}
+	
+	public List<Report> sortReportsByResolvedStatus() {
+		return this.reportRepo.sortReportsByResolvedStatus();
+	}
+	
 	public Report findById(int reportId) {
 		return this.reportRepo.findById(reportId).orElseThrow(() -> new RuntimeException("Report not found"));
+	}
+	
+	public List<Report> findByComputerId(int computerId) {
+		return this.reportRepo.findByComputerId(computerId);
 	}
 	
 	public void save(Report newReport) {

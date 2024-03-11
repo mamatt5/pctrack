@@ -41,7 +41,7 @@ const getRooms = (setRooms) => {
 const getReport = (setReport) => {
     const config = {
         method: "get",
-        endpoint: "reports"
+        endpoint: "reports/date"
     }
 
     callApi(setReport, null, config);
@@ -87,7 +87,7 @@ export const SearchComputerPage = () => {
     useEffect(() => {
         getComputers(setComputers);
         setUpdated(true);
-    }, [updated]);
+    }, [updated == false]);
 
     useEffect(() => {
         getReport(setReport);

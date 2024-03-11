@@ -11,6 +11,7 @@ import com.fdmgroup.PCTrack.service.ReportService;
 
 import org.mockito.Mock;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.never;
@@ -153,6 +154,88 @@ public class ReportServiceTests {
 		verify(reportRepo, times(1)).findById(1);
 	}
 	
+	@Test
+	void sort_reports_by_date()
+	{
+		Report report1 = new Report();
+		Report report2 = new Report();
+		Report report3 = new Report();
+		Report report4 = new Report();
+
+		List<Report> allReports = new ArrayList<>();
+		allReports.add(report1);
+		allReports.add(report2);
+		allReports.add(report3);
+		allReports.add(report4);
+		when(reportRepo.sortReportsByDate()).thenReturn(allReports);
+
+		List<Report> actualReports = reportService.sortReportsByDate();
+
+		assertEquals(allReports, actualReports);
+	}
+	
+	@Test
+	void sort_reports_by_computer_code()
+	{
+		Report report1 = new Report();
+		Report report2 = new Report();
+		Report report3 = new Report();
+		Report report4 = new Report();
+
+		List<Report> allReports = new ArrayList<>();
+		allReports.add(report1);
+		allReports.add(report2);
+		allReports.add(report3);
+		allReports.add(report4);
+		when(reportRepo.sortReportsByComputerCode()).thenReturn(allReports);
+
+		List<Report> actualReports = reportService.sortReportsByComputerCode();
+
+		assertEquals(allReports, actualReports);
+	}
+	
+	@Test
+	void sort_reports_by_resolved_status()
+	{
+		Report report1 = new Report();
+		Report report2 = new Report();
+		Report report3 = new Report();
+		Report report4 = new Report();
+
+		List<Report> allReports = new ArrayList<>();
+		allReports.add(report1);
+		allReports.add(report2);
+		allReports.add(report3);
+		allReports.add(report4);
+		when(reportRepo.sortReportsByResolvedStatus()).thenReturn(allReports);
+
+		List<Report> actualReports = reportService.sortReportsByResolvedStatus();
+
+		assertEquals(allReports, actualReports);
+	}
+	
+	@Test
+	void find_report_by_computer_id()
+	{
+		int computerId = 1;
+		Report report1 = new Report();
+		Report report2 = new Report();
+		Report report3 = new Report();
+		Report report4 = new Report();
+
+		List<Report> expectedReports = new ArrayList<>();
+		expectedReports.add(report1);
+		expectedReports.add(report2);
+		expectedReports.add(report3);
+		expectedReports.add(report4);
+		when(reportRepo.findByComputerId(computerId)).thenReturn(expectedReports);
+
+
+		List<Report> actualReports = reportService.findByComputerId(computerId);
+
+		assertEquals(expectedReports, actualReports);
+	}
+
 	@Test
 	void update_report_test_when_nonexist() {
 		

@@ -30,6 +30,7 @@ const ViewComputersInRoomPage = (props) => {
     const [isHovered, setIsHovered] = useState(false);
     const [staff, setStaff] = useState([]);
     const { id } = useParams();
+    const [updated, setUpdated] = useState(true);
 
     const handleMandatesModal = (open) => {
         setMandatesModal(open)
@@ -79,7 +80,7 @@ const ViewComputersInRoomPage = (props) => {
                             {
                                 computers.map(computer =>
 
-                                    <ComputerCard key={computer.computerId} computer={computer} rooms={[]}/>
+                                    <ComputerCard key={computer.computerId} computer={computer} rooms={[]} updated={[updated, setUpdated]}/>
 
                                 )
                             }
