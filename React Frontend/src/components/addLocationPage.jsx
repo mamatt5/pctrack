@@ -76,22 +76,35 @@ const AddLocationPage = (props) => {
     const createLocation = (e) => {
         e.preventDefault();
 
-        let locallocationError = false;
-        let localcityError = false;
+        let locallocationError = !/^[a-zA-Z\s]*$/.test(locationName.trim());
+        let localcityError = !/^[a-zA-Z\s]*$/.test(cityName.trim());
      
-        if (!/^[a-zA-Z\s]*$/.test(locationName.trim())) {
-            console.log("location name error")
-            setLocationError(true)
+
+        if (locationName.trim().length == 0) {
             locallocationError = true;
+            setLocationError(true)
            
         }
 
-        if (!/^[a-zA-Z\s]*$/.test(cityName.trim())) {
+        if (cityName.trim().length == 0) {
+            localcityError = true;
+            setCityErrorr(true)
+           
+        }
+
+        if (locallocationError) {
+            console.log("location name error")
+            setLocationError(true)
+ 
+           
+        }
+
+        if (localcityError) {
             console.log("city name error")
             setCityErrorr(true)
-            citlocalcityErroryError = true;
-          
+     
         }
+
 
         if (!locallocationError && !localcityError) {
             const config = {
