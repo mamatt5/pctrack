@@ -12,5 +12,14 @@ import com.fdmgroup.PCTrack.model.Report;
 public interface ReportRepository extends JpaRepository<Report, Integer> {
 	@Query("SELECT r FROM Report r WHERE r.computer.computerId = :computerId")
 	List<Report> findByComputerId(@Param("computerId") Integer computerId);
+	
+	@Query("SELECT r FROM Report r ORDER BY r.dateCreated DESC, r.resolved")
+	List<Report> sortReportsByDate();
+	
+	@Query("SELECT r FROM Report r ORDER BY r.computer.computerCode, r.resolved")
+	List<Report> sortReportsByComputerCode();
+	
+	@Query("SELECT r FROM Report r ORDER BY r.resolved")
+	List<Report> sortReportsByResolvedStatus();
 }
 

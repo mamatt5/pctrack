@@ -21,6 +21,18 @@ public class ReportService {
 		return this.reportRepo.findAll();
 	}
 	
+	public List<Report> sortReportsByDate() {
+		return this.reportRepo.sortReportsByDate();
+	}
+	
+	public List<Report> sortReportsByComputerCode() {
+		return this.reportRepo.sortReportsByComputerCode();
+	}
+	
+	public List<Report> sortReportsByResolvedStatus() {
+		return this.reportRepo.sortReportsByResolvedStatus();
+	}
+	
 	public Report findById(int reportId) {
 		return this.reportRepo.findById(reportId).orElseThrow(() -> new RuntimeException("Report not found"));
 	}
