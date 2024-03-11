@@ -11,6 +11,12 @@ import ComputerIcon from '@mui/icons-material/Computer';
 import callApi from '../api/callApi';
 import { ThemeProvider } from '@emotion/react';
 import AddComputer from './AddComputer';
+import { Snackbar } from '@mui/material';
+import { Alert } from '@mui/material';
+import { memo } from 'react';
+import { useMemo } from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const style = {
     position: 'absolute',
@@ -44,12 +50,29 @@ const checkPerm = (computer, rooms) => {
     return boolean;
 }
 
+const MySnackbar = memo(function MySnackBar({ open, onClose }) {
+    return (
+      <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
+        <Alert onClose={onClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+          A Computer has been Deleted!
+        </Alert>
+      </Snackbar>
+    );
+  });
+
 
 const ComputerCard = (props) => {
     const { computer, staff, rooms } = props;
     const [open, setModal] = useState(false);
-    const [render, setRender] = useState(false);
     const [updated, setUpdated] = props.updated;
+    // const [deleteComputer, onDeleteComputer] = useState(() => {
+    //     // This function is called only once during the initial render
+    //     return false; // Initial value
+    //   });
+
+    const deleteComputer = useRef(false);
+
+
 
     const openModal = () => {
         setModal(true);
@@ -60,9 +83,7 @@ const ComputerCard = (props) => {
         setUpdated(false);
     };
 
-    const t = () => {
-        setRender(true)
-    }
+
 
     const delComputer = () => {
         const config = {
@@ -71,6 +92,7 @@ const ComputerCard = (props) => {
         }
 
         callApi(closeModal, null, config);
+        
     }
 
     const getColor = (computer) => {
@@ -93,6 +115,8 @@ const ComputerCard = (props) => {
     }
 
     return (
+        <>
+    
         <Card sx={{
             maxWidth: 130,
 
@@ -127,7 +151,6 @@ const ComputerCard = (props) => {
             <Modal
                 open={open}
                 onClose={closeModal}
-                onClick={t}
 
 
             >
@@ -163,6 +186,7 @@ const ComputerCard = (props) => {
                 </Box>
             </Modal>
         </Card>
+        </>
     );
 }
 

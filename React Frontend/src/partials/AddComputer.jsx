@@ -28,9 +28,9 @@ const AddComputer = (props) => {
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
     const { computer, staff, rooms } = props;
-    const [openAlert, setOpen] = useState(false);
-
-
+    const [newComputer, onNewComputer] = useState(false);
+    const [updatedComputer, onUpdatedComputer] = useState(false);
+    
     useEffect(() => {
         reset();
     }, []);
@@ -61,7 +61,7 @@ const AddComputer = (props) => {
         reset();
     };
 
-    const submitComputer = () => {
+    const submitComputer = (update) => {
         if (code == "") {
             setError(true);
             return;
@@ -97,22 +97,48 @@ const AddComputer = (props) => {
 
         }
         setUpdated(false);
-        setOpen(true);
+        
+        console.log("bacl");
+        console.log(update);
+        if (update) {
+            onUpdatedComputer(true);
+        } else {
+            onNewComputer(true);
+        }
     }
 
     return (
         <>
 
-            <Snackbar open={openAlert} autoHideDuration={6000} onClose={()=>setOpen(false)}>
+            <Snackbar open={newComputer} autoHideDuration={6000} onClose={()=>onNewComputer(false)}>
                     <Alert
-                        onClose={()=>setOpen(false)}
+                        onClose={()=>onNewComputer(false)}
                         severity="success"
                         variant="filled"
                         sx={{ width: '100%' }}
                     >
                         A new Computer has been Added!
                     </Alert>
-                </Snackbar>
+            </Snackbar>
+
+            
+
+            <Snackbar
+                    zIndex={2147483647}
+                    open={updatedComputer}
+                    autoHideDuration={6000}
+                    onClose={()=>onUpdatedComputer(false)}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
+                    <Alert
+                        onClose={()=>onUpdatedComputer(false)}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        Computer has been Updated!
+                    </Alert>
+            </Snackbar>
+
             <Modal
                 open={open}
                 onClose={closeModal}
@@ -148,14 +174,15 @@ const AddComputer = (props) => {
                     {computer == null ?
                         <Button
                             variant="contained"
-                            onClick={submitComputer}
+                            onClick={() => submitComputer(false)}
+                           
                         >
                             Add Computer
                         </Button>
                         :
                         <Button
                             variant="contained"
-                            onClick={submitComputer}
+                            onClick={() => submitComputer(true)}
                         >
                             Update Computer
                         </Button>
