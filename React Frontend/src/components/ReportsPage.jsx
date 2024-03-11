@@ -15,7 +15,7 @@ export const ReportsPage = () => {
     const [reports, setReports] = useState([]);
     const [report, setReport] = useState([])
     const [filter, setFilter] = useState("date")
-    const [reportUpdated, setReportUpdated] = useState(true);
+    const [reportUpdated, setReportUpdated] = useState(false);
     const [open, setOpen] = useState(false);
 
     useEffect (() => {
@@ -30,10 +30,11 @@ export const ReportsPage = () => {
       callApi(setReports, null, config);
     };
 
-    useEffect(() => {
-      getReports(setReport);
-      setReportUpdated(true);
-    }, [reportUpdated])
+    const getUpdatedReports = () => {
+      getReports(setReports);
+      setReportUpdated(false);
+  };
+  
 
 
     const handleClose = () => {
@@ -91,7 +92,8 @@ export const ReportsPage = () => {
                   </Box>
                   <ReportsTable array={reports} getReports={getReports} setReports={setReports}/>
         </Box>
-        <CreateReport reportUpdated={[reportUpdated, setReportUpdated]} />
+        <CreateReport reportUpdated={[reportUpdated, setReportUpdated]} getUpdatedReports={getUpdatedReports} />
+
 
       </>
     )

@@ -71,7 +71,7 @@ const CreateReport  = (props) => {
 
     const submitReport = () => {
         console.log("user when submitting" + user)
-        if (computer == "") {
+        if (selectedComputer == "") {
             setError(true);
             return;
         }
@@ -88,8 +88,11 @@ const CreateReport  = (props) => {
             endpoint: "reports",
             data: report
         }
-        callApi(closeModal, null, config);
-        props.created();
+        callApi(() => {
+            closeModal();
+            setReportUpdated(true);
+            props.getUpdatedReports();
+        }, null, config);
     }
 
     return (
