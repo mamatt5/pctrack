@@ -37,6 +37,7 @@ const AddLocationPage = (props) => {
     const [open, setOpen] = useState(false);
 
 
+
     const successNotification = () => {
         setOpen(true);
 
@@ -49,7 +50,7 @@ const AddLocationPage = (props) => {
 
     const onCreation = (e) => {
         CreateStaff(successNotification, id, e.locationId, 1)
-
+        props.setRender(c => !c)
     }
 
 

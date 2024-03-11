@@ -99,11 +99,14 @@ const LoggedInHomePage = () => {
 	const { id } = useParams();
 	const [admin, setAdmin] = useState(false);
 	const [staff, setStaff] = useState([]); // gives all the staff info
+	const [render, setRender] = useState(false);
 	console.log(staff);
+
+
 	useEffect(() => {
 		console.log("checking");
 		CheckAdmin(setAdmin, setStaff, id);
-	}, []);
+	}, [render]);
 
 	console.log(staff)
 	const isHomePage = useMatch("/home/:id");
@@ -122,7 +125,7 @@ const LoggedInHomePage = () => {
 				<Route path="/help" element={<HelpPage />} />
 				{/* <Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
 				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} /> */}
-				<Route path="/manageFacilities" element={< ManageFacilities  admin={admin} currStaff={staff}/>} />
+				<Route path="/manageFacilities" element={< ManageFacilities  admin={admin} currStaff={staff} setRender={setRender}/>} />
 			</Routes>
 			{console.log("boi")}
 			{console.log(staff)}

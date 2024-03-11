@@ -5,7 +5,7 @@ import callApi from "../api/callApi";
 import { useState, useEffect } from "react";
 import LocationComputerStatus from "../partials/LocationComputerStatus";
 
-const ManageFacilities = ({ admin, currStaff }) => {
+const ManageFacilities = ({ admin, currStaff, setRender}) => {
 	console.log(admin);
 	console.log(currStaff);
 	const BusinessPerms = currStaff.filter((staff) => staff.adminLevel.name === "Business" || staff.adminLevel.name === "Location");
@@ -19,7 +19,7 @@ const ManageFacilities = ({ admin, currStaff }) => {
 				<>
 
                     <LocationComputerStatus perms={BusinessPerms}/>
-					<AddLocationPage admin={admin} />
+					<AddLocationPage admin={admin} setRender={setRender} />
 					<AddRoomPage admin={admin} currStaff={currStaff} />
 				</>
 			) : BusinessPerms.length === 0 && LocationPerms.length !== 0 ? (

@@ -35,11 +35,11 @@ const LocationComputerStatus = ({ perms }) => {
 
   return (
     <>
-      {rooms.map((room) => (
+      {/* {rooms.map((room) => (
         <Typography key={room.id}>
           {room.location.city} {room.name}
         </Typography>
-      ))}
+      ))} */}
     </>
   );
 };
