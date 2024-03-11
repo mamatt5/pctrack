@@ -54,5 +54,13 @@ public class AdminLevelServiceTests {
 		when(adminRepo.existsById(admin.getId())).thenReturn(true);
 		assertThrows(RuntimeException.class, ()-> adminLevelService.save(admin));
 	}
+	
+	@Test
+	public void get_admin_levels_by_ids() {
+		List<AdminLevel> adminLevels = new ArrayList<>();
+		List<Integer> adminLevelIds = new ArrayList<>();
+		when(adminRepo.findAllById(adminLevelIds)).thenReturn(adminLevels);
+		assertEquals(adminLevels, adminLevelService.getAdminLevelsByIds(adminLevelIds));
+	}
 
 }

@@ -87,7 +87,7 @@ export const SearchComputerPage = () => {
     useEffect(() => {
         getComputers(setComputers);
         setUpdated(true);
-    }, [updated]);
+    }, [updated == false]);
 
     useEffect(() => {
         getReport(setReport);

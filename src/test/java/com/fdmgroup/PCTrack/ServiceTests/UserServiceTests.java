@@ -2,6 +2,10 @@ package com.fdmgroup.PCTrack.ServiceTests;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fdmgroup.PCTrack.dal.UserRepository;
@@ -38,6 +42,7 @@ public class UserServiceTests {
 	
 	UserService userService;
 	User user;
+	Page<User> page;
 	
 	@BeforeEach
 	void setup() {
@@ -249,4 +254,21 @@ public class UserServiceTests {
 		assertEquals("encoded", userService.encodePw(password));
 	}
 
+	@Test
+	void get_user_page() {
+		List<User> userPageContents = new ArrayList<>();
+		page = new PageImpl<User>(userPageContents);
+		Pageable pageable = PageRequest.of(1, 10);
+		when(userRepo.findAll(pageable)).thenReturn(page);
+		assertEquals(page, userService.getUserPage(1, 10));
+	}
+	
+	@Test
+	void get_partial_user_page() {
+		List<User> userPageContents = new ArrayList<>();
+		page = new PageImpl<User>(userPageContents);
+		Pageable pageable = PageRequest.of(1, 10);
+		when(userRepo.findPartial("test", pageable)).thenReturn(page);
+		assertEquals(page, userService.findAllUsersPartialMatch("test", 1, 10));
+	}
 }
