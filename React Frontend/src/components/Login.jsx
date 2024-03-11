@@ -95,7 +95,7 @@ const login = (props) => {
 		// console.log(error);
 		callApi(
 			() => {
-				setPasswordError("* Incorrect Password");
+				setPasswordError("* Incorrect Credentials");
 			},
 			() => {
 				setusernameError("* Username does not exist");
@@ -106,12 +106,12 @@ const login = (props) => {
 
 	return (
 		<div className="centerHorizonal">
-			
-		
-			
+
+
+
 			<Grow in={true} timeout={1000}>
-			
-			
+
+
 			<Box sx={{
             marginTop: 8,
             display: 'flex',
@@ -122,7 +122,7 @@ const login = (props) => {
             padding: 6,
             boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
             className: 'box',
-			
+
           }} >
 				<Box>
 				<Typography variant="h4" sx={{ padding: "1rem", fontWeight: 'bold' }}>

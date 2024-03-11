@@ -162,7 +162,7 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 			endpoint: "users",
 			data: {
 				username: username,
-				password: password,
+				password: "password",
 				firstName: firstName,
 				lastName: lastName,
 				email: email,
