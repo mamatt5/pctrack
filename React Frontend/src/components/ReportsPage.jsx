@@ -69,18 +69,6 @@ export const ReportsPage = () => {
         <Box className="dashBoardPadding">
           <h1>Reports</h1>
 
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert
-              onClose={handleClose}
-              severity="success"
-              variant="filled"
-              sx={{ width: '100%' }}
-          >
-              Reports have been refreshed!
-          </Alert>
-          </Snackbar>
-
-          <Button variant="contained" sx={{margin: '0px 0px 15px 0px'}}onClick={()=>{refresh(setReports,filter)}}>Refresh</Button>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}> 
                     <InputLabel id="Filter By">Filter By</InputLabel>
                     <Select

@@ -26,17 +26,22 @@ const getReports = (reportId, setReportsFunc, getAllReports) => {
 //   callApi(()=> getReports(setReports), null, config)
 // }
 
-const updateReport = (updatedRpt, setReports) => {
+const updateReport = (updatedRpt, callback) => {
   const config = {
     method: 'put',
     endpoint: 'reports',
     data : updatedRpt
   };
 
-  callApi(()=> getReports(setReports), null, config)
-}
+  callApi(() => {
+    if (callback) {
+      callback();
+    }
+  }, null, config);
+};
 
-const Reports = ({report, getAllReports, setReportsFunc}) => {
+
+const Reports = ({report, getAllReports, setReportsFunc, closeModal}) => {
   const navigate = useNavigate();
   const [reports, setReports] = useState([])
   const [reportDescription, setReportDescription] = useState('')
@@ -61,12 +66,14 @@ const Reports = ({report, getAllReports, setReportsFunc}) => {
   }
 
   const handleUpdate = () => {
-    const updatedReport = { ...report, description: reportDescription, resolved: reportResolved}
-    updateReport(updatedReport, setReportsFunc, getAllReports);
-    setEditReportDialogue(false)
-    //setReportDescription('')
-    //setReports(null)
-  }
+    const updatedReport = { ...report, description: reportDescription, resolved: reportResolved};
+    updateReport(updatedReport, () => {
+      getAllReports(setReportsFunc);
+      setEditReportDialogue(false);
+      closeModal();
+    });
+  };
+  
 
   const handleChange = (e) => {
     setReportResolved(e.target.checked);
