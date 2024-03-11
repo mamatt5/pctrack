@@ -129,7 +129,12 @@ const AddComputer = (props) => {
                 onClose={closeModal}
             >
                 <Box sx={style}>
-                    <h1>Add New Computer</h1>
+                   
+                    {computer == null ?
+                        <h1>Add New Computer</h1>
+                        :
+                        <h1>Edit Computer</h1>
+                    }
                     <TextField
                         value={code}
                         label={'Computer Code'}
