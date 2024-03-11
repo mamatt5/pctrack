@@ -30,6 +30,21 @@ public class ReportController {
 		return reportService.findAllReports();
 	}
 	
+	@GetMapping("reports/date")
+	public List<Report> sortReportsByDate() {
+		return reportService.sortReportsByDate();
+	}
+	
+	@GetMapping("reports/computerCode")
+	public List<Report> sortReportsByComputerCode() {
+		return reportService.sortReportsByComputerCode();
+	}
+	
+	@GetMapping("reports/resolved")
+	public List<Report> sortReportsByResolvedStatus() {
+		return reportService.sortReportsByResolvedStatus();
+	}
+	
 	@GetMapping("reports/{reportId}")
 	public Report findById(@PathVariable int reportId) {
 		return reportService.findById(reportId); 
