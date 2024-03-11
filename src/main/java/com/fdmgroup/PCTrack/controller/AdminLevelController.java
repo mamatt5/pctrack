@@ -19,9 +19,9 @@ public class AdminLevelController {
 	
 	@Autowired
 	public AdminLevelController(AdminLevelService adminService) {
-		super();
+		super(); 
 		this.adminService = adminService;
-	}
+	} 
 	
 	@GetMapping("adminLevels")
 	public List<AdminLevel> getAdminLevels() {

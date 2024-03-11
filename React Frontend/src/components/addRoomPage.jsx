@@ -14,6 +14,7 @@ import { Snackbar } from '@mui/material'
 import { MultipleSelect } from "../partials/CheckBoxDropDowns";
 import { Collapse } from '@mui/material'
 import Fade from '@mui/material/Fade';
+import { useEffect } from 'react'
 
 const style = {
     // position: 'absolute',
@@ -34,10 +35,13 @@ const AddRoomPage = (props) => {
 
     const [location, setLocation] = useState(null)
     const [roomName, setRoomName] = useState("")
-
     const [open, setOpen] = useState(false);
-	const registerableLocations = props.currStaff.map((item) => {
+    const [render, setRender] = useState(props.updated);
 
+
+
+	const registerableLocations = props.currStaff.map((item) => {
+        
 		if (item.adminLevel.precedence < 3) {
 			return item.location
 		} else {
@@ -52,13 +56,14 @@ const AddRoomPage = (props) => {
     }
 
     const handleClose = () => {
-
+        
         setOpen(false);
       };
 
 
 
 	const handleCheck = (value) => {
+        
 		setLocation(value)
 
 	};
@@ -80,7 +85,7 @@ const AddRoomPage = (props) => {
 
     <>
         <NavBar admin={props.admin} />
-
+       
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
             onClose={handleClose}

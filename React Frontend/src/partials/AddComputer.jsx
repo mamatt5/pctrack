@@ -21,6 +21,7 @@ const style = {
 };
 
 const AddComputer = (props) => {
+            
     const [updated, setUpdated] = props.updated;
     const [open, setModal] = useState(false);
     const [code, setCode] = useState("");
@@ -28,9 +29,9 @@ const AddComputer = (props) => {
     const [error, setError] = useState(false);
     const [programList, setProgramList] = useState([]);
     const { computer, staff, rooms } = props;
-    const [openAlert, setOpen] = useState(false);
-
-
+    const [newComputer, onNewComputer] = useState(false);
+    
+    
     useEffect(() => {
         reset();
     }, []);
@@ -61,7 +62,7 @@ const AddComputer = (props) => {
         reset();
     };
 
-    const submitComputer = () => {
+    const submitComputer = (update) => {
         if (code == "") {
             setError(true);
             return;
@@ -97,28 +98,43 @@ const AddComputer = (props) => {
 
         }
         setUpdated(false);
-        setOpen(true);
+
+        if (update) {
+            props.onUpdate();
+        } else {
+            onNewComputer(true);
+        }
     }
 
     return (
         <>
 
-            <Snackbar open={openAlert} autoHideDuration={6000} onClose={()=>setOpen(false)}>
+            <Snackbar open={newComputer} autoHideDuration={6000} onClose={()=>onNewComputer(false)}>
                     <Alert
-                        onClose={()=>setOpen(false)}
+                        onClose={()=>onNewComputer(false)}
                         severity="success"
                         variant="filled"
                         sx={{ width: '100%' }}
                     >
                         A new Computer has been Added!
                     </Alert>
-                </Snackbar>
+            </Snackbar>
+
+            
+
+            
+
             <Modal
                 open={open}
                 onClose={closeModal}
             >
                 <Box sx={style}>
-                    <h1>Add New Computer</h1>
+                   
+                    {computer == null ?
+                        <h1>Add New Computer</h1>
+                        :
+                        <h1>Edit Computer</h1>
+                    }
                     <TextField
                         value={code}
                         label={'Computer Code'}
@@ -148,14 +164,15 @@ const AddComputer = (props) => {
                     {computer == null ?
                         <Button
                             variant="contained"
-                            onClick={submitComputer}
+                            onClick={() => submitComputer(false)}
+                           
                         >
                             Add Computer
                         </Button>
                         :
                         <Button
                             variant="contained"
-                            onClick={submitComputer}
+                            onClick={() => submitComputer(true)}
                         >
                             Update Computer
                         </Button>

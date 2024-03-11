@@ -11,6 +11,12 @@ import ComputerIcon from '@mui/icons-material/Computer';
 import callApi from '../api/callApi';
 import { ThemeProvider } from '@emotion/react';
 import AddComputer from './AddComputer';
+import { Snackbar } from '@mui/material';
+import { Alert } from '@mui/material';
+import { memo } from 'react';
+import { useMemo } from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const style = {
     position: 'absolute',
@@ -48,8 +54,12 @@ const checkPerm = (computer, rooms) => {
 const ComputerCard = (props) => {
     const { computer, staff, rooms } = props;
     const [open, setModal] = useState(false);
-    const [render, setRender] = useState(false);
     const [updated, setUpdated] = props.updated;
+  
+
+  
+
+
 
     const openModal = () => {
         setModal(true);
@@ -60,9 +70,7 @@ const ComputerCard = (props) => {
         setUpdated(false);
     };
 
-    const t = () => {
-        setRender(true)
-    }
+
 
     const delComputer = () => {
         const config = {
@@ -71,6 +79,8 @@ const ComputerCard = (props) => {
         }
 
         callApi(closeModal, null, config);
+        props.onDelete();
+        
     }
 
     const getColor = (computer) => {
@@ -93,6 +103,8 @@ const ComputerCard = (props) => {
     }
 
     return (
+        <>
+    
         <Card sx={{
             maxWidth: 130,
 
@@ -127,7 +139,6 @@ const ComputerCard = (props) => {
             <Modal
                 open={open}
                 onClose={closeModal}
-                onClick={t}
 
 
             >
@@ -151,7 +162,7 @@ const ComputerCard = (props) => {
                     <br></br>
                     { checkPerm(computer, rooms) &&
                         <ThemeProvider theme={theme}>
-                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} rooms={rooms}/>
+                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} rooms={rooms} onUpdate={props.onUpdate}/>
                             <Button
                                 variant="contained"
                                 color="error"
@@ -163,6 +174,7 @@ const ComputerCard = (props) => {
                 </Box>
             </Modal>
         </Card>
+        </>
     );
 }
 

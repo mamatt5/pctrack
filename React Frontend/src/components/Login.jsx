@@ -10,6 +10,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { OutlinedInput, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormControl } from "@mui/material";
+import { Grow } from "@mui/material";
+import { FormControlLabel } from "@mui/material";
+import { Switch } from "@mui/material";
 
 // outside to prevent reredner
 let username = "";
@@ -18,7 +21,7 @@ let password = "";
 /**
  * @returns
  */
-const login = () => {
+const login = (props) => {
 	const navigate = useNavigate();
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -103,13 +106,28 @@ const login = () => {
 
 	return (
 		<div className="centerHorizonal">
-			<Box style={{ left: 0 }}>
-				<Typography variant="h5" sx={{ padding: "1rem" }}>
+			
+		
+			
+			<Grow in={true} timeout={1000}>
+			
+			
+			<Box sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            borderRadius: 8,
+            padding: 6,
+            boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
+            className: 'box',
+			
+          }} >
+				<Box>
+				<Typography variant="h4" sx={{ padding: "1rem", fontWeight: 'bold' }}>
 					PC Track
 				</Typography>
-			</Box>
-			<Box sx={{ border: "1px solid black", borderRadius: "10px", width: "30vw" }}>
-				<Box>
 					<Typography variant="h6" sx={{ padding: "0.5rem" }}>
 						Login
 					</Typography>
@@ -168,6 +186,7 @@ const login = () => {
 					</Button>
 				</form>
 			</Box>
+			</Grow>
 		</div>
 	);
 };

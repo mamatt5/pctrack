@@ -45,7 +45,7 @@ const CreateReport  = (props) => {
     const [issueDescription, setIssueDescription] = useState("");
     const [error, setError] = useState(false);
     const [user, setUser] = useState([]);
-    const [openAlert, setOpen] = useState(false);
+  
 
     useEffect(() => {
         getComputers(setComputers);
@@ -89,24 +89,13 @@ const CreateReport  = (props) => {
             data: report
         }
         callApi(closeModal, null, config);
-        setOpen(true)
+        props.created();
     }
 
     return (
         <div>
            
-           <Snackbar open={openAlert} autoHideDuration={6000} onClose={()=>setOpen(false)} 
-           
-           >
-                    <Alert
-                        onClose={()=>setOpen(false)}
-                        severity="success"
-                        variant="filled"
-                        sx={{ width: '100%' }}
-                    >
-                        A new Report has been created!
-                    </Alert>
-                </Snackbar>
+        
 
             <Modal
                 open={open}

@@ -120,7 +120,7 @@ export default function NavBar(props) {
 	const [businessAdmin, setBusinessAdmin] = useState(false);
 	const [locationAdmin, setLocationAdmin] = useState(false);
 	const [roomAdmin, setRoomAdmin] = useState(false);
-	const [test, setTest] = useState(null)
+
 
 
 

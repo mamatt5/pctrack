@@ -51,7 +51,18 @@ const welcomePage = (staff) => {
 
 
 	return (
-		<>
+		<Fade in={true} timeout={1000}>
+		<Box sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            borderRadius: 8,
+            padding: 6,
+            boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
+            className: 'box',
+          }} >
 			{staff.map((roles, index) => (
 				<>
 					{index === 0 ? (
@@ -78,7 +89,7 @@ const welcomePage = (staff) => {
 								User at {roles.location.city}
 							</Typography>:
 
-							<Typography>
+							<Typography variant="h6">
 								{roles.adminLevel.name} Admin at {roles.location.city}
 							</Typography>
 							}
@@ -90,7 +101,8 @@ const welcomePage = (staff) => {
 					</Box>
 				</>
 			))}
-		</>
+		</Box>
+		</Fade>
 	);
 };
 const LoggedInHomePage = () => {
@@ -99,13 +111,16 @@ const LoggedInHomePage = () => {
 	const { id } = useParams();
 	const [admin, setAdmin] = useState(false);
 	const [staff, setStaff] = useState([]); // gives all the staff info
-	console.log(staff);
+	const [render, setRender] = useState(false);
+	
+
+
 	useEffect(() => {
 		console.log("checking");
 		CheckAdmin(setAdmin, setStaff, id);
-	}, []);
+	}, [render]);
 
-	console.log(staff)
+	
 	const isHomePage = useMatch("/home/:id");
 
 	return (
@@ -122,7 +137,7 @@ const LoggedInHomePage = () => {
 				<Route path="/help" element={<HelpPage />} />
 				{/* <Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
 				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} /> */}
-				<Route path="/manageFacilities" element={< ManageFacilities  admin={admin} currStaff={staff}/>} />
+				<Route path="/manageFacilities" element={< ManageFacilities  admin={admin} currStaff={staff} setRender={setRender}/>} />
 			</Routes>
 			{console.log("boi")}
 			{console.log(staff)}
