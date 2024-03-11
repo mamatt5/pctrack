@@ -34,9 +34,12 @@ const style = {
 const AddRoomPage = (props) => {
 
     const [location, setLocation] = useState(null)
-    const [roomName, setRoomName] = useState("")
+
     const [open, setOpen] = useState(false);
     const [render, setRender] = useState(props.updated);
+
+    const [roomName, setRoomName] = useState("")
+    const [roomError, setRoomError] = useState(false);
 
 
 
@@ -60,7 +63,10 @@ const AddRoomPage = (props) => {
         setOpen(false);
       };
 
-
+    const roomHandle = (name) => {
+        setRoomName(name)
+        setRoomError(false);
+    }
 
 	const handleCheck = (value) => {
         
@@ -70,21 +76,32 @@ const AddRoomPage = (props) => {
 
     const createRoom = (e) => {
         e.preventDefault();
+        let localRoomError = false;
 
-        const config = {
-            method: "post",
-            endpoint: "rooms",
-            data: {
-                "name": roomName,
-                "location": location[0]
-            }
+        if (!/^[a-zA-Z]+$/.test(roomName.trim())) {
+           
+            setRoomError(true)
+            localRoomError = true;
+           
         }
-        callApi(successNotification, null, config);
+
+        if (!localRoomError) {
+            const config = {
+                method: "post",
+                endpoint: "rooms",
+                data: {
+                    "name": roomName,
+                    "location": location[0]
+                }
+            }
+            callApi(successNotification, null, config);
+        }
+        
     }
   return (
 
     <>
-        <NavBar admin={props.admin} />
+       
        
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
@@ -123,10 +140,10 @@ const AddRoomPage = (props) => {
 				<TextField
 					name="Room Name"
 					label="Room Name"
-					// error={Boolean(lastNameErr)}
-					// helperText={lastNameErr ? lastNameErr : ""}
-					// onChange={(e) => checkInput("lastName", e.target.value)}
-                    onChange={(e) => setRoomName(e.target.value)}
+					error={roomError}
+					helperText={roomError ? "Invalid Room Name" : ""}
+				
+                    onChange={(e) => roomHandle(e.target.value)}
 					sx={{ margin: "0.5rem" }}
 				/>
 
