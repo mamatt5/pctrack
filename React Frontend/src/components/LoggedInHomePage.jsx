@@ -51,7 +51,18 @@ const welcomePage = (staff) => {
 
 
 	return (
-		<>
+		<Fade in={true} timeout={1000}>
+		<Box sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            borderRadius: 8,
+            padding: 6,
+            boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
+            className: 'box',
+          }} >
 			{staff.map((roles, index) => (
 				<>
 					{index === 0 ? (
@@ -90,7 +101,8 @@ const welcomePage = (staff) => {
 					</Box>
 				</>
 			))}
-		</>
+		</Box>
+		</Fade>
 	);
 };
 const LoggedInHomePage = () => {
