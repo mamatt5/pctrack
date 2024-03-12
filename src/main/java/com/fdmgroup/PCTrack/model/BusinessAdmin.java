@@ -16,8 +16,6 @@ public class BusinessAdmin extends LocationAdmin {
 
 	}
 	
-	
-	
 	public void addLocation(Location location) {
 		
 	}

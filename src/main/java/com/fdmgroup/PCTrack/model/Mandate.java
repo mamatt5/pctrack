@@ -5,6 +5,12 @@ import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.*;
 
+/**
+ * This object acts as computer requirements in a given room. It is created through "String" data type to allow
+ * users to have flexibility in setting requirements. This allows the user to add more information such as a
+ * computer being DEV ready but must also have Excel installed in it.
+ */
+
 @Entity
 public class Mandate {
 	@Id

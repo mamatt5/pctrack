@@ -2,6 +2,10 @@ package com.fdmgroup.PCTrack.model;
 
 import jakarta.persistence.*;
 
+/**
+ * This object represents the actual software along with its version installed in a computer.
+ */
+
 @Entity
 public class Program {
 

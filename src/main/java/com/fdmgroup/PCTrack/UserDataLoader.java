@@ -986,21 +986,14 @@ public class UserDataLoader implements ApplicationRunner {
 			userService.register(user);
 		}
 
-		// username: admin (u00)
-		// password: 0000 !!
-		// location, business and room admins in diff locations
 
 		// Business admin
 		BusinessAdmin businessAdmin0 = new BusinessAdmin(Business, u0, location1);
 		BusinessAdmin businessAdmin = new BusinessAdmin(Business, u0, location2);
 		BusinessAdmin businessAdmin1 = new BusinessAdmin(Business, u00, location1);
-//		BusinessAdmin businessAdmin2 = new BusinessAdmin(Business, u00, location2);
-//		BusinessAdmin businessAdmin3 = new BusinessAdmin(Business, u00, location3);
 		staffService.save(businessAdmin0);
 		staffService.save(businessAdmin);
 		staffService.save(businessAdmin1);
-//		staffService.save(businessAdmin2);
-//		staffService.save(businessAdmin3);
 
 		// Location admin
 		LocationAdmin locationAdmin0 = new LocationAdmin(Location, u00, location2);
@@ -1049,9 +1042,6 @@ public class UserDataLoader implements ApplicationRunner {
 		staffService.save(staff4);
 		staffService.save(staff5);
 		staffService.save(staff6);
-//		staffService.save(staff7);
-//		staffService.save(staff8);
-//		staffService.save(staff9);
 
 		// Mandate
 		String mandate1Desc = "We need 10 DEV-ready computers.";

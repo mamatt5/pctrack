@@ -30,7 +30,7 @@ public class StaffController {
 		this.adminLevelService = adminLevelService; 
 	}
 
-	// non pagination filtiered by location and by admin level.
+	// non pagination filtered by location and by admin level.
 	@GetMapping("filteredStaff")
 	public List<Staff> getStaffByLocationsAndAdminLevels(@RequestParam List<Integer> locationIds,
 			@RequestParam List<Integer> adminLevelIds, @RequestParam(defaultValue = "0") int pageNumber,
@@ -55,7 +55,7 @@ public class StaffController {
 
 	}
 	
-	// takes into account whats filtered from locations and adminlevel
+	// takes into account what is filtered from locations and adminlevel
 	@GetMapping("searchStaff/{query}")
 	public List<Staff> getStaffPartial(@PathVariable String query, @RequestParam List<Integer> locationIds,
 			@RequestParam List<Integer> adminLevelIds, @RequestParam(defaultValue = "0") int pageNumber,

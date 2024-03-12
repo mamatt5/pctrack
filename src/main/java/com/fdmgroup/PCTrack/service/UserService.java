@@ -33,13 +33,13 @@ public class UserService {
 	}
 
 
-// pagnates user
+	// paginates user
 	public Page<User> getUserPage(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return this.userRepository.findAll(pageable);
     }
 	
-	// pagenates user with query match 
+	// paginates user with query match 
 	public Page<User> findAllUsersPartialMatch(String query, int pageNumber, int pageSize) {
 		   Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		return this.userRepository.findPartial(query, pageable);

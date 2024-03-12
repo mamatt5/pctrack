@@ -10,6 +10,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+/**
+ * This entity is the used for logging in and having access into the system. It also contains Staff objects since a user
+ * can have multiple roles in the company, given different locations.
+ */
+
 @Entity
 public class User {
 	@Id

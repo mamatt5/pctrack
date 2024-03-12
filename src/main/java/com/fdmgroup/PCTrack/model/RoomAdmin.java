@@ -12,13 +12,11 @@ import jakarta.persistence.OneToMany;
 @DiscriminatorValue("room_admin")
 public class RoomAdmin extends Staff {
 	
-	// Ask floor if she manages all rooms or multiple admins can manage one room
 	@ManyToMany
 	private List<Room> roomAssigned;
 	
 	
 	public RoomAdmin() {
-        // Default constructor required by JPA
 		super(); 
     }
 	

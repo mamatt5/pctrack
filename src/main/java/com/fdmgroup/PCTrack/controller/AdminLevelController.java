@@ -12,6 +12,10 @@ import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.service.AdminLevelService;
 import com.fdmgroup.PCTrack.service.ComputerService; 
  
+/**
+ * Controller for Admin level object
+ */
+
 @RestController
 @CrossOrigin("http://localhost:5173")
 public class AdminLevelController {

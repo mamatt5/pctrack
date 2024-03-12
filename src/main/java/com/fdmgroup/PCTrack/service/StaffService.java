@@ -44,13 +44,13 @@ public class StaffService {
 		return this.staffRepo.findByLocationInAndAdminLevelIn(locations, adminLevels, pageable).getContent();
 	}
 
-	// pagnates staff
+	// paginates staff
 	public Page<Staff> getStaffPage(int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("user.username").ascending());
 		return this.staffRepo.findAll(pageable);
 	}
 
-	// pagenates staff with query match AND with the filter
+	// paginates staff with query match AND with the filter
 	public List<Staff> findAllUsersPartialMatch(String query, int pageNumber, int pageSize, List<Integer> locations,
 			List<Integer> adminLevels) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -128,13 +128,6 @@ public class StaffService {
 	public long staffCountFiltered(List<Location> locations, List<AdminLevel> adminLevels) {
 		return this.staffRepo.countByLocationInAndAdminLevelIn(locations, adminLevels);
 	}
-
-//	public void assignLocationAdmin(int locationId, int userId) {
-//		AdminLevel adminLevel = new AdminLevel("Location", 2);
-//		Location location = this.locationRepository.findById(locationId).get();
-//		User user = this.userRepository.findById(userId).get();
-//		
-//	}
 
 	public List<Room> getRoomStaffIsRegisterdIn(int userId) {
 		return this.staffRepo.findRoomsStaffIsRegisteredIn(userId);
