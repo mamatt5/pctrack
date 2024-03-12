@@ -1,23 +1,21 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import EditOffIcon from "@mui/icons-material/EditOff";
+import { Box, IconButton, Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { Box, IconButton, Typography } from "@mui/material";
-import SearchBar from "./SearchBar";
-import EditIcon from "@mui/icons-material/Edit";
-import PermissonModal from "./ManagePermission";
-import EditOffIcon from "@mui/icons-material/EditOff";
-import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { LocationsPermsModal, DeleteModal } from "./ManagePermission";
+import TableRow from "@mui/material/TableRow";
+import { styled } from "@mui/material/styles";
+import * as React from "react";
 import Config from "../configs.json";
+import PermissonModal, { DeleteModal, LocationsPermsModal } from "./ManagePermission";
+import SearchBar from "./SearchBar";
 
 const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -35,17 +33,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	// "&:nth-of-type(odd)": {
-	// 	backgroundColor:"#f9fafb",
-	// },
-	// hide last border
 	"&:last-child td, &:last-child th": {
 		border: 0,
 	},
-	// backgroundColor: "white", // Set background color to white
-	// "&:last-child td, &:last-child th": {
-	// 	border: 0, // Remove border for last child
-	// },
 	"&:hover": {
 		backgroundColor: "#f3f7f9",
 	},
@@ -60,8 +50,6 @@ const hasPrecedence = (logginedInStaff, toBeManagedStaff) => {
 	const currStaffHasPredence = logginedInStaff.filter((staff) => {
 		if (staff.adminLevel.precedence !== MAX_PRECEDENCE) {
 			return (
-				// console.log(staff.adminLevel.precedence),
-
 				staff.location.locationId === toBeManagedStaff.location.locationId &&
 				staff.adminLevel.precedence <= toBeManagedStaff.adminLevel.precedence &&
 				staff.user.userId != toBeManagedStaff.user.userId
@@ -131,12 +119,10 @@ export default function CustomizedTables({
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 	// for al the modals.
-	console.log(array, "rendering ????? -------------------");
 	React.useEffect(() => {
 		setPage(0);
 	}, [usersOn, pageZero]);
 
-	console.log(page, "PAGE WERE ON IN STAFF TABLE", staffCount);
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 		onChangePage(newPage, rowsPerPage);
@@ -272,7 +258,7 @@ export default function CustomizedTables({
 							<TableRow style={{ height: 53 * 10 }}>
 								<TableCell colSpan={6} align="center">
 									<Typography variant="h6" sx={{ color: "gray", fontStyle: "italic" }}>
-										Fetching Data
+										Nothing to show
 									</Typography>
 								</TableCell>
 							</TableRow>
@@ -349,13 +335,6 @@ export default function CustomizedTables({
 														<IconButton onClick={() => handleOpenDeleteModal(row.staffId)}>
 															<DeleteOutlineIcon sx={iconStyle} />
 														</IconButton>
-														{/* setOpenModal={(isOpen) => isOpen ? handleOpenModal(row.id) :
-                        handleCloseModal(row.id)}: This passes a function setOpenModal
-                        to the PermissionModal component. When setOpenModal(true) is called
-                        inside PermissionModal, it calls handleOpenModal(row.id) to open the modal
-                         for the corresponding row.id. When setOpenModal(false) is called inside
-                         PermissionModal, it calls handleCloseModal(row.id) to close the modal
-                         for the corresponding row.id. */}
 														<PermissonModal
 															openModal={!!openModals[row.staffId]}
 															setOpenModal={(isOpen) =>
@@ -421,7 +400,6 @@ export default function CustomizedTables({
 					labelRowsPerPage={
 						<Typography variant="body2" sx={{ color: "#8a989f" }}>
 							{" "}
-							{/* Change color as needed */}
 							Rows per page:
 						</Typography>
 					}

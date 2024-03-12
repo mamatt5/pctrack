@@ -1,9 +1,9 @@
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import callApi from '../api/callApi'
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import callApi from '../api/callApi';
 
 const getStaff = (userId, setStaff, setHasPermission) => {
   const config = {
@@ -31,6 +31,8 @@ const createRoomMandate = (staff, room, description, deadline, setRoomMandates) 
     roomAdmin: staff,
     room: room,
     description: description,
+    
+    // Convert timestamp from UTC to AEST
     dateCreated: new Date(new Date().getTime() + 36000000).toISOString().split('T')[0],
     deadline: deadline }
   

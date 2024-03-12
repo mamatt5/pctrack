@@ -1,13 +1,17 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
 
+/**
+ * Custom styled component for table rows and cells  
+ * Applies alternating row colors for better readability.
+ * */ 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -22,22 +26,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover,
     },
-    // hide last border
     '&:last-child td, &:last-child th': {
         border: 0,
     },
 }));
 
+
+/**
+ * Functional component for displaying a table of programs with customized styling.
+ * @param {*} array - An array of program data objects, each containing programId, software, and version fields.
+ */
 export default function ProgramTable({ array }) {
     return (
         <TableContainer component={Paper} sx={{ maxWidth: "70vw" }}>
             <Table sx={{ minWidth: 600 }} aria-label="customized table">
+                {/* HEAD */}
                 <TableHead>
                     <TableRow>
                         <StyledTableCell align="left">Name</StyledTableCell>
                         <StyledTableCell align="left">Version Number</StyledTableCell>
                     </TableRow>
                 </TableHead>
+                {/* BODY */}
                 <TableBody>
                     {array.map((row) => (
                         <StyledTableRow key={row.programId}>

@@ -1,35 +1,41 @@
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { useState } from "react";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { Divider, Typography } from "@mui/material";
-import callApi from "../api/callApi";
-import { useEffect } from "react";
-import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
-import { RegisterLocation } from "../partials/ManagePermission";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import { useState } from "react";
+import callApi from "../api/callApi";
 import { MultipleSelect } from "../partials/CheckBoxDropDowns";
-// const fields = ["firstName", "lastName", "password", "email"];
+import { RegisterLocation } from "../partials/ManagePermission";
+
 let formData = {
 	firstName: "",
 	lastName: "",
 	password: "",
 	email: "",
 };
-// let updatedCheckedValues = {};
 
+/**
+ * Generates a unique username. if the generated username exists, then
+ * add a number to it to uniquemly identify it
+ * @param {*} users
+ * @param {*} first
+ * @param {*} last
+ * @returns the username int he form of firstname.lastname{number}
+ */
 const getUsername = (users, first, last) => {
-	console.log(users);
-	console.log(first, last);
 	const expectedUsername = `${first}.${last}`;
 	if (users.length === 0) return expectedUsername;
 	let count = users.length;
 	return `${expectedUsername}${count}`;
 };
 
+/**
+ * The modal that opens when an admin wants to register a
+ * @param {*} param0
+ * @returns
+ */
 export const RegisterModal = ({ openModal, setOpenModal, locations, adminLevels, setChange }) => {
 	return (
 		<>
@@ -73,7 +79,13 @@ export const RegisterModal = ({ openModal, setOpenModal, locations, adminLevels,
 		</>
 	);
 };
-let selectedOptions = []
+
+let selectedOptions = [];
+/**
+ * Implementation for registering a user. Its what opens inside the reigster modal
+ * @param {*} param0
+ * @returns
+ */
 const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 	const [firstNameErr, setFirstNameErr] = useState("");
 	const [lastNameErr, setLastNameErr] = useState("");
@@ -84,17 +96,21 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 		prev.precedence < curr.precedence ? curr : prev
 	);
 
-
-	// checks if all fields are filled
+	/**
+	 * Checks if the form is valid
+	 * @returns
+	 */
 	const isFormValid = () => {
 		const textInputsNotFilled = Object.values(formData).some((value) => value === "");
-		console.log(textInputsNotFilled);
 		if (textInputsNotFilled) return false;
-		console.log(selectedOptions)
-		if (selectedOptions.length === 0 ) return false;
+		if (selectedOptions.length === 0) return false;
 		return true;
 	};
 
+	/**
+	 * CHecks if the email exists
+	 * @param {*} e
+	 */
 	const checkEmailExists = (e) => {
 		e.preventDefault();
 		const data = new FormData(e.currentTarget);
@@ -103,7 +119,6 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 			method: "get",
 			endpoint: `usersEmail/${email}`,
 		};
-		console.log(email);
 		callApi(
 			() => checkRegister(data, true),
 			() => checkRegister(data, false),
@@ -111,18 +126,16 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 		);
 	};
 
+	/**
+	 * Checks that the register form is correctly filled out
+	 * @param {*} data
+	 * @param {*} emailExists
+	 */
 	const checkRegister = (data, emailExists) => {
-		console.log(data);
 		const firstName = data.get("firstName").trim();
 		const lastName = data.get("lastName").trim();
 		const password = data.get("password").trim();
 		const email = data.get("email").trim();
-
-		// assume that every user must then be made into a x
-		// as a result, register will create a new user, and then make then a staff.
-		// same username and laste name simply adds 1
-		// Count the number of special characters
-
 		const hasTwoSpecialChars = () => {
 			const specialChars = password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || [];
 			return specialChars.length >= 2;
@@ -151,11 +164,17 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 			callApi(createUser, null, config, firstName, lastName, password, email);
 		}
 	};
-
+	/**
+	 * Creates the new user
+	 * @param {*} users
+	 * @param {*} firstName
+	 * @param {*} lastName
+	 * @param {*} password
+	 * @param {*} email
+	 */
 	const createUser = (users, firstName, lastName, password, email) => {
-		console.log(users, firstName, lastName);
 		const username = getUsername(users, firstName, lastName);
-		console.log(username);
+
 		const currentDate = new Date();
 		const config = {
 			method: "post",
@@ -173,35 +192,37 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 		callApi(createStaff, null, config);
 	};
 
+	/**
+	 * Create the staff which is an instance of a user with location and perms
+	 * @param {*} data
+	 */
 	const createStaff = (data) => {
-		console.log(data);
 		const userid = data.userId;
 		const adminid = lowestAdminLevel.id;
-		RegisterLocation(selectedOptions, userid, adminid, setOpenModal, setChange)
+		RegisterLocation(selectedOptions, userid, adminid, setOpenModal, setChange);
 	};
 
-	// checklist
+	/**
+	 * Resets the error messages and performs a check on all data passed in the
+	 * register form
+	 * @param {*} field
+	 * @param {*} value
+	 */
 	const checkInput = (field, value) => {
 		setFirstNameErr("");
 		setLastNameErr("");
 		setPasswordError("");
 		setEmailErr("");
 
-		console.log(value, field);
 		formData = { ...formData, [field]: value };
-		console.log(formData);
 		setFormValid(isFormValid());
 	};
 
 	const handleCheck = (value) => {
-		console.log(value)
-		selectedOptions = value
+		selectedOptions = value;
 		setFormValid(isFormValid());
 	};
 
-	//
-
-	// console.log(checkedValues);
 	return locations.length === 0 ? null : (
 		<Box sx={{ width: "95%", padding: "1.5rem" }}>
 			<Box>
@@ -244,18 +265,16 @@ const Register = ({ setOpenModal, locations, adminLevels, setChange }) => {
 					sx={{ margin: "0.5rem" }}
 				/>
 
-				<Box sx={{ margin: "0.5rem" }} >
-					{MultipleSelect(
-						locations,
-						"city",
-						"Locations",
-						"Add Locations",
-						true,
-						handleCheck
-					)}
+				<Box sx={{ margin: "0.5rem" }}>
+					{MultipleSelect(locations, "city", "Locations", "Add Locations", true, handleCheck)}
 				</Box>
 				<Box className="centerHorizonal">
-					<Button type="submit" variant="contained" disabled={!formValid} sx={{marginTop:"2rem"}}>
+					<Button
+						type="submit"
+						variant="contained"
+						disabled={!formValid}
+						sx={{ marginTop: "2rem" }}
+					>
 						Register
 					</Button>
 				</Box>

@@ -4,6 +4,14 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
+
+/**
+ * This object represents the role of a user in the company. It is the most basic role in the web application with 
+ * the most basic permissions which are basically read only permissions. It is from this entity where the admin
+ * roles inherits in the following order (with increasing permission levels): Room, Location, Business. Note that
+ * a user can have multiple Staff objects in it.
+ */
+
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="staff_type")
@@ -27,15 +35,6 @@ public class Staff {
 	public Staff() {
 		super();
 	}
-	 
-	
-//
-//	public Staff(User user, Location location) {
-//		super();
-//		this.user = user;
-//		this.location = location;
-//		this.adminLevel = null; 
-//	}
 
 	public Staff(AdminLevel type, User user, Location location) {
 		super();

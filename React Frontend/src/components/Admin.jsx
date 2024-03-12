@@ -1,32 +1,27 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import NavBar from "../partials/NavBar";
-import { useState } from "react";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Register from "./Register";
-import CustomizedTables from "../partials/StaffsTable";
-import { useEffect } from "react";
-import callApi from "../api/callApi";
-import Paper from "@mui/material/Paper";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { Divider, IconButton, Tooltip, Typography } from "@mui/material";
-import { RegisterModal } from "./Register";
-import CustomizedSwitches from "../partials/Switch";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormHelperText from "@mui/material/FormHelperText";
-import Checkbox from "@mui/material/Checkbox";
-import Popover from "@mui/material/Popover";
-import LibraryAddCheckOutlinedIcon from "@mui/icons-material/LibraryAddCheckOutlined";
 import ClearAllOutlinedIcon from "@mui/icons-material/ClearAllOutlined";
-import Loading from "../partials/Loading";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import LibraryAddCheckOutlinedIcon from "@mui/icons-material/LibraryAddCheckOutlined";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import { Divider, IconButton, Tooltip, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Paper from "@mui/material/Paper";
+import Popover from "@mui/material/Popover";
+import { useEffect, useState } from "react";
+import callApi from "../api/callApi";
+import CustomizedTables from "../partials/StaffsTable";
+import CustomizedSwitches from "../partials/Switch";
+import { RegisterModal } from "./Register";
+
 let pageNum = 0;
 let pageSize = 10;
 
+/**
+ * Returns all the levels of admins
+ * @param {*} setAdminLevels function for setting all admin levels
+ */
 export const GetAdminsLevels = (setAdminLevels) => {
 	// Functionality to get staff on pagination
 	const config = {
@@ -37,9 +32,13 @@ export const GetAdminsLevels = (setAdminLevels) => {
 	callApi(setAdminLevels, null, config);
 };
 
+/**
+ * Returns the number of staff after its been filtered.
+ * @param {*} setStaffCount  sets the staff count
+ * @param {*} locationIds    the location Ids of the ticked locations for the filter
+ * @param {*} adminLevelIds  the adminIds of the ticked admins for the filter
+ */
 const getStaffCount = (setStaffCount, locationIds, adminLevelIds) => {
-	// Functionality to get staff on pagination
-	// console.log(pageNum, pageSize);
 	const config = {
 		method: "get",
 		endpoint: "countStaffFiltered",
@@ -52,10 +51,14 @@ const getStaffCount = (setStaffCount, locationIds, adminLevelIds) => {
 	callApi(setStaffCount, null, config);
 };
 
+/**
+ *
+ * @param {*} setStaff 	    sets the staff
+ * @param {*} locationIds    the location Ids of the ticked locations for the filter
+ * @param {*} adminLevelIds the adminIds of the ticked admins for the filter
+ */
 const getStaff = (setStaff, locationIds, adminLevelIds) => {
-	console.log(pageNum, "JELLO!!");
 	// Functionality to get staff on pagination
-	// console.log(pageNum, pageSize);
 	const config = {
 		method: "get",
 		endpoint: "filteredStaff",
@@ -70,8 +73,14 @@ const getStaff = (setStaff, locationIds, adminLevelIds) => {
 	callApi(setStaff, null, config);
 };
 
+/**
+ * Returned a filtered list of staff when using search bar
+ * @param {*} query the search query
+ * @param {*} setStaff setting the results
+ * @param {*} locationIds the ids of the ticked location filters
+ * @param {*} adminLevelIds the ids of the ticked admin filters
+ */
 const searchStaff = (query, setStaff, locationIds, adminLevelIds) => {
-	// console.log(query);
 	// Functionality to search users
 	const config = {
 		method: "get",
@@ -87,9 +96,12 @@ const searchStaff = (query, setStaff, locationIds, adminLevelIds) => {
 	callApi(setStaff, null, config);
 };
 
+/**
+ * Reutnrs total number of users
+ * @param {*} setUserCount sets the num of users
+ */
 const getUserCount = (setUserCount) => {
 	// Functionality to get staff on pagination
-	console.log(pageNum, pageSize);
 	const config = {
 		method: "get",
 		endpoint: "countUser",
@@ -98,8 +110,13 @@ const getUserCount = (setUserCount) => {
 	callApi(setUserCount, null, config);
 };
 
+/**
+ * Returns the number of users when quieried via search bar
+ * @param {*} query the query
+ * @param {*} setUser sets the users
+ * @param  {...any} optional any optional params to pass into setUser
+ */
 const searchUser = (query, setUser, ...optional) => {
-	// console.log(query);
 	// Functionality to search users
 	const config = {
 		method: "get",
@@ -113,9 +130,15 @@ const searchUser = (query, setUser, ...optional) => {
 	callApi(setUser, null, config, ...optional);
 };
 
+/**
+ * Returns a list of staff after apssing filter and the search bar query
+ * @param {*} query
+ * @param {*} setStaffCount
+ * @param {*} locationIds
+ * @param {*} adminLevelIds
+ */
 const searchStaffCount = (query, setStaffCount, locationIds, adminLevelIds) => {
-	// console.log(query);
-	// Functionality to search users
+	// gets the staff count
 	const config = {
 		method: "get",
 		endpoint: `countStaffPartial/${query}`,
@@ -128,6 +151,11 @@ const searchStaffCount = (query, setStaffCount, locationIds, adminLevelIds) => {
 	callApi(setStaffCount, null, config);
 };
 
+/**
+ * Reutnrs the number of users found after passing the search bar query
+ * @param {*} query
+ * @param {*} setUserCount
+ */
 const searchUserCount = (query, setUserCount) => {
 	const config = {
 		method: "get",
@@ -137,6 +165,10 @@ const searchUserCount = (query, setUserCount) => {
 	callApi(setUserCount, null, config);
 };
 
+/**
+ * Returns all locations
+ * @param {*} setLocations
+ */
 const getLocations = (setLocations) => {
 	const config = {
 		method: "get",
@@ -145,6 +177,12 @@ const getLocations = (setLocations) => {
 	callApi(setLocations, null, config);
 };
 
+/**
+ * Returns the staff given an userId
+ * @param {*} funct
+ * @param {*} userId
+ * @param {*} person
+ */
 const findUserRegisteredLocs = (funct, userId, person) => {
 	const config = {
 		method: "get",
@@ -153,9 +191,13 @@ const findUserRegisteredLocs = (funct, userId, person) => {
 	callApi(funct, null, config, userId, person);
 };
 
+/**
+ * Gets the User for a paginated page
+ * @param {*} setUserLocations
+ */
 const getUser = (setUserLocations) => {
-	// Functionality to get staff on pagination
-	// console.log(pageNum, pageSize);
+	// Functionality to get all users
+
 	const config = {
 		method: "get",
 		endpoint: "userPage",
@@ -168,6 +210,10 @@ const getUser = (setUserLocations) => {
 	callApi(setUserLocations, null, config);
 };
 
+/**
+ * Gets the holistic staff count disregardinig pagination
+ * @param {*} setAllStaffCount
+ */
 const getAllStaffCount = (setAllStaffCount) => {
 	const config = {
 		method: "get",
@@ -177,13 +223,18 @@ const getAllStaffCount = (setAllStaffCount) => {
 	callApi(setAllStaffCount, null, config);
 };
 
+/**
+ * Use effect and state factory for fetching all data first before passing it to
+ * any components that need it.
+ * @param {*} param0
+ * @returns
+ */
 const Admin = ({ currStaff }) => {
 	document.body.style = "background: #f2f5f7;";
 
 	// basically for each location, admins have different adminlevels
 	// first check location matching.
 
-	// console.log(currStaff);
 	const [openModal, setOpenModal] = useState(false);
 	// sets all the staff.
 	const [staff, setStaff] = useState([]);
@@ -302,9 +353,7 @@ const Admin = ({ currStaff }) => {
 	}, [user]);
 
 	const setUserLocations = (user) => {
-		// setUser(users);
 		for (const person of user) {
-			//console.log(person);
 			findUserRegisteredLocs(handleSetUserLocation, person.userId, person);
 		}
 	};
@@ -328,10 +377,6 @@ const Admin = ({ currStaff }) => {
 			}
 		});
 	};
-
-	// console.log(userLocation);
-	// console.log(user);
-	console.log(locationCheckBox, permissionsCheckBox);
 
 	return (
 		// staff.length === 0 && allStaffCount === -1 ? <Loading/> :
@@ -399,7 +444,7 @@ const Admin = ({ currStaff }) => {
 											<IconButton
 												onClick={() => {
 													pageNum = 0;
-													setChange((C) => !C)
+													setChange((C) => !C);
 													setPageZero((pageZero) => !pageZero);
 													const updatedPermissionsCheckBox = Object.fromEntries(
 														Object.keys(permissionsCheckBox).map((key) => [key, true])
@@ -418,7 +463,7 @@ const Admin = ({ currStaff }) => {
 											<IconButton
 												onClick={() => {
 													pageNum = 0;
-													setChange((C) => !C)
+													setChange((C) => !C);
 													setPageZero((pageZero) => !pageZero);
 													const updatedPermissionsCheckBox = Object.fromEntries(
 														Object.keys(permissionsCheckBox).map((key) => [key, false])

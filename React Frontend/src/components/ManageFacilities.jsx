@@ -1,13 +1,13 @@
-import AddLocationPage from "./addLocationPage";
-import AddRoomPage from "./addRoomPage";
 import { Box } from "@mui/material";
 import LocationComputerStatus from "../partials/LocationComputerStatus";
+import AddLocationPage from "./addLocationPage";
+import AddRoomPage from "./addRoomPage";
 
 const ManageFacilities = ({ admin, currStaff, setRender }) => {
 
 	const BusinessPerms = currStaff.filter((staff) => staff.adminLevel.name === "Business");
 	const LocationPerms = currStaff.filter((staff) => staff.adminLevel.name === "Location");
-
+	
 
 	return (
 		<Box sx={{ paddingTop: "9rem" }}>

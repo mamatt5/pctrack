@@ -1,22 +1,34 @@
-import React from "react";
+import { Fade, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useMatch, useParams } from "react-router-dom";
+import callApi from "../api/callApi";
 import NavBar from "../partials/NavBar";
 import callApi from "../api/callApi";
 import { useState, useEffect } from "react";
-import { useMatch, Routes, Route } from "react-router-dom";
+import { useMatch, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SearchComputerPage } from "./SearchComputerPage";
 import { SearchRoomPage } from "./SearchRoomPage";
 import { SearchSoftwarePage } from "./SearchSoftwarePage";
-import { useParams } from "react-router-dom";
-import Admin from "./Admin";
 import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
 import { Fade, Typography } from "@mui/material";
+import { Grow } from "@mui/material";
+import { createTheme } from '@mui/material/styles'
+import { Collapse } from "@mui/material";
+import AddLocationPage from "./addLocationPage";
+import AddRoomPage from "./addRoomPage";
 import ManageFacilities from "./ManageFacilities";
 
 
 import { Box } from "@mui/material";
-import { ReportsPage } from "./ReportsPage";
 import HelpPage from "./HelpPage";
+import { ReportsPage } from "./ReportsPage";
 
+/**
+ * Checks the adminLevls and
+ * @param {*} setAdmin
+ * @param {*} setStaff
+ * @param {*} id the staff id
+ */
 export const CheckAdmin = (setAdmin, setStaff, id) => {
 	const config = {
 		method: "get",
@@ -25,6 +37,12 @@ export const CheckAdmin = (setAdmin, setStaff, id) => {
 	callApi(checkAdminLevel, null, config, setAdmin, setStaff);
 };
 
+/**
+ * Checks the adminLevls and sets it in setAdmin, as well as fetching staff
+ * @param {*} data is the data of the staff in question
+ * @param {*} setAdmin
+ * @param {*} setStaff
+ */
 const checkAdminLevel = (data, setAdmin, setStaff) => {
 
 	// dta == [] means not even a staff,
@@ -41,63 +59,74 @@ const checkAdminLevel = (data, setAdmin, setStaff) => {
 	}
 };
 
+/**
+ *
+ * @param {*} staff
+ * @returns a basic welcome page. Details the users name, and their permissions
+ */
 const welcomePage = (staff) => {
+
 
 	return (
 		<Fade in={true} timeout={1000}>
-			<Box sx={{
-				marginTop: 8,
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				backgroundColor: 'white',
-				borderRadius: 8,
-				padding: 6,
-				boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
-				className: 'box',
-			}} >
-				{staff.map((roles, index) => (
-					<>
-						{index === 0 ? (
-							<Box>
-								<Fade in={true} timeout={500}>
-									<h1>
-										Welcome {roles.user.firstName} {roles.user.lastName}{" "}
-									</h1>
-								</Fade>
-
-								<Fade in={true} timeout={1000}>
-									<h2>
-										Your Current Permissions are:{" "}
-									</h2>
-								</Fade>
-
-							</Box>
-						) : null}
-
+		<Box sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            borderRadius: 8,
+            padding: 6,
+            boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.2)',
+            className: 'box',
+          }} >
+			{staff.map((roles, index) => (
+				<>
+					{index === 0 ? (
 						<Box>
-							<Fade in={true} timeout={2000}>
-								{roles.adminLevel.name === "" ?
-									<Typography>
-										User at {roles.location.city}
-									</Typography> :
-
-									<Typography variant="h6">
-										{roles.adminLevel.name} Admin at {roles.location.city}
-									</Typography>
-								}
-
-
+							<Fade in={true} timeout={500}>
+								<h1>
+									Welcome {roles.user.firstName} {roles.user.lastName}{" "}
+								</h1>
 							</Fade>
 
+							<Fade in={true} timeout={1000}>
+							<h2>
+								Your Current Permissions are:{" "}
+							</h2>
+							</Fade>
 
 						</Box>
-					</>
-				))}
-			</Box>
+					) : null}
+
+					<Box>
+						<Fade in={true} timeout={2000}>
+							{roles.adminLevel.name === "" ?
+							<Typography>
+								User at {roles.location.city}
+							</Typography>:
+
+							<Typography variant="h6">
+								{roles.adminLevel.name} Admin at {roles.location.city}
+							</Typography>
+							}
+
+
+						</Fade>
+
+
+					</Box>
+				</>
+			))}
+		</Box>
 		</Fade>
 	);
 };
+
+/**
+ *
+ * @returns the welcome page if at root page, else, its returns its repective routes.
+ */
 const LoggedInHomePage = () => {
 	// check if user if an admin
 	// checking if is admin.
@@ -105,14 +134,14 @@ const LoggedInHomePage = () => {
 	const [admin, setAdmin] = useState(false);
 	const [staff, setStaff] = useState([]); // gives all the staff info
 	const [render, setRender] = useState(false);
-
+	
 
 
 	useEffect(() => {
 		CheckAdmin(setAdmin, setStaff, id);
 	}, [render]);
 
-
+	
 	const isHomePage = useMatch("/home/:id");
 
 	return (
@@ -129,7 +158,7 @@ const LoggedInHomePage = () => {
 				<Route path="/help" element={<HelpPage />} />
 				{/* <Route path="/addlocation" element={<AddLocationPage admin={admin} />} />
 				<Route path="/addroom" element={<AddRoomPage admin={admin} currStaff={staff} />} /> */}
-				<Route path="/manageFacilities" element={< ManageFacilities admin={admin} currStaff={staff} setRender={setRender} />} />
+				<Route path="/manageFacilities" element={< ManageFacilities  admin={admin} currStaff={staff} setRender={setRender}/>} />
 			</Routes>
 			<NavBar admin={admin} staff={staff} />
 		</Box>

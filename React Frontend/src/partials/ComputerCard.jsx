@@ -2,22 +2,17 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Button, CardActionArea, createTheme } from '@mui/material';
-import ComputerTwoToneIcon from '@mui/icons-material/ComputerTwoTone';
 import { useState } from 'react';
 import { Modal } from '@mui/material';
 import { Box } from '@mui/material';
 import ProgramTable from './programTable';
 import ComputerIcon from '@mui/icons-material/Computer';
 import callApi from '../api/callApi';
-import { ThemeProvider } from '@emotion/react';
 import AddComputer from './AddComputer';
-import { Snackbar } from '@mui/material';
-import { Alert } from '@mui/material';
-import { memo } from 'react';
-import { useMemo } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
 
+/**
+ * Styling used for ComputerCard component
+ */
 const style = {
     position: 'absolute',
     top: '50%',
@@ -30,17 +25,12 @@ const style = {
     borderRadius: 8,
 };
 
-const theme = createTheme({
-    palette: {
-        yellow: {
-            main: '#E3D026',
-            light: '#E9DB5D',
-            dark: '#A29415',
-            contrastText: '#242105',
-        },
-    },
-});
-
+/**
+ * Determine user is allowed to edit or delete computer
+ * @param {Object} computer - The current computer object for this ComputerCard component.
+ * @param {Object[]} rooms - List of rooms that the user have admin privileges.
+ * @returns {boolean} The verdict of granting computer editing authorization.
+ */
 const checkPerm = (computer, rooms) => {
     var boolean = false;
     if (rooms.filter(x => x.roomId == computer.room.roomId).length > 0) {
@@ -50,28 +40,38 @@ const checkPerm = (computer, rooms) => {
     return boolean;
 }
 
-
+/**
+ * Main Computer Card component, displaying computers in SearchComputerPage
+ * @param {Object} props
+ * @param {Object} props.computer - The computer object assigned to this ComputerCard component
+ * @param {boolean} open - A variable indicate the model is open or not
+ * @param {function} setModal - The function change 'open' variable
+ * @param {[boolean, function]} props.updated - Indication of the SearchComputerPage requires a database update
+ * @returns {ReactNode} A clickable component include brief info of the computer, with details of the computer upon clicking
+ */
 const ComputerCard = (props) => {
     const { computer, staff, rooms } = props;
     const [open, setModal] = useState(false);
     const [updated, setUpdated] = props.updated;
-  
 
-  
-
-
-
+    /**
+     * Set 'open' to true - open modal
+     */
     const openModal = () => {
         setModal(true);
     };
 
+    /**
+     * Set 'open' to false - open modal
+     */
     const closeModal = () => {
         setModal(false);
         setUpdated(false);
     };
 
-
-
+    /**
+     * Function after click 'Delete Computer'
+     */
     const delComputer = () => {
         const config = {
             method: "delete",
@@ -80,9 +80,14 @@ const ComputerCard = (props) => {
 
         callApi(closeModal, null, config);
         props.onDelete();
-        
+
     }
 
+    /**
+     * Getting the ComputerCard background colour based on its role
+     * @param {Object} computer - The computer object assigned to this ComputerCard component
+     * @returns {String} The correct colour code
+     */
     const getColor = (computer) => {
 
         switch (computer.role) {
@@ -104,76 +109,76 @@ const ComputerCard = (props) => {
 
     return (
         <>
-    
-        <Card sx={{
-            maxWidth: 130,
 
-            borderRadius: 5,
-            boxShadow: '8px 8px 25px rgba(0, 0, 0, 0.2)',
-            transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            width: 350,
+            <Card sx={{
+                maxWidth: 130,
 
-            ':hover': {
-                transform: 'scale(1.05)',
-                boxShadow: 20,
+                borderRadius: 5,
+                boxShadow: '8px 8px 25px rgba(0, 0, 0, 0.2)',
+                transition: 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                width: 350,
 
-            },
+                ':hover': {
+                    transform: 'scale(1.05)',
+                    boxShadow: 20,
 
-            backgroundColor: getColor(computer),
-            margin: '5px',
+                },
 
-        }}>
-            <CardActionArea onClick={openModal}>
-                {/* <CardHeader title="Computer Details"/> */}
-                <CardContent>
-                    {computer.role === 'DEV' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>DEV</div>}
-                    {computer.role === 'BI' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>BI</div>}
-                    {computer.role === 'BOTH' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>&nbsp;</div>}
-                    {computer.role === 'NONE' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>&nbsp;</div>}
-                    <ComputerIcon sx={{ fontSize: 100 }} />
-                    <div style={{ textAlign: 'center' }}>{computer.computerCode}</div>
+                backgroundColor: getColor(computer),
+                margin: '5px',
 
-                </CardContent>
-            </CardActionArea>
+            }}>
+                <CardActionArea onClick={openModal}>
+                    {/* <CardHeader title="Computer Details"/> */}
+                    <CardContent>
+                        {computer.role === 'DEV' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>DEV</div>}
+                        {computer.role === 'BI' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>BI</div>}
+                        {computer.role === 'BOTH' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>&nbsp;</div>}
+                        {computer.role === 'NONE' && <div style={{ textAlign: 'center', fontWeight: 'bold' }}>&nbsp;</div>}
+                        <ComputerIcon sx={{ fontSize: 100 }} />
+                        <div style={{ textAlign: 'center' }}>{computer.computerCode}</div>
 
-            <Modal
-                open={open}
-                onClose={closeModal}
+                    </CardContent>
+                </CardActionArea>
+
+                <Modal
+                    open={open}
+                    onClose={closeModal}
 
 
-            >
-                <Box sx={{
-                    ...style,
-                    overflowY: 'scroll', // Enable vertical scrolling
-                    maxHeight: '90vh',
-                    padding: '20px',
-                    '-ms-overflow-style': 'none',  // Hide scrollbar for Internet Explorer and Edge
-                    'scrollbar-width': 'none', // Hide scrollbar for Firefox
-                    '&::-webkit-scrollbar': {
-                        display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari)
-                    },
-                    textAlign: 'center'
-                }}>
-                    <h1>Computer Details</h1>
-                    <h2>{computer.computerCode}</h2>
-                    <h3>Room: {computer.room.name}, {computer.room.location.name}</h3>
-                    {computer.role !== 'NONE' && <h3>Role: {computer.role}</h3>}
-                    {computer.programList?.length > 0 && <ProgramTable array={computer.programList} />}
-                    <br></br>
-                    { checkPerm(computer, rooms) &&
-                        <ThemeProvider theme={theme}>
-                            <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} rooms={rooms} onUpdate={props.onUpdate}/>
-                            <Button
-                                variant="contained"
-                                color="error"
-                                sx={{ margin: "50px" }}
-                                onClick={delComputer}
-                            >Delete Computer</Button>
-                        </ThemeProvider>
-                    }
-                </Box>
-            </Modal>
-        </Card>
+                >
+                    <Box sx={{
+                        ...style,
+                        overflowY: 'scroll', // Enable vertical scrolling
+                        maxHeight: '90vh',
+                        padding: '20px',
+                        '-ms-overflow-style': 'none',  // Hide scrollbar for Internet Explorer and Edge
+                        'scrollbar-width': 'none', // Hide scrollbar for Firefox
+                        '&::-webkit-scrollbar': {
+                            display: 'none', // Hide scrollbar for WebKit browsers (Chrome, Safari)
+                        },
+                        textAlign: 'center'
+                    }}>
+                        <h1>Computer Details</h1>
+                        <h2>{computer.computerCode}</h2>
+                        <h3>Room: {computer.room.name}, {computer.room.location.name}</h3>
+                        {computer.role !== 'NONE' && <h3>Role: {computer.role}</h3>}
+                        {computer.programList?.length > 0 && <ProgramTable array={computer.programList} />}
+                        <br></br>
+                        {checkPerm(computer, rooms) &&
+                            <>
+                                <AddComputer updated={[updated, setUpdated]} computer={computer} staff={staff} rooms={rooms} onUpdate={props.onUpdate} />
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    sx={{ margin: "50px" }}
+                                    onClick={delComputer}
+                                >Delete Computer</Button>
+                            </>
+                        }
+                    </Box>
+                </Modal>
+            </Card>
         </>
     );
 }

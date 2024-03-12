@@ -45,11 +45,5 @@ public class ProgramController {
 	public void deleteProgram(@PathVariable int programId) {
 		programService.deleteById(programId);
 	}
-	
-//	@DeleteMapping("programs/{programId}")
-//	public void deleteProgram(@PathVariable int programId) {
-//		computerService.deleteByProgramId(programId);
-//		programService.deleteById(programId);
-//	}
 
 }

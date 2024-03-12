@@ -1,16 +1,9 @@
-import React from 'react'
-import { Box } from '@mui/material'
-import { Typography } from '@mui/material'
-import { Divider } from '@mui/material'
-import { TextField } from '@mui/material'
-import { Button } from '@mui/material'
-import { useState } from "react";
+import { Alert, Box, Button, Divider, Snackbar, TextField, Typography } from '@mui/material'
+import Fade from '@mui/material/Fade'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import callApi from '../api/callApi'
 import { CreateStaff } from '../partials/ManagePermission'
-import { useParams } from 'react-router-dom';
-import { Snackbar } from '@mui/material'
-import { Alert } from '@mui/material'
-import Fade from '@mui/material/Fade';
 
 
 const style = {

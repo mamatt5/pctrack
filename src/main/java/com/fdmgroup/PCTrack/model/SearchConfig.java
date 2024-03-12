@@ -1,5 +1,9 @@
 package com.fdmgroup.PCTrack.model;
 
+/**
+ * This object is used for having the filter functionality in the frontend.
+ */
+
 public class SearchConfig {
 
 	private String computerCode;

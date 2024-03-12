@@ -1,16 +1,8 @@
-import React from 'react'
-import { Box } from '@mui/material'
-import { Typography } from '@mui/material'
-import { Divider } from '@mui/material'
-import { TextField } from '@mui/material'
-import { Button } from '@mui/material'
-import { useState } from "react";
+import { Alert, Box, Button, Divider, Snackbar, TextField, Typography } from '@mui/material'
+import Fade from '@mui/material/Fade'
+import React, { useState } from 'react'
 import callApi from '../api/callApi'
-import { Alert } from '@mui/material'
-import { Snackbar } from '@mui/material'
-import { MultipleSelect } from "../partials/CheckBoxDropDowns";
-import Fade from '@mui/material/Fade';
-
+import { MultipleSelect } from "../partials/CheckBoxDropDowns"
 
 const style = {
     width: 700,

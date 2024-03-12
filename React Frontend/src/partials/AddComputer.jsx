@@ -1,13 +1,13 @@
-import { Box, Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material"
-import { useState } from "react";
-import { useEffect } from "react";
+import { Box, Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import callApi from "../api/callApi";
 import ProgramTransferList from "./ProgramTransferList";
 
-import { Snackbar } from '@mui/material'
-import { Alert } from '@mui/material'
+import { Alert, Snackbar } from '@mui/material';
 
-
+/**
+ * Styling
+ */
 const style = {
     position: 'absolute',
     top: '50%',
@@ -22,20 +22,24 @@ const style = {
 
 const AddComputer = (props) => {
             
-    const [updated, setUpdated] = props.updated;
-    const [open, setModal] = useState(false);
-    const [code, setCode] = useState("");
-    const [selectedRoom, setSelectedRoom] = useState({});
-    const [error, setError] = useState(false);
-    const [programList, setProgramList] = useState([]);
-    const { computer, staff, rooms } = props;
-    const [newComputer, onNewComputer] = useState(false);
+    const [updated, setUpdated] = props.updated;            // Set update variable when returning on SearchComputerPage to force database refresh
+    const [open, setModal] = useState(false);               // Variable indicates modal is currently open or nto
+    const [code, setCode] = useState("");                   // Computer Code Text Field
+    const [selectedRoom, setSelectedRoom] = useState({});   // Selected Room in 'select-room' drop-down menu
+    const [error, setError] = useState(false);              // Indicator to display error message
+    const [programList, setProgramList] = useState([]);     // List of programs to be added in computer
+    const { computer, rooms } = props;                      // computer - current computer user is editing (only upon 'Edit Computer' button prompt)
+                                                            // rooms - List of rooms user have admin privileges, limiting room choices for assignation
+    const [newComputer, onNewComputer] = useState(false);   // Alert prompt when new computer added
     
     
     useEffect(() => {
         reset();
     }, []);
 
+    /**
+     * Reset function, will be ran everytime AddComputer component initialised, or its modal component opens.
+     */
     const reset = () => {
         if (computer != null) {
             setCode(computer.computerCode);
@@ -43,6 +47,9 @@ const AddComputer = (props) => {
         }
     }
 
+    /**
+     * When 'rooms' variable are fetched
+     */
     useEffect(() => {
         if (computer != null) {
             setSelectedRoom(rooms.find((x) => x.roomId == computer.room.roomId))
@@ -52,18 +59,28 @@ const AddComputer = (props) => {
 
     }, [rooms]);
 
+    /**
+     * Opens AddComputer modal
+     */
     const openModal = () => {
         setModal(true);
     };
 
+    /**
+     * Closes AddComputer modal
+     */
     const closeModal = () => {
         setUpdated(false);
         setModal(false);
         reset();
     };
 
+    /**
+     * Functionality upon click 'Add Computer' or 'Update Computer'
+     * @param {boolean} update - Determine running POST or PUT method
+     */
     const submitComputer = (update) => {
-        if (code == "") {
+        if (code == "") {   // Error checking
             setError(true);
             return;
         }
@@ -97,9 +114,9 @@ const AddComputer = (props) => {
             callApi(closeModal, null, config);
 
         }
-        setUpdated(false);
+        setUpdated(false);  // Database no longer updated, need refresh
 
-        if (update) {
+        if (update) {       // Alert Prompt
             props.onUpdate();
         } else {
             onNewComputer(true);

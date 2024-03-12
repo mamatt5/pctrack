@@ -9,11 +9,9 @@ import ComputerCard from '../partials/ComputerCard';
 import { Grid } from '@mui/material';
 import RoomMandates from './RoomMandates';
 import ComputerIcon from '@mui/icons-material/Computer';
-import { useParams } from 'react-router-dom';
 
 
-
-const ViewComputersInRoomPage = (props) => {
+const ViewComputersInRoomPage = () => {
     const { state } = useLocation();
     const [room, setRoom] = useState({});
     const [computers, setComputers] = useState([])
@@ -26,7 +24,6 @@ const ViewComputersInRoomPage = (props) => {
     }
 
     useEffect(() => {
-        
         setRoom(state)
 
         const config = {

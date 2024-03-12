@@ -5,6 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+/**
+ * This object converts the permission level of a user into a numerical value to use for frontend
+ * permission checking
+ */
+
 @Entity
 public class AdminLevel {
 
