@@ -12,8 +12,11 @@ const style = {
     borderRadius: 8,
 };
 
-
-
+/**
+ * Functional component for adding a new room
+ * Allows users to create a new room
+ * @returns - Displays this AddRoomPage
+ */
 const AddRoomPage = (props) => {
 
     const [location, setLocation] = useState(null)

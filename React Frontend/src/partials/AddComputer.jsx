@@ -137,10 +137,6 @@ const AddComputer = (props) => {
                     </Alert>
             </Snackbar>
 
-            
-
-            
-
             <Modal
                 open={open}
                 onClose={closeModal}

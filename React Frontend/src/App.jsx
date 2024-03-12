@@ -13,9 +13,7 @@ import LoggedInHomePage from "./components/LoggedInHomePage";
 import Login from "./components/Login";
 import { ReportsPage } from "./components/ReportsPage";
 
-
 const promptBeforeIdle = 4_000
-
 
 function App() {
 
@@ -26,6 +24,7 @@ function App() {
 			}
 		},
 	});
+
 
 	let timeout = 10000_000
 	
@@ -39,9 +38,14 @@ function App() {
 	}
 
 	const [remaining, setRemaining] = useState(timeout)
-	let location = useLocation();
-	const navigate = useNavigate();
 
+	let location = useLocation();
+
+	const closeModal = () => {
+		setOpen(false);
+		localStorage.removeItem("token");
+		navigate("/");
+	};
 
 
 	const onPrompt = () => {
@@ -51,7 +55,6 @@ function App() {
 	const change = () => {
 
 		setDemoMode(!demoMode)
-		console.log(demoMode);
 		if (demoMode) {
 			timeout = 10_000
 		} else {
@@ -59,14 +62,8 @@ function App() {
 		}
 	}
 
-	const closeModal = () => {
-		setOpen(false);
-		localStorage.removeItem("token");
-		console.log("close")
-		navigate("/");
-	};
-
-
+	// idle timer use to detect used to log a user out if they
+	// have been idle for too long
 	const { getRemainingTime, pause, resume, activate } = useIdleTimer({
 
 		onPrompt,
@@ -86,7 +83,7 @@ function App() {
 	})
 
 	useEffect(() => {
-		console.log(location)
+
 		if (location.pathname === "/") {
 
 			pause(true)
@@ -106,8 +103,6 @@ function App() {
 
 		<>
 			<ThemeProvider theme={defaultTheme} >
-
-
 				{location.pathname === "/" &&
 					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 						<span>Idle Mode</span>

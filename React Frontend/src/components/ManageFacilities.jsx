@@ -3,6 +3,12 @@ import LocationComputerStatus from "../partials/LocationComputerStatus";
 import AddLocationPage from "./addLocationPage";
 import AddRoomPage from "./addRoomPage";
 
+
+/**
+ * Functional component for viewing computers in a room
+ * Allows users to view an interact with computers in a room
+ * @returns - Displays this ViewComputersInRoomPage
+ */
 const ManageFacilities = ({ admin, currStaff, setRender }) => {
 
 	const BusinessPerms = currStaff.filter((staff) => staff.adminLevel.name === "Business");

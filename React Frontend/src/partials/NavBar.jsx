@@ -97,6 +97,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 	})
 );
 
+/**
+ * Functional component for NavBar
+ * Allows users to interact with the NavBar
+ * @returns - Displays this NavBar
+ */
 export default function NavBar(props) {
 
 	const [admin, setAdmin] = useState(false);

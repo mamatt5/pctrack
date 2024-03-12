@@ -5,19 +5,28 @@ import callApi from "../api/callApi";
 import { CheckAdmin } from "../components/LoggedInHomePage";
 import CustomizedTables from '../partials/roomTable';
 
-export const SearchRoomPage = (props) => {
+
+/**
+ * Functional component that allows for viewing rooms a user is registered in
+ * Allows users to view rooms
+ * @returns - Displays this SearchRoomPage
+ */
+export const SearchRoomPage = () => {
 
   const [rooms, setRooms] = useState([]);
   const [businessAdmin, setBusinessAdmin] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [staff, setStaff] = useState([]);
 
-  const test = (input) => {
+  const setRoom = (input) => {
     setRooms(input)
   }
 
   const { id } = useParams()
 
+  // If user is a business Admin gets all rooms
+  // otherwise gets rooms at locations where the user
+  // is registered in 
   useEffect(()=>{
 
     CheckAdmin(setAdmin, setStaff, id);
@@ -48,7 +57,7 @@ export const SearchRoomPage = (props) => {
 
     }
 
-    callApi(test, null, config);
+    callApi(setRoom, null, config);
 
   }, []);
   
@@ -60,7 +69,6 @@ export const SearchRoomPage = (props) => {
     <>
       <Box className="dashBoardPadding">
       <h1>Rooms</h1>
-
 
         <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <RoomTab />

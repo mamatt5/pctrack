@@ -10,7 +10,11 @@ import { Grid } from '@mui/material';
 import RoomMandates from './RoomMandates';
 import ComputerIcon from '@mui/icons-material/Computer';
 
-
+/**
+ * Functional component for viewing computers in a room
+ * Allows users to view an interact with computers in a room
+ * @returns - Displays this ViewComputersInRoomPage
+ */
 const ViewComputersInRoomPage = () => {
     const { state } = useLocation();
     const [room, setRoom] = useState({});
@@ -24,14 +28,13 @@ const ViewComputersInRoomPage = () => {
     }
 
     useEffect(() => {
-        setRoom(state)
 
+        setRoom(state)
         const config = {
             method: "get",
             endpoint: "getcomputers/" + state["roomId"],
 
         }
-
         callApi(setComputers, null, config);
     }, []);
 
@@ -54,7 +57,6 @@ const ViewComputersInRoomPage = () => {
                     <RoomMandates room={room} />
                 </DialogContent>
             </Dialog>
-
 
             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} marginTop={10}>
                 <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={5}>

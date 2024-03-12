@@ -14,7 +14,11 @@ const style = {
     borderRadius: 8,
 };
 
-
+/**
+ * Functional component for adding a new location
+ * Allows users to create a new location
+ * @returns - Displays this AddLocationPage
+ */
 const AddLocationPage = (props) => {
 
     const [locationName, setLocationName] = useState("")

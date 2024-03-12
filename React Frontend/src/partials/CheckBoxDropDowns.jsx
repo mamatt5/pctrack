@@ -19,7 +19,7 @@ const MenuProps = {
 };
 
 export default function SelectSmall({ array, label, item, setItem, disabledKey, setChange }) {
-	console.log(disabledKey)
+
 	return (
 		<FormControl sx={{ minWidth: "100%" }} component="div">
 			<InputLabel id="select">Permissions</InputLabel>
@@ -51,8 +51,6 @@ export default function SelectSmall({ array, label, item, setItem, disabledKey, 
 
 //
 export function MultipleSelect(arrayOfObjects, key, label, placeholder, canEdit, setSelects, defaultValues) {
-	console.log(arrayOfObjects);
-
 
 	// freaking objects arent equal
 	//https://stackoverflow.com/questions/61947941/material-ui-autocomplete-warning-the-value-provided-to-autocomplete-is-invalid

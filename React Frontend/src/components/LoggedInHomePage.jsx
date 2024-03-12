@@ -1,27 +1,17 @@
 import { Fade, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import { Route, Routes, useMatch, useParams } from "react-router-dom";
 import callApi from "../api/callApi";
 import NavBar from "../partials/NavBar";
-import callApi from "../api/callApi";
 import { useState, useEffect } from "react";
-import { useMatch, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SearchComputerPage } from "./SearchComputerPage";
 import { SearchRoomPage } from "./SearchRoomPage";
 import { SearchSoftwarePage } from "./SearchSoftwarePage";
 import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
-import { Fade, Typography } from "@mui/material";
-import { Grow } from "@mui/material";
-import { createTheme } from '@mui/material/styles'
-import { Collapse } from "@mui/material";
-import AddLocationPage from "./addLocationPage";
-import AddRoomPage from "./addRoomPage";
 import ManageFacilities from "./ManageFacilities";
-
-
 import { Box } from "@mui/material";
 import HelpPage from "./HelpPage";
 import { ReportsPage } from "./ReportsPage";
+import Admin from "./Admin";
 
 /**
  * Checks the adminLevls and

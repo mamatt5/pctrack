@@ -141,7 +141,6 @@ const CreateReport = (props) => {
                         renderInput={(params) => <TextField {...params} label={`Computer: `} />} //
                         onChange={(e, newValue) => {
                             if (newValue != null) {
-                                console.log(newValue)
                                 setSelectedComputer(newValue)
                             } else {
                                 setSelectedComputer(null)

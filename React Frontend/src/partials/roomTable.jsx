@@ -12,9 +12,7 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { useParams } from 'react-router-dom';
-
 import RoomMandates from '../components/RoomMandates';
 
 
@@ -65,7 +63,10 @@ const modalStyle = {
 };
 
 
-
+/**
+ * Functional table component for displaying rooms
+ * @returns - Displays this CustomizedTables
+ */
 export default function CustomizedTables({array}) {
     const [selectedRow, setSelectedRow] = useState(null)
     const navigate = useNavigate();
@@ -127,7 +128,7 @@ export default function CustomizedTables({array}) {
                 
               <Box sx={modalStyle}>
                 {selectedRow && <RoomMandates room={selectedRow} />}
-                {console.log("modal opened")}
+             
               </Box>
             </Modal>
     </TableBody>
