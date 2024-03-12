@@ -42,7 +42,6 @@ public class SoftwareController {
 	
 	@DeleteMapping("softwares/{softwareId}")
 	public void deleteSoftware(@PathVariable int softwareId) {
-		//softwareVersionService.deleteBySoftwareId(softwareId);
 		softwareService.deleteById(softwareId);
 	}
 

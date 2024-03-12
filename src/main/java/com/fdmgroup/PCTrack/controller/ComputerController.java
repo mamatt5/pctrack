@@ -11,6 +11,11 @@ import com.fdmgroup.PCTrack.model.SearchConfig;
 import com.fdmgroup.PCTrack.service.ComputerService;
 import com.fdmgroup.PCTrack.service.ReportService;
 
+/**
+ * Controller for Computer entity
+ * Takes in Computer service and Report service to allow cascade delete if deleting a computer
+ */
+
 @RestController
 @CrossOrigin("http://localhost:5173")
 public class ComputerController {
@@ -30,11 +35,22 @@ public class ComputerController {
 		return computerService.findAllComputers();
 	}
 	
+	/**
+	 * Finds the computer based on id
+	 * @param computerId
+	 * @return Computer
+	 */
 	@GetMapping("computers/{computerId}")
 	public Computer findById(@PathVariable int computerId) {
 		return computerService.findById(computerId);
 	}
 	
+	/**
+	 * Finds the computer based on code through search config which is used in filtering results
+	 * in front end
+	 * @param searchConfig
+	 * @return Computer
+	 */
 	@PostMapping("computers/search")
 	public List<Computer> searchByComputerCode(@RequestBody SearchConfig searchConfig) {
 		return computerService.searchByComputerCode(searchConfig.getComputerCode(), searchConfig.getRoomId(), searchConfig.getRole());

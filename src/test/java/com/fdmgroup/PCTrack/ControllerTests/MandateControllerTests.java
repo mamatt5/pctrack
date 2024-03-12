@@ -46,11 +46,6 @@ public class MandateControllerTests {
 	@BeforeEach
 	public void setup() {
 		mandateController = new MandateController(mandateService);
-//		Location location = new Location("FDM Sydney", "Sydney");
-//		Room room = new Room("Bondi", location);
-//		User user = new User("admin", "0000!!", "Root1", "Admin", "admin1@example.com");
-//		RoomAdmin roomAdmin = new RoomAdmin(Room, user, location);
-		
 	}
 	
 	@Test

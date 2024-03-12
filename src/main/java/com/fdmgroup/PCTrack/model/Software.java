@@ -7,6 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
+/**
+ * This object is a generic representation of a software that is installed in the computer, regardless
+ * of its version. This is used for modularity in the data handling.
+ */
 @Entity
 public class Software {
 	@Id

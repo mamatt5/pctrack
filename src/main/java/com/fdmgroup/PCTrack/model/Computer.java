@@ -5,6 +5,11 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
+/**
+ * One of the main objects in the software, this object registers the data of a computer into the database.
+ * It automatically designates a role based on the software that are installed on the computer.
+ */
+
 @Entity
 public class Computer {
 	@Id
@@ -91,6 +96,14 @@ public class Computer {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	/**
+	 * The list of software required for a computer to be DEV/BI ready is taken from an interview with a stakeholder.
+	 * In the future, it will be better to create another object that sets the list of software that needs to be
+	 * installed in a computer to be designated a role.
+	 * @param computer
+	 * @return Role
+	 */
 	public Role determineRole(Computer computer) {
 		boolean devReady = true;
 		boolean biReady = true;
