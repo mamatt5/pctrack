@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import callApi from "../api/callApi";
 
-// Styling for creating reports modal
+/**
+ * Styling for creating reports modal
+ */
 const style = {
     position: 'absolute',
     top: '50%',
@@ -16,7 +18,10 @@ const style = {
     borderRadius: 8,
 };
 
-// Function to update a computers using the provided API call function
+/**
+ * Function to update a computers using the provided API call function
+ * @param {*} setComputers
+ */
 const getComputers = (setComputers) => {
     const config = {
         method: "get",
@@ -26,7 +31,11 @@ const getComputers = (setComputers) => {
     callApi(setComputers, null, config);
 }
 
-// Function to get the current user object using the provided API call function
+/**
+ * Function to get the current user object using the provided API call function
+ * @param {*} id 
+ * @param {*} setUser 
+ */
 const getUser = (id, setUser) => {
     const config = {
         method: "get",
@@ -35,7 +44,11 @@ const getUser = (id, setUser) => {
     callApi(setUser, null, config);
 };
 
-// Functional component for creating new reports
+/**
+ * Functional component for creating new reports.
+ * Allows users to select a computer, enter a description, and submit the report.
+ * @param {*} props - Contains the reportUpdated state and getUpdatedReports function.
+ */
 const CreateReport = (props) => {
     const { id } = useParams();
     const [reportUpdated, setReportUpdated] = props.reportUpdated;
@@ -46,7 +59,9 @@ const CreateReport = (props) => {
     const [error, setError] = useState(false);
     const [user, setUser] = useState([]);
 
-    // Fetch computers and user information on component render
+    /**
+     * Fetch computers and user information on component render
+    */
     useEffect(() => {
         getComputers(setComputers);
     }, [])
@@ -55,12 +70,16 @@ const CreateReport = (props) => {
         getUser(id, setUser);
     }, [])
 
-    // Set default selected computer after computers are fetched
+    /**
+     * Set default selected computer after computers are fetched
+    */ 
     useEffect(() => {
         setSelectedComputer(computers[0]);
     }, [computers])
 
-    // Functions to open and close the Create Report modal
+    /**
+     * Functions to open and close the Create Report modal
+     */
     const openModal = () => {
         setModal(true);
     };
@@ -70,7 +89,9 @@ const CreateReport = (props) => {
         setModal(false);
     };
 
-    // Function to create and submit a new report
+    /**
+     * Function to create and submit a new report
+     */ 
     const submitReport = () => {
         // Validate required fields
         if (selectedComputer == "") {
@@ -98,9 +119,11 @@ const CreateReport = (props) => {
         }, null, config);
     }
     
-    // Rending this componenet and UI elements
-    // Modal for report creation that can open and close using a button, eror message if required fields are empty
-    // Autocomplete for selecting a computer, input fields for descriptions and users, submit button to create the report
+    /**
+     * Rending this componenet and UI elements
+     * Modal for report creation that can open and close using a button, eror message if required fields are empty
+     * Autocomplete for selecting a computer, input fields for descriptions and users, submit button to create the report
+     */
     return (
         <div>
             <Modal

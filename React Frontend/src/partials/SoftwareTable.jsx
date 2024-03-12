@@ -8,6 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 
+/**
+ * Custom styled component for table rows and cells  
+ * Applies alternating row colors for better readability.
+ */ 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -22,12 +26,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
 }));
 
+/**
+ * Renders the software table with data from the 'array' prop passed from SearchSoftwarePage
+ */
 export default function SoftwareTables({array}) {
     console.log(array)
   return (
@@ -38,7 +44,6 @@ export default function SoftwareTables({array}) {
 
             <StyledTableCell align="left">Name</StyledTableCell>
             <StyledTableCell align="left">Version Number</StyledTableCell>
-            {/* <StyledTableCell align="right">Action</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,10 +51,6 @@ export default function SoftwareTables({array}) {
             <StyledTableRow key={row.programId}>
               <StyledTableCell align="left">{row.software.name}</StyledTableCell>
               <StyledTableCell align="left">{row.version}</StyledTableCell>
-              {/* <StyledTableCell align="right" component="th" scope="row">
-                {row.id}
-                edit
-              </StyledTableCell> */}
             </StyledTableRow>
           ))}
         </TableBody>

@@ -8,7 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 
-// Custom styled component for table rows and cells 
+/**
+ * Custom styled component for table rows and cells  
+ * Applies alternating row colors for better readability.
+ * */ 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -29,7 +32,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-// Functional component for displaying a table of programs
+/**
+ * Functional component for displaying a table of programs with customized styling.
+ * @param {*} array - An array of program data objects, each containing programId, software, and version fields.
+ */
 export default function ProgramTable({ array }) {
     return (
         <TableContainer component={Paper} sx={{ maxWidth: "70vw" }}>

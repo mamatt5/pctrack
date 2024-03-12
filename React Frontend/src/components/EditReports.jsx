@@ -6,10 +6,9 @@ import callApi from '../api/callApi';
 /**
  * Updates a report using the provided API call function.
  * 
- * @param {Object} updatedRpt - The updated report object with new description and resolved state.
- * @param {Function} callback - An optional callback function to be executed after successful update.
+ * @param {*} updatedRpt - The updated report object with new description and resolved state.
+ * @param {*} callback - An optional callback function to be executed after successful update.
  */
-
 const updateReport = (updatedRpt, callback) => {
   const config = {
     method: 'put',
@@ -26,11 +25,10 @@ const updateReport = (updatedRpt, callback) => {
 
 /**
  * Reports component that displays and allows editing of a report.
- * 
- * @param {Object} report - The report object containing details.
- * @param {Function} getAllReports - Function to retrieve all reports (used for refresh).
- * @param {Function} setReportsFunc - Function to update the reports state.
- * @param {Function} closeModal - Function to close a modal component.
+ * @param {*} report - The report object containing details.
+ * @param {*} getAllReports - Function to retrieve all reports (used for refresh).
+ * @param {*} setReportsFunc - Function to update the reports state.
+ * @param {*} closeModal - Function to close a modal component.
  * 
  * @returns {JSX.Element} The JSX element representing the Reports component.
  */
@@ -42,8 +40,7 @@ const Reports = ({ report, getAllReports, setReportsFunc, closeModal }) => {
 
   /**
    * Handles editing a report, populating state with report details.
-   * 
-   * @param {Object} report - The report object to be edited.
+   * @param {*} report - The report object to be edited.
    */
   const editReport = (report) => {
     setReports(report)
@@ -52,7 +49,9 @@ const Reports = ({ report, getAllReports, setReportsFunc, closeModal }) => {
     setEditReportDialogue(true)
   }
 
-  // Function to handle report update
+  /**
+   * Handles report update, constructing updated report object and calling updateReport.
+   */
   const handleUpdate = () => {
     const updatedReport = { ...report, description: reportDescription, resolved: reportResolved };
     // Update the report using the API call function
@@ -65,16 +64,14 @@ const Reports = ({ report, getAllReports, setReportsFunc, closeModal }) => {
 
   /**
    * Function to handle checkbox change for report resolved state
-   * 
    * @param {*} e 
    */
   const handleChange = (e) => {
     setReportResolved(e.target.checked);
   };
 
-  // Render the report details and edit dialog
   /**
-   * 
+   * Render the report details and edit dialog
    */
   return (
     <>
