@@ -1,6 +1,4 @@
 import React from 'react'
-import NavBar from '../partials/NavBar'
-import ComputerCard from '../partials/ComputerCard'
 import callApi from "../api/callApi";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -23,20 +21,19 @@ export const SearchRoomPage = (props) => {
   const { id } = useParams()
 
   useEffect(()=>{
-    CheckAdmin(setAdmin, setStaff, id);
 
+    CheckAdmin(setAdmin, setStaff, id);
     staff.forEach(staffMember => {
 
 			let precedence = staffMember.adminLevel.precedence;
-      console.log("BUBU")
-      console.log(staffMember)
+
 			if (precedence === 1) {
 				setBusinessAdmin(true);
       }
 		});
 
     let config = {};
-    console.log("well fuck")
+   
     if (businessAdmin) {
       config = {
         method: "get",
@@ -44,7 +41,6 @@ export const SearchRoomPage = (props) => {
 
       }
     } else {
-      // get rooms where user is register at
 
       config = {
         method: "get",

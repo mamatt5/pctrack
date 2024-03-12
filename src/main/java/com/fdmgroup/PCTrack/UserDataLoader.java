@@ -1010,7 +1010,7 @@ public class UserDataLoader implements ApplicationRunner {
 		LocationAdmin locationAdmin4 = new LocationAdmin(Location, u3, location2);
 		LocationAdmin locationAdmin5 = new LocationAdmin(Location, u4, location3);
 
-		staffService.save(locationAdmin0);
+		staffService.save(locationAdmin0); 
 		staffService.save(locationAdmin1);
 		staffService.save(locationAdmin2);
 		staffService.save(locationAdmin3);

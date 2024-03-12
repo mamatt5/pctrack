@@ -3,12 +3,10 @@ import NavBar from '../partials/NavBar'
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Box, Button, Dialog, DialogContent, Modal, Tooltip } from '@mui/material';
+import { Box, Button, Dialog, DialogContent } from '@mui/material';
 import callApi from '../api/callApi';
 import ComputerCard from '../partials/ComputerCard';
-import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
-import { Divider } from '@mui/material';
 import RoomMandates from './RoomMandates';
 import ComputerIcon from '@mui/icons-material/Computer';
 import { useParams } from 'react-router-dom';
@@ -71,16 +69,13 @@ const ViewComputersInRoomPage = (props) => {
 
 
             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} marginTop={10}>
-
-
                 <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={5}>
-
                     <Grid item xs={12} >
                         <Grid container justifyContent="center" spacing={5} >
                             {
                                 computers.map(computer =>
 
-                                    <ComputerCard key={computer.computerId} computer={computer} rooms={[]} updated={[updated, setUpdated]}/>
+                                    <ComputerCard key={computer.computerId} computer={computer} rooms={[]} updated={[updated, setUpdated]} />
 
                                 )
                             }
@@ -104,30 +99,30 @@ const ViewComputersInRoomPage = (props) => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}>
 
-        {isHovered && (
-            <>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                    <ComputerIcon style={{ color: '#77DD77'}} /> Both roles
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                    <ComputerIcon style={{ color: '#ffff66'}} /> Dev/BI-ready
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <ComputerIcon style={{ color: '#FF6961'}} /> None
-                </div>
-                <div style={{fontSize: '11px'}}><em>
-                  *Check Help for Dev/BI software list
-                  </em></div>
-            </>
-        )}
-        {!isHovered && (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <ComputerIcon style={{ color: '#77DD77'}} />
-                <ComputerIcon style={{ color: '#ffff66'}} />
-                <ComputerIcon style={{ color: '#FF6961'}} />
-            </div>
-        )}
-      </Box>
+                {isHovered && (
+                    <>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                            <ComputerIcon style={{ color: '#77DD77' }} /> Both roles
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                            <ComputerIcon style={{ color: '#ffff66' }} /> Dev/BI-ready
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <ComputerIcon style={{ color: '#FF6961' }} /> None
+                        </div>
+                        <div style={{ fontSize: '11px' }}><em>
+                            *Check Help for Dev/BI software list
+                        </em></div>
+                    </>
+                )}
+                {!isHovered && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <ComputerIcon style={{ color: '#77DD77' }} />
+                        <ComputerIcon style={{ color: '#ffff66' }} />
+                        <ComputerIcon style={{ color: '#FF6961' }} />
+                    </div>
+                )}
+            </Box>
 
         </Box>
     )

@@ -13,10 +13,10 @@ import com.fdmgroup.PCTrack.service.AdminLevelService;
 import com.fdmgroup.PCTrack.service.ComputerService; 
  
 @RestController
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5173")   
 public class AdminLevelController {
 	private AdminLevelService adminService; 
-	
+	 
 	@Autowired
 	public AdminLevelController(AdminLevelService adminService) {
 		super(); 
