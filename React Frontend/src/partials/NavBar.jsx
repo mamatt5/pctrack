@@ -21,23 +21,14 @@ import Tooltip from "@mui/material/Tooltip";
 import ConstructionIcon from '@mui/icons-material/Construction';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
-
-import callApi from "../api/callApi";
+import { useState, useEffect,  } from "react";
 import ComputerIcon from "@mui/icons-material/Computer";
-import SearchIcon from "@mui/icons-material/Search";
 import ApiIcon from "@mui/icons-material/Api";
-import ChairIcon from "@mui/icons-material/Chair";
 import HomeIcon from '@mui/icons-material/Home';
-import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
-import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
-import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { HelpCenter } from "@mui/icons-material";
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import LivingIcon from '@mui/icons-material/Living';
 import { CheckAdmin } from "../components/LoggedInHomePage";
 
 
@@ -119,28 +110,19 @@ export default function NavBar(props) {
 
 	const [businessAdmin, setBusinessAdmin] = useState(false);
 	const [locationAdmin, setLocationAdmin] = useState(false);
-	const [roomAdmin, setRoomAdmin] = useState(false);
-
-
-
-
 
 	useEffect(() => {
-
 		CheckAdmin(setAdmin, setStaff, id);
 
 		staff.forEach(staffMember => {
 
 			let precedence = staffMember.adminLevel.precedence;
 
-
 			if (precedence === 1) {
 				setBusinessAdmin(true);
 			} else if (precedence === 2) {
 				setLocationAdmin(true);
-			} else if (precedence === 3) {
-				setRoomAdmin(true);
-			}
+			} 
 		});
 	}, [props]);
 
@@ -220,7 +202,7 @@ export default function NavBar(props) {
 
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<Tooltip title={text} placement="right">
-									{console.log(businessAdmin)}
+								
 									<ListItemButton
 
 										disabled={
