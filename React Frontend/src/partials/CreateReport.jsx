@@ -1,12 +1,11 @@
-import { Box, Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material"
+import { Box, Button, Modal, TextField } from "@mui/material"
 import { useState } from "react";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 import { Autocomplete } from '@mui/material';
 import { useParams } from "react-router-dom";
-import { Snackbar } from '@mui/material'
-import { Alert } from '@mui/material'
 
+// Styling for creating reports modal
 const style = {
     position: 'absolute',
     top: '50%',
@@ -19,6 +18,7 @@ const style = {
     borderRadius: 8,
 };
 
+// Function to update a computers using the provided API call function
 const getComputers = (setComputers) => {
     const config = {
         method: "get",
@@ -28,15 +28,17 @@ const getComputers = (setComputers) => {
     callApi(setComputers, null, config);
 }
 
+// Function to get the current user object using the provided API call function
 const getUser = (id, setUser) => {
-	const config = {
-		method: "get",
-		endpoint: `users/${id}`,
-	};
-	callApi(setUser, null, config);
+    const config = {
+        method: "get",
+        endpoint: `users/${id}`,
+    };
+    callApi(setUser, null, config);
 };
 
-const CreateReport  = (props) => {
+// Functional component for creating new reports
+const CreateReport = (props) => {
     const { id } = useParams();
     const [reportUpdated, setReportUpdated] = props.reportUpdated;
     const [open, setModal] = useState(false);
@@ -45,21 +47,22 @@ const CreateReport  = (props) => {
     const [issueDescription, setIssueDescription] = useState("");
     const [error, setError] = useState(false);
     const [user, setUser] = useState([]);
-  
 
+    // Fetch computers and user information on component render
     useEffect(() => {
         getComputers(setComputers);
     }, [])
 
     useEffect(() => {
         getUser(id, setUser);
-    },[])
+    }, [])
 
+    // Set default selected computer after computers are fetched
     useEffect(() => {
         setSelectedComputer(computers[0]);
     }, [computers])
 
-
+    // Functions to open and close the Create Report modal
     const openModal = () => {
         setModal(true);
     };
@@ -69,12 +72,14 @@ const CreateReport  = (props) => {
         setModal(false);
     };
 
+    // Function to create and submit a new report
     const submitReport = () => {
-        console.log("user when submitting" + user)
+        // Validate required fields
         if (selectedComputer == "") {
             setError(true);
             return;
         }
+        // Construct report data
         const currentDate = new Date();
         const report = {
             "computer": selectedComputer,
@@ -82,31 +87,31 @@ const CreateReport  = (props) => {
             "user": user,
             "description": issueDescription
         }
-        
         const config = {
             method: "post",
             endpoint: "reports",
             data: report
         }
+        // Make API call to create the report
         callApi(() => {
             closeModal();
             setReportUpdated(true);
             props.getUpdatedReports();
         }, null, config);
     }
-
+    
+    // Rending this componenet and UI elements
+    // Modal for report creation that can open and close using a button, eror message if required fields are empty
+    // Autocomplete for selecting a computer, input fields for descriptions and users, submit button to create the report
     return (
         <div>
-           
-        
-
             <Modal
                 open={open}
                 onClose={closeModal}
             >
                 <Box sx={style}>
                     <h1>Add New Report</h1>
-                    <Autocomplete 
+                    <Autocomplete
                         required id="computer"
                         getOptionLabel={(selectedComputer) => `${selectedComputer.computerCode} - ${selectedComputer.room.name} ${selectedComputer.room.location.city}`}
                         options={computers}
@@ -114,25 +119,23 @@ const CreateReport  = (props) => {
                         noOptionsText={"No computers"}
                         renderInput={(params) => <TextField {...params} label={`Computer: `} />} //
                         onChange={(e, newValue) => {
-                            if(newValue != null){
+                            if (newValue != null) {
                                 console.log(newValue)
                                 setSelectedComputer(newValue)
-                            }else{
+                            } else {
                                 setSelectedComputer(null)
                             }
                         }}
                     />
-                    {error && <p style={{color: 'red'}}>Must be filled</p>}
+                    {error && <p style={{ color: 'red' }}>Must be filled</p>}
                     <h3>
-                    <TextField
-						//error={Boolean(usernameError)}
-						//helperText={usernameError ? usernameError : ""}
-                        required id="description"
-						name="description"
-						label="Description"
-						onChange={(e) => setIssueDescription(e.target.value)}
-						sx={{ width: '100%'}}
-					/>
+                        <TextField
+                            required id="description"
+                            name="description"
+                            label="Description"
+                            onChange={(e) => setIssueDescription(e.target.value)}
+                            sx={{ width: '100%' }}
+                        />
                     </h3>
                     <Button
                         variant="contained"

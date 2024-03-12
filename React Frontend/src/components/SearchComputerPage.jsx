@@ -3,7 +3,7 @@ import ComputerCard from '../partials/ComputerCard'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import callApi from '../api/callApi'
-import { Box, Button, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
+import { Box, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
 import SearchIcon from "@mui/icons-material/Search"
 import AddComputer from '../partials/AddComputer'
 import CreateReport from '../partials/CreateReport'
