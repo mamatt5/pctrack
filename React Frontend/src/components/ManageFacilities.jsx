@@ -8,10 +8,11 @@ import LocationComputerStatus from "../partials/LocationComputerStatus";
 const ManageFacilities = ({ admin, currStaff, setRender}) => {
 	console.log(admin);
 	console.log(currStaff);
-	const BusinessPerms = currStaff.filter((staff) => staff.adminLevel.name === "Business" || staff.adminLevel.name === "Location");
+	const BusinessPerms = currStaff.filter((staff) => staff.adminLevel.name === "Business");
 	const LocationPerms = currStaff.filter((staff) => staff.adminLevel.name === "Location");
 
-
+    console.log(currStaff)
+    console.log(BusinessPerms)
 
 	return (
 		<Box sx={{ paddingTop: "9rem" }}>

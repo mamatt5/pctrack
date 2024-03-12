@@ -272,7 +272,7 @@ export default function CustomizedTables({
 							<TableRow style={{ height: 53 * 10 }}>
 								<TableCell colSpan={6} align="center">
 									<Typography variant="h6" sx={{ color: "gray", fontStyle: "italic" }}>
-										Fetching Data
+										Nothing to show
 									</Typography>
 								</TableCell>
 							</TableRow>
