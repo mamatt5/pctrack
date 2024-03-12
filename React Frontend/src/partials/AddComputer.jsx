@@ -1,11 +1,9 @@
-import { Box, Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material"
-import { useState } from "react";
-import { useEffect } from "react";
+import { Box, Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import callApi from "../api/callApi";
 import ProgramTransferList from "./ProgramTransferList";
 
-import { Snackbar } from '@mui/material'
-import { Alert } from '@mui/material'
+import { Alert, Snackbar } from '@mui/material';
 
 
 const style = {

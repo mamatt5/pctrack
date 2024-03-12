@@ -1,17 +1,11 @@
-import React from 'react'
-import NavBar from '../partials/NavBar'
-import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Box, Button, Dialog, DialogContent, Modal, Tooltip } from '@mui/material';
+import ComputerIcon from '@mui/icons-material/Computer';
+import { Box, Button, Dialog, DialogContent, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import callApi from '../api/callApi';
 import ComputerCard from '../partials/ComputerCard';
-import { Typography } from '@mui/material';
-import { Grid } from '@mui/material';
-import { Divider } from '@mui/material';
+import NavBar from '../partials/NavBar';
 import RoomMandates from './RoomMandates';
-import ComputerIcon from '@mui/icons-material/Computer';
-import { useParams } from 'react-router-dom';
 
 const getStaff = (setStaff, id) => {
     const config = {

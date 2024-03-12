@@ -1,7 +1,7 @@
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import callApi from '../api/callApi'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
+import React, { useState } from 'react';
+import callApi from '../api/callApi';
 
 // Function to update a report using the provided API call function
 const updateReport = (updatedRpt, callback) => {

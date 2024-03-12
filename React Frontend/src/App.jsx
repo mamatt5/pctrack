@@ -1,28 +1,17 @@
-import { useState } from "react";
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import BrowserRouter as Router
 import { ThemeProvider } from "@mui/material";
-import { createTheme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles';
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom"; // Import BrowserRouter as Router
+import "./App.css";
 //pages
 
-import Login from "./components/Login";
-import Admin from "./components/Admin";
-import LoggedInHomePage from "./components/LoggedInHomePage";
-import { SearchComputerPage } from "./components/SearchComputerPage";
-import { SearchRoomPage } from "./components/SearchRoomPage";
-import { SearchSoftwarePage } from "./components/SearchSoftwarePage";
-import NavBar from "./partials/NavBar";
-import ViewComputersInRoomPage from "./components/ViewComputersInRoomPage";
-import { ReportsPage } from "./components/ReportsPage";
-import { useIdleTimer } from 'react-idle-timer'
+import { Box, Modal, Switch, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { Modal } from "@mui/material";
-import { Box } from "@mui/material";
-import { Style } from "@mui/icons-material";
-import { Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
-import { Switch } from "@mui/material";
+import { useIdleTimer } from 'react-idle-timer';
+import { useLocation, useNavigate } from "react-router-dom";
+import LoggedInHomePage from "./components/LoggedInHomePage";
+import Login from "./components/Login";
+import { ReportsPage } from "./components/ReportsPage";
 
 
 const promptBeforeIdle = 4_000

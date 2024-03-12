@@ -1,20 +1,18 @@
-import React from "react";
-import NavBar from "../partials/NavBar";
+import { Fade, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useMatch, useParams } from "react-router-dom";
 import callApi from "../api/callApi";
-import { useState, useEffect } from "react";
-import { useMatch, BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NavBar from "../partials/NavBar";
+import Admin from "./Admin";
+import ManageFacilities from "./ManageFacilities";
 import { SearchComputerPage } from "./SearchComputerPage";
 import { SearchRoomPage } from "./SearchRoomPage";
 import { SearchSoftwarePage } from "./SearchSoftwarePage";
-import { useParams } from "react-router-dom";
-import Admin from "./Admin";
 import ViewComputersInRoomPage from "./ViewComputersInRoomPage";
-import { Fade, Typography } from "@mui/material";
-import ManageFacilities from "./ManageFacilities";
 
 import { Box } from "@mui/material";
-import { ReportsPage } from "./ReportsPage";
 import HelpPage from "./HelpPage";
+import { ReportsPage } from "./ReportsPage";
 
 /**
  * Checks the adminLevls and

@@ -1,13 +1,13 @@
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { useState } from "react";
 import { Divider, Typography } from "@mui/material";
-import callApi from "../api/callApi";
-import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
-import { RegisterLocation } from "../partials/ManagePermission";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import { useState } from "react";
+import callApi from "../api/callApi";
 import { MultipleSelect } from "../partials/CheckBoxDropDowns";
+import { RegisterLocation } from "../partials/ManagePermission";
 
 let formData = {
 	firstName: "",

@@ -1,13 +1,9 @@
-import React from 'react'
-import NavBar from '../partials/NavBar'
-import ComputerCard from '../partials/ComputerCard'
-import callApi from "../api/callApi";
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import CustomizedTables from '../partials/roomTable'
 import { Box } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import callApi from "../api/callApi";
 import { CheckAdmin } from "../components/LoggedInHomePage";
+import CustomizedTables from '../partials/roomTable';
 
 export const SearchRoomPage = (props) => {
 

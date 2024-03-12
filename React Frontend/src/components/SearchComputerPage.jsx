@@ -1,17 +1,12 @@
-import React from 'react'
-import ComputerCard from '../partials/ComputerCard'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import callApi from '../api/callApi'
-import { Box, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
+import ComputerIcon from '@mui/icons-material/Computer'
 import SearchIcon from "@mui/icons-material/Search"
-import AddComputer from '../partials/AddComputer'
-import CreateReport from '../partials/CreateReport'
-import ComputerIcon from '@mui/icons-material/Computer';
-import { Fade } from '@mui/material'
+import { Alert, Box, Fade, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, Snackbar } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Snackbar } from '@mui/material'
-import { Alert } from '@mui/material'
+import callApi from '../api/callApi'
+import AddComputer from '../partials/AddComputer'
+import ComputerCard from '../partials/ComputerCard'
+import CreateReport from '../partials/CreateReport'
 
 
 const getComputers = (setComputers) => {

@@ -1,17 +1,13 @@
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import { Button, Divider, IconButton, Select, Typography } from "@mui/material";
-import { Box } from "@mui/material";
-import SelectSmall from "./CheckBoxDropDowns";
-import { useState } from "react";
-import { useEffect } from "react";
-import callApi from "../api/callApi";
-import Config from "../configs.json";
-import { MultipleSelect } from "./CheckBoxDropDowns";
-import { GetAdminsLevels } from "../components/Admin";
-import { TextField } from "@mui/material";
-import { subtractArrays } from "../helpers/helperFunctions";
 import WarningIcon from "@mui/icons-material/Warning";
+import { Box, Button, Divider, IconButton, TextField, Typography } from "@mui/material";
+import Fade from "@mui/material/Fade";
+import Modal from "@mui/material/Modal";
+import { useEffect, useState } from "react";
+import callApi from "../api/callApi";
+import { GetAdminsLevels } from "../components/Admin";
+import Config from "../configs.json";
+import { subtractArrays } from "../helpers/helperFunctions";
+import SelectSmall, { MultipleSelect } from "./CheckBoxDropDowns";
 
 const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
 

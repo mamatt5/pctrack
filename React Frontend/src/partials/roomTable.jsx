@@ -1,19 +1,16 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import DeviceHubIcon from '@mui/icons-material/DeviceHub';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { Box, IconButton, Modal } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-import { IconButton } from '@mui/material';
-import DeviceHubIcon from '@mui/icons-material/DeviceHub';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
 import { useState } from 'react';
-import { Modal } from '@mui/material';
-import { Box } from '@mui/material';
-import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
