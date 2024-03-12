@@ -1,44 +1,43 @@
 import React from 'react'
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import NavBar from "../partials/NavBar";
 import { useState } from "react";
 import SoftwareTable from "../partials/SoftwareTable";
 import { useEffect } from "react";
 import callApi from "../api/callApi";
 
+// Functional component for searching and displaying software information
 export const SearchSoftwarePage = () => {
-    const [software, setSoftware] = useState([]);
+  const [software, setSoftware] = useState([]);
 
-    useEffect (() => {
-        getSoftware(setSoftware)
-    }, []);
+  // Fetch software data on component render
+  useEffect(() => {
+    getSoftware(setSoftware)
+  }, []);
 
-    const getSoftware = (setSoftware) => {
-      const config = {
-        method: "get",
-        endpoint: "programs",
-      };
-      callApi(setSoftware, null, config);
+  // Fetch software data from the API
+  const getSoftware = (setSoftware) => {
+    const config = {
+      method: "get",
+      endpoint: "programs",
     };
+    callApi(setSoftware, null, config);
+  };
 
+  const SoftwareTab = () => {
+    return <></>;
+  };
 
-    const SoftwareTab = () => {
-      return <></>;
-    };
-
-    return (
-
-      <>
-        <Box className="dashBoardPadding">
-          <h1>Software</h1>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <SoftwareTab />
-                  </Box>
-            <SoftwareTable array={software} />
+  // Rending this componenet and UI elements
+  // Display heading, SoftwareTable to display fetched software data
+  return (
+    <>
+      <Box className="dashBoardPadding">
+        <h1>Software</h1>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <SoftwareTab />
         </Box>
-
-      </>
-    )
+        <SoftwareTable array={software} />
+      </Box>
+    </>
+  )
 }
-//export default SearchSoftwarePage;

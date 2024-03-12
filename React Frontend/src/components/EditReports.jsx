@@ -1,36 +1,14 @@
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material'
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import callApi from '../api/callApi'
-import { useParams } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
-import { useNavigate } from "react-router-dom";
 
-const getReports = (reportId, setReportsFunc, getAllReports) => {
-  const config = {
-    method: 'get',
-    endpoint: `reports/${reportId}`
-  };
-  callApi(setReportsFunc(getAllReports), null, config)
-}
-
-// const createReport = (computer, description, setReports) => {
-//   const newReport = { 
-//     computer: computer,
-//     description: description }
-
-//   const config = {
-//     method: 'post',
-//     endpoint: 'reports',
-//     data: newReport
-//   };
-//   callApi(()=> getReports(setReports), null, config)
-// }
-
+// Function to update a report using the provided API call function
 const updateReport = (updatedRpt, callback) => {
   const config = {
     method: 'put',
     endpoint: 'reports',
-    data : updatedRpt
+    data: updatedRpt
   };
 
   callApi(() => {
@@ -40,20 +18,14 @@ const updateReport = (updatedRpt, callback) => {
   }, null, config);
 };
 
-
-const Reports = ({report, getAllReports, setReportsFunc, closeModal}) => {
-  const navigate = useNavigate();
+// Reports component that displays and allows editing of a report
+const Reports = ({ report, getAllReports, setReportsFunc, closeModal }) => {
   const [reports, setReports] = useState([])
   const [reportDescription, setReportDescription] = useState('')
   const [reportResolved, setReportResolved] = useState()
   const [editReportDialogue, setEditReportDialogue] = useState(false)
-  const reportId = report.reportId
-  const { id } = useParams()
 
-  // useEffect(() => {
-  //   getReports(reportId, setReports);
-  // }, [report])
-
+  // Function to handle editing a report, populating state with report details
   const editReport = (report) => {
     setReports(report)
     setReportDescription(report.description)
@@ -61,61 +33,59 @@ const Reports = ({report, getAllReports, setReportsFunc, closeModal}) => {
     setEditReportDialogue(true)
   }
 
-  const navToReportsPage = (id) => {
-    navigate(`/home/${id}/reports`)
-  }
-
+  // Function to handle report update
   const handleUpdate = () => {
-    const updatedReport = { ...report, description: reportDescription, resolved: reportResolved};
+    const updatedReport = { ...report, description: reportDescription, resolved: reportResolved };
+    // Update the report using the API call function
     updateReport(updatedReport, () => {
       getAllReports(setReportsFunc);
       setEditReportDialogue(false);
       closeModal();
     });
   };
-  
 
+  // Function to handle checkbox change for report resolved state
   const handleChange = (e) => {
     setReportResolved(e.target.checked);
   };
 
+  // Render the report details and edit dialog
   return (
     <>
       <div>
-        <ul style={{listStyle: 'none'}}>
+        <ul style={{ listStyle: 'none' }}>
           <h2>Report: {report.computer.computerCode} - {report.computer.room.name} {report.computer.room.location.city}</h2>
-                <li></li>
-                <li key={report.reportId}> Description: {report.description} </li>
-                <li>Report status: {report.resolved ? "Resolved" : "Active"}</li>
-                <li><Button onClick={()=> editReport(report)}>Edit</Button>
-                </li>
+          <li></li>
+          <li key={report.reportId}> Description: {report.description} </li>
+          <li>Report status: {report.resolved ? "Resolved" : "Active"}</li>
+          <li><Button onClick={() => editReport(report)}>Edit</Button>
+          </li>
         </ul>
       </div>
 
-      <Dialog open={editReportDialogue} onClose={()=>setEditReportDialogue(false)} fullWidth>
-
+      <Dialog open={editReportDialogue} onClose={() => setEditReportDialogue(false)} fullWidth>
         <DialogTitle>Editing report</DialogTitle>
         <DialogContent>
-          Description: 
+          Description:
           <TextField
             value={reportDescription}
-            onChange={(e)=> setReportDescription(e.target.value)}
+            onChange={(e) => setReportDescription(e.target.value)}
             multiline
             fullWidth
-            />
-            Issue Resolved:
-            <Checkbox
-              checked={reportResolved}
-              label="Resolved"
-              onChange={handleChange}
-              inputProps={{ 'aria-label': 'controlled' }}
-            />
+          />
+
+          Issue Resolved:
+          <Checkbox
+            checked={reportResolved}
+            label="Resolved"
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={()=>{setReportDescription('');setEditReportDialogue(false)}}>Cancel</Button>
+          <Button onClick={() => { setReportDescription(''); setEditReportDialogue(false) }}>Cancel</Button>
           <Button onClick={handleUpdate}>Save</Button>
         </DialogActions>
-
       </Dialog>
     </>
   )
