@@ -110,10 +110,7 @@ function App() {
 		}
 	  }, [location, demoMode])
 
-	  
-	
-	
-	  
+
 	
 
 	return (
