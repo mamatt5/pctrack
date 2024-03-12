@@ -5,18 +5,27 @@ import callApi from "../api/callApi";
 import CreateReport from '../partials/CreateReport';
 import ReportsTable from "../partials/ReportsTable";
 
-// Functional component for managing and displaying reports
+
+/**
+ * @returns - Displays this ReportsPage
+ */
 export const ReportsPage = () => {
   const [reports, setReports] = useState([]);
   const [filter, setFilter] = useState("date")
   const [reportUpdated, setReportUpdated] = useState(false);
 
-  // Fetch initial reports after component renders
+  /**
+   * Fetches initial reports after component renders.
+   */
   useEffect(() => {
     getReports(setReports)
   }, []);
 
-  // Fetch reports filtered by dates by default
+
+  /**
+   * Fetch reports, filtered by dates by default
+   * @param {*} setReports - Function to update the reports state.
+   */
   const getReports = (setReports) => {
     const config = {
       method: "get",
@@ -25,13 +34,20 @@ export const ReportsPage = () => {
     callApi(setReports, null, config);
   };
 
-  // Refetch reports and reset the 'reportUpdated' flag
+  /**
+   * Refetches reports and resets the 'reportUpdated' flag.
+   * Used after a report is created or updated.
+   */
   const getUpdatedReports = () => {
     getReports(setReports);
     setReportUpdated(false);
   };
 
-  // Fetch reports based on the updated filter selection
+  /**
+   * Handles filter change, fetching reports based on the new filter.
+   * @param {*} setReports - Function to update the reports state.
+   * @param {*} filter - The new filter (date, computerCode, or resolved).
+   */
   const onSearchChange = (setReports, filter) => {
     const config = {
       method: "get",
@@ -45,8 +61,10 @@ export const ReportsPage = () => {
     return <></>;
   };
 
-  // Rending this componenet and UI elements
-  // Display heading, filter selection of reports, ReportsTable to display reports, CreateReport component to create new reports
+  /**
+   * Rending this componenet and UI elements
+   * Display heading, filter selection of reports, ReportsTable to display reports, CreateReport component to create new reports
+   */
   return (
 
     <>
@@ -75,8 +93,6 @@ export const ReportsPage = () => {
         <ReportsTable array={reports} getReports={getReports} setReports={setReports} />
       </Box>
       <CreateReport reportUpdated={[reportUpdated, setReportUpdated]} getUpdatedReports={getUpdatedReports} />
-
-
     </>
   )
 }
