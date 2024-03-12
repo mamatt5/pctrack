@@ -1,22 +1,21 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import EditOffIcon from "@mui/icons-material/EditOff";
+import { Box, IconButton, Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { Box, IconButton, Typography } from "@mui/material";
-import SearchBar from "./SearchBar";
-import EditIcon from "@mui/icons-material/Edit";
-import PermissonModal from "./ManagePermission";
-import EditOffIcon from "@mui/icons-material/EditOff";
-import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { LocationsPermsModal, DeleteModal } from "./ManagePermission";
+import TableRow from "@mui/material/TableRow";
+import { styled } from "@mui/material/styles";
+import * as React from "react";
 import Config from "../configs.json";
+import PermissonModal, { DeleteModal, LocationsPermsModal } from "./ManagePermission";
+import SearchBar from "./SearchBar";
 
 const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({

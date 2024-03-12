@@ -1,22 +1,13 @@
-import * as React from 'react';
+import { ThemeProvider } from '@emotion/react';
+import ComputerIcon from '@mui/icons-material/Computer';
+import { Box, Button, CardActionArea, Modal, createTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Button, CardActionArea, createTheme } from '@mui/material';
-import ComputerTwoToneIcon from '@mui/icons-material/ComputerTwoTone';
+import * as React from 'react';
 import { useState } from 'react';
-import { Modal } from '@mui/material';
-import { Box } from '@mui/material';
-import ProgramTable from './programTable';
-import ComputerIcon from '@mui/icons-material/Computer';
 import callApi from '../api/callApi';
-import { ThemeProvider } from '@emotion/react';
 import AddComputer from './AddComputer';
-import { Snackbar } from '@mui/material';
-import { Alert } from '@mui/material';
-import { memo } from 'react';
-import { useMemo } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
+import ProgramTable from './programTable';
 
 /**
  * Styling used for ComputerCard component

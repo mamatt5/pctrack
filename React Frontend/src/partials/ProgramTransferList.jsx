@@ -1,7 +1,6 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import callApi from "../api/callApi";
 import { Button, Checkbox, Collapse, Grid, List, ListItemButton, ListItemIcon, ListItemText, Paper } from "@mui/material";
+import { useEffect, useState } from "react";
+import callApi from "../api/callApi";
 
 /**
  * Get list of softwares through API query

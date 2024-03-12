@@ -1,9 +1,7 @@
-import { Box, Button, Modal, TextField } from "@mui/material"
-import { useState } from "react";
-import { useEffect } from "react";
-import callApi from "../api/callApi";
-import { Autocomplete } from '@mui/material';
+import { Autocomplete, Box, Button, Modal, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import callApi from "../api/callApi";
 
 // Styling for creating reports modal
 const style = {
