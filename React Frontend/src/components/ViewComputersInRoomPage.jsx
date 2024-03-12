@@ -10,7 +10,11 @@ import { Grid } from '@mui/material';
 import RoomMandates from './RoomMandates';
 import ComputerIcon from '@mui/icons-material/Computer';
 
-
+/**
+ * Functional component for viewing computers in a room
+ * Allows users to view an interact with computers in a room
+ * @returns - Displays this ViewComputersInRoomPage
+ */
 const ViewComputersInRoomPage = () => {
     const { state } = useLocation();
     const [room, setRoom] = useState({});
@@ -24,14 +28,13 @@ const ViewComputersInRoomPage = () => {
     }
 
     useEffect(() => {
-        setRoom(state)
 
+        setRoom(state)
         const config = {
             method: "get",
             endpoint: "getcomputers/" + state["roomId"],
 
         }
-
         callApi(setComputers, null, config);
     }, []);
 
@@ -55,18 +58,14 @@ const ViewComputersInRoomPage = () => {
                 </DialogContent>
             </Dialog>
 
-
             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} marginTop={10}>
-
-
                 <Grid sx={{ flexGrow: 1 }} container spacing={2} sm={5}>
-
                     <Grid item xs={12} >
                         <Grid container justifyContent="center" spacing={5} >
                             {
                                 computers.map(computer =>
 
-                                    <ComputerCard key={computer.computerId} computer={computer} rooms={[]} updated={[updated, setUpdated]}/>
+                                    <ComputerCard key={computer.computerId} computer={computer} rooms={[]} updated={[updated, setUpdated]} />
 
                                 )
                             }
@@ -90,30 +89,30 @@ const ViewComputersInRoomPage = () => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}>
 
-        {isHovered && (
-            <>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                    <ComputerIcon style={{ color: '#77DD77'}} /> Both roles
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                    <ComputerIcon style={{ color: '#ffff66'}} /> Dev/BI-ready
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <ComputerIcon style={{ color: '#FF6961'}} /> None
-                </div>
-                <div style={{fontSize: '11px'}}><em>
-                  *Check Help for Dev/BI software list
-                  </em></div>
-            </>
-        )}
-        {!isHovered && (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <ComputerIcon style={{ color: '#77DD77'}} />
-                <ComputerIcon style={{ color: '#ffff66'}} />
-                <ComputerIcon style={{ color: '#FF6961'}} />
-            </div>
-        )}
-      </Box>
+                {isHovered && (
+                    <>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                            <ComputerIcon style={{ color: '#77DD77' }} /> Both roles
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                            <ComputerIcon style={{ color: '#ffff66' }} /> Dev/BI-ready
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <ComputerIcon style={{ color: '#FF6961' }} /> None
+                        </div>
+                        <div style={{ fontSize: '11px' }}><em>
+                            *Check Help for Dev/BI software list
+                        </em></div>
+                    </>
+                )}
+                {!isHovered && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <ComputerIcon style={{ color: '#77DD77' }} />
+                        <ComputerIcon style={{ color: '#ffff66' }} />
+                        <ComputerIcon style={{ color: '#FF6961' }} />
+                    </div>
+                )}
+            </Box>
 
         </Box>
     )

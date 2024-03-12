@@ -29,8 +29,6 @@ const LocationComputerStatus = ({ perms }) => {
     });
   }, []);
 
-  console.log(perms)
-  console.log(rooms);
 
   return (
     <>

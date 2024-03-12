@@ -5,41 +5,34 @@ import callApi from '../api/callApi'
 import { MultipleSelect } from "../partials/CheckBoxDropDowns"
 
 const style = {
-    // position: 'absolute',
-    // top: '50%',
-    // left: '50%',
-    // transform: 'translate(-50%, -50%)',
     width: 700,
     bgcolor: 'background.paper',
     border: "1px solid black",
-    // boxShadow: 24,
     padding: 6,
     borderRadius: 8,
 };
 
-
-
+/**
+ * Functional component for adding a new room
+ * Allows users to create a new room
+ * @returns - Displays this AddRoomPage
+ */
 const AddRoomPage = (props) => {
 
     const [location, setLocation] = useState(null)
-
     const [open, setOpen] = useState(false);
-    const [render, setRender] = useState(props.updated);
-
     const [roomName, setRoomName] = useState("")
     const [roomError, setRoomError] = useState(false);
 
+    const registerableLocations = props.currStaff.map((item) => {
 
+        if (item.adminLevel.precedence < 3) {
+            return item.location
+        } else {
+            return null
+        }
 
-	const registerableLocations = props.currStaff.map((item) => {
-        
-		if (item.adminLevel.precedence < 3) {
-			return item.location
-		} else {
-			return null
-		}
-	}).filter((location) => location !== null);
-
+    }).filter((location) => location !== null);
 
     const successNotification = () => {
         setOpen(true);
@@ -47,20 +40,18 @@ const AddRoomPage = (props) => {
     }
 
     const handleClose = () => {
-        
         setOpen(false);
-      };
+    };
 
     const roomHandle = (name) => {
         setRoomName(name)
         setRoomError(false);
     }
 
-	const handleCheck = (value) => {
-        
-		setLocation(value)
+    const handleCheck = (value) => {
+        setLocation(value)
 
-	};
+    };
 
     const createRoom = (e) => {
         e.preventDefault();
@@ -72,10 +63,8 @@ const AddRoomPage = (props) => {
         }
 
         if (localRoomError) {
-            
             setRoomError(true)
             localRoomError = true;
-           
         }
 
         if (!localRoomError) {
@@ -89,68 +78,64 @@ const AddRoomPage = (props) => {
             }
             callApi(successNotification, null, config);
         }
-        
+
     }
-  return (
+    return (
+        <>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    A Room has been added!
+                </Alert>
+                
+            </Snackbar>
+            <Fade in={true}>
+                <Box sx={style}>
 
-    <>
-       
-       
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert
-            onClose={handleClose}
-            severity="success"
-            variant="filled"
-            sx={{ width: '100%' }}
-        >
-            A Room has been added!
-        </Alert>
+                    <Box>
+                        <Typography variant="h4">Create a New Room</Typography>
+                    </Box>
 
-        </Snackbar>
+                    <Divider sx={{ margin: "1rem 0 1rem 0" }} />
 
-    <Fade in={true}>
-    <Box sx={style}>
+                    <form onSubmit={createRoom} className="flexCol">
 
-			<Box>
-				<Typography variant="h4">Create a New Room</Typography>
-			</Box>
+                        <Box sx={{ margin: "0.5rem" }} >
+                            {MultipleSelect(
+                                registerableLocations,
+                                "city",
+                                "Locations",
+                                "Add Locations",
+                                true,
+                                handleCheck
+                            )}
+                        </Box>
 
-			<Divider sx={{ margin: "1rem 0 1rem 0" }} />
+                        <TextField
+                            name="Room Name"
+                            label="Room Name"
+                            error={roomError}
+                            helperText={roomError ? "Invalid Room Name" : ""}
 
-			<form onSubmit={createRoom} className="flexCol">
+                            onChange={(e) => roomHandle(e.target.value)}
+                            sx={{ margin: "0.5rem" }}
+                        />
 
-				<Box sx={{ margin: "0.5rem" }} >
-					{MultipleSelect(
-						registerableLocations,
-						"city",
-						"Locations",
-						"Add Locations",
-						true,
-						handleCheck
-					)}
-				</Box>
+                        <Box className="centerHorizonal">
+                            <Button type="submit" variant="contained" sx={{ marginTop: "2rem" }}>
+                                Create
+                            </Button>
+                        </Box>
+                    </form>
 
-				<TextField
-					name="Room Name"
-					label="Room Name"
-					error={roomError}
-					helperText={roomError ? "Invalid Room Name" : ""}
-				
-                    onChange={(e) => roomHandle(e.target.value)}
-					sx={{ margin: "0.5rem" }}
-				/>
-
-				<Box className="centerHorizonal">
-					<Button type="submit" variant="contained"  sx={{marginTop:"2rem"}}>
-						Create
-					</Button>
-				</Box>
-			</form>
-
-		</Box>
-        </Fade>
-    </>
-  )
+                </Box>
+            </Fade>
+        </>
+    )
 }
 
 export default AddRoomPage

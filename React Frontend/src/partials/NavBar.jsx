@@ -20,7 +20,6 @@ import Typography from "@mui/material/Typography";
 import { styled, useTheme } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { HelpCenter } from "@mui/icons-material";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import ApiIcon from "@mui/icons-material/Api";
@@ -98,6 +97,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 	})
 );
 
+/**
+ * Functional component for NavBar
+ * Allows users to interact with the NavBar
+ * @returns - Displays this NavBar
+ */
 export default function NavBar(props) {
 
 	const [admin, setAdmin] = useState(false);
@@ -109,28 +113,19 @@ export default function NavBar(props) {
 
 	const [businessAdmin, setBusinessAdmin] = useState(false);
 	const [locationAdmin, setLocationAdmin] = useState(false);
-	const [roomAdmin, setRoomAdmin] = useState(false);
-
-
-
-
 
 	useEffect(() => {
-
 		CheckAdmin(setAdmin, setStaff, id);
 
 		staff.forEach(staffMember => {
 
 			let precedence = staffMember.adminLevel.precedence;
 
-
 			if (precedence === 1) {
 				setBusinessAdmin(true);
 			} else if (precedence === 2) {
 				setLocationAdmin(true);
-			} else if (precedence === 3) {
-				setRoomAdmin(true);
-			}
+			} 
 		});
 	}, [props]);
 
@@ -210,7 +205,7 @@ export default function NavBar(props) {
 
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<Tooltip title={text} placement="right">
-									{console.log(businessAdmin)}
+								
 									<ListItemButton
 
 										disabled={

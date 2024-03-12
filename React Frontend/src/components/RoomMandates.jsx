@@ -35,8 +35,6 @@ const createRoomMandate = (staff, room, description, deadline, setRoomMandates) 
     // Convert timestamp from UTC to AEST
     dateCreated: new Date(new Date().getTime() + 36000000).toISOString().split('T')[0],
     deadline: deadline }
-  
-  console.log('New mandate:', newMandate)
 
   const config = {
     method: 'post',

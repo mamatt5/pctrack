@@ -35,7 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
  * Renders the software table with data from the 'array' prop passed from SearchSoftwarePage
  */
 export default function SoftwareTables({array}) {
-    console.log(array)
+
   return (
     <TableContainer component={Paper} sx={{maxWidth:"70vw"}}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">

@@ -160,7 +160,6 @@ const ProgramTransferList = (props) => {
     useEffect(() => {
         setLeftSide(softwares);
         if (programList.length != 0) {
-            console.log('%c open', 'background: #222; color: #bada55')
             var tempLeft = softwares;
             programList.map(program => {
                 tempLeft = tempLeft.filter(a => a.softwareId !== program.software.softwareId);
