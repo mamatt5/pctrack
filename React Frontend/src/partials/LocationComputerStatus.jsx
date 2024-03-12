@@ -1,6 +1,5 @@
-import { Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import callApi from "../api/callApi";
-import { useState, useEffect } from "react";
 
 const getRooms = (setRooms, locationId) => {
   // Functionality to get rooms by locationId

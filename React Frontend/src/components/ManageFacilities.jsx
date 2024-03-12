@@ -1,9 +1,7 @@
+import { Box } from "@mui/material";
+import LocationComputerStatus from "../partials/LocationComputerStatus";
 import AddLocationPage from "./addLocationPage";
 import AddRoomPage from "./addRoomPage";
-import { Box, Typography } from "@mui/material";
-import callApi from "../api/callApi";
-import { useState, useEffect } from "react";
-import LocationComputerStatus from "../partials/LocationComputerStatus";
 
 const ManageFacilities = ({ admin, currStaff, setRender}) => {
 	console.log(admin);

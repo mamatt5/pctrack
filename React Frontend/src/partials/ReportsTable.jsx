@@ -1,19 +1,17 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, IconButton, Modal } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { IconButton } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
 import { useState } from 'react';
-import EditIcon from '@mui/icons-material/Edit';
-import { Modal } from '@mui/material';
-import { Box } from '@mui/material';
 import EditReports from '../components/EditReports';
 
 // Custom styled components for table rows and cells

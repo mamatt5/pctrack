@@ -1,11 +1,9 @@
-import React from 'react'
+import { InputLabel, MenuItem, Select } from '@mui/material';
 import Box from "@mui/material/Box";
-import { useState } from "react";
-import ReportsTable from "../partials/ReportsTable";
-import { InputLabel, MenuItem, Select } from '@mui/material'
-import { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import callApi from "../api/callApi";
-import CreateReport from '../partials/CreateReport'
+import CreateReport from '../partials/CreateReport';
+import ReportsTable from "../partials/ReportsTable";
 
 // Functional component for managing and displaying reports
 export const ReportsPage = () => {

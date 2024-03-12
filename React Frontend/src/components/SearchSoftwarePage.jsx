@@ -1,9 +1,7 @@
-import React from 'react'
 import Box from "@mui/material/Box";
-import { useState } from "react";
-import SoftwareTable from "../partials/SoftwareTable";
-import { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import callApi from "../api/callApi";
+import SoftwareTable from "../partials/SoftwareTable";
 
 // Functional component for searching and displaying software information
 export const SearchSoftwarePage = () => {
