@@ -3,33 +3,20 @@ import NavBar from '../partials/NavBar'
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Box, Button, Dialog, DialogContent, Modal, Tooltip } from '@mui/material';
+import { Box, Button, Dialog, DialogContent } from '@mui/material';
 import callApi from '../api/callApi';
 import ComputerCard from '../partials/ComputerCard';
-import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
-import { Divider } from '@mui/material';
 import RoomMandates from './RoomMandates';
 import ComputerIcon from '@mui/icons-material/Computer';
-import { useParams } from 'react-router-dom';
 
-const getStaff = (setStaff, id) => {
-    const config = {
-        method: "get",
-        endpoint: `staff/${id}`
-    }
 
-    callApi(setStaff, null, config);
-}
-
-const ViewComputersInRoomPage = (props) => {
+const ViewComputersInRoomPage = () => {
     const { state } = useLocation();
     const [room, setRoom] = useState({});
     const [computers, setComputers] = useState([])
     const [mandatesModal, setMandatesModal] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-    const [staff, setStaff] = useState([]);
-    const { id } = useParams();
     const [updated, setUpdated] = useState(true);
 
     const handleMandatesModal = (open) => {
@@ -37,7 +24,6 @@ const ViewComputersInRoomPage = (props) => {
     }
 
     useEffect(() => {
-        getStaff(setStaff, id);
         setRoom(state)
 
         const config = {
