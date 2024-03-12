@@ -13,14 +13,13 @@ import { TextField } from "@mui/material";
 import { subtractArrays } from "../helpers/helperFunctions";
 import WarningIcon from "@mui/icons-material/Warning";
 
-
-//#####
-// TODO:
-// refactor the modals if bothered. they can all be reused
-//#####
-
 const MAX_PRECEDENCE = Config.MAX_PRECEDENCE;
-const MIN_PRECEDENCE = Config.MIN_PRECEDENCE;
+
+/**
+ * gETs all rooms at a given location
+ * @param {*} setRooms
+ * @param {*} locationId
+ */
 const getRoomsAtLocation = (setRooms, locationId) => {
 	const config = {
 		method: "get",
@@ -30,8 +29,12 @@ const getRoomsAtLocation = (setRooms, locationId) => {
 	callApi(setRooms, null, config);
 };
 
+/**
+ * Deletes a staff memeber as well as any related mandates
+ * @param {*} funct
+ * @param {*} staffId
+ */
 const deleteStaff = (funct, staffId) => {
-	console.log(staffId);
 	const config = {
 		method: "delete",
 		endpoint: `staff/${staffId}`,
@@ -40,9 +43,14 @@ const deleteStaff = (funct, staffId) => {
 	callApi(funct, null, config);
 };
 
-// for all staff but room admin
+/**
+ * Creats a staff member
+ * @param {*} funct
+ * @param {*} userId the id of the user - user and staff are DIFFERENT
+ * @param {*} locId loction id of the staff member
+ * @param {*} adminLevel
+ */
 export const CreateStaff = (funct, userId, locId, adminLevel) => {
-	console.log(adminLevel, "admin level!!!! ");
 	const config = {
 		method: "post",
 		endpoint: "staff",
@@ -62,7 +70,14 @@ export const CreateStaff = (funct, userId, locId, adminLevel) => {
 	callApi(funct, null, config);
 };
 
-// for all staff
+/**
+ * Creates a room admin instead of a staff member
+ * @param {*} funct
+ * @param {*} userId
+ * @param {*} locId
+ * @param {*} adminLevel
+ * @param {*} roomsArray
+ */
 const createRoomAdmin = (funct, userId, locId, adminLevel, roomsArray) => {
 	const config = {
 		method: "post",
@@ -84,9 +99,16 @@ const createRoomAdmin = (funct, userId, locId, adminLevel, roomsArray) => {
 	callApi(funct, null, config);
 };
 
-// for all staff
+/**
+ * Edits a room admin, in particular, the rooms.
+ * @param {*} funct
+ * @param {*} userId
+ * @param {*} staffId
+ * @param {*} locId
+ * @param {*} adminLevel
+ * @param {*} roomsArray
+ */
 const editRoomAdmin = (funct, userId, staffId, locId, adminLevel, roomsArray) => {
-	console.log(staffId, locId, adminLevel, roomsArray);
 	const config = {
 		method: "put",
 		endpoint: `editRoomAdmin/${staffId}`,
@@ -106,8 +128,12 @@ const editRoomAdmin = (funct, userId, staffId, locId, adminLevel, roomsArray) =>
 	callApi(funct, null, config);
 };
 
+/**
+ * Gets all the rooms of a particular room admin
+ * @param {*} funct
+ * @param {*} staffId
+ */
 const getRoomsOfAdmin = (funct, staffId) => {
-	console.log(staffId);
 	const config = {
 		method: "get",
 		endpoint: `getRoomAdminRooms/${staffId}`,
@@ -119,12 +145,7 @@ const getRoomsOfAdmin = (funct, staffId) => {
 // 1. find the location were editing
 // 2. find the permission we have at that location
 // 3. return all adminlevels below that.
-
 const getAssignableLevels = (admin, allAdminlevels, locationId) => {
-	// console.log(admin);
-	// console.log(allAdminlevels);
-	// console.log(locationId);
-
 	const adminLevel = admin.filter((staff) => {
 		return staff.location.locationId === locationId;
 	})[0].adminLevel.precedence;
@@ -132,7 +153,6 @@ const getAssignableLevels = (admin, allAdminlevels, locationId) => {
 	//note business (MAX PRECEDNECE ) is the only one that can assign
 	//another user the same precedence role.
 	let filteredAdminLevel = [];
-	// console.log(adminLevel)
 	if (adminLevel === MAX_PRECEDENCE) {
 		filteredAdminLevel = allAdminlevels.filter((levels) => {
 			return levels.precedence >= adminLevel;
@@ -142,12 +162,11 @@ const getAssignableLevels = (admin, allAdminlevels, locationId) => {
 			return levels.precedence >= adminLevel;
 		});
 	}
-
-	// console.log(filteredAdminLevel);
 	return filteredAdminLevel.sort((a, b) => a.precedence - b.precedence);
 };
 
 /**
+ * Acts as just the modal that calls the Registe Location functionality
  * @staff staff is the user we are editing
  * @admin admin is the admin editing the user
  * @adminLevels is all the possible admin levels
@@ -163,10 +182,6 @@ export const LocationsPermsModal = ({
 	assignableLocations,
 	setChange,
 }) => {
-	// console.log(openModal);
-	// console.log(staff);
-	// console.log(adminLevels);
-
 	return (
 		<Modal
 			open={openModal}
@@ -202,6 +217,14 @@ export const LocationsPermsModal = ({
 	);
 };
 
+/**
+ * Given a list of locations, it registers a user to al the locations into the databas
+ * @param {*} selectedOptions	this is the locations that have been selected to be added
+ * @param {*} staffId this is the userId of the user being registered
+ * @param {*} adminlevel this is the users adminLevel id.
+ * @param {*} setOpenModal this is ise used to open and close a modal
+ * @param {*} setChange this is a callback that triggers a rerender
+ */
 export const RegisterLocation = async (
 	selectedOptions,
 	staffId,
@@ -209,7 +232,6 @@ export const RegisterLocation = async (
 	setOpenModal,
 	setChange
 ) => {
-	console.log(staffId, adminlevel);
 	try {
 		const promises = selectedOptions.map((location) => {
 			const config = {
@@ -240,8 +262,16 @@ export const RegisterLocation = async (
 	}
 };
 
+/**
+ * Allows a user to add a location
+ * @param {*} staff
+ * @param {*} userlocations
+ * @param {*} assignableLocations
+ * @param {*} setOpenModal
+ * @param {*} setChange
+ * @returns
+ */
 const addLocation = (staff, userlocations, assignableLocations, setOpenModal, setChange) => {
-	console.log(userlocations);
 	const [adminLevels, setAdminLevels] = useState([]);
 	const [selectedOptions, setSelectedOptions] = useState([]);
 	let lowestAdminLevel = "";
@@ -326,10 +356,6 @@ const addLocation = (staff, userlocations, assignableLocations, setOpenModal, se
 };
 
 const PermissonModal = ({ openModal, setOpenModal, staff, adminLevels, admin, setChange }) => {
-	// console.log(openModal);
-	// console.log(staff);
-	// console.log(adminLevels);
-
 	const assignableAdminLevels = getAssignableLevels(admin, adminLevels, staff.location.locationId);
 	return (
 		<Modal
@@ -371,7 +397,12 @@ const PermissonModal = ({ openModal, setOpenModal, staff, adminLevels, admin, se
 	);
 };
 
-// the staff is NOT us, is the staff were edting!!!
+/**
+ * The staff is the pmember were editin. This function allos us to change permissions
+ * of another staff member
+ * @param {*} param0
+ * @returns
+ */
 const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 	const [permission, setPermission] = useState("");
 	const [adminRooms, setAdminRooms] = useState([]);
@@ -395,11 +426,6 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 	useEffect(() => {
 		setSelectedRoom(adminRooms);
 	}, [adminRooms, changeDropDown]);
-
-	console.log(adminLevels);
-	console.log(adminLevels.find((role) => role.name === "Business")?.id);
-	console.log(adminRooms);
-	console.log(roomSelectedDifference);
 
 	return (
 		<>
@@ -502,7 +528,6 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 							selectedRooms
 						);
 					} else if (permission === "none") {
-						console.log("HIHIHHIHI");
 						deleteStaff(() => {}, staff.staffId);
 						CreateStaff(
 							() => {
@@ -514,9 +539,7 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 							adminLevels.find((role) => role.name === "")?.id
 						);
 					} else if (permission === "Room") {
-						console.log("OH NONOONO");
 						deleteStaff(() => {}, staff.staffId);
-
 						createRoomAdmin(
 							() => {
 								setOpenModal(false);
@@ -528,8 +551,6 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 							selectedRooms
 						);
 					} else {
-						console.log(permission);
-						console.log("YUIKESSSSS");
 						deleteStaff(() => {}, staff.staffId);
 						CreateStaff(
 							() => {
@@ -549,9 +570,12 @@ const ChangePerms = ({ staff, adminLevels, setOpenModal, setChange }) => {
 	);
 };
 
-// for room admins, you need to select a room in that location.
+/**
+ * This is just the modal that opens to alllow the user to delete a another user
+ * @param {*} param0
+ * @returns
+ */
 export const DeleteModal = ({ openModal, setOpenModal, staff, setChange }) => {
-	console.log(staff);
 	return (
 		<Modal
 			open={openModal}
@@ -586,8 +610,14 @@ export const DeleteModal = ({ openModal, setOpenModal, staff, setChange }) => {
 	);
 };
 
+/**
+ * Functionality for deleting a staff member
+ * @param {*} staff
+ * @param {*} setOpenModal
+ * @param {*} setChange
+ * @returns
+ */
 const DeleteStaff = (staff, setOpenModal, setChange) => {
-	console.log(staff);
 	return (
 		<Box className="centerHorizonal" sx={{}}>
 			<IconButton sx={{ color: "#fb8723", fontSize: "30%" }}>
@@ -631,8 +661,5 @@ const DeleteStaff = (staff, setOpenModal, setChange) => {
 		</Box>
 	);
 };
-
-
-
 
 export default PermissonModal;

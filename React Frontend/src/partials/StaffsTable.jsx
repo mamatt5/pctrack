@@ -15,7 +15,6 @@ import PermissonModal from "./ManagePermission";
 import EditOffIcon from "@mui/icons-material/EditOff";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { LocationsPermsModal, DeleteModal } from "./ManagePermission";
 import Config from "../configs.json";
 
@@ -35,17 +34,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	// "&:nth-of-type(odd)": {
-	// 	backgroundColor:"#f9fafb",
-	// },
-	// hide last border
 	"&:last-child td, &:last-child th": {
 		border: 0,
 	},
-	// backgroundColor: "white", // Set background color to white
-	// "&:last-child td, &:last-child th": {
-	// 	border: 0, // Remove border for last child
-	// },
 	"&:hover": {
 		backgroundColor: "#f3f7f9",
 	},
@@ -60,8 +51,6 @@ const hasPrecedence = (logginedInStaff, toBeManagedStaff) => {
 	const currStaffHasPredence = logginedInStaff.filter((staff) => {
 		if (staff.adminLevel.precedence !== MAX_PRECEDENCE) {
 			return (
-				// console.log(staff.adminLevel.precedence),
-
 				staff.location.locationId === toBeManagedStaff.location.locationId &&
 				staff.adminLevel.precedence <= toBeManagedStaff.adminLevel.precedence &&
 				staff.user.userId != toBeManagedStaff.user.userId
@@ -131,12 +120,10 @@ export default function CustomizedTables({
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 	// for al the modals.
-	console.log(array, "rendering ????? -------------------");
 	React.useEffect(() => {
 		setPage(0);
 	}, [usersOn, pageZero]);
 
-	console.log(page, "PAGE WERE ON IN STAFF TABLE", staffCount);
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 		onChangePage(newPage, rowsPerPage);
@@ -349,13 +336,6 @@ export default function CustomizedTables({
 														<IconButton onClick={() => handleOpenDeleteModal(row.staffId)}>
 															<DeleteOutlineIcon sx={iconStyle} />
 														</IconButton>
-														{/* setOpenModal={(isOpen) => isOpen ? handleOpenModal(row.id) :
-                        handleCloseModal(row.id)}: This passes a function setOpenModal
-                        to the PermissionModal component. When setOpenModal(true) is called
-                        inside PermissionModal, it calls handleOpenModal(row.id) to open the modal
-                         for the corresponding row.id. When setOpenModal(false) is called inside
-                         PermissionModal, it calls handleCloseModal(row.id) to close the modal
-                         for the corresponding row.id. */}
 														<PermissonModal
 															openModal={!!openModals[row.staffId]}
 															setOpenModal={(isOpen) =>
@@ -421,7 +401,6 @@ export default function CustomizedTables({
 					labelRowsPerPage={
 						<Typography variant="body2" sx={{ color: "#8a989f" }}>
 							{" "}
-							{/* Change color as needed */}
 							Rows per page:
 						</Typography>
 					}
