@@ -11,14 +11,7 @@ import RoomMandates from './RoomMandates';
 import ComputerIcon from '@mui/icons-material/Computer';
 import { useParams } from 'react-router-dom';
 
-const getStaff = (setStaff, id) => {
-    const config = {
-        method: "get",
-        endpoint: `staff/${id}`
-    }
 
-    callApi(setStaff, null, config);
-}
 
 const ViewComputersInRoomPage = (props) => {
     const { state } = useLocation();
@@ -26,8 +19,6 @@ const ViewComputersInRoomPage = (props) => {
     const [computers, setComputers] = useState([])
     const [mandatesModal, setMandatesModal] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-    const [staff, setStaff] = useState([]);
-    const { id } = useParams();
     const [updated, setUpdated] = useState(true);
 
     const handleMandatesModal = (open) => {
@@ -35,7 +26,7 @@ const ViewComputersInRoomPage = (props) => {
     }
 
     useEffect(() => {
-        getStaff(setStaff, id);
+        
         setRoom(state)
 
         const config = {
