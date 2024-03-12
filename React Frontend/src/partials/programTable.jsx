@@ -34,12 +34,14 @@ export default function ProgramTable({ array }) {
     return (
         <TableContainer component={Paper} sx={{ maxWidth: "70vw" }}>
             <Table sx={{ minWidth: 600 }} aria-label="customized table">
+                {/* HEAD */}
                 <TableHead>
                     <TableRow>
                         <StyledTableCell align="left">Name</StyledTableCell>
                         <StyledTableCell align="left">Version Number</StyledTableCell>
                     </TableRow>
                 </TableHead>
+                {/* BODY */}
                 <TableBody>
                     {array.map((row) => (
                         <StyledTableRow key={row.programId}>

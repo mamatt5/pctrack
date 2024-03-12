@@ -13,7 +13,10 @@ import { useParams } from 'react-router-dom'
 import { Snackbar } from '@mui/material'
 import { Alert } from '@mui/material'
 
-
+/**
+ * Fetch list of computers through API query
+ * @param {function} setComputers - assign computers variable to API query result
+ */
 const getComputers = (setComputers) => {
     const config = {
         method: "get",
@@ -23,6 +26,11 @@ const getComputers = (setComputers) => {
     callApi(setComputers, null, config);
 }
 
+/**
+ * Fetch list of registered rooms the user have admin privileges to
+ * @param {function} setRegRooms - Assign regRooms variable to API query result
+ * @param {int} id - The user ID
+ */
 const getRegRooms = (setRegRooms, id) => {
     const config = {
         method: "get",
@@ -32,6 +40,10 @@ const getRegRooms = (setRegRooms, id) => {
     callApi(setRegRooms, null, config);
 }
 
+/**
+ * Fetch list of all rooms in API query
+ * @param {function} setRooms - Assign rooms variable to API query result
+ */
 const getRooms = (setRooms) => {
     const config = {
         method: "get",
@@ -41,6 +53,10 @@ const getRooms = (setRooms) => {
     callApi(setRooms, null, config);
 }
 
+/**
+ * Fetch list of reports in API query
+ * @param {function} setReport - Assign report variable to API query result
+ */
 const getReport = (setReport) => {
     const config = {
         method: "get",
@@ -50,6 +66,13 @@ const getReport = (setReport) => {
     callApi(setReport, null, config);
 }
 
+/**
+ * Change the list of computers displayed in page based on search criterias
+ * @param {function} setComputers - Assign computers varaible to API query result
+ * @param {int} computerCode - Search computers filtered on computer code
+ * @param {int} roomId - Search computers based on room assigned
+ * @param {*} role - Search computers based on role assigned
+ */
 const onSearchChange = (setComputers, computerCode, roomId, role) => {
     //const onSearchChange = (setComputers, computerCode, roomId, role) => {
     const searchConfig = {
@@ -68,21 +91,21 @@ const onSearchChange = (setComputers, computerCode, roomId, role) => {
 }
 
 export const SearchComputerPage = () => {
-    const [computers, setComputers] = useState([]);
-    const [rooms, setRooms] = useState([]);
-    const [search, setSearch] = useState("");
-    const [updated, setUpdated] = useState(true);
-    const [report, setReport] = useState([])
-    const [reportUpdated, setReportUpdated] = useState(true);
-    const [roomId, setRoomId] = useState("%%");
-    const [role, setRole] = useState("%%");
-    const [regRooms, setRegRooms] = useState([]);
-    const { id } = useParams();
-    const [isHovered, setIsHovered] = useState(false)
+    const [computers, setComputers] = useState([]);                 /* List of computers */
+    const [rooms, setRooms] = useState([]);                         /* List of rooms */
+    const [search, setSearch] = useState("");                       /* Variable holding ComputerCode search Textfield */
+    const [updated, setUpdated] = useState(true);                   /* Boolean determine page is updated upon database changes (fetch computers when false) */
+    const [report, setReport] = useState([])                        /* List of reports */
+    const [reportUpdated, setReportUpdated] = useState(true);       /* Determine reports are being updated based on changes */
+    const [roomId, setRoomId] = useState("%%");                     /* The room ID selected from 'search-by-room' drop down menu */
+    const [role, setRole] = useState("%%");                         /* The role selected from 'search-by-roles' drop down menu */
+    const [regRooms, setRegRooms] = useState([]);                   /* The lists of room user have admin privileges on */
+    const { id } = useParams();                                     /* User ID */
+    const [isHovered, setIsHovered] = useState(false)               /* Determine the legend in top right corner is hovered on */
 
-    const [updatedComputer, onUpdatedComputer] = useState(false);
-    const [deleteComputer, onDeletedComputer] = useState(false);
-    const [openAlert, setOpen] = useState(false);
+    const [updatedComputer, onUpdatedComputer] = useState(false);   /* Alert prompt on computer being updated */
+    const [deleteComputer, onDeletedComputer] = useState(false);    /* Alert prompt on computer being deleted */
+    const [openAlert, setOpen] = useState(false);                   /* Status on alert prompt displaying */
 
     useEffect(() => {
         getComputers(setComputers);
@@ -90,11 +113,13 @@ export const SearchComputerPage = () => {
         getRegRooms(setRegRooms, id);
     }, []);
 
+    // Refresh computer database when exiting from modals
     useEffect(() => {
         getComputers(setComputers);
         setUpdated(true);
     }, [updated == false]);
 
+    // Refresh reports database when reportUpdated variable is changed
     useEffect(() => {
         getReport(setReport);
         setReportUpdated(true);
