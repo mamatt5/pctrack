@@ -75,6 +75,20 @@ public class MandateServiceTests {
 	}
 	
 	@Test
+	public void findById_throws_error_when_nonexist()
+	{
+		when(mandateRepo.findById(0)).thenReturn(Optional.empty());
+		assertThrows(RuntimeException.class, () -> mandateService.findById(0));
+	}
+	
+	@Test
+	public void findByRoom_throws_error_when_nonexist()
+	{
+		when(roomRepo.findById(0)).thenReturn(Optional.empty());
+		assertThrows(RuntimeException.class, () -> mandateService.findByRoom(0));
+	}
+	
+	@Test
 	public void delete_mandate_by_id() {
 		when(mandateRepo.existsById(0)).thenReturn(true);
 		mandateService.deleteById(0);
@@ -86,6 +100,7 @@ public class MandateServiceTests {
 		when(mandateRepo.existsById(0)).thenReturn(false);
 		assertThrows(RuntimeException.class, ()-> mandateService.deleteById(0));
 	}
+	
 	
 	@Test
 	public void update_mandate() {

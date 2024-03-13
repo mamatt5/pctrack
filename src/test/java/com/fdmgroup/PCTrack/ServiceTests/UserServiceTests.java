@@ -149,6 +149,20 @@ public class UserServiceTests {
 	}
 	
 	@Test
+	void findUserEmail_non_existing_email_test()
+	{
+		when(userRepo.findByEmail(anyString())).thenReturn(Optional.empty());
+		assertThrows(RuntimeException.class, () -> userService.findUserEmail("test@test"));
+	}
+	
+	@Test
+	void findByUsername_non_existing_username_test()
+	{
+		when(userRepo.findByUsername(anyString())).thenReturn(Optional.empty());
+		assertThrows(RuntimeException.class, () -> userService.findByUsername("test"));
+	}
+	
+	@Test
 	void update_user_test() {
 		
 		User user1 = new User("amumu.munsen", "password123", "Amumu", "Munsen", LocalDate.of(2023, 11, 27),
