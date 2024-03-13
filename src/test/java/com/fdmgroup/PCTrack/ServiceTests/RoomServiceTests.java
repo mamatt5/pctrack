@@ -5,6 +5,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fdmgroup.PCTrack.dal.LocationRepository;
 import com.fdmgroup.PCTrack.dal.RoomRepository;
+import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.service.LocationService;
@@ -204,5 +205,13 @@ public class RoomServiceTests {
 		List<Room> roomsByLocation = new ArrayList<>();
 		when(roomRepo.getRoomsInLocation(0)).thenReturn(roomsByLocation);
 		assertEquals(roomsByLocation, roomService.getRoomsInLocation(0));
+	}
+	
+	@Test
+	void get_computers_in_room_test()
+	{
+		List<Computer> computers = new ArrayList<>();
+		when(roomRepo.getComputersInRoom(0)).thenReturn(computers);
+		assertEquals(computers, roomService.getComptuersInRoom(0));
 	}
 }

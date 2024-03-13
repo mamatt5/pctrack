@@ -81,7 +81,7 @@ public class StaffServiceTests {
 	
 	@Test
 	public void delete_throws_when_staff_does_not_exist() {
-		assertThrows(RuntimeException.class, ()-> staffService.deleteById(0));
+		assertThrows(RuntimeException.class, ()-> staffService.deleteById(2));
 	}
 	
 	@Test
@@ -98,6 +98,12 @@ public class StaffServiceTests {
 		staff.setStaffId(0);
 		when(staffRepo.findById(0)).thenReturn(Optional.of(staff));
 		assertEquals(staff, staffService.findByStaffId(0));
+	}
+	
+	@Test
+	public void find_staff_by_id_throws_when_not_found()
+	{
+		assertThrows(RuntimeException.class, () -> staffService.findByStaffId(0));
 	}
 	
 	@Test
@@ -145,8 +151,11 @@ public class StaffServiceTests {
 	}
 	
 	@Test
-	public void update_throws_when_staff_does_not_exist() {
-		assertThrows(RuntimeException.class, ()-> staffService.update(staff));
+	public void update_throws_when_staff_does_not_exist()
+	{
+		staff = new Staff();
+		when(staffRepo.existsById(staff.getStaffId())).thenReturn(false);
+		assertThrows(RuntimeException.class, () -> staffService.update(staff));
 	}
 	
 	@Test
