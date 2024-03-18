@@ -28,6 +28,10 @@ public class ComputerService {
 		return this.computerRepo.searchComputer(code, roomId, role);
 	}
 	
+	public List<Computer> findByProgramId(int programId) {
+		return this.computerRepo.findByProgramList_ProgramId(programId);
+	}
+	
 	public void save(Computer newComputer) {
 		if (this.computerRepo.existsById(newComputer.getComputerId())) {
 			throw new RuntimeException("Computer already exists");

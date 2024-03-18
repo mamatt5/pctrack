@@ -62,7 +62,7 @@ const ComputerCard = (props) => {
     };
 
     /**
-     * Set 'open' to false - open modal
+     * Set 'open' to false - close modal
      */
     const closeModal = () => {
         setModal(false);

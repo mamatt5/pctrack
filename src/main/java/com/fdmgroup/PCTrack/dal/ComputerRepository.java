@@ -12,4 +12,6 @@ public interface ComputerRepository extends JpaRepository<Computer, Integer> {
 			+ "AND CAST(c.room.roomId AS text) LIKE :roomId "
 			+ "AND c.role LIKE :role") 
 	List<Computer> searchComputer(@Param("code") String code, @Param("roomId") String roomId, @Param("role") String role);
+	
+	List<Computer> findByProgramList_ProgramId(Integer programId);
 }

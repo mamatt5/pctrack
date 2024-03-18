@@ -154,4 +154,5 @@ public class ComputerControllerTests {
 		assertEquals(Arrays.asList(computer3), computerController.searchByComputerCode(searchConfig3));
 		assertEquals(Arrays.asList(computer4), computerController.searchByComputerCode(searchConfig4));
 	}
+	
 }
