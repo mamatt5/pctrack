@@ -101,7 +101,7 @@ const SoftwareCard = (props) => {
                                         <StyledTableCell align="left">{row.version}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             {
-                                                computerList[row.programId].map((computer) => (
+                                                open && computerList[row.programId].map((computer) => (
                                                     <span key={computer.computerId}>{computer.computerCode} </span>
                                                 ))
                                             }
