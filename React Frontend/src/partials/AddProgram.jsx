@@ -113,7 +113,7 @@ const AddProgram = (props) => {
                 onClose={closeModal}
             >
                 <Box sx={style}>
-                    <h1 style={{textAlign: "center"}}>Add Computer</h1>
+                    <h1 style={{textAlign: "center"}}>Add Program</h1>
                     <div>
                         <InputLabel id="software-label">Software</InputLabel>
                         <Select
