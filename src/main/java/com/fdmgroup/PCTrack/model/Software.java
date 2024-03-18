@@ -1,5 +1,6 @@
 package com.fdmgroup.PCTrack.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +27,7 @@ public class Software {
 	public Software(String name) {
 		super();
 		this.name = name;
+		this.versions = null;
 	}
 
 	public Software()
@@ -55,6 +57,7 @@ public class Software {
 	}
 
 	public List<Program> getVersions() {
+		if (versions != null) versions.sort(new ProgramComparator());
 		return versions;
 	}
 

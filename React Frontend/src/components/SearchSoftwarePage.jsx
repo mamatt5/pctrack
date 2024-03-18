@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import React, { useEffect, useState } from 'react';
 import callApi from "../api/callApi";
 import SoftwareTable from "../partials/SoftwareTable";
+import AddProgram from "../partials/AddProgram";
 
 
 /**
@@ -11,13 +12,14 @@ import SoftwareTable from "../partials/SoftwareTable";
  */
 export const SearchSoftwarePage = () => {
   const [software, setSoftware] = useState([]);
+  const [open, setOpen] = useState(false);
 
   /**
    * Fetches software data from the API on component mount.
    */
   useEffect(() => {
     getSoftware(setSoftware)
-  }, []);
+  }, [open]);
 
   /**
    * Fetches software data using a GET request to the programs endpoint.
@@ -27,7 +29,7 @@ export const SearchSoftwarePage = () => {
   const getSoftware = (setSoftware) => {
     const config = {
       method: "get",
-      endpoint: "programs",
+      endpoint: "softwares",
     };
     callApi(setSoftware, null, config);
   };
@@ -49,6 +51,7 @@ export const SearchSoftwarePage = () => {
         </Box>
         <SoftwareTable array={software} />
       </Box>
+      <AddProgram open={[open, setOpen]}/>
     </>
   )
 }

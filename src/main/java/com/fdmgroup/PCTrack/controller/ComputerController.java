@@ -45,6 +45,11 @@ public class ComputerController {
 		return computerService.findById(computerId);
 	}
 	
+	@GetMapping("computers/programs/{programId}")
+	public List<Computer> findByProgramId(@PathVariable int programId) {
+		return computerService.findByProgramId(programId);
+	}
+	
 	/**
 	 * Finds the computer based on code through search config which is used in filtering results
 	 * in front end
