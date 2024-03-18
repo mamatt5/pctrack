@@ -22,6 +22,7 @@ import com.fdmgroup.PCTrack.model.Computer;
 import com.fdmgroup.PCTrack.model.Location;
 import com.fdmgroup.PCTrack.model.Software;
 import com.fdmgroup.PCTrack.model.Program;
+import com.fdmgroup.PCTrack.model.Report;
 import com.fdmgroup.PCTrack.model.Room;
 import com.fdmgroup.PCTrack.model.SearchConfig;
 import com.fdmgroup.PCTrack.service.ComputerService;
@@ -155,4 +156,14 @@ public class ComputerControllerTests {
 		assertEquals(Arrays.asList(computer4), computerController.searchByComputerCode(searchConfig4));
 	}
 	
+	@Test
+	public void deleteComputer_with_reports()
+	{
+		Computer computer = new Computer(1);
+		when(reportService.findByComputerId(1)).thenReturn(Arrays.asList(new Report()));
+		computerController.deleteComputer(1);
+		verify(reportService, times(1)).findByComputerId(1);
+		verify(reportService, times(1)).deleteById(any(Integer.class));
+		verify(computerService, times(1)).deleteByComputerId(1);
+	}
 }
